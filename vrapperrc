@@ -1,0 +1,6 @@
+set nu
+inoremap jk <ESC>
+inoremap <space>o o<ESC>k
+inoremap <space>O O<ESC>j
+inoremap <space>l yypVr-
+inoremap <space>L yypVr=

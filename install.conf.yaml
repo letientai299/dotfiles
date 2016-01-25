@@ -1,6 +1,13 @@
+# Remove the old file first
 - clean: ['~']
 
+- shell: 
+    - ['rm ~/.vimrc', 'Remove existing vimrc']
+    - ['rm ~/.zshrc', 'Remove existing zshrc']
+    - ['rm ~/.vrapperrc', 'Remove existing vrapperrc']
+    - ['rm -rf ~/.vim', 'Remove existing vim folder']
 
+# Update git submodules
 - shell:
     - ['git submodule update --init --recursive', 'Installing submodules']
     - ['curl https://raw.githubusercontent.com/noahfrederick/vim-hemisu/master/colors/hemisu.vim --create-dirs -o vim/colors/hemisu.vim', 'Install hemisu.vim']
@@ -8,3 +15,5 @@
 - link: 
     ~/.vim: 'vim/'
     ~/.vimrc: 'vimrc'
+    ~/.vrapperrc: 'vrapperrc'
+    ~/.zshrc: 'zshrc'
