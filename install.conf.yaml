@@ -1,0 +1,10 @@
+- clean: ['~']
+
+
+- shell:
+    - ['git submodule update --init --recursive', 'Installing submodules']
+    - ['curl https://raw.githubusercontent.com/noahfrederick/vim-hemisu/master/colors/hemisu.vim --create-dirs -o vim/colors/hemisu.vim', 'Install hemisu.vim']
+
+- link: 
+    ~/.vim: 'vim/'
+    ~/.vimrc: 'vimrc'
