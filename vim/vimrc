@@ -56,6 +56,7 @@ set cc=80
 set nospell spelllang=en_us
 set encoding=utf8
 set cursorline
+set nofoldenable
 syntax on
 filetype plugin indent on
 
