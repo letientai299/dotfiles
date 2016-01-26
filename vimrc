@@ -83,19 +83,11 @@ nnoremap <leader>s :set spell!<CR>
 " Toggle foldenable
 nnoremap <leader>f :set foldenable!<CR>
 
+
 " Quickly paste from clipboard
 " ----------------------------
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
-
-" Insert a second level or first level header line below the current line in
-" normal mode
-"----------------------------------------------------------------------------
-nnoremap <leader>l yypVr-
-nnoremap <leader>L yypVr=
-
-" Insert a code bloke in markdown
-nnoremap Q i```<CR><CR>```<ESC>ki
 
 
 " Auto remove trailing white space on saving file
