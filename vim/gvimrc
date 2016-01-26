@@ -1,0 +1,8 @@
+" Custom font
+set gfn=Liberation\ Mono\ 9
+
+" Set window size
+set lines=30 columns=120
+
+" Use dark theme for GUI mode
+set background=dark
