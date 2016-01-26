@@ -1,3 +1,5 @@
+" Custom for vrapper Eclipse plugin
+"----------------------------------
 set nu
 inoremap jk <ESC>
 inoremap <space>o o<ESC>k
