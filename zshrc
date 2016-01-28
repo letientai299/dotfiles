@@ -85,3 +85,18 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias s2040='ssh eng2@hcutwrk2040'
 alias ff="firefox"
+
+alias so="source"
+# Add, commit and push in single call
+function lazygit() {
+# Check for commit message
+if [ $# -eq 0 ]; then
+    echo "Need a commit message"
+    return 1
+fi
+git add .
+git commit -a -m "$*"
+git push
+}
+
+alias lg="lazygit" # And even more lazy
