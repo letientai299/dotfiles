@@ -31,12 +31,14 @@ Plug 'tpope/vim-unimpaired'
 Plug 'mattn/emmet-vim'
 
 
-"For working with git
+" For working with git
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-call plug#end()
 
+" Show mark
+Plug 'kshenoy/vim-signature'
+call plug#end()
 
 " Avoid using the Escape key
 " --------------------------
