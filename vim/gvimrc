@@ -1,8 +1,9 @@
-" Custom font
-set gfn=Liberation\ Mono\ 9
-
+set gfn=Literation\ Mono\ Powerline\ 9
 " Set window size
 set lines=30 columns=120
+"
+" Enable gnome-terminal full color
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 
-" Use dark theme for GUI mode
-set background=dark

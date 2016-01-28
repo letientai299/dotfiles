@@ -6,12 +6,15 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
+" Enable gnome-terminal full color
+set t_Co=256
 
 " List of plugin
 " --------------
 call plug#begin()
 Plug 'Chiel92/vim-autoformat'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'chase/vim-ansible-yaml'
 Plug 'flazz/vim-colorschemes'
 Plug 'ingydotnet/yaml-vim'
@@ -26,8 +29,16 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'mattn/emmet-vim'
-call plug#end()
 
+
+" For working with git
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Show mark
+Plug 'kshenoy/vim-signature'
+call plug#end()
 
 " Avoid using the Escape key
 " --------------------------
@@ -50,6 +61,30 @@ nnoremap <leader>as :so $MYVIMRC<CR>
 "---------------------------------------------
 nnoremap <c-f12> :NERDTreeToggle<CR>
 
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+au VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'white')
+au VimEnter * call NERDTreeHighlightFile('ini', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('py', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('md', '19', 'none', '#3366FF', 'white')
+au VimEnter * call NERDTreeHighlightFile('yml', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('config', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('conf', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('json', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('html', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', 'white')
+au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'white')
+au VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'white')
+au VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'white')
+au VimEnter * call NERDTreeHighlightFile('rb', 'Red', 'none', '#ffa500', 'white')
+au VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'white')
+
+
+"Some custom setting that I wrote myself
 set number nocompatible
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set ignorecase smartcase incsearch hls
@@ -67,8 +102,8 @@ filetype plugin indent on
 " custom font
 "-------------------------------------------------------------------------
 let g:airline_powerline_fonts=1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+"let g:airline_left_sep=''
+"let g:airline_right_sep=''
 
 
 " Insert an blank line below or above the current line in normal mode
