@@ -99,3 +99,4 @@ git push
 }
 
 alias lg="lazygit" # And even more lazy
+alias ff="firefox"
