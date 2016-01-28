@@ -7,9 +7,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " Enable gnome-terminal full color
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+set t_Co=256
 
 " List of plugin
 " --------------
@@ -68,14 +66,14 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
 endfunction
 
 au VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'white')
-au VimEnter * call NERDTreeHighlightFile('ini', '3', 'none', '3', 'white')
-au VimEnter * call NERDTreeHighlightFile('py', '3', 'none', '3', 'white')
+au VimEnter * call NERDTreeHighlightFile('ini', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('py', '100', 'none', 'Yellow4', 'white')
 au VimEnter * call NERDTreeHighlightFile('md', '19', 'none', '#3366FF', 'white')
-au VimEnter * call NERDTreeHighlightFile('yml', '3', 'none', 'yellow', 'white')
-au VimEnter * call NERDTreeHighlightFile('config', '3', 'none', 'yellow', 'white')
-au VimEnter * call NERDTreeHighlightFile('conf', '3', 'none', 'yellow', 'white')
-au VimEnter * call NERDTreeHighlightFile('json', '3', 'none', 'yellow', 'white')
-au VimEnter * call NERDTreeHighlightFile('html', '3', 'none', 'yellow', 'white')
+au VimEnter * call NERDTreeHighlightFile('yml', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('config', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('conf', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('json', '100', 'none', 'Yellow4', 'white')
+au VimEnter * call NERDTreeHighlightFile('html', '100', 'none', 'Yellow4', 'white')
 au VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', 'white')
 au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'white')
 au VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'white')
@@ -84,7 +82,7 @@ au VimEnter * call NERDTreeHighlightFile('rb', 'Red', 'none', '#ffa500', 'white'
 au VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'white')
 
 
-
+"Some custom setting that I wrote myself
 set number nocompatible
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set ignorecase smartcase incsearch hls
