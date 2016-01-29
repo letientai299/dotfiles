@@ -140,9 +140,15 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 
 " Auto format on save
-au BufWrite * :Autoformat
+" au BufWrite * :Autoformat
 
+" Insert a second level or first level header line below the current line in
+" normal mode
+"----------------------------------------------------------------------------
+nnoremap <leader>l yypVr-
+nnoremap <leader>L yypVr=
 
+au BufNewFile,BufRead *.txt  set ft=markdown
 " Custom theme
 " ------------
 colo hemisu
