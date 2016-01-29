@@ -38,28 +38,31 @@ Plug 'airblade/vim-gitgutter'
 
 " Show mark
 Plug 'kshenoy/vim-signature'
+
+" Fuzzy file finder
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 " Avoid using the Escape key
-" --------------------------
 inoremap jk <ESC>
 vnoremap jk <ESC>
 
 
 " Use space as leader key, it's easy to touch
-" -------------------------------------------
 let mapleader="\<SPACE>"
 
 
 " Quickly open vimrc and apply change
-" -----------------------------------
 nnoremap <leader>es :tabedit $MYVIMRC<CR>
 nnoremap <leader>as :so $MYVIMRC<CR>
 
 
+" For NERDTree
+"-------------
 " Shortcut to quickly open the NerdTree panel
-"---------------------------------------------
 nnoremap <c-f12> :NERDTreeToggle<CR>
+" And here for quickly reveal the location of opened buffer.
+nnoremap <c-s-f12> :NERDTreeFind<CR>
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -76,8 +79,8 @@ au VimEnter * call NERDTreeHighlightFile('config', '100', 'none', 'Yellow4', 'wh
 au VimEnter * call NERDTreeHighlightFile('conf', '100', 'none', 'Yellow4', 'white')
 au VimEnter * call NERDTreeHighlightFile('json', '100', 'none', 'Yellow4', 'white')
 au VimEnter * call NERDTreeHighlightFile('html', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', 'white')
-au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'white')
+au VimEnter * call NERDTreeHighlightFile('styl', '19', 'none', 'cyan', 'white')
+au VimEnter * call NERDTreeHighlightFile('css', '19', 'none', 'cyan', 'white')
 au VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'white')
 au VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'white')
 au VimEnter * call NERDTreeHighlightFile('rb', 'Red', 'none', '#ffa500', 'white')
@@ -97,17 +100,11 @@ set nofoldenable
 syntax on
 filetype plugin indent on
 
-
-" Remove the triangle default in Vim-airline, because I'm lazy to install
-" custom font
-"-------------------------------------------------------------------------
+" Allow airline use powerline fonts
 let g:airline_powerline_fonts=1
-"let g:airline_left_sep=''
-"let g:airline_right_sep=''
 
 
 " Insert an blank line below or above the current line in normal mode
-"---------------------------------------------------------------------
 nnoremap <leader>o o<ESC>k
 nnoremap <leader>O O<ESC>j
 
@@ -123,10 +120,16 @@ nnoremap <leader>f :set foldenable!<CR>
 
 
 " Quickly paste from clipboard
-" ----------------------------
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 
+" And quickly copy to clipboard also
+nnoremap <leader>y "+y
+nnoremap <leader>yy "+yy
+vnoremap <leader>y "+y
+
+" Make Y copy to end the line like the D command
+nnoremap Y y$
 
 " Auto remove trailing white space on saving file
 " -----------------------------------------------
@@ -148,7 +151,18 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 nnoremap <leader>l yypVr-
 nnoremap <leader>L yypVr=
 
+" Use markdown as default, actually, I'm still not use vim heavily for other
+" languages, not yet.
 au BufNewFile,BufRead *.txt  set ft=markdown
+
+
 " Custom theme
-" ------------
 colo hemisu
+
+" Delete comment character when joining comnmented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+" Reload unchanged files automatically.
+set autoread

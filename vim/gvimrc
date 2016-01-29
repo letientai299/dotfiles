@@ -1,9 +1,4 @@
 set gfn=Literation\ Mono\ Powerline\ 11
 " Set window size
 set lines=30 columns=120
-"
-" Enable gnome-terminal full color
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
 

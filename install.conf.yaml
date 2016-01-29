@@ -21,3 +21,7 @@
     ~/.vim: 'vim/'
     ~/.vrapperrc: 'vrapperrc'
     ~/.zshrc: 'zshrc'
+    ~/.gitignore_global: 'gitignore_global'
+
+- shell:
+    ["git config --global core.excludesfile '~/.gitignore_global'"]
