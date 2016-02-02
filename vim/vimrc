@@ -41,7 +41,16 @@ Plug 'kshenoy/vim-signature'
 
 " Fuzzy file finder
 Plug 'ctrlpvim/ctrlp.vim'
+
+
+
+" This plugin adds a number of text objects to make vim editing more
+" convenient.
+Plug 'wellle/targets.vim'
+
 call plug#end()
+
+" ------------------------------------------
 
 " Avoid using the Escape key
 inoremap jk <ESC>
@@ -166,3 +175,6 @@ endif
 
 " Reload unchanged files automatically.
 set autoread
+
+" Quickly format the paregraph, and also a way to avoid enter Ex-mode
+nnoremap gQ gqap
