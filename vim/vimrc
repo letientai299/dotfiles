@@ -52,6 +52,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 " convenient.
 Plug 'wellle/targets.vim'
 
+" Help making the table in markdown easier
+Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 " ------------------------------------------
@@ -187,3 +189,9 @@ set autoread
 
 " Quickly format the paregraph, and also a way to avoid enter Ex-mode
 nnoremap gQ gqap
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
