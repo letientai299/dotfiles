@@ -1,6 +1,6 @@
 " Someone said that this should be the first line in thew vimrc,
 " because this can change the other setting behavior as a side effect.
-set number nocompatible
+set nocompatible
 
 " Auto install on the first time if there no plug.vim found
 " ---------------------------------------------------------
@@ -23,33 +23,22 @@ source ~/.vim/custom/plugins.vim
 " - Command to highlight by file extension
 source ~/.vim/custom/nerdtree.vim
 
-" Avoid using the Escape key
-inoremap jk <ESC>
-inoremap kj <ESC>
-vnoremap jk <ESC>
-vnoremap kj <ESC>
 
+" Now we add the common settings
+source ~/.vim/common.vim
 
-" Use space as leader key, it's easy to touch
-let mapleader="\<SPACE>"
-
-
-" Quickly open vimrc and apply change
-nnoremap <leader>es :tabedit $MYVIMRC<CR>
-nnoremap <leader>as :so $MYVIMRC<CR>
-
-
-"Some custom setting that I wrote myself
-set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-set ignorecase smartcase incsearch hls
-set textwidth=79
-set cc=80
+" Set spelling language to English, not sure if this setting could be included
+" in the common.Vim
 set nospell spelllang=en_us
-set encoding=utf8
-set cursorline
-set nofoldenable
+
+" Automatic recognize flie syntax
 syntax on
 filetype plugin indent on
+
+" Quickly open vimrc and apply change
+nnoremap <Leader>es :tabedit $MYVIMRC<CR>
+nnoremap <Leader>as :so $MYVIMRC<CR>
+
 
 " Allow airline use powerline fonts
 let g:airline_powerline_fonts=1
@@ -59,33 +48,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Insert an blank line below or above the current line in normal mode
-nnoremap <leader>o o<ESC>k
-nnoremap <leader>O O<ESC>j
-
-
-" Toggle highlight search
-nnoremap <leader>n :set hls!<CR>
-
-" Toggle spelling
-nnoremap <leader>s :set spell!<CR>
-
-" Toggle foldenable
-nnoremap <leader>f :set foldenable!<CR>
-
-
-" Quickly paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-
-" And quickly copy to clipboard also
-nnoremap <leader>y "+y
-nnoremap <leader>yy "+yy
-vnoremap <leader>y "+y
-
-" Make Y copy to end the line like the D command
-nnoremap Y y$
 
 " Auto remove trailing white space on saving file
 " -----------------------------------------------
@@ -97,15 +59,6 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-
-" Auto format on save
-" au BufWrite * :Autoformat
-
-" Insert a second level or first level header line below the current line in
-" normal mode
-"----------------------------------------------------------------------------
-nnoremap <leader>l yypVr-
-nnoremap <leader>L yypVr=
 
 " Use markdown as default, actually, I'm still not use vim heavily for other
 " languages, not yet.
@@ -122,9 +75,6 @@ endif
 
 " Reload unchanged files automatically.
 set autoread
-
-" Quickly format the paregraph, and also a way to avoid enter Ex-mode
-nnoremap gQ gqap
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)

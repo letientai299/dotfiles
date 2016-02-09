@@ -5,7 +5,6 @@ au VimEnter * Abolish ex{,s} example{}
 au VimEnter * Abolish doc{,s,n,ns} document{,s,ation,ations}
 au VimEnter * Abolish fn{,s,n} function{,s,ality}
 
-ab vim Vim
 ab vm Vim
 
 ab pv _Practical Vim_

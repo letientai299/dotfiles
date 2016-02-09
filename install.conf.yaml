@@ -2,9 +2,7 @@
 - clean: ['~']
 
 - shell:
-    - ['rm ~/.zshrc', 'Remove existing zshrc']
-    - ['rm ~/.vrapperrc', 'Remove existing vrapperrc']
-    - ['rm -rf ~/.vim', 'Remove existing vim folder']
+    - ['./remove_existing_files.sh', "Remove existing config files/folders"]
 
 # Update git submodules
 - shell:
@@ -19,7 +17,8 @@
       'Install xxf.zsh-theme']
 - link:
     ~/.vim: 'vim/'
-    ~/.vrapperrc: 'vrapperrc'
+    ~/.vrapperrc: 'vim/vrapper.vim'
+    ~/.ideavimrc: 'vim/idearc.vim'
     ~/.zshrc: 'zshrc'
     ~/.gitignore_global: 'gitignore_global'
 
