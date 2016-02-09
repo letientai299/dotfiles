@@ -25,7 +25,9 @@ source ~/.vim/custom/nerdtree.vim
 
 " Avoid using the Escape key
 inoremap jk <ESC>
+inoremap kj <ESC>
 vnoremap jk <ESC>
+vnoremap kj <ESC>
 
 
 " Use space as leader key, it's easy to touch
