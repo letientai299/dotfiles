@@ -89,3 +89,10 @@ source ~/.vim/custom/on_working.vim
 
 let g:ctrlp_cmd = 'CtrlPLastMode'
 let g:ctrlp_extensions = ['buffertag','tag', 'line', 'dir']
+
+" Quickly format the paregraph, and also a way to avoid enter Ex-mode
+nnoremap gQ gqap
+
+
+" Make CtrlP uses regex as default
+let g:ctrlp_regexp=1
