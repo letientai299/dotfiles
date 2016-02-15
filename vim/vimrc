@@ -1,3 +1,7 @@
+" Someone said that this should be the first line in thew vimrc,
+" because this can change the other setting behavior as a side effect.
+set nocompatible
+
 " Auto install on the first time if there no plug.vim found
 " ---------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -9,136 +13,41 @@ endif
 " Enable gnome-terminal full color
 set t_Co=256
 
-" List of plugin
-" --------------
-call plug#begin()
-Plug 'Chiel92/vim-autoformat'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'chase/vim-ansible-yaml'
-Plug 'flazz/vim-colorschemes'
-Plug 'ingydotnet/yaml-vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'raimondi/delimitmate'
-Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-liquid'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'mattn/emmet-vim'
+" This script defines list of the plugins will be managed by plug.vim
+source ~/.vim/custom/plugins.vim
+
+" This script have come custom for the NERDTree plugin.
+" Includes:
+" - Shortcut to open NERDTree panel
+" - Shortcut to reveal current buffer location on disk
+" - Command to highlight by file extension
+source ~/.vim/custom/nerdtree.vim
 
 
-" For working with git
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+" Now we add the common settings
+source ~/.vim/common.vim
 
-" Show mark
-Plug 'kshenoy/vim-signature'
-
-" Fuzzy file finder
-Plug 'ctrlpvim/ctrlp.vim'
-
-
-
-" This plugin adds a number of text objects to make vim editing more
-" convenient.
-Plug 'wellle/targets.vim'
-
-call plug#end()
-
-" ------------------------------------------
-
-" Avoid using the Escape key
-inoremap jk <ESC>
-vnoremap jk <ESC>
-
-
-" Use space as leader key, it's easy to touch
-let mapleader="\<SPACE>"
-
-
-" Quickly open vimrc and apply change
-nnoremap <leader>es :tabedit $MYVIMRC<CR>
-nnoremap <leader>as :so $MYVIMRC<CR>
-
-
-" For NERDTree
-"-------------
-" Shortcut to quickly open the NerdTree panel
-nnoremap <c-f12> :NERDTreeToggle<CR>
-" And here for quickly reveal the location of opened buffer.
-nnoremap <c-s-f12> :NERDTreeFind<CR>
-
-" NERDTress File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-au VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'white')
-au VimEnter * call NERDTreeHighlightFile('ini', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('py', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('md', '19', 'none', '#3366FF', 'white')
-au VimEnter * call NERDTreeHighlightFile('yml', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('config', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('conf', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('json', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('html', '100', 'none', 'Yellow4', 'white')
-au VimEnter * call NERDTreeHighlightFile('styl', '19', 'none', 'cyan', 'white')
-au VimEnter * call NERDTreeHighlightFile('css', '19', 'none', 'cyan', 'white')
-au VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'white')
-au VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'white')
-au VimEnter * call NERDTreeHighlightFile('rb', 'Red', 'none', '#ffa500', 'white')
-au VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'white')
-
-
-"Some custom setting that I wrote myself
-set number nocompatible
-set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-set ignorecase smartcase incsearch hls
-set textwidth=79
-set cc=80
+" Set spelling language to English, not sure if this setting could be included
+" in the common.Vim
 set nospell spelllang=en_us
-set encoding=utf8
-set cursorline
-set nofoldenable
+
+" Automatic recognize flie syntax
 syntax on
 filetype plugin indent on
+
+" Quickly open vimrc and apply change
+nnoremap <Leader>es :tabedit $MYVIMRC<CR>
+nnoremap <Leader>as :so $MYVIMRC<CR>
+
 
 " Allow airline use powerline fonts
 let g:airline_powerline_fonts=1
 
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
 
-" Insert an blank line below or above the current line in normal mode
-nnoremap <leader>o o<ESC>k
-nnoremap <leader>O O<ESC>j
-
-
-" Toggle highlight search
-nnoremap <leader>n :set hls!<CR>
-
-" Toggle spelling
-nnoremap <leader>s :set spell!<CR>
-
-" Toggle foldenable
-nnoremap <leader>f :set foldenable!<CR>
-
-
-" Quickly paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-
-" And quickly copy to clipboard also
-nnoremap <leader>y "+y
-nnoremap <leader>yy "+yy
-vnoremap <leader>y "+y
-
-" Make Y copy to end the line like the D command
-nnoremap Y y$
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Auto remove trailing white space on saving file
 " -----------------------------------------------
@@ -150,15 +59,6 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-
-" Auto format on save
-" au BufWrite * :Autoformat
-
-" Insert a second level or first level header line below the current line in
-" normal mode
-"----------------------------------------------------------------------------
-nnoremap <leader>l yypVr-
-nnoremap <leader>L yypVr=
 
 " Use markdown as default, actually, I'm still not use vim heavily for other
 " languages, not yet.
@@ -175,6 +75,20 @@ endif
 
 " Reload unchanged files automatically.
 set autoread
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
+" Some short term settings that can be change in future work
+source ~/.vim/custom/on_working.vim
+
+
+let g:ctrlp_cmd = 'CtrlPLastMode'
+let g:ctrlp_extensions = ['buffertag','tag', 'line', 'dir']
 
 " Quickly format the paregraph, and also a way to avoid enter Ex-mode
 nnoremap gQ gqap
