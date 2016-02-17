@@ -82,9 +82,9 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-
-" Some short term settings that can be change in future work
-source ~/.vim/custom/on_working.vim
+if !empty(glob("~/.vimrc_local"))
+    source ~/.vimrc_local
+endif
 
 
 let g:ctrlp_cmd = 'CtrlPLastMode'
