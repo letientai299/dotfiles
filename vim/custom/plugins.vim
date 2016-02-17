@@ -42,4 +42,8 @@ Plug 'wellle/targets.vim'
 
 " Help making the table in markdown easier
 Plug 'junegunn/vim-easy-align'
+
+" Vim zen-mode
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
 call plug#end()
