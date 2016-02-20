@@ -39,4 +39,8 @@ alias lg="lazygit" # And even more lazy
 # This is a habit, and I want to make this habit work
 alias :q="exit"
 
+# Get current day
+alias today="date +%Y-%m-%d"
+
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
