@@ -44,3 +44,8 @@ alias today="date +%Y-%m-%d"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+
+# include local settings if file existing
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
