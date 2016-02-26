@@ -27,9 +27,6 @@ source ~/.vim/custom/nerdtree.vim
 " Now we add the common settings
 source ~/.vim/common.vim
 
-" Set spelling language to English, not sure if this setting could be included
-" in the common.Vim
-set nospell spelllang=en_us
 
 " Automatic recognize flie syntax
 syntax on
