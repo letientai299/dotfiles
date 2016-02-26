@@ -38,8 +38,10 @@ alias today="date +%Y-%m-%d"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-# Source the local configuration
-[[ -e ~/.zshrc_local ]] && emulate sh -c 'source ~/.zshrc_local'
+# include local settings if file existing
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
 
 # finally remove the duplicated entries in path
 typeset -U PATH
