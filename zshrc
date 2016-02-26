@@ -14,13 +14,7 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
-alias s2040='ssh eng2@hcutwrk2040'
-alias ff="firefox"
+# I still change my configuration a lot, so I wanna soften the typing.
 alias so="source"
 
 # Add, commit and push in single call
@@ -44,3 +38,8 @@ alias today="date +%Y-%m-%d"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+# Source the local configuration
+[[ -e ~/.zshrc_local ]] && emulate sh -c 'source ~/.zshrc_local'
+
+# finally remove the duplicated entries in path
+typeset -U PATH
