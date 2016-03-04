@@ -46,4 +46,7 @@ Plug 'junegunn/vim-easy-align'
 " Vim zen-mode
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
+
+" Plugin for gradle file editing
+Plug 'tfnico/vim-gradle'
 call plug#end()
