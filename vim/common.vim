@@ -79,3 +79,6 @@ nnoremap Y y$
 nnoremap <Leader>l yypVr-
 nnoremap <Leader>L yypVr=
 
+" Center the cursor on the screen after a search
+nnoremap n nzz
+nnoremap N Nzz
