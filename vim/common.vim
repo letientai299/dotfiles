@@ -44,9 +44,6 @@ nnoremap gQ gqap
 " Settings that required Leader key
 "------------------------------------------------------------------------------
 
-" Use space as Leader key, it's easy to touch
-let mapleader="\<SPACE>"
-
 " Insert an blank line below or above the current line in normal mode
 nnoremap <Leader>o o<ESC>k
 nnoremap <Leader>O O<ESC>j

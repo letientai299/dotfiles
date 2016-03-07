@@ -23,6 +23,8 @@ source ~/.vim/custom/plugins.vim
 " - Command to highlight by file extension
 source ~/.vim/custom/nerdtree.vim
 
+" Use space as Leader key, it's easy to touch
+let mapleader="\<SPACE>"
 
 " Now we add the common settings
 source ~/.vim/common.vim
