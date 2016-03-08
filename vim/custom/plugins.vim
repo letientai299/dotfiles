@@ -49,4 +49,7 @@ Plug 'junegunn/goyo.vim'
 
 " Plugin for gradle file editing
 Plug 'tfnico/vim-gradle'
+
+" Support for the editor confile definition.
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
