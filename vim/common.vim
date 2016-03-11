@@ -27,7 +27,6 @@ set expandtab
 set tabstop=4 softtabstop=4 shiftwidth=4
 set ignorecase smartcase incsearch hls
 set textwidth=79
-set cc=80
 set encoding=utf8
 set cursorline
 set nofoldenable
@@ -75,6 +74,18 @@ nnoremap Y y$
 " normal mode
 nnoremap <Leader>l yypVr-
 nnoremap <Leader>L yypVr=
+
+" Quickly toggle the color column
+function! g:ToggleColorColumn()
+    if &colorcolumn != ''
+        setlocal colorcolumn&
+    else
+        setlocal colorcolumn=+1
+    endif
+endfunction
+
+nnoremap <silent> <leader>q :call g:ToggleColorColumn()<CR>
+
 
 " Center the cursor on the screen after a search
 nnoremap n nzz
