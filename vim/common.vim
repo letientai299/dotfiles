@@ -64,7 +64,7 @@ nnoremap <Leader>P "+P
 
 " And quickly copy to clipboard also
 nnoremap <Leader>y "+y
-nnoremap <Leader>yy "+yy
+nnoremap <Leader>Y :.y+<CR>
 vnoremap <Leader>y "+y
 
 " Make Y copy to end the line like the D command
