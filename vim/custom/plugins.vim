@@ -52,4 +52,7 @@ Plug 'tfnico/vim-gradle'
 
 " Support for the editor confile definition.
 Plug 'editorconfig/editorconfig-vim'
+
+" Make searching in Vim easier
+Plug 'haya14busa/incsearch.vim'
 call plug#end()

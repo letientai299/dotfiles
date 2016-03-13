@@ -95,3 +95,9 @@ nnoremap gQ gqap
 
 " Make CtrlP uses regex as default
 let g:ctrlp_regexp=1
+
+" make use of the incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
