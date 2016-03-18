@@ -52,5 +52,30 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
+# Inverse recursive search for a find name
+# Usage:
+#    findup <file_name>
+findup () {
+  file_name=$1
+  current_dir=`pwd`
+  local  result=1
+
+  while [[ "`pwd`" != "/" ]]; do
+    if [ -f ${file_name} ]; then
+      echo `pwd`"/"${file_name}
+      result=0
+      break
+    fi
+    cd ..
+  done
+
+  if [ ${result} -eq 1 ]; then
+    echo File ${file_name} cannot found.
+  fi
+
+  cd ${current_dir}
+  return ${result}
+}
+
 # finally remove the duplicated entries in path
 typeset -U PATH
