@@ -22,7 +22,6 @@ Plug 'tpope/Vim-repeat'
 
 Plug 'mattn/emmet-vim'
 
-
 " For working with git
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
@@ -33,8 +32,6 @@ Plug 'kshenoy/vim-signature'
 
 " Fuzzy file finder
 Plug 'ctrlpvim/ctrlp.vim'
-
-
 
 " This plugin adds a number of text objects to make vim editing more
 " convenient.
@@ -55,4 +52,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Make searching in Vim easier
 Plug 'haya14busa/incsearch.vim'
+
+" Visualize the undo branches in vim
+Plug 'mbbill/undotree'
 call plug#end()
