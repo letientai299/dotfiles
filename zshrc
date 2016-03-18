@@ -39,6 +39,7 @@ function quit_session {
         tmux detach
     fi
 }
+alias exit=quit_session
 alias :q=quit_session
 
 # Get current day
