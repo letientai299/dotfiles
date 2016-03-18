@@ -47,11 +47,6 @@ alias today="date +%Y-%m-%d"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-# include local settings if file existing
-if [ -f ~/.zshrc_local ]; then
-    source ~/.zshrc_local
-fi
-
 # Inverse recursive search for a find name
 # Usage:
 #    findup <file_name>
@@ -70,12 +65,17 @@ findup () {
   done
 
   if [ ${result} -eq 1 ]; then
-    echo File ${file_name} cannot found.
+    echo "Cannot found ${file_name}"
   fi
 
   cd ${current_dir}
   return ${result}
 }
+
+# include local settings if file existing
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
 
 # finally remove the duplicated entries in path
 typeset -U PATH
