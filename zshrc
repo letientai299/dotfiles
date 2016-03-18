@@ -31,7 +31,15 @@ git push
 alias lg="lazygit" # And even more lazy
 
 # This is a habit, and I want to make this habit work
-alias :q="exit"
+function quit_session {
+    if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+        # Not in a tmux session, just do normal exit.
+        exit
+    else
+        tmux detach
+    fi
+}
+alias :q=quit_session
 
 # Get current day
 alias today="date +%Y-%m-%d"
