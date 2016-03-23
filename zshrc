@@ -72,6 +72,10 @@ findup () {
   return ${result}
 }
 
+
+#Custom key binding
+bindkey -s "^j" "|less^m"
+
 # include local settings if file existing
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
