@@ -75,6 +75,7 @@ findup () {
 
 #Custom key binding
 bindkey -s "^j" "|less^m"
+bindkey -s "jk" "^["
 
 # include local settings if file existing
 if [ -f ~/.zshrc_local ]; then
