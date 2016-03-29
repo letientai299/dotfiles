@@ -29,6 +29,7 @@ let mapleader="\<SPACE>"
 " Now we add the common settings
 source ~/.vim/common.vim
 
+set nospell
 
 " Automatic recognize flie syntax
 syntax on
@@ -101,3 +102,10 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
+" Date time inserting
+"Tue 29 Mar 2016 09:07:43 AM ICT
+:iab <expr> dtf strftime("%c")
+"Mar 29, 2016
+:iab <expr> dtd strftime("%b %d, %Y")
+"09:07:56
+:iab <expr> dtt strftime("%T")
