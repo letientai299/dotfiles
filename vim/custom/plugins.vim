@@ -2,10 +2,6 @@
 call plug#begin()
 Plug 'Chiel92/vim-autoformat'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'chase/vim-ansible-yaml'
-Plug 'flazz/vim-colorschemes'
-Plug 'ingydotnet/yaml-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'raimondi/delimitmate'
 Plug 'ryanoasis/vim-devicons'
@@ -33,26 +29,15 @@ Plug 'kshenoy/vim-signature'
 " Fuzzy file finder
 Plug 'ctrlpvim/ctrlp.vim'
 
-" This plugin adds a number of text objects to make vim editing more
-" convenient.
+" This plugin adds a number of text objects to make vim editing more convenient
 Plug 'wellle/targets.vim'
 
 " Help making the table in markdown easier
 Plug 'junegunn/vim-easy-align'
 
-" Vim zen-mode
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
-
 " Plugin for gradle file editing
 Plug 'tfnico/vim-gradle'
 
-" Support for the editor confile definition.
-Plug 'editorconfig/editorconfig-vim'
-
 " Make searching in Vim easier
 Plug 'haya14busa/incsearch.vim'
-
-" Visualize the undo branches in vim
-Plug 'mbbill/undotree'
 call plug#end()
