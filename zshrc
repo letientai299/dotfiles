@@ -76,6 +76,8 @@ findup () {
 #Custom key binding
 bindkey -s "^j" "|less^m"
 bindkey -s "jk" "^["
+bindkey "^u" "history-incremental-search-backward"
+bindkey "^b" "history-incremental-search-forward"
 
 # include local settings if file existing
 if [ -f ~/.zshrc_local ]; then
