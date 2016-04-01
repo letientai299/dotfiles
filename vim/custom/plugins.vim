@@ -35,8 +35,9 @@ Plug 'wellle/targets.vim'
 " Help making the table in markdown easier
 Plug 'junegunn/vim-easy-align'
 
-" Plugin for gradle file editing
+" Lanuage plugins
 Plug 'tfnico/vim-gradle'
+Plug 'kchmck/vim-coffee-script'
 
 " Make searching in Vim easier
 Plug 'haya14busa/incsearch.vim'
