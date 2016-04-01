@@ -2,25 +2,20 @@
 call plug#begin()
 Plug 'Chiel92/vim-autoformat'
 Plug 'vim-airline/vim-airline'
-Plug 'plasticboy/vim-markdown'
 Plug 'raimondi/delimitmate'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tommcdo/vim-exchange'
 
-Plug 'tpope/vim-liquid'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/Vim-abolish'
 Plug 'tpope/Vim-repeat'
 
-Plug 'mattn/emmet-vim'
-
 " For working with git
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 
 " Show mark
@@ -35,9 +30,11 @@ Plug 'wellle/targets.vim'
 " Help making the table in markdown easier
 Plug 'junegunn/vim-easy-align'
 
-" Lanuage plugins
-Plug 'tfnico/vim-gradle'
-Plug 'kchmck/vim-coffee-script'
+" Additional lanuage plugins
+Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
+Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
+Plug 'tpope/vim-liquid'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 " Make searching in Vim easier
 Plug 'haya14busa/incsearch.vim'

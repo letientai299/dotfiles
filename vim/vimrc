@@ -29,8 +29,6 @@ let mapleader="\<SPACE>"
 " Now we add the common settings
 source ~/.vim/common.vim
 
-set nospell
-
 " Automatic recognize flie syntax
 syntax on
 filetype plugin indent on
