@@ -62,6 +62,8 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 " languages, not yet.
 au BufNewFile,BufRead *.txt  set ft=markdown
 
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
 
 " Custom theme
 colo hemisu

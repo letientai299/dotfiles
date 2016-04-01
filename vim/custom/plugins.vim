@@ -33,7 +33,6 @@ Plug 'junegunn/vim-easy-align'
 " Additional lanuage plugins
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
-Plug 'tpope/vim-liquid'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 " Make searching in Vim easier
