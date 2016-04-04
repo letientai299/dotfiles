@@ -16,6 +16,9 @@ set t_Co=256
 " This script defines list of the plugins will be managed by plug.vim
 source ~/.vim/custom/plugins.vim
 
+" Some of my custom fucntions
+source ~/.vim/custom/funcs.vim
+
 " This script have come custom for the NERDTree plugin.
 " Includes:
 " - Shortcut to open NERDTree panel
@@ -35,6 +38,7 @@ filetype plugin indent on
 
 " Quickly open vimrc and apply change
 nnoremap <Leader>es :tabedit $MYVIMRC<CR>
+nnoremap <Leader>ss :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>as :so $MYVIMRC<CR>
 
 
