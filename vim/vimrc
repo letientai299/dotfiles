@@ -38,6 +38,7 @@ filetype plugin indent on
 
 " Quickly open vimrc and apply change
 nnoremap <Leader>es :tabedit $MYVIMRC<CR>
+nnoremap <Leader>ep :tabedit ~/.vim/custom/plugins.vim<CR>
 nnoremap <Leader>ss :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>as :so $MYVIMRC<CR>
 
@@ -113,3 +114,6 @@ map g/ <Plug>(incsearch-stay)
 :iab <expr> dtd strftime("%b %d, %Y")
 "09:07:56
 :iab <expr> dtt strftime("%T")
+
+"Set up for vimwiki
+let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]

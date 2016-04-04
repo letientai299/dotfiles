@@ -37,4 +37,7 @@ Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 
 " Make searching in Vim easier
 Plug 'haya14busa/incsearch.vim'
+
+" Personal wiki
+Plug 'vimwiki/vimwiki'
 call plug#end()
