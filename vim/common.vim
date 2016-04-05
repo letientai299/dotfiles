@@ -90,6 +90,8 @@ nnoremap <silent> <leader>q :call g:ToggleColorColumn()<CR>
 " Center the cursor on the screen after a search
 nnoremap n nzz
 nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
 
 " Simulate Vim-surround behavior for deleting space around world
 nmap ds<space> F<space>xf<space>x
