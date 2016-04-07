@@ -1,43 +1,49 @@
 " List of plugins
 call plug#begin()
-Plug 'Chiel92/vim-autoformat'
-Plug 'vim-airline/vim-airline'
-Plug 'raimondi/delimitmate'
+"------------------------------------------------------------------------------
+" UI
+"
+Plug 'kshenoy/vim-signature'
 Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'tommcdo/vim-exchange'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
 
+"------------------------------------------------------------------------------
+" Searching
+"
+Plug 'haya14busa/incsearch.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+
+"------------------------------------------------------------------------------
+" Automate stuff
+Plug 'Chiel92/vim-autoformat'
+Plug 'raimondi/delimitmate'
+
+"------------------------------------------------------------------------------
+" Custom keymap
+"
+Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/Vim-abolish'
-Plug 'tpope/Vim-repeat'
-
-" For working with git
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
-Plug 'airblade/vim-gitgutter'
-
-" Show mark
-Plug 'kshenoy/vim-signature'
-
-" Fuzzy file finder
-Plug 'ctrlpvim/ctrlp.vim'
-
-" This plugin adds a number of text objects to make vim editing more convenient
-Plug 'wellle/targets.vim'
-
-" Help making the table in markdown easier
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdcommenter'
 
-" Additional lanuage plugins
+"------------------------------------------------------------------------------
+" Text objects
+"
+Plug 'wellle/targets.vim'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line'
+
+"------------------------------------------------------------------------------
+" Additional language plugins
+"
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-
-" Make searching in Vim easier
-Plug 'haya14busa/incsearch.vim'
-
-" Personal wiki
 Plug 'vimwiki/vimwiki'
 call plug#end()
