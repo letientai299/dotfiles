@@ -7,7 +7,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gradle adb vi-mode)
+plugins=(git gradle adb vi-mode pip)
 
 # User configuration
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
@@ -16,6 +16,8 @@ export LANG=en_US.UTF-8
 
 # I still change my configuration a lot, so I wanna soften the typing.
 alias so="source"
+alias v="vim"
+alias sv="sudo vim"
 
 # Add, commit and push in single call
 function lazygit() {
