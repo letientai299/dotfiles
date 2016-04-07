@@ -110,8 +110,8 @@ map g/ <Plug>(incsearch-stay)
 " Date time inserting
 "Tue 29 Mar 2016 09:07:43 AM ICT
 :iab <expr> dtf strftime("%c")
-"Mar 29, 2016
-:iab <expr> dtd strftime("%b %d, %Y")
+"2016-04-07
+:iab <expr> dtd strftime("%Y-%m-%d")
 "09:07:56
 :iab <expr> dtt strftime("%T")
 
