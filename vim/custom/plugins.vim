@@ -7,6 +7,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tommcdo/vim-exchange'
+Plug 'ivalkeen/nerdtree-execute/'
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
