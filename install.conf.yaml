@@ -1,4 +1,8 @@
-# Remove the old file first
+- defaults:
+    link:
+        create: true
+        relink: true
+
 - clean: ['~']
 
 - shell:
@@ -16,7 +20,10 @@
       --create-dirs -o ~/.oh-my-zsh/custom/themes/xxf.zsh-theme',
       'Install xxf.zsh-theme']
 - link:
-    ~/.vim: 'vim/'
+    ~/.vim:
+        force: true
+        path: 'vim/'
+
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.vrapperrc: 'vim/vrapper.vim'
     ~/.ideavimrc: 'vim/idearc.vim'
