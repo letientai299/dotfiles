@@ -44,6 +44,9 @@ function quit_session {
 alias exit=quit_session
 alias :q=quit_session
 
+# This help to send Ctrl-S to vim
+alias vim="stty stop '' -ixoff; vim"
+
 # Get current day
 alias today="date +%Y-%m-%d"
 

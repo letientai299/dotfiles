@@ -6,6 +6,7 @@ call plug#begin()
 Plug 'kshenoy/vim-signature'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'ivalkeen/nerdtree-execute/'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'

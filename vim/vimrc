@@ -2,8 +2,7 @@
 " because this can change the other setting behavior as a side effect.
 set nocompatible
 
-" Auto install on the first time if there no plug.vim found
-" ---------------------------------------------------------
+" Auto install on the first time if there no plug.vim found --------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -110,10 +109,40 @@ map g/ <Plug>(incsearch-stay)
 " Date time inserting
 "Tue 29 Mar 2016 09:07:43 AM ICT
 :iab <expr> dtf strftime("%c")
-"Mar 29, 2016
-:iab <expr> dtd strftime("%b %d, %Y")
+:iab <expr> Dtf strftime("%c")
+"2016-04-07
+:iab <expr> dtd strftime("%Y-%m-%d")
+:iab <expr> Dtd strftime("%Y-%m-%d")
 "09:07:56
 :iab <expr> dtt strftime("%T")
+:iab <expr> Dtt strftime("%T")
+" Need to make another variant that have first letter capitalized to use with
+" the auto-capitalisation mode
 
 "Set up for vimwiki
 let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]
+
+
+" Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
+" Gnome temrinal
+:nmap <c-s> :w<CR>
+:imap <c-s> <Esc>:w<CR>a
+
+"------------------------------------------------------------------------------
+" The following script is copied from (with modification to use with my setup)
+" https://davidxmoody.com/vim-auto-capitalisation/
+" This make vim capitalize the first letter of the sentence.
+func! WordProcessorMode()
+    " Auto-capitalize script
+    augroup SENTENCES
+        au!
+        autocmd InsertCharPre * if search('\v(%^|[.!?]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
+    augroup END
+endfu
+
+com! WP call WordProcessorMode()
+au BufNewFile,BufRead *.mkd call WordProcessorMode()
+au BufNewFile,BufRead *.md call WordProcessorMode()
+au BufNewFile,BufRead *.wiki call WordProcessorMode()
+au BufNewFile,BufRead diary-*.txt call WordProcessorMode()
+
