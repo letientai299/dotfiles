@@ -19,6 +19,11 @@ alias so="source"
 alias v="vim"
 alias sv="sudo vim"
 
+# Open the ebook from command line
+z(){
+    (zathura $1 &)
+}
+
 # Add, commit and push in single call
 function lazygit() {
 if [ $# -eq 0 ]; then # Check for commit message
