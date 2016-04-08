@@ -17,6 +17,7 @@
       'Install xxf.zsh-theme']
 - link:
     ~/.vim: 'vim/'
+    ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.vrapperrc: 'vim/vrapper.vim'
     ~/.ideavimrc: 'vim/idearc.vim'
     ~/.zshrc: 'zshrc'

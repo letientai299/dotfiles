@@ -1,0 +1,3 @@
+unmap d
+map d scroll half-down
+map u scroll half-up
