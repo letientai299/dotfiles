@@ -65,6 +65,7 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 " Use markdown as default, actually, I'm still not use vim heavily for other
 " languages, not yet.
 au BufNewFile,BufRead *.txt  set ft=markdown
+au BufNewFile * set ft=markdown
 
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
@@ -146,4 +147,3 @@ au BufNewFile,BufRead *.mkd call WordProcessorMode()
 au BufNewFile,BufRead *.md call WordProcessorMode()
 au BufNewFile,BufRead *.wiki call WordProcessorMode()
 au BufNewFile,BufRead diary-*.txt call WordProcessorMode()
-
