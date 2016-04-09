@@ -121,12 +121,13 @@ map g/ <Plug>(incsearch-stay)
 
 "Set up for vimwiki
 let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]
+nmap <Leader>dt o<CR><CR>dtt <ESC>=<<o-<SPACE>
 
 
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
-:nmap <c-s> :w<CR>
-:imap <c-s> <Esc>:w<CR>a
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
 
 "------------------------------------------------------------------------------
 " The following script is copied from (with modification to use with my setup)
