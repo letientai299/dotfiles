@@ -98,6 +98,8 @@ let g:ctrlp_extensions = ['buffertag','tag', 'line', 'dir']
 " Quickly format the paregraph, and also a way to avoid enter Ex-mode
 nnoremap gQ gqap
 
+" Avoid the ex mode
+nmap Q :q<CR>
 
 " Make CtrlP uses regex as default
 let g:ctrlp_regexp=1
