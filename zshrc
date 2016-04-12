@@ -14,6 +14,7 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
+
 # I still change my configuration a lot, so I wanna soften the typing.
 alias so="source"
 alias v="vim"
@@ -98,3 +99,7 @@ fi
 
 # finally remove the duplicated entries in path
 typeset -U PATH
+
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

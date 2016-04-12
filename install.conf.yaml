@@ -31,4 +31,4 @@
     ~/.gitignore_global: 'gitignore_global'
 
 - shell:
-    ["git config --global core.excludesfile '~/.gitignore_global'"]
+    - git config --global core.excludesfile '~/.gitignore_global'

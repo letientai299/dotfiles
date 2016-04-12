@@ -15,7 +15,8 @@ Plug 'vim-airline/vim-airline'
 " Searching
 "
 Plug 'haya14busa/incsearch.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 "------------------------------------------------------------------------------
 " Automate stuff
