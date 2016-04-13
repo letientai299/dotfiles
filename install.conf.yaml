@@ -12,10 +12,6 @@
 - shell:
     - ['git submodule update --init --recursive', 'Installing submodules']
     - ['curl
-      https://raw.githubusercontent.com/noahfrederick/vim-hemisu/master/colors/hemisu.vim
-      --create-dirs -o vim/colors/hemisu.vim',
-      'Install hemisu.vim']
-    - ['curl
       https://raw.githubusercontent.com/xfanwu/oh-my-zsh-custom-xxf/master/themes/xxf.zsh-theme
       --create-dirs -o ~/.oh-my-zsh/custom/themes/xxf.zsh-theme',
       'Install xxf.zsh-theme']

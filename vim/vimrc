@@ -16,7 +16,7 @@ set t_Co=256
 source ~/.vim/custom/plugins.vim
 
 " Some of my custom fucntions
-source ~/.vim/custom/funcs.vim
+source ~/.vim/custom/wordmode.vim
 
 " This script have come custom for the NERDTree plugin.
 " Includes:
@@ -92,13 +92,6 @@ if !empty(glob("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
 
-" Quickly format the paregraph, and also a way to avoid enter Ex-mode
-nnoremap gQ gqap
-
-" Avoid the ex mode
-nmap Q :q<CR>
-
-
 " make use of the incsearch.vim
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
@@ -119,30 +112,12 @@ map g/ <Plug>(incsearch-stay)
 
 "Set up for vimwiki
 let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]
-au BufNewFile,BufRead *.wiki nmap <Leader>dt Go<CR><CR>dtt <ESC>=<<o-<SPACE>
 
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
 
-"------------------------------------------------------------------------------
-" The following script is copied from (with modification to use with my setup)
-" https://davidxmoody.com/vim-auto-capitalisation/
-" This make vim capitalize the first letter of the sentence.
-func! WordProcessorMode()
-    " Auto-capitalize script
-    augroup SENTENCES
-        au!
-        autocmd InsertCharPre * if search('\v(%^|[.!?]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
-    augroup END
-endfu
-
-com! WP call WordProcessorMode()
-au BufNewFile,BufRead *.mkd call WordProcessorMode()
-au BufNewFile,BufRead *.md call WordProcessorMode()
-au BufNewFile,BufRead *.wiki call WordProcessorMode()
-au BufNewFile,BufRead diary-*.txt call WordProcessorMode()
 
 "Config for fzf
 "---------------
