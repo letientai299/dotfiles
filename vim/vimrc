@@ -1,55 +1,24 @@
-" Someone said that this should be the first line in thew vimrc,
-" because this can change the other setting behavior as a side effect.
 set nocompatible
+syntax on
+filetype plugin indent on
 
-" Auto install on the first time if there no plug.vim found --------------------------------------------------------
+" --------------------------------------------------------
+" Auto install on the first time if there no plug.vim found
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+source ~/.vim/plugins.vim
 
-" Enable gnome-terminal full color
-set t_Co=256
-
-" This script defines list of the plugins will be managed by plug.vim
-source ~/.vim/custom/plugins.vim
-
-" Some of my custom fucntions
-source ~/.vim/custom/wordmode.vim
-
-" This script have come custom for the NERDTree plugin.
-" Includes:
-" - Shortcut to open NERDTree panel
-" - Shortcut to reveal current buffer location on disk
-" - Command to highlight by file extension
-source ~/.vim/custom/nerdtree.vim
-
-" Use space as Leader key, it's easy to touch
 let mapleader="\<SPACE>"
 
-" Automatic recognize flie syntax
-syntax on
-filetype plugin indent on
-
-" Now we add the common settings
-source ~/.vim/common.vim
-
 " Quickly open vimrc and apply change
-nnoremap <Leader>es :tabedit $MYVIMRC<CR>
-nnoremap <Leader>ep :tabedit ~/.vim/custom/plugins.vim<CR>
-nnoremap <Leader>ss :tabedit ~/.vimrc_local<CR>
-nnoremap <Leader>as :so $MYVIMRC<CR>
+nnoremap <Leader>ve :tabedit $MYVIMRC<CR>
+nnoremap <Leader>vp :tabedit ~/.vim/custom/plugins.vim<CR>
+nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
+nnoremap <Leader>va :so $MYVIMRC<CR>
 
-
-" Allow airline use powerline fonts
-let g:airline_powerline_fonts=1
-
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Auto remove trailing white space on saving file
 " -----------------------------------------------
@@ -62,13 +31,9 @@ endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 
-" Use markdown as default, actually, I'm still not use vim heavily for other
+" Use vimwiki as default, actually, I'm still not use vim heavily for other
 " languages, not yet.
-au BufNewFile,BufRead *.txt  set ft=markdown
-au BufNewFile * set ft=markdown
-
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_json_frontmatter = 1
+au BufEnter * if &ft == "" | setlocal ft=vimwiki | endif
 
 " Custom theme
 colo lucius
@@ -82,17 +47,6 @@ endif
 " Reload unchanged files automatically.
 set autoread
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-if !empty(glob("~/.vimrc_local"))
-    source ~/.vimrc_local
-endif
-
-" make use of the incsearch.vim
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -110,31 +64,13 @@ map g/ <Plug>(incsearch-stay)
 " Need to make another variant that have first letter capitalized to use with
 " the auto-capitalisation mode
 
-"Set up for vimwiki
-let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]
-
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
 
-
-"Config for fzf
-"---------------
-" Mapping selecting mappings
-nmap <c-p> :FZF!<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
-
-let g:w3m#homepage = "http://www.google.com/"
+" This should always be at the end of the file
+if !empty(glob("~/.vimrc_local"))
+    source ~/.vimrc_local
+endif
 

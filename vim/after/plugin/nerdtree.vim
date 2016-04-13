@@ -1,11 +1,12 @@
-" For NERDTree
-"-------------
+" This script have come custom for the NERDTree plugin
+"------------------------------------------------------
+
 " Shortcut to quickly open the NerdTree panel
 nnoremap <c-f12> :NERDTreeToggle<CR>
-" And here for quickly reveal the location of opened buffer.
+" Quickly reveal the location of opened buffer.
 nnoremap <c-s-f12> :NERDTreeFind<CR>
 
-" NERDTress File highlighting
+" Command to highlight by file extension
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
     exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
     exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
