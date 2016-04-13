@@ -1,5 +1,5 @@
-" List of plugins
 call plug#begin()
+
 "------------------------------------------------------------------------------
 " UI
 "
@@ -11,6 +11,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/goyo.vim'
+Plug 'yggdroot/indentline'
+
 
 "------------------------------------------------------------------------------
 " Searching
@@ -19,10 +22,13 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+
 "------------------------------------------------------------------------------
 " Automate stuff
+"
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
+
 
 "------------------------------------------------------------------------------
 " Custom keymap
@@ -36,11 +42,13 @@ Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 
+
 "------------------------------------------------------------------------------
 " Text objects
 "
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line'
+
 
 "------------------------------------------------------------------------------
 " Additional language plugins
@@ -49,9 +57,19 @@ Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markd
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
+Plug 'derekwyatt/vim-scala'
+Plug 'pangloss/vim-javascript'
+
+
+"------------------------------------------------------------------------------
+" Helper
+"
+Plug 'scrooloose/syntastic'
+
 
 "------------------------------------------------------------------------------
 " Other
 "
 Plug 'yuratomo/w3m.vim'
+
 call plug#end()

@@ -24,6 +24,8 @@ au VimEnter * call NERDTreeHighlightFile('html', '100', 'none', 'Yellow4', 'whit
 au VimEnter * call NERDTreeHighlightFile('styl', '19', 'none', 'cyan', 'white')
 au VimEnter * call NERDTreeHighlightFile('css', '19', 'none', 'cyan', 'white')
 au VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'white')
+au VimEnter * call NERDTreeHighlightFile('java', 'Red', 'none', 'red', 'white')
+au VimEnter * call NERDTreeHighlightFile('scala', '198', 'none', '#ff0087', 'white')
 au VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'white')
 au VimEnter * call NERDTreeHighlightFile('rb', 'Red', 'none', '#ffa500', 'white')
 au VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'white')

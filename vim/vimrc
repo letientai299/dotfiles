@@ -15,7 +15,7 @@ let mapleader="\<SPACE>"
 
 " Quickly open vimrc and apply change
 nnoremap <Leader>ve :tabedit $MYVIMRC<CR>
-nnoremap <Leader>vp :tabedit ~/.vim/custom/plugins.vim<CR>
+nnoremap <Leader>vp :tabedit ~/.vim/plugins.vim<CR>
 nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 
@@ -36,8 +36,11 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 au BufEnter * if &ft == "" | setlocal ft=vimwiki | endif
 
 " Custom theme
-colo lucius
-:LuciusBlack
+try
+    colo lucius
+    :LuciusDark
+catch
+endtry
 
 " Delete comment character when joining comnmented lines
 if v:version > 703 || v:version == 703 && has("patch541")
@@ -69,6 +72,18 @@ map g/ <Plug>(incsearch-stay)
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
 
+
+" :W sudo saves the file
+" " (useful for handling the permission-denied error)
+command! W w !sudo tee % > /dev/null
+
+" Set lines to the cursor - when moving vertically using j/k
+set so=5
+
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+
+" Load the local config
 " This should always be at the end of the file
 if !empty(glob("~/.vimrc_local"))
     source ~/.vimrc_local
