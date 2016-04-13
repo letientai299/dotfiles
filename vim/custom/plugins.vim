@@ -48,4 +48,7 @@ Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markd
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
+
+" Other
+Plug 'yuratomo/w3m.vim'
 call plug#end()

@@ -161,3 +161,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
+let g:w3m#homepage = "http://www.google.com/"
+:autocmd BufEnter,FileType *
+\   if &ft ==? 'w3m' | set background=dark |
+\   else | colo hemisu | set background=light  |
+\   endif
