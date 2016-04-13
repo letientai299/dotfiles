@@ -12,7 +12,7 @@ func! WordProcessorMode()
    " ---------------------
     " some custom setting
     " Quickly format the paregraph, and also a way to avoid enter Ex-mode
-    nnoremap gQ gqap
+    nnoremap <buffer> gQ gqap
     setlocal nocursorline
     setlocal spell
 endfu

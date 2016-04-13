@@ -2,7 +2,7 @@
 "--------------------------------------------------------------
 
 " Include the common settings
-source ~/.vim/common.vim
+source ~/.vim/plugin/common.vim
 
 inoremap <space>o o<ESC>k
 inoremap <space>O O<ESC>j
