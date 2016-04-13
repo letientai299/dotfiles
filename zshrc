@@ -17,7 +17,7 @@ export LANG=en_US.UTF-8
 
 # I still change my configuration a lot, so I wanna soften the typing.
 alias so="source"
-alias v="vim"
+alias v="view"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias sv="sudo vim"

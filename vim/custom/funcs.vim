@@ -10,3 +10,5 @@
 "endfunction
 
 "nmap <Leader>ww :call OpenTodayNote()<CR>
+
+nmap <leader>gf :e <cfile><cr>

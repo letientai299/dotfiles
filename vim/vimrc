@@ -28,12 +28,12 @@ source ~/.vim/custom/nerdtree.vim
 " Use space as Leader key, it's easy to touch
 let mapleader="\<SPACE>"
 
-" Now we add the common settings
-source ~/.vim/common.vim
-
 " Automatic recognize flie syntax
 syntax on
 filetype plugin indent on
+
+" Now we add the common settings
+source ~/.vim/common.vim
 
 " Quickly open vimrc and apply change
 nnoremap <Leader>es :tabedit $MYVIMRC<CR>
@@ -71,7 +71,8 @@ let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
 
 " Custom theme
-colo hemisu
+colo lucius
+:LuciusBlack
 
 " Delete comment character when joining comnmented lines
 if v:version > 703 || v:version == 703 && has("patch541")
@@ -120,7 +121,6 @@ map g/ <Plug>(incsearch-stay)
 let g:vimwiki_list = [{'path': '$NOTE/vimwiki/'}]
 au BufNewFile,BufRead *.wiki nmap <Leader>dt Go<CR><CR>dtt <ESC>=<<o-<SPACE>
 
-
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
 nmap <c-s> :w<CR>
@@ -162,3 +162,4 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 let g:w3m#homepage = "http://www.google.com/"
+

@@ -10,6 +10,7 @@ Plug 'ivalkeen/nerdtree-execute/'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'flazz/vim-colorschemes'
 
 "------------------------------------------------------------------------------
 " Searching
@@ -49,6 +50,8 @@ Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
 
+"------------------------------------------------------------------------------
 " Other
+"
 Plug 'yuratomo/w3m.vim'
 call plug#end()
