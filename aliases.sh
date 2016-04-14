@@ -16,7 +16,7 @@ make_alias_open(){
 }
 
 make_alias_open vim\
-  vim md sh c cpp cs css xml rc tex py java scala
+  vim md c cpp cs css xml rc tex py java scala
 make_alias_open zathura\
   pdf
 make_alias_open vlc\
