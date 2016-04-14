@@ -73,6 +73,8 @@ map g/ <Plug>(incsearch-stay)
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
 
+nmap <Leader>q <ESC>:q<CR>
+nmap <Leader><S-q> <ESC>:q!<CR>
 
 " :W sudo saves the file
 " " (useful for handling the permission-denied error)

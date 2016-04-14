@@ -30,7 +30,6 @@ Plug 'junegunn/fzf.vim'
 "
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
-Plug 'jdelkins/vim-correction'
 Plug 'airblade/vim-rooter'
 
 
