@@ -15,6 +15,13 @@ func! WordProcessorMode()
     nnoremap <buffer> gQ gqap
     setlocal nocursorline
     setlocal spell
+    setlocal formatoptions=1
+    map j gj
+    map k gk
+    setlocal formatprg=par
+    setlocal linebreak
+    setlocal wrap
+    call textobj#quote#init()
 endfu
 
 com! WordProcessorMode call WordProcessorMode()

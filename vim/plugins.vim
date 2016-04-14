@@ -43,12 +43,15 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
+Plug 'christoomey/vim-titlecase'
 
 
 "------------------------------------------------------------------------------
 " Text objects
 "
 Plug 'wellle/targets.vim'
+Plug 'reedes/vim-textobj-quote'
+Plug 'reedes/vim-textobj-sentence'
 Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line'
 
 
