@@ -16,6 +16,7 @@ let mapleader="\<SPACE>"
 " Quickly open vimrc and apply change
 nnoremap <Leader>ve :tabedit $MYVIMRC<CR>
 nnoremap <Leader>vp :tabedit ~/.vim/plugins.vim<CR>
+nnoremap <Leader>vi :tabedit ~/.vim/after/plugin/abbreviation.vim<CR>
 nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 

@@ -13,6 +13,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim'
 Plug 'yggdroot/indentline'
+Plug 'mhinz/vim-startify'
 
 
 "------------------------------------------------------------------------------

@@ -24,6 +24,7 @@
     ~/.vrapperrc: 'vim/vrapper.vim'
     ~/.ideavimrc: 'vim/idearc.vim'
     ~/.zshrc: 'zshrc'
+    ~/.aliases.sh: 'aliases.sh'
     ~/.gitignore_global: 'gitignore_global'
 
 - shell:

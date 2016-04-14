@@ -14,14 +14,8 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
-
-# I still change my configuration a lot, so I wanna soften the typing.
-alias so="source"
-alias v="view"
-alias vw="vim +VimwikiIndex"
-alias vd="vim +VimwikiDiaryIndex"
-alias vt="vim +VimwikiMakeDiaryNote +Goyo"
-alias sv="sudo vim"
+# For quickly open file
+source ~/.aliases.sh
 
 # Open the ebook from command line
 z(){

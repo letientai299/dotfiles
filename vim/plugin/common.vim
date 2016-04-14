@@ -30,11 +30,11 @@ set textwidth=79
 set encoding=utf8
 set cursorline
 set nofoldenable
-set nospell
 
 " Set spelling language to English, not sure if this setting could be included
 " in the common.Vim
 set spelllang=en_us
+set nospell
 
 " Quickly format the paragraph, and also a way to avoid enter Ex-mode
 nnoremap gQ gqap
