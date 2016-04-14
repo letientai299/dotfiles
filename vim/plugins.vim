@@ -31,6 +31,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
 Plug 'jdelkins/vim-correction'
+Plug 'airblade/vim-rooter'
 
 
 "------------------------------------------------------------------------------
@@ -52,7 +53,6 @@ Plug 'christoomey/vim-titlecase'
 "
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-line'
-Plug 'reedes/vim-textobj-quote'
 Plug 'reedes/vim-textobj-sentence'
 Plug 'kana/vim-textobj-user'
 

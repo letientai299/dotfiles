@@ -21,7 +21,6 @@ func! WordProcessorMode()
     setlocal formatprg=par
     setlocal linebreak
     setlocal wrap
-    call textobj#quote#init()
 endfu
 
 com! WordProcessorMode call WordProcessorMode()
