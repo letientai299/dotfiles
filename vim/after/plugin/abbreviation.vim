@@ -5,6 +5,3 @@ iab ok OK
 iab Ok OK
 iab vlc VLC
 iab Vlc VLC
-
-Abolish dont don't
-Abolish cant can't

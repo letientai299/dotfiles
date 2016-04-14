@@ -25,7 +25,7 @@ make_alias_open vlc\
 # I still change my configuration a lot, so I wanna soften the typing.
 alias so="source"
 alias v="view"
-alias vw="vim +VimwikiIndeix"
+alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
