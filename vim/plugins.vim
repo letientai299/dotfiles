@@ -14,6 +14,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim'
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
+Plug 'drn/zoomwin-vim'
 
 
 "------------------------------------------------------------------------------
@@ -50,9 +51,10 @@ Plug 'christoomey/vim-titlecase'
 " Text objects
 "
 Plug 'wellle/targets.vim'
+Plug 'kana/vim-textobj-line'
 Plug 'reedes/vim-textobj-quote'
 Plug 'reedes/vim-textobj-sentence'
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-user'
 
 
 "------------------------------------------------------------------------------

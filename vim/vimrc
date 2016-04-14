@@ -81,8 +81,9 @@ command! SW w !sudo tee % > /dev/null
 " Set lines to the cursor - when moving vertically using j/k
 set so=5
 
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+
+" Gitgutter
+let g:gitgutter_sign_column_always = 1
 
 " Load the local config
 " This should always be at the end of the file
