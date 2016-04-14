@@ -87,6 +87,7 @@ let g:gitgutter_sign_column_always = 1
 
 " Recolve project root from a symbol link.
 let g:rooter_resolve_links = 1
+let g:rooter_silent_chdir = 1
 
 " Load the local config
 " This should always be at the end of the file
