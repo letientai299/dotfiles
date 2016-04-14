@@ -75,7 +75,7 @@ imap <c-s> <Esc>:w<CR>a
 
 " :W sudo saves the file
 " " (useful for handling the permission-denied error)
-command! W w !sudo tee % > /dev/null
+command! SW w !sudo tee % > /dev/null
 
 " Set lines to the cursor - when moving vertically using j/k
 set so=5

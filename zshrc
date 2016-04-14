@@ -20,6 +20,7 @@ alias so="source"
 alias v="view"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
+alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
 
 # Open the ebook from command line
