@@ -1,4 +1,6 @@
 #!/bin/bash
+# vim: syntax=sh
+
 # This will create surfix alias to open a file with the associated application.
 # Input:
 # - Application name
@@ -13,6 +15,7 @@ make_alias_open(){
     for ext; do
       alias -s $ext=$app
     done
+    unset ext
 }
 
 make_alias_open vim\
@@ -29,3 +32,11 @@ alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
+
+
+# This help to send Ctrl-S to vim. I map <C-S> to save current editing file.
+alias vim="stty stop '' -ixoff; vim"
+
+# Get current day, useful for some lazy commands.
+alias today="date +%Y-%m-%d"
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+# vim: syntax=sh
+# Custom key binding
+bindkey -s "^j" "|less^m"
+bindkey -s "jk" "^["
+bindkey "^u" "history-incremental-search-backward"
+bindkey "^b" "history-incremental-search-forward"
+

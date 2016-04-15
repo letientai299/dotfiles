@@ -41,13 +41,11 @@ Abolish agreem{,ee}n{,e}ts	agreements
 Abolish agressive	aggressive
 Abolish ahppen	happen
 Abolish ahve	have
-Abolish allwasy	always
-Abolish allwyas	always
 Abolish alm{ots,sot}	almost
 Abolish alomst	almost
 Abolish alot	a lot
 Abolish alr{aedy,eayd,eday}	already
-Abolish al{aw,wa}{sy,ts,y,s}	always
+Abolish al{,l}{aw,wa}{sy,ys,y,s}	always
 Abolish amde	made
 Abolish amke	make
 Abolish amkes	makes

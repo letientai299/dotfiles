@@ -12,82 +12,22 @@ plugins=(zsh_reload git gradle adb vi-mode pip colored-man-pages)
 # User configuration
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 source $ZSH/oh-my-zsh.sh
-export LANG=en_US.UTF-8
 
-# For quickly open file
-source ~/.aliases.sh
-
-# Open the ebook from command line
-z(){
-    (zathura $1 &)
-}
-
-# Add, commit and push in single call
-function lazygit() {
-if [ $# -eq 0 ]; then # Check for commit message
-    echo "Need a commit message"
-    return 1
-fi
-git add .
-git commit -a -m "$*"
-git push
-}
-
-alias lg="lazygit" # And even more lazy
-
-# This is a habit, and I want to make this habit work
-function quit_session {
-    if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
-        # Not in a tmux session, just do normal exit.
-        exit
-    else
-        tmux detach
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
+    if [ -r "$file" ] && [ -f "$file" ]; then
+        source "$file";
     fi
-}
-alias exit=quit_session
-alias :q=quit_session
-
-# This help to send Ctrl-S to vim
-alias vim="stty stop '' -ixoff; vim"
-
-# Get current day
-alias today="date +%Y-%m-%d"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-# Inverse recursive search for a find name
-# Usage:
-#    findup <file_name>
-findup () {
-  file_name=$1
-  current_dir=`pwd`
-  local  result=1
-
-  while [[ "`pwd`" != "/" ]]; do
-    if [ -f ${file_name} ]; then
-      echo `pwd`"/"${file_name}
-      result=0
-      break
-    fi
-    cd ..
-  done
-
-  if [ ${result} -eq 1 ]; then
-    echo "Cannot found ${file_name}"
-  fi
-
-  cd ${current_dir}
-  return ${result}
-}
+done;
+unset file;
 
 
-#Custom key binding
-bindkey -s "^j" "|less^m"
-bindkey -s "jk" "^["
-bindkey "^u" "history-incremental-search-backward"
-bindkey "^b" "history-incremental-search-forward"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # include local settings if file existing
+# This should always be the last call to source. Because the local
+# machine setting may need to override something.
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
@@ -95,6 +35,3 @@ fi
 # finally remove the duplicated entries in path
 typeset -U PATH
 
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

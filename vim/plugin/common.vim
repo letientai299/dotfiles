@@ -23,8 +23,8 @@ set number
 " Use space (I hate tab)
 set expandtab
 
-" Use 4-spaces per tab
-set tabstop=4 softtabstop=4 shiftwidth=4
+" Use 2-spaces per tab
+set tabstop=2 softtabstop=2 shiftwidth=2
 set ignorecase smartcase incsearch hls
 set textwidth=79
 set encoding=utf8
