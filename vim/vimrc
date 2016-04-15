@@ -36,6 +36,9 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 " languages, not yet.
 au BufEnter * if &ft == "" | setlocal ft=vimwiki | endif
 
+" Some simple custom for different filetype
+au FileType vim-plug set nospell
+
 " Custom theme
 try
     colo lucius
