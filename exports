@@ -7,3 +7,13 @@ export LANG=en_US.UTF-8
 export FZF_DEFAULT_COMMAND='ag -g ""'
 # Also apply to the Ctrl-T command.
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Make less output colored
+GNU_SOURCE_HIGHLIGHT="/usr/bin/source-highlight-esc.sh"
+if [ ! -f $GNU_SOURCE_HIGHLIGHT ]; then
+  echo "Installl GNU source-highlight"
+  sudo apt-get install source-highlight
+  echo "Done install source-highlight."
+fi
+export LESSOPEN="| $GNU_SOURCE_HIGHLIGHT %s"
+export LESS=' -R '
