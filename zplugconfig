@@ -1,0 +1,34 @@
+# vim: syntax=zsh
+source ~/.zplug/zplug
+
+# Plugins from oh-my-zsh
+for p in {zsh_reload,git,svn,gradle,adb,vi-mode,pip,colored-man-pages}; do
+  zplug "plugins/$p", from:oh-my-zsh
+done
+
+
+# Theme
+zplug "bhilburn/powerlevel9k", of:powerlevel9k.zsh-theme
+# Custom for powerlevel9k
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_MODE='awesome-patched'
+POWERLEVEL9K_RAM_ELEMENTS=(ram_free)
+# POWERLEVEL9K_MODE='compatible' # Use when cannot install patched fonts
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+
+POWERLEVEL9K_VCS_GIT_ICON=''
+POWERLEVEL9K_VCS_STAGED_ICON='\u00b1'
+POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
+POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
+
+# Thing to remember: %K and %F start a new background and foreground for ZSH
+# And %k and %f end there instruction.
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%K{white}%F{black} `date +%T` \UE12E %f%k%F{white}%f "
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status nvm rvm background_jobs ram battery)
+# Then, source plugins and add commands to $PATH
+zplug load
+

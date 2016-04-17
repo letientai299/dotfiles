@@ -8,10 +8,6 @@
 # Update git submodules
 - shell:
     - ['git submodule update --init --recursive', 'Installing submodules']
-    - ['curl
-      https://raw.githubusercontent.com/xfanwu/oh-my-zsh-custom-xxf/master/themes/xxf.zsh-theme
-      --create-dirs -o ~/.oh-my-zsh/custom/themes/xxf.zsh-theme',
-      'Install xxf.zsh-theme']
 
 - link:
     # Vim related setting.
@@ -26,11 +22,12 @@
 
 
     # Shell setting
-    ~/.zshrc:    'zshrc'
-    ~/.aliases:  'aliases'
-    ~/.bindkeys: 'bindkeys'
-    ~/.exports:  'exports'
-    ~/.funcs:    'funcs'
+    ~/.zshrc:       'zshrc'
+    ~/.zplugconfig: 'zplugconfig'
+    ~/.aliases:     'aliases'
+    ~/.bindkeys:    'bindkeys'
+    ~/.exports:     'exports'
+    ~/.funcs:       'funcs'
 
     # Git
     ~/.gitignore: 'gitignore'

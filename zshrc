@@ -1,18 +1,20 @@
-export ZSH=~/.oh-my-zsh
-ZSH_THEME="xxf"
-HYPHEN_INSENSITIVE="true"
-ENABLE_CORRECTION="true"
+TERM=xterm-256color
+#------------------------------------------------------------------------------
+# Zplug
+#------------------------------------------------------------------------------
+# Install zplug if it is not installed
+if [ ! -f ~/.zplug/zplug ]; then
+  echo "Zplug not found, installing to home..."
+  git clone https://github.com/b4b4r07/zplug ~/.zplug
+  echo "Done."
+fi
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh_reload git gradle adb vi-mode pip colored-man-pages)
+# Load zplug config
+source ~/.zplugconfig;
 
-# User configuration
-export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-source $ZSH/oh-my-zsh.sh
-
+#------------------------------------------------------------------------------
+# Other config
+#------------------------------------------------------------------------------
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
@@ -22,16 +24,20 @@ for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
 done;
 unset file;
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# include local settings if file existing
-# This should always be the last call to source. Because the local
-# machine setting may need to override something.
+
+#------------------------------------------------------------------------------
+# Per machine setting
+#------------------------------------------------------------------------------
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
-# finally remove the duplicated entries in path
+
+#------------------------------------------------------------------------------
+# Finallize
+#------------------------------------------------------------------------------
+# Remove the duplicated entries in path
 typeset -U PATH
 
