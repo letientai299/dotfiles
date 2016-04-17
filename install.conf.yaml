@@ -23,11 +23,6 @@
 
     # Shell setting
     ~/.zshrc:       'zshrc'
-    ~/.zplugconfig: 'zplugconfig'
-    ~/.aliases:     'aliases'
-    ~/.bindkeys:    'bindkeys'
-    ~/.exports:     'exports'
-    ~/.funcs:       'funcs'
 
     # Git
     ~/.gitignore: 'gitignore'

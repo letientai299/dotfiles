@@ -1,4 +1,5 @@
 TERM=xterm-256color
+export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 #------------------------------------------------------------------------------
 # Zplug
 #------------------------------------------------------------------------------
@@ -10,7 +11,7 @@ if [ ! -f ~/.zplug/zplug ]; then
 fi
 
 # Load zplug config
-source ~/.zplugconfig;
+source "$DOTFILES"/zplugconfig;
 
 #------------------------------------------------------------------------------
 # ZSH setting
@@ -37,7 +38,7 @@ source ~/.fzf.zsh
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
-for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
+for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
     if [ -r "$file" ] && [ -f "$file" ]; then
         source "$file";
     fi

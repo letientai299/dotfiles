@@ -25,8 +25,9 @@ make_alias_open zathura\
 make_alias_open vlc\
   mp4 flv avi mkv
 
-# I still change my configuration a lot, so I wanna soften the typing.
+# I still change my configuration a lot, so I wanna shorten the typing.
 alias so="source"
+alias r="ranger"
 alias v="view"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
