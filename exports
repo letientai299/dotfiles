@@ -17,4 +17,4 @@ if [ ! -f $GNU_SOURCE_HIGHLIGHT ]; then
 fi
 
 export LESSOPEN="| $GNU_SOURCE_HIGHLIGHT %s"
-export LESS=' -R '
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
