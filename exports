@@ -15,5 +15,6 @@ if [ ! -f $GNU_SOURCE_HIGHLIGHT ]; then
   sudo apt-get install source-highlight
   echo "Done install source-highlight."
 fi
+
 export LESSOPEN="| $GNU_SOURCE_HIGHLIGHT %s"
 export LESS=' -R '

@@ -28,6 +28,13 @@ setopt hist_ignore_dups
 #------------------------------------------------------------------------------
 # My zsh config
 #------------------------------------------------------------------------------
+# Make sure that fzf is installed.
+if [ ! -f ~/.fzf.zsh ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
+source ~/.fzf.zsh
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
@@ -37,7 +44,6 @@ for file in ~/.{path,exports,aliases,funcs,bindkeys}; do
 done;
 unset file;
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
 #------------------------------------------------------------------------------

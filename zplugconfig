@@ -9,6 +9,7 @@ done
 # Other plugins
 zplug "djui/alias-tips"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-completions"
 zplug "supercrabtree/k" # directory listing with git supported
 zplug "Tarrasch/zsh-bd" # back-cd
 

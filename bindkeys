@@ -5,4 +5,4 @@ bindkey -s "^j" "|less^m"
 bindkey -s "jk" "^["
 bindkey "^u" "history-incremental-search-backward"
 bindkey "^b" "history-incremental-search-forward"
-
+bindkey "^ " "autosuggest-accept"
