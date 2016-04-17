@@ -13,7 +13,20 @@ fi
 source ~/.zplugconfig;
 
 #------------------------------------------------------------------------------
-# Other config
+# ZSH setting
+#------------------------------------------------------------------------------
+# Auto correct spelling for command and argument
+setopt correct_all
+# Disable <C-D> logout
+setopt ignore_eof
+# Disable beeps
+setopt no_beep
+# Ignore dups
+setopt hist_ignore_dups
+
+
+#------------------------------------------------------------------------------
+# My zsh config
 #------------------------------------------------------------------------------
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
