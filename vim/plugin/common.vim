@@ -95,3 +95,6 @@ nnoremap # #zz
 
 " Simulate Vim-surround behavior for deleting space around world
 nmap ds<space> F<space>xf<space>x
+
+" Insert mode delete forward one char
+inoremap <C-d> <Del>

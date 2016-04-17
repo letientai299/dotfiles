@@ -15,6 +15,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'drn/zoomwin-vim'
+Plug 'gorodinskiy/vim-coloresque'
 
 
 "------------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
 Plug 'derekwyatt/vim-scala'
 Plug 'pangloss/vim-javascript'
+Plug 'hail2u/vim-css3-syntax'
 
 
 "------------------------------------------------------------------------------

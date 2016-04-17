@@ -80,10 +80,6 @@ nmap <Leader><S-q> <ESC>:q!<CR>
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
 
-" Set lines to the cursor - when moving vertically using j/k
-set so=5
-
-
 " Gitgutter
 let g:gitgutter_sign_column_always = 1
 
