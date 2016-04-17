@@ -74,3 +74,16 @@ findup () {
     return ${result}
 }
 
+lgn(){
+  if [ -z "$NOTE" ]; then
+    echo NOTE folder is not configured, discard.
+    return
+  fi
+  if [ "$(pwd)" != "$NOTE" ];then
+    echo Not in NOTE folder, discard.
+    return
+  fi
+
+  lg Add note for "$(today)"
+}
+
