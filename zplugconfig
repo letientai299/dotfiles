@@ -9,44 +9,17 @@ done
 # Other plugins
 zplug "djui/alias-tips"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "supercrabtree/k" # directory listing with git supported
 zplug "Tarrasch/zsh-bd" # back-cd
-
 # auto close the matching pair, this plugin must be load after compinit,
 # hence I have to add nice:10.
 zplug "hlissner/zsh-autopair", nice:10
-zplug "zsh-users/zsh-autosuggestions"
-
-
+zplug "Valiev/almostontop"
 
 # Theme
-zplug "bhilburn/powerlevel9k", of:powerlevel9k.zsh-theme
-# Custom for powerlevel9k
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_MODE='awesome-patched'
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-
-POWERLEVEL9K_VCS_GIT_ICON=''
-POWERLEVEL9K_VCS_STAGED_ICON='\u00b1'
-POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
-POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
-
-POWERLEVEL9K_RAM_BACKGROUND="black"
-POWERLEVEL9K_RAM_FOREGROUND="249"
-POWERLEVEL9K_RAM_ELEMENTS=(ram_free)
-
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\n"
-# Thing to remember: %K and %F start a new background and foreground for ZSH
-# And %k and %f end there instruction.
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%K{white}%F{black} `date +%T` \UE12E %f%k%F{white}%f "
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status nvm rvm background_jobs ram battery)
-
-
+zplug "xfanwu/18fd7c24360c68bab884", from:gist
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
