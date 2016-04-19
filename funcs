@@ -8,9 +8,9 @@
 # Open the ebook from command line using zathura, this also make z an alias to
 # zathura.
 # Usage:
-#   z [file_name]
+#   za [file_name]
 # If file_name is not provided, simply open zathura.
-z(){
+za(){
 if [ $# -eq 0 ]; then
     (zathura &)
 else

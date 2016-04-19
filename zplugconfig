@@ -2,7 +2,7 @@
 source ~/.zplug/zplug
 
 # Plugins from oh-my-zsh
-for p in {zsh_reload,git,svn,gradle,adb,pip,colored-man-pages,wd}; do
+for p in {zsh_reload,git,git-extras,svn,gradle,adb,pip,colored-man-pages,wd,z}; do
   zplug "plugins/$p", from:oh-my-zsh
 done
 
