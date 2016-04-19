@@ -2,6 +2,8 @@
 
 " Name:         correction.vim
 " Author:       Le Tien Tai <letientai299@gmail.com>
+" Description:  This is not only contains spelling correction, but also
+" shortcuts for my often typed words
 
 " Auo failse if the abolish not found
 if (exists(":Abolish") != 2) || exists("g:loaded_autocorrect")
@@ -45,6 +47,7 @@ Abolish cheif{,s}	chief{}
 Abolish chekc{,s}	check{}
 Abolish chnag{e,ing,er,es}	chang{}
 Abolish claer{,ed,ly}	clear{}
+Abolish cm{,s}                                            command{}
 Abolish coma{,p}n{y,ies}	com{p}an{}
 Abolish combintation{,s}	combination{}
 Abolish comit{ed,ee,tee,tment,tments}	commit{ted,tee,tee,ment,ments}
