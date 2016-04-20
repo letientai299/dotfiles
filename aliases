@@ -28,7 +28,7 @@ make_alias_open vlc\
 # I still change my configuration a lot, so I wanna shorten the typing.
 alias so="source"
 alias r="ranger"
-alias v="view"
+alias v="vim -R"
 alias vi="vim"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
