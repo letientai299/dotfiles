@@ -34,11 +34,9 @@ alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
-alias vim="nvim"
-
 
 # This help to send Ctrl-S to vim. I map <C-S> to save current editing file.
-alias vim="stty stop '' -ixoff; vim"
+alias vim="stty stop '' -ixoff; nvim"
 
 # Get current day, useful for some lazy commands.
 alias today="date +%Y-%m-%d"
