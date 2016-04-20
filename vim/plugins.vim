@@ -67,6 +67,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'derekwyatt/vim-scala'
 Plug 'pangloss/vim-javascript'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'keith/tmux.vim'
 
 
 "------------------------------------------------------------------------------

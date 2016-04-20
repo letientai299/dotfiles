@@ -27,7 +27,11 @@
     # Git
     ~/.gitignore: 'gitignore'
 
+    # Tmux
+    ~/.tmux.conf: 'tmux.conf'
+
 - shell:
+    # Git
     - git config --global core.excludesfile '~/.gitignore'
     - git config --global pager.diff "diff-so-fancy | less --tabs=4 -RFX"
     - git config --global pager.show "diff-so-fancy | less --tabs=4 -RFX"
