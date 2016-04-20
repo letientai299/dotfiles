@@ -2,7 +2,7 @@
 source ~/.zplug/zplug
 
 # Plugins from oh-my-zsh
-for p in {zsh_reload,git,git-extras,svn,gradle,adb,pip,colored-man-pages,wd,z}; do
+for p in {zsh_reload,git,git-extras,svn,gradle,adb,pip,colored-man-pages,z}; do
   zplug "plugins/$p", from:oh-my-zsh
 done
 
@@ -19,7 +19,7 @@ zplug "hlissner/zsh-autopair", nice:10
 zplug "Valiev/almostontop"
 
 # Theme
-zplug "xfanwu/18fd7c24360c68bab884", from:gist
+zplug "xfanwu/oh-my-zsh-custom-xxf", of:"themes/*.zsh-theme"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then

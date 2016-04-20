@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/letientai299/Project/notes/Books'
+let g:netrw_dirhist_2='/home/letientai299/Project/notes/Books/[Robert C. Matin] Clean Code'
+let g:netrw_dirhist_3='/home/letientai299/Project/notes/Books'
+let g:netrw_dirhist_4='/home/letientai299/temp/java-8-lambdas-exercises'
+let g:netrw_dirhist_5='/home/letientai299/temp/java-8-lambdas-exercises/src'
+let g:netrw_dirhist_6='/home/letientai299/temp/java-8-lambdas-exercises'
