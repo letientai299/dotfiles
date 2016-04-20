@@ -27,7 +27,9 @@ set expandtab
 set tabstop=2 softtabstop=2 shiftwidth=2
 set ignorecase smartcase incsearch hls
 set textwidth=79
-set encoding=utf8
+if(!has('nvim'))
+  set encoding=utf8
+endif
 set cursorline
 set nofoldenable
 

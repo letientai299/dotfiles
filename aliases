@@ -29,10 +29,12 @@ make_alias_open vlc\
 alias so="source"
 alias r="ranger"
 alias v="view"
+alias vi="vim"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
+alias vim="nvim"
 
 
 # This help to send Ctrl-S to vim. I map <C-S> to save current editing file.

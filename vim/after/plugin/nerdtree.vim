@@ -1,10 +1,15 @@
 " This script have come custom for the NERDTree plugin
 "------------------------------------------------------
 
-" Shortcut to quickly open the NerdTree panel
-nnoremap <c-f12> :NERDTreeToggle<CR>
-" Quickly reveal the location of opened buffer.
-nnoremap <c-s-f12> :NERDTreeFind<CR>
+if(has('nvim'))
+  nnoremap <F36> :NERDTreeToggle<CR>
+  nnoremap <F24> :NERDTreeFind<CR>
+else
+  " Shortcut to quickly open the NerdTree panel
+  nnoremap <c-f12> :NERDTreeToggle<CR>
+  " Quickly reveal the location of opened buffer.
+  nnoremap <s-f12> :NERDTreeFind<CR>
+endif
 
 " Command to highlight by file extension
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)

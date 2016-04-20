@@ -19,6 +19,7 @@
 
     # Config files
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
+    ~/.config/nvim: 'vim'
 
 
     # Shell setting
