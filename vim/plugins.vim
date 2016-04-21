@@ -10,6 +10,7 @@ Plug 'ivalkeen/nerdtree-execute/'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim'
 Plug 'yggdroot/indentline'
