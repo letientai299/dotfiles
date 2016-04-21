@@ -76,7 +76,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'vimwiki/vimwiki', { 'for' : 'wiki' }
+Plug 'vimwiki/vimwiki'
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'pangloss/vim-javascript', { 'for': 'js' }
 Plug 'hail2u/vim-css3-syntax',  { 'for': ['css', 'scss'] }
@@ -86,7 +86,7 @@ Plug 'keith/tmux.vim', { 'for': '*tmux.conf*' }
 "------------------------------------------------------------------------------
 " Helper
 "
-Plug 'scrooloose/syntastic', { 'on' : ['SyntasticCheck', 'SyntasticInfo'] }
+Plug 'scrooloose/syntastic'
 
 
 "------------------------------------------------------------------------------
