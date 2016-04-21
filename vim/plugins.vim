@@ -41,7 +41,6 @@ if(has('nvim'))
     UpdateRemotePlugins
   endfunction
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  Plug 'zchee/deoplete-clang', { 'for':['cpp','h','c','hpp','cxx','hxx','hh'] }
 else
   Plug 'Shougo/neocomplete.vim'
 endif
