@@ -20,10 +20,11 @@ make_alias_open(){
 
 make_alias_open vim\
   vim md c cpp cs css xml rc tex py java scala
-make_alias_open zathura\
-  pdf
 make_alias_open vlc\
   mp4 flv avi mkv
+
+# I often want to detach zathura, so I reuse my custom function for zathura
+alias -s pdf=za
 
 # I still change my configuration a lot, so I wanna shorten the typing.
 alias so="source"
