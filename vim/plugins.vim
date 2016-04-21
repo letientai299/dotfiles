@@ -6,13 +6,13 @@ call plug#begin()
 Plug 'kshenoy/vim-signature'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'ivalkeen/nerdtree-execute/'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+Plug 'ivalkeen/nerdtree-execute', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'drn/zoomwin-vim'
@@ -25,7 +25,7 @@ Plug 'gorodinskiy/vim-coloresque'
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'rking/ag.vim'
+Plug 'rking/ag.vim', { 'on' : 'Ag'}
 
 
 "------------------------------------------------------------------------------
@@ -76,22 +76,22 @@ Plug 'kana/vim-textobj-user'
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'vimwiki/vimwiki'
-Plug 'derekwyatt/vim-scala'
-Plug 'pangloss/vim-javascript'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'keith/tmux.vim'
+Plug 'vimwiki/vimwiki', { 'for' : 'wiki' }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'pangloss/vim-javascript', { 'for': 'js' }
+Plug 'hail2u/vim-css3-syntax',  { 'for': ['css', 'scss'] }
+Plug 'keith/tmux.vim', { 'for': '*tmux.conf*' }
 
 
 "------------------------------------------------------------------------------
 " Helper
 "
-Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic', { 'on' : ['SyntasticCheck', 'SyntasticInfo'] }
 
 
 "------------------------------------------------------------------------------
 " Other
 "
-Plug 'yuratomo/w3m.vim'
+Plug 'yuratomo/w3m.vim', { 'on' : 'W3m' }
 
 call plug#end()
