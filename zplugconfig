@@ -16,7 +16,6 @@ zplug "Tarrasch/zsh-bd" # back-cd
 # auto close the matching pair, this plugin must be load after compinit,
 # hence I have to add nice:10.
 zplug "hlissner/zsh-autopair", nice:10
-zplug "Valiev/almostontop"
 
 # Theme
 zplug "xfanwu/oh-my-zsh-custom-xxf", of:"themes/*.zsh-theme"
