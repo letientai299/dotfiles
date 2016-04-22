@@ -1,9 +1,15 @@
 {
+  "common": {
+    "term_truecolor": false
+  },
   "segments": {
     "right": [
       {
-        "function": "powerline.segments.common.vcs.branch",
-        "name": "vcs"
+        "function": "powerline.segments.common.players.rhythmbox",
+        "name": "player",
+        "args": {
+          "format": "{state_symbol} {title} [{elapsed}/{total}]"
+        }
       },
       {
         "function": "powerline.segments.common.players.cmus",
@@ -11,6 +17,10 @@
         "args": {
           "format": "{state_symbol} {title} [{elapsed}/{total}]"
         }
+      },
+      {
+        "function": "powerline.segments.common.net.network_load",
+        "name": "network_load"
       },
       {
         "function": "powerline.segments.common.time.date",
@@ -21,7 +31,13 @@
         }
       },
       {
+        "function": "powerline.segments.tmux.attached_clients"
+      },
+      {
         "function": "powerline.segments.common.net.hostname"
+      },
+      {
+        "function": "powerline.segments.common.bat.battery"
       }
     ]
   }
