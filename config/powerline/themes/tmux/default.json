@@ -20,7 +20,10 @@
       },
       {
         "function": "powerline.segments.common.net.network_load",
-        "name": "network_load"
+        "args": {
+          "recv_format": "{value:>8}⬇",
+          "sent_format": "{value:>8}⬆"
+        }
       },
       {
         "function": "powerline.segments.common.time.date",
@@ -31,13 +34,16 @@
         }
       },
       {
-        "function": "powerline.segments.tmux.attached_clients"
+        "function": "powerline.segments.common.bat.battery",
+        "args": {
+          "full_heart": "♥",
+          "empty_heart": "♡",
+          "online": "⚡︎",
+          "offline": "☕"
+        }
       },
       {
         "function": "powerline.segments.common.net.hostname"
-      },
-      {
-        "function": "powerline.segments.common.bat.battery"
       }
     ]
   }

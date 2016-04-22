@@ -1,5 +1,5 @@
 {
-	"groups": {
+	"groups":                 {
 		"active_window_status": {"fg": "darkblue",   "bg": "gray0",    "attrs": []},
 		"window_status":        {"fg": "gray70",     "bg": "gray0",    "attrs": []},
 		"activity_status":      {"fg": "yellow",     "bg": "gray0",    "attrs": []},
@@ -9,6 +9,12 @@
 		"window:current":       {"fg": "mediumcyan", "bg": "darkblue", "attrs": []},
 		"window_name":          {"fg": "white",      "bg": "darkblue", "attrs": ["bold"]},
 		"session":              {"fg": "black",      "bg": "gray90",   "attrs": ["bold"]},
-		"session:prefix":       {"fg": "gray90",     "bg": "darkblue", "attrs": ["bold"]}
+		"session:prefix":       {"fg": "gray90",     "bg": "darkblue", "attrs": ["bold"]},
+		"network_load:divider": {"fg": "gray4",      "bg": "gray8",    "attrs": []},
+		"network_load_sent":    {"fg": "black",      "bg": "gray8",    "attrs": []},
+		"network_load_recv":    {"fg": "black",      "bg": "gray8",    "attrs": []},
+		"player_play":          {"fg": "darkgreen",  "bg": "gray8",    "attrs": []},
+		"player_pause":         {"fg": "darkblue",   "bg": "gray8",    "attrs": []},
+		"player_stop":          {"fg": "black",      "bg": "gray8",    "attrs": []}
 	}
 }
