@@ -17,6 +17,9 @@
     ~/.vrapperrc: 'vim/vrapper.vim'
     ~/.ideavimrc: 'vim/idearc.vim'
 
+    # Emacs settings
+    ~/.emacs: 'emacs'
+
     # Config files
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.config/nvim: 'vim'
