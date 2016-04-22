@@ -26,6 +26,10 @@
     ~/.config/ranger/rc.conf: 'config/ranger/rc.conf'
     ~/.cmus/rc: 'cmus/rc'
 
+    ~/.config/powerline:
+        path: 'config/powerline/'
+        force: true
+
 
     # Shell setting
     ~/.zshrc:       'zshrc'

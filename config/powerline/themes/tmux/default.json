@@ -1,0 +1,28 @@
+{
+  "segments": {
+    "right": [
+      {
+        "function": "powerline.segments.common.vcs.branch",
+        "name": "vcs"
+      },
+      {
+        "function": "powerline.segments.common.players.cmus",
+        "name": "player",
+        "args": {
+          "format": "{state_symbol} {title} [{elapsed}/{total}]"
+        }
+      },
+      {
+        "function": "powerline.segments.common.time.date",
+        "name": "time",
+        "args": {
+          "format": "%m/%d %H:%M:%S",
+          "istime": true
+        }
+      },
+      {
+        "function": "powerline.segments.common.net.hostname"
+      }
+    ]
+  }
+}
