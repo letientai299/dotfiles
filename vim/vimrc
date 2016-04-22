@@ -58,18 +58,7 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" Date time inserting
-"Tue 29 Mar 2016 09:07:43 AM ICT
-:iab <expr> dtf strftime("%c")
-:iab <expr> Dtf strftime("%c")
-"2016-04-07
-:iab <expr> dtd strftime("%Y-%m-%d")
-:iab <expr> Dtd strftime("%Y-%m-%d")
-"09:07:56
-:iab <expr> dtt strftime("%T")
-:iab <expr> Dtt strftime("%T")
-" Need to make another variant that have first letter capitalized to use with
-" the auto-capitalisation mode
+set iskeyword-=.
 
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
