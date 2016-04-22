@@ -24,6 +24,7 @@
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.config/nvim: 'vim'
     ~/.config/ranger/rc.conf: 'config/ranger/rc.conf'
+    ~/.cmus/rc: 'cmus/rc'
 
 
     # Shell setting
