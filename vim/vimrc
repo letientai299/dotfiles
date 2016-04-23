@@ -2,13 +2,6 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-" --------------------------------------------------------
-" Auto install on the first time if there no plug.vim found
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
 source ~/.vim/plugins.vim
 
 let mapleader="\<SPACE>"
@@ -21,71 +14,22 @@ nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 
 
-" Auto remove trailing white space on saving file
-" -----------------------------------------------
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-
-" Use vimwiki as default, actually, I'm still not use vim heavily for other
-" languages, not yet.
-au BufEnter * if &ft == "" | setlocal ft=vimwiki | endif
-
-" Some simple custom for different filetype
-au FileType vim-plug set nospell
-
-" Custom theme
-try
-    colo lucius
-    :LuciusDark
-catch
-endtry
-
-" Delete comment character when joining comnmented lines
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j
-endif
-
 " Reload unchanged files automatically.
 set autoread
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
 
 " Search in the command line
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-set iskeyword-=.
 
 " Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
 " Gnome temrinal
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
-
-nmap <Leader>q <ESC>:q<CR>
-nmap <Leader><S-q> <ESC>:q!<CR>
+" Save and also reload the file, use when change Vim modeline config
+nmap <c-s-s> :w<CR>:e %<CR>
 
 " :W sudo saves the file
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
-
-" Gitgutter
-let g:gitgutter_sign_column_always = 1
-
-" Recolve project root from a symbol link.
-let g:rooter_resolve_links = 1
-let g:rooter_silent_chdir = 1
-
-" Load the local config
-" This should always be at the end of the file
-if !empty(glob("~/.vimrc_local"))
-    source ~/.vimrc_local
-endif
 

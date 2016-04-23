@@ -1,3 +1,10 @@
+" Auto install on the first time if there no plug.vim found
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 call plug#begin()
 
 "------------------------------------------------------------------------------
@@ -11,6 +18,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] 
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ntpeters/vim-airline-colornum'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'yggdroot/indentline'
@@ -37,6 +45,7 @@ Plug 'raimondi/delimitmate'
 Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
+Plug 'ntpeters/vim-better-whitespace'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -98,3 +107,50 @@ Plug 'scrooloose/syntastic'
 Plug 'yuratomo/w3m.vim', { 'on' : 'W3m' }
 
 call plug#end()
+
+" Auto install missing plugins on startup
+autocmd VimEnter *
+  \  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall | q
+  \| endif
+
+
+
+" H to open help docs
+function! s:plug_doc()
+  let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
+  if has_key(g:plugs, name)
+    for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
+      execute 'tabe' doc
+    endfor
+  endif
+endfunction
+
+augroup PlugHelp
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> H :call <sid>plug_doc()<cr>
+augroup END
+
+
+
+" gx to open GitHub URLs on browser
+function! s:plug_gx()
+  let line = getline('.')
+  let sha  = matchstr(line, '^  \X*\zs\x\{7}\ze ')
+  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  if uri !~ 'github.com'
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#BrowseX(url, 0)
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+

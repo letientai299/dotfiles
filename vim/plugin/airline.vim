@@ -7,3 +7,4 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+let g:airline_detect_iminsert=1

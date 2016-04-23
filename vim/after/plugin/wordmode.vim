@@ -6,7 +6,7 @@ func! WordProcessorMode()
     " Auto-capitalize script
     augroup SENTENCES
         au!
-        autocmd InsertCharPre * if search('\v(%^|[.!?]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
+        autocmd InsertCharPre <buffer> if search('\v(%^|[.!?]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
     augroup END
 
    " ---------------------
@@ -16,8 +16,8 @@ func! WordProcessorMode()
     setlocal nocursorline
     setlocal spell
     setlocal formatoptions=1
-    map j gj
-    map k gk
+    map <buffer> j gj
+    map <buffer> k gk
     setlocal formatprg=par
     setlocal linebreak
     setlocal wrap
