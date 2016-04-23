@@ -35,6 +35,8 @@ Plug 'rking/ag.vim', { 'on' : 'Ag'}
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
 Plug 'airblade/vim-rooter'
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
