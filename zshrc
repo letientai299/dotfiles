@@ -16,8 +16,6 @@ source "$DOTFILES"/zplugconfig;
 #------------------------------------------------------------------------------
 # ZSH setting
 #------------------------------------------------------------------------------
-# Auto correct spelling for command and argument
-setopt correct_all
 # Disable <C-D> logout
 setopt ignore_eof
 # Disable beeps
