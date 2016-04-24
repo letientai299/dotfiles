@@ -92,7 +92,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'pangloss/vim-javascript', { 'for': 'js' }
 Plug 'hail2u/vim-css3-syntax',  { 'for': ['css', 'scss'] }
-Plug 'keith/tmux.vim', { 'for': '*tmux.conf*' }
+Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 
 
 "------------------------------------------------------------------------------
