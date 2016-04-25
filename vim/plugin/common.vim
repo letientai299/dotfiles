@@ -46,8 +46,8 @@ nnoremap gQ gqap
 "------------------------------------------------------------------------------
 
 " Insert an blank line below or above the current line in normal mode
-nnoremap <Leader>o o<ESC>k
-nnoremap <Leader>O O<ESC>j
+nnoremap <silent> <leader>o :<C-u>call append(line("."),   repeat([""], v:count1))<CR>
+nnoremap <silent> <leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
 
 
 " Toggle highlight search
