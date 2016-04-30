@@ -1,5 +1,6 @@
-unmap d
 map d scroll half-down
 map u scroll half-up
+map <S-Space> scroll half-up
+map <Space> scroll half-down
 
 set recolor-keephue
