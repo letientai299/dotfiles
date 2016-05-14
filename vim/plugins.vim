@@ -18,7 +18,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] 
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ntpeters/vim-airline-colornum'
+" Plug 'ntpeters/vim-airline-colornum'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'yggdroot/indentline'
@@ -93,6 +93,7 @@ Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'pangloss/vim-javascript', { 'for': 'js' }
 Plug 'hail2u/vim-css3-syntax',  { 'for': ['css', 'scss'] }
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
+Plug 'lervag/vimtex', { 'for': 'tex' }
 
 
 "------------------------------------------------------------------------------
