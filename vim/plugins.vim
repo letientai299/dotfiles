@@ -85,7 +85,7 @@ Plug 'kana/vim-textobj-user'
 "------------------------------------------------------------------------------
 " Additional language plugins
 "
-Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
+Plug 'godlygeek/tabular', {'on': 'Tabularize'}| Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
