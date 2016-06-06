@@ -19,3 +19,4 @@ set tw=80
 set fo-=l
 set fo+=t
 
+" Shortcut to open the table of content
