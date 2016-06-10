@@ -24,7 +24,6 @@ Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'drn/zoomwin-vim'
-Plug 'gorodinskiy/vim-coloresque'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 
