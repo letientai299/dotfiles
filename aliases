@@ -20,8 +20,12 @@ make_alias_open(){
 
 make_alias_open vim\
   vim md c cpp cs css xml rc tex py java scala
+
 make_alias_open vlc\
   mp4 flv avi mkv
+
+make_alias_open eog\
+  jpg png jpeg bmp
 
 # I often want to detach zathura, so I reuse my custom function for zathura
 alias -s pdf=za
@@ -51,3 +55,6 @@ alias cru="cmus-remote --pause"
 alias crs="cmus-remote --stop"
 alias crvu="cmus-remote -v +10%"
 alias crvd="cmus-remote -v -10%"
+
+# Use ag with the global agignore file
+alias ag='ag --path-to-agignore ~/.agignore'

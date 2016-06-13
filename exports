@@ -4,7 +4,7 @@
 export LANG=en_US.UTF-8
 
 # Use ag as file searching engine
-export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='ag --path-to-agignore ~/.agignore -g ""'
 # Also apply to the Ctrl-T command.
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 

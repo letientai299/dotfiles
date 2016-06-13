@@ -40,6 +40,10 @@
     # Tmux
     ~/.tmux.conf: 'tmux.conf'
 
+    # Ag
+    ~/.agignore: 'agignore'
+
+
 - shell:
     # Git
     - git config --global core.excludesfile '~/.gitignore'

@@ -1,0 +1,69 @@
+# vim: syntax: conf
+/log/
+/logs/
+/images/
+/javascripts/
+/stylesheets/
+/tmp/
+/temp/
+/vendor/
+/bin/
+/workspace/
+/workspaces/
+
+# Java
+*.class
+
+# Intellij Idea project file
+.idea/
+*.iml
+
+# Vim files
+*.vim~
+*.un~
+*~
+.netrwhist
+
+### Eclipse template
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# NetBeans template
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
+
+# VS code
+*.browse.VC.*
+
+# Others
+*.tags*
+*.gemtags*
+*.tsv
+*.tmp*
+*.old
+*.plist
+*.pdf
+*.jpg
+*.png
+
