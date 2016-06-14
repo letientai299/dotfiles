@@ -1,4 +1,6 @@
 # vim: syntax: conf
+
+# Global file system.
 /log/
 /logs/
 /images/
@@ -10,9 +12,17 @@
 /bin/
 /workspace/
 /workspaces/
+/dev/
+/lib32/
+/lib64/
 
 # Java
 *.class
+
+# Scala SBT
+*.cache
+$global/
+resolution-cache/
 
 # Intellij Idea project file
 .idea/

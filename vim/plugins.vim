@@ -21,11 +21,13 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
+Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'drn/zoomwin-vim'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
+Plug 'Konfekt/FastFold'
 
 
 "------------------------------------------------------------------------------
@@ -53,10 +55,14 @@ if(has('nvim'))
     UpdateRemotePlugins
   endfunction
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  Plug 'zchee/deoplete-jedi'
+  " deoplete source for Go
+  Plug 'zchee/deoplete-go', { 'do': 'make'}
 else
   Plug 'Shougo/neocomplete.vim'
 endif
 
+Plug 'SirVer/ultisnips'
 
 "------------------------------------------------------------------------------
 " Custom keymap
@@ -87,13 +93,11 @@ Plug 'kana/vim-textobj-user'
 "
 Plug 'godlygeek/tabular', {'on': 'Tabularize'}| Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'vimwiki/vimwiki'
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-Plug 'pangloss/vim-javascript', { 'for': 'js' }
-Plug 'hail2u/vim-css3-syntax',  { 'for': ['css', 'scss'] }
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
-Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'sheerun/vim-polyglot', {'do': './build'}
+Plug 'fatih/vim-go'
+
 
 
 "------------------------------------------------------------------------------
