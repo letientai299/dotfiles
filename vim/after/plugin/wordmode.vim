@@ -14,7 +14,6 @@ func! WordProcessorMode()
     " Quickly format the paregraph, and also a way to avoid enter Ex-mode
     nnoremap <buffer> gQ gqap
     setlocal nocursorline
-    setlocal spell
     setlocal formatoptions=1
     map <buffer> j gj
     map <buffer> k gk
