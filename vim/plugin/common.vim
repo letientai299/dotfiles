@@ -50,12 +50,6 @@ nnoremap <silent> <leader>o :<C-u>call append(line("."),   repeat([""], v:count1
 nnoremap <silent> <leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
 
 
-" Toggle highlight search
-nnoremap <Leader>n :set hls!<CR>
-
-" Toggle spelling
-nnoremap <Leader>s :set spell!<CR>
-
 " Toggle foldenable
 nnoremap <Leader>f :set foldenable!<CR>
 
