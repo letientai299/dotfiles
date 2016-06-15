@@ -54,8 +54,17 @@ if(has('nvim'))
   function! DoRemote(arg)
     UpdateRemotePlugins
   endfunction
+  " Required by some async plugins.
+  Plug 'Shougo/vimproc', { 'do': 'make' }
+  " The completion engine
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
   Plug 'zchee/deoplete-jedi'
+  Plug 'osyo-manga/vim-monster'
+    " With deoplete.nvim
+    let g:monster#completion#rcodetools#backend = "async_rct_complete"
+    let g:deoplete#sources#omni#input_patterns = {
+    \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+    \}
   " deoplete source for Go
   Plug 'zchee/deoplete-go', { 'do': 'make'}
 else
