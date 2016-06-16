@@ -28,6 +28,7 @@ Plug 'drn/zoomwin-vim'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'Konfekt/FastFold'
+Plug 'sjl/gundo.vim'
 
 
 "------------------------------------------------------------------------------
