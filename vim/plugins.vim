@@ -24,9 +24,8 @@ Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
-Plug 'drn/zoomwin-vim'
 Plug 'luochen1990/rainbow'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'Konfekt/FastFold'
 Plug 'sjl/gundo.vim'
 Plug 'easymotion/vim-easymotion'
@@ -59,9 +58,9 @@ if(has('nvim'))
   endfunction
   " The completion engine
   Plug 'Shougo/deoplete.nvim', { 'tag': '1.1', 'do': function('DoRemote') }
-  Plug 'zchee/deoplete-jedi'
+  Plug 'zchee/deoplete-jedi', { 'for': 'py' }
   " deoplete source for Go
-  Plug 'zchee/deoplete-go', { 'do': 'make'}
+  Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
 else
   Plug 'Shougo/neocomplete.vim'
 endif
@@ -101,7 +100,7 @@ Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 
 
@@ -117,14 +116,6 @@ Plug 'scrooloose/syntastic'
 Plug 'yuratomo/w3m.vim', { 'on' : 'W3m' }
 
 call plug#end()
-
-" Auto install missing plugins on startup
-autocmd VimEnter *
-  \  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall | q
-  \| endif
-
-
 
 " H to open help docs
 function! s:plug_doc()

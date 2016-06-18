@@ -36,7 +36,6 @@ alias r="ranger"
 alias v="vim -R"
 alias vw="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
-alias vt="vim +VimwikiMakeDiaryNote +Goyo"
 alias sv="sudo vim"
 
 # This help to send Ctrl-S to vim. I map <C-S> to save current editing file.
