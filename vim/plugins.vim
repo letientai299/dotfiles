@@ -58,7 +58,7 @@ if(has('nvim'))
     UpdateRemotePlugins
   endfunction
   " The completion engine
-  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  Plug 'Shougo/deoplete.nvim', { 'tag': '1.1', 'do': function('DoRemote') }
   Plug 'zchee/deoplete-jedi'
   " deoplete source for Go
   Plug 'zchee/deoplete-go', { 'do': 'make'}
