@@ -25,7 +25,7 @@ Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'majutsushi/tagbar'
 Plug 'Konfekt/FastFold'
 Plug 'sjl/gundo.vim'
 Plug 'easymotion/vim-easymotion'
