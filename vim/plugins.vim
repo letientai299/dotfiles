@@ -50,6 +50,7 @@ Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'editorconfig/editorconfig-vim'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -78,6 +79,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-speeddating'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-titlecase'
