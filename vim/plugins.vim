@@ -24,12 +24,8 @@ Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
-Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'Konfekt/FastFold'
-Plug 'sjl/gundo.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'osyo-manga/vim-over'
 
 
 "------------------------------------------------------------------------------
@@ -112,11 +108,6 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic'
 
 
-"------------------------------------------------------------------------------
-" Other
-"
-Plug 'yuratomo/w3m.vim', { 'on' : 'W3m' }
-
 call plug#end()
 
 " H to open help docs
@@ -157,3 +148,8 @@ augroup PlugGx
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
 
+
+" Leave a place to try some new plugins, before add it into this list
+if !empty(glob('~/.local.plugins.vim'))
+  source ~/.local.plugins.vim
+endif

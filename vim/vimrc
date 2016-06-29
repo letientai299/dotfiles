@@ -14,9 +14,6 @@ nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 
 
-" Reload unchanged files automatically.
-set autoread
-
 " Search in the command line
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>

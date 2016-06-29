@@ -1,60 +1,89 @@
 #!/bin/bash
-# vim: syntax=sh
+# vim: syntax=sh foldenable foldmethod=marker
 
-# This will create surfix alias to open a file with the associated application.
-# Input:
-# - Application name
-# - List of file extention
-make_alias_open(){
-    # App name should be the fisrt input,
-    app="$1"
+# Alias open file based on extention {{{ #
 
-    shift # Ignore the first param, which is the app name.
+  # Create surfix alias to open a file with the associated application.
+  # Input:
+  # - First varialbe: Application name
+  # - The rest: List of file extentions, separated by white space.
+  make_alias_open(){
+      # App name should be the fisrt input,
+      local app="$1"
 
-    # Loop through the rest of argument list to make surfix alias
-    for ext; do
-      alias -s $ext=$app
-    done
-    unset ext
-}
+      shift # Ignore the first param, which is the app name.
 
-make_alias_open vim\
-  vim md c cpp cs css xml rc tex py java scala
+      # Loop through the rest of argument list to make surfix alias
+      for ext; do
+        alias -s $ext=$app
+      done
+      unset ext # otherwise, ext will remain in ENV
+  }
 
-make_alias_open vlc\
-  mp4 flv avi mkv
+  # Text file
+  make_alias_open vim\
+    vim md c cpp cs css xml rc tex py java scala xtext xtend wiki
 
-make_alias_open eog\
-  jpg png jpeg bmp
+  # Video
+  make_alias_open vlc\
+    mp4 flv avi mkv
 
-# I often want to detach zathura, so I reuse my custom function for zathura
-alias -s pdf=za
+  # Image
+  make_alias_open eog\
+    jpg png jpeg bmp
 
-# I still change my configuration a lot, so I wanna shorten the typing.
-alias so="source"
-alias r="ranger"
-alias v="vim -R"
-alias vw="vim +VimwikiIndex"
-alias vd="vim +VimwikiDiaryIndex"
-alias vt="vim +Goyo ~/.today.wiki"
-alias sv="sudo vim"
+  # Music
+  make_alias_open mpv\
+    mp3 3gpp m4a opus
 
-# This help to send Ctrl-S to vim. I map <C-S> to save current editing file.
-alias vim="stty stop '' -ixoff; nvim"
+  # PDF document
+  make_alias_open zathura\
+    pdf
 
-# Get current day, useful for some lazy commands.
-alias today="date +%Y-%m-%d"
+  # I cannot remember the LibreOffice binary name
+  make_alias_open soffice\
+    doc docx xls xlsx ppt pptx
 
-# Alias for the cmus player
-alias cr="cmus-remote"
-alias crst="cmus-remote -Q" # Status
-alias crn="cmus-remote --next"
-alias crr="cmus-remote --prev"
-alias crp="cmus-remote --play"
-alias cru="cmus-remote --pause"
-alias crs="cmus-remote --stop"
-alias crvu="cmus-remote -v +10%"
-alias crvd="cmus-remote -v -10%"
+# }}} #
 
-# Use ag with the global agignore file
-alias ag='ag --path-to-agignore ~/.agignore'
+# Vim {{{ #
+
+  alias v="vim -R"
+  alias vw="vim +VimwikiIndex"
+  alias vd="vim +VimwikiDiaryIndex"
+  alias vt="vim +Goyo ~/.today.wiki"
+  alias sv="sudo vim"
+  # Help to send Ctrl-S to vim. I map <C-S> to save current editing file.
+  alias vim="stty stop '' -ixoff; nvim"
+
+# }}} Vim  #
+
+
+# Cmus {{{ #
+
+  # Alias for the cmus player
+  alias cr="cmus-remote"
+  alias crst="cmus-remote -Q" # Status
+  alias crn="cmus-remote --next"
+  alias crr="cmus-remote --prev"
+  alias crp="cmus-remote --play"
+  alias cru="cmus-remote --pause"
+  alias crs="cmus-remote --stop"
+  alias crvu="cmus-remote -v +10%"
+  alias crvd="cmus-remote -v -10%"
+
+# }}} Cmus #
+
+
+# Other {{{ #
+
+  alias so="source"
+  alias r="ranger"
+
+  # Get current day, useful for some lazy commands.
+  alias today="date +%Y-%m-%d"
+
+  # Use ag with the global agignore file
+  alias ag='ag --path-to-agignore ~/.agignore'
+
+# }}} Other #
