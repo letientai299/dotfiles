@@ -24,6 +24,8 @@
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.config/nvim: 'vim'
     ~/.config/ranger/rc.conf: 'config/ranger/rc.conf'
+    ~/.config/i3: 'config/i3'
+    ~/.config/i3status: 'config/i3status'
     ~/.cmus/rc: 'cmus/rc'
 
     ~/.config/powerline:
