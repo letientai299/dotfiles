@@ -23,12 +23,15 @@ ethernet enp0s25 {
 }
 
 battery 0 {
-        format = "%status %percentage"
+        format = "%status %remaining %percentage"
+        integer_battery_capacity = true
         format_down = "∅"
         status_chr = "🔌"
         status_bat = "⚡"
         status_full = "🔋 "
         path = "/sys/class/power_supply/BAT%d/uevent"
+        hide_seconds = true
+        last_full_capacity = true
         low_threshold = 10
 }
 

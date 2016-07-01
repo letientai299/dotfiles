@@ -33,10 +33,36 @@
   new_window pixel 3
   hide_edge_borders both
 
-  # Make pidgin always float
-  for_window [class="^Pidgin$"] floating enable
+  #  Messaging application {{{ #
+    for_window [class="^Pidgin$"] floating enable
+    assign [class="^Pidgin$"] $tag_message
 
+    for_window [class="Viber"] floating enable
+    assign [class="Viber"] $tag_message
+
+    for_window [class="Skype"] floating enable
+    assign [class="Skype"] $tag_message
+  #  }}} #
+
+  exec --no-startup-id conky
+  assign [class="Conky"] $tag_system
 #  }}} UI setting #
+
+
+#  Focus {{{ #
+
+# Change focus
+# focus_follows_mouse no
+focus_follows_mouse true
+popup_during_fullscreen smart
+
+# Workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+
+# }}} #
 
 
 # i3 config file (v4)
@@ -62,7 +88,8 @@ font pango:Inconsolata for Powerline Medium 10
 # font, it doesn’t scale on retina/hidpi displays.
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# I prefer using Alt key for moving floating windows
+floating_modifier Mod1
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -75,11 +102,15 @@ bindsym $mod+n scratchpad show
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#
+# Use j4, as they claim it 25x faster than i3-menu-desktop. I also don't like
+# the delay in i3-menu-desktop
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
@@ -99,17 +130,18 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+# alternatively, you can use the cursor keys with faster movement
+bindsym $mod+Shift+Left  move left    50px
+bindsym $mod+Shift+Down  move down    50px
+bindsym $mod+Shift+Up    move up      50px
+bindsym $mod+Shift+Right move right   50px
+
 
 # split in horizontal orientation
-bindsym $mod+semicolon split h
+bindsym $mod+semicolon split h; exec notify-send "split horizontally"
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split v; exec notify-send "split vertically"
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -120,10 +152,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+p floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+p focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -131,36 +163,62 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Name the workspaces
+set $tag_main "1:Main"
+set $tag_message "2:Messaging"
+set $tag_music "3:Music"
+set $tag4 "4"
+set $tag5 "5"
+set $tag6 "6"
+set $tag7 "7"
+set $tag8 "8"
+set $tag9 "9"
+set $tag_system "10:System"
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $tag_main
+bindsym $mod+2 workspace $tag_message
+bindsym $mod+3 workspace $tag_music
+bindsym $mod+4 workspace $tag4
+bindsym $mod+5 workspace $tag5
+bindsym $mod+6 workspace $tag6
+bindsym $mod+7 workspace $tag7
+bindsym $mod+8 workspace $tag8
+bindsym $mod+9 workspace $tag9
+bindsym $mod+0 workspace $tag_system
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace $tag_main
+bindsym $mod+Shift+2 move container to workspace $tag_message
+bindsym $mod+Shift+3 move container to workspace $tag_music
+bindsym $mod+Shift+4 move container to workspace $tag4
+bindsym $mod+Shift+5 move container to workspace $tag5
+bindsym $mod+Shift+6 move container to workspace $tag6
+bindsym $mod+Shift+7 move container to workspace $tag7
+bindsym $mod+Shift+8 move container to workspace $tag8
+bindsym $mod+Shift+9 move container to workspace $tag9
+bindsym $mod+Shift+0 move container to workspace $tag_system
+
+# move focused container to workspace and also move to that workspace
+bindsym $mod+Control+1 move container to workspace $tag_main,    workspace $tag_main
+bindsym $mod+Control+2 move container to workspace $tag_message, workspace $tag_message
+bindsym $mod+Control+3 move container to workspace $tag_music,   workspace $tag_music
+bindsym $mod+Control+4 move container to workspace $tag4,        workspace $tag4
+bindsym $mod+Control+5 move container to workspace $tag5,        workspace $tag5
+bindsym $mod+Control+6 move container to workspace $tag6,        workspace $tag6
+bindsym $mod+Control+7 move container to workspace $tag7,        workspace $tag7
+bindsym $mod+Control+8 move container to workspace $tag8,        workspace $tag8
+bindsym $mod+Control+9 move container to workspace $tag9,        workspace $tag9
+bindsym $mod+Control+0 move container to workspace $tag_system,  workspace $tag_system
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+Delete exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -196,4 +254,17 @@ bar {
   position top
   i3bar_command i3bar
   status_command i3status
+
+	colors {
+		# Whole color settings
+		background #000000
+		statusline #ffffff
+		separator  #666666
+
+		# Type             border  background font
+		focused_workspace  #008fff #007fff #ffffff
+		active_workspace   #333333 #5f676a #ffffff
+		inactive_workspace #333333 #222222 #888888
+		urgent_workspace   #aa0000 #990000 #ffffff
+	}
 }
