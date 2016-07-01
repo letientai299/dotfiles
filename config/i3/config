@@ -30,8 +30,11 @@
   # Make gnome theme available
   exec gnome-settings-daemon
   # Save some screen space
-  new_window pixel 1
+  new_window pixel 3
   hide_edge_borders both
+
+  # Make pidgin always float
+  for_window [class="^Pidgin$"] floating enable
 
 #  }}} UI setting #
 
@@ -64,8 +67,12 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# move window to scratchpad
+bindsym $mod+m move scratchpad
+bindsym $mod+n scratchpad show
+
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
