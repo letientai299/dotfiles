@@ -45,7 +45,6 @@
   #  }}} #
 
   exec --no-startup-id conky
-  assign [class="Conky"] $tag_system
 #  }}} UI setting #
 
 
@@ -149,7 +148,9 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+t layout toggle split
+bindsym $mod+Shift+v layout splitv
+bindsym $mod+Shift+semicolon layout splith
 
 # toggle tiling / floating
 bindsym $mod+Shift+p floating toggle
@@ -161,7 +162,7 @@ bindsym $mod+p focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+Shift+a focus child
 
 # Name the workspaces
 set $tag_main "1:Main"
@@ -219,6 +220,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+Delete exit
+
+bindsym $mod+Shift+BackSpace exec i3lock
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
