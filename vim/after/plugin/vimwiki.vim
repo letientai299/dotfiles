@@ -14,4 +14,3 @@ let wiki.nested_syntaxes ={
 let g:vimwiki_list = [wiki]
 
 let g:vimwiki_hl_cb_checked = 1
-let g:vimwiki_listsyms = ' ○◐●✓'
