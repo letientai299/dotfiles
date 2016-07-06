@@ -22,6 +22,19 @@
   bindsym XF86AudioNext  exec cmus-remote --next
   bindsym XF86AudioPrev  exec cmus-remote --prev
 
+  # For working on non-media key keyboards (this made me think about the
+  # previous config, is it worth it)
+
+    #       Pulse   Audio controls
+    bindsym $mod+F2 exec  pactl set-sink-volume $(pacmd list-sinks |grep "*" |cut -c 12-) -5%       #decrease sound volume
+    bindsym $mod+F3 exec  pactl set-sink-volume $(pacmd list-sinks |grep "*" |cut -c 12-) +5%    #increase sound     volume
+    bindsym $mod+F4 exec  pactl set-sink-mute   $(pacmd list-sinks |grep "*" |cut -c 12-) toggle #         mute      sound
+
+    # Media player controls
+    bindsym $mod+F7 exec cmus-remote --pause # don't know wh
+    bindsym $mod+F6 exec cmus-remote --play # but this works
+    bindsym $mod+F8 exec cmus-remote --next
+    bindsym $mod+F5 exec cmus-remote --prev
 #  }}} Multimedia keys #
 
 
@@ -44,9 +57,13 @@
     assign [class="Skype"] $tag_message
   #  }}} #
 
-  exec --no-startup-id conky
 #  }}} UI setting #
 
+#  Auto start application {{{ #
+exec --no-startup-id pidgin.orig
+exec --no-startup-id conky
+exec --no-startup-id xrandr --output VGA1 --left-of HDMI2
+#  }}} Auto start application #
 
 #  Focus {{{ #
 
