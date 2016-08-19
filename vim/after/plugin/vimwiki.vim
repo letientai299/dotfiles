@@ -8,7 +8,8 @@ let wiki.nested_syntaxes ={
             \'c++':    'cpp',
             \'c':      'c',
             \'scala':  'scala',
-            \'java':   'java'
+            \'java':   'java',
+            \'js':   'javascript'
             \}
 
 let g:vimwiki_list = [wiki]

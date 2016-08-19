@@ -108,6 +108,11 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'scrooloose/syntastic'
 
 
+" Leave a place to try some new plugins, before add it into this list
+if !empty(glob('~/.local.plugins.vim'))
+  source ~/.local.plugins.vim
+endif
+
 call plug#end()
 
 " H to open help docs
@@ -149,7 +154,3 @@ augroup PlugGx
 augroup END
 
 
-" Leave a place to try some new plugins, before add it into this list
-if !empty(glob('~/.local.plugins.vim'))
-  source ~/.local.plugins.vim
-endif
