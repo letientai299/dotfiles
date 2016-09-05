@@ -66,11 +66,6 @@ vnoremap <Leader>y "+y
 " Make Y copy to end the line like the D command
 nnoremap Y y$
 
-" Insert a second level or first level header line below the current line in
-" normal mode
-nnoremap <Leader>l yypVr-
-nnoremap <Leader>L yypVr=
-
 " Quickly toggle the color column
 function! g:ToggleColorColumn()
     if &colorcolumn != ''

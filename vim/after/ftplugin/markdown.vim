@@ -19,4 +19,8 @@ set tw=80
 set fo-=l
 set fo+=t
 
-" Shortcut to open the table of content
+" Insert a second level or first level header line below the current line in
+" normal mode
+nnoremap <buffer> <Leader>l yypVr-
+nnoremap <buffer> <Leader>L yypVr=
+

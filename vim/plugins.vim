@@ -79,7 +79,6 @@ Plug 'tpope/vim-speeddating'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-titlecase'
-Plug 'justinmk/vim-sneak'
 
 
 "------------------------------------------------------------------------------
