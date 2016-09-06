@@ -101,19 +101,8 @@ Plug 'sheerun/vim-polyglot', {'do': './build'}
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Setup for nodejs
-Plug 'ternjs/tern_for_vim'
-Plug 'carlitux/deoplete-ternjs'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'moll/vim-node'
-
-let g:tern_request_timeout = 1
-let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
-
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-
-set omnifunc=syntaxcomplete#Complete
-let g:tern_map_keys=1
-let g:tern_show_argument_hints="on_hold"
 
 
 "------------------------------------------------------------------------------
