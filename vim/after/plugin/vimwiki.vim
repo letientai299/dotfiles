@@ -8,6 +8,7 @@ let wiki.nested_syntaxes ={
             \'c++':    'cpp',
             \'c':      'c',
             \'scala':  'scala',
+            \'js':     'javascript',
             \'java':   'java'
             \}
 
