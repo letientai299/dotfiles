@@ -67,7 +67,7 @@ endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'letientai299/vim-react-snippets'
+Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
 
 "------------------------------------------------------------------------------
 " Custom keymap
