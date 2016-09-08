@@ -47,6 +47,7 @@ Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'schickling/vim-bufonly'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -58,12 +59,16 @@ if(has('nvim'))
   Plug 'zchee/deoplete-jedi', { 'for': 'py' }
   " deoplete source for Go
   Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+
+  let g:deoplete#auto_completion_start_length=1
 else
   Plug 'Shougo/neocomplete.vim'
 endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
+
 
 "------------------------------------------------------------------------------
 " Custom keymap
@@ -79,6 +84,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-titlecase'
+Plug 'mattn/emmet-vim'
 
 
 "------------------------------------------------------------------------------
