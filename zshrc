@@ -29,6 +29,12 @@ setopt ignore_eof
 setopt no_beep
 # Ignore dups
 setopt hist_ignore_dups
+# enable edit-command-line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
+
 
 # Load custom shell script
 for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
