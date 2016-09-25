@@ -56,7 +56,8 @@ if(has('nvim'))
   endfunction
   " The completion engine
   Plug 'Shougo/deoplete.nvim', { 'tag': '1.1', 'do': function('DoRemote') }
-  Plug 'zchee/deoplete-jedi', { 'for': 'py' }
+  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+  Plug 'davidhalter/jedi-vim', { 'for': 'python' }
   " deoplete source for Go
   Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
 
