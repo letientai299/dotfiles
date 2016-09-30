@@ -70,9 +70,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
 
-" For ruby
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'tpope/vim-rails', {'for': 'ruby'}
+Plug 'tpope/vim-endwise', {'for': 'ruby'}
 
 
 "------------------------------------------------------------------------------
