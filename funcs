@@ -80,10 +80,11 @@ lgn(){
     echo NOTE folder is not configured, discard.
     return
   fi
-  if [ "$(pwd)" != "$NOTE" ];then
+  if [ "$(pwd)/" != "$NOTE" ];then
     echo Not in NOTE folder, discard.
     return
   fi
-
-  lg Add note for "$(today)"
+  local now
+  now=$(date '+%F %a %T')
+  lg Add note "$now"
 }
