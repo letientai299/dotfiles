@@ -48,6 +48,10 @@ Plug 'xolox/vim-misc'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'schickling/vim-bufonly'
+Plug 'wellle/tmux-complete.vim'
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-endwise', { 'for': 'ruby'}
+
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -74,6 +78,9 @@ Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 
+" Gist
+Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
+
 
 "------------------------------------------------------------------------------
 " Custom keymap
@@ -97,6 +104,7 @@ Plug 'mattn/emmet-vim'
 "
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-line'
+Plug 'thalesmello/vim-textobj-methodcall'
 Plug 'reedes/vim-textobj-sentence'
 Plug 'kana/vim-textobj-user'
 
@@ -110,6 +118,10 @@ Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'heavenshell/vim-jsdoc'
+Plug 'chikamichi/mediawiki.vim', { 'for': 'mediawiki'}
+Plug 'heavenshell/vim-pydocstring', {'for': 'python'}
+
 
 " Setup for nodejs
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
