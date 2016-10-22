@@ -75,3 +75,7 @@ fi
 # Remove the duplicated entries in path
 typeset -U PATH
 #  }}} Finalize  #
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/letientai299/.sdkman"
+[[ -s "/home/letientai299/.sdkman/bin/sdkman-init.sh" ]] && source "/home/letientai299/.sdkman/bin/sdkman-init.sh"

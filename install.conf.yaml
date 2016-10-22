@@ -27,6 +27,7 @@
     ~/.config/i3: 'config/i3'
     ~/.config/i3status: 'config/i3status'
     ~/.config/conky: 'config/conky'
+    ~/.config/vimfx: 'config/vimfx'
     ~/.cmus/rc: 'cmus/rc'
 
     ~/.config/powerline:
