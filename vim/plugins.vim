@@ -127,6 +127,9 @@ Plug 'heavenshell/vim-pydocstring', {'for': 'python'}
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'moll/vim-node'
 
+" Typescript
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
 "------------------------------------------------------------------------------
 " Helper
