@@ -6,6 +6,7 @@ vimfx.addCommand({
 }, ({vim}) => {
   vim.window.FullZoom.enlarge()
 })
+vimfx.set('custom.mode.normal.zoom_in', 'zi')
 
 
 vimfx.addCommand({
@@ -14,6 +15,7 @@ vimfx.addCommand({
 }, ({vim}) => {
   vim.window.FullZoom.reduce()
 })
+vimfx.set('custom.mode.normal.zoom_out', 'zo')
 
 
 // Search bookmarks
@@ -35,6 +37,7 @@ vimfx.addCommand({
 }, ({vim}) => {
   vim.window.gBrowser.loadOneTab('about:downloads')
 })
+vimfx.set('custom.mode.normal.goto_downloads', 'gd')
 
 // Move tab to index
 // This command moves the current tab before tab number count.
@@ -59,6 +62,8 @@ vimfx.addCommand({
     window.gBrowser.moveTabTo(selectedTab, newPosition)
   }, 0)
 })
+vimfx.set('custom.mode.normal.tab_move_to_index','gm')
+
 
 // Close tab to the left
 vimfx.addCommand({
@@ -71,4 +76,4 @@ vimfx.addCommand({
   Array.slice(gBrowser.tabs, gBrowser._numPinnedTabs, gBrowser.selectedTab._tPos)
     .forEach(tab => gBrowser.removeTab(tab))
 })
-
+vimfx.set('custom.mode.normal.tab_close_to_start', 'gx^')
