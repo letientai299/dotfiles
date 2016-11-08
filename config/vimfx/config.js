@@ -1,59 +1,94 @@
-let {commands} = vimfx.modes.normal
-// Zoom
+// Zoom functions {{{ //
+let {
+  commands
+} = vimfx.modes.normal
+  // Zoom
 vimfx.addCommand({
   name: 'zoom_in',
   description: 'Zoom in',
-}, ({vim}) => {
+}, ({
+  vim
+}) => {
   vim.window.FullZoom.enlarge()
 })
 vimfx.set('custom.mode.normal.zoom_in', 'zi')
 
-
 vimfx.addCommand({
   name: 'zoom_out',
   description: 'Zoom out',
-}, ({vim}) => {
+}, ({
+  vim
+}) => {
   vim.window.FullZoom.reduce()
-})
+});
 vimfx.set('custom.mode.normal.zoom_out', 'zo')
+  // }}} Zoom functions //
 
-
-// Search bookmarks
+// Search bookmarks {{{ //
 vimfx.addCommand({
-  name: 'search_bookmarks',
-  description: 'Search bookmarks',
-  category: 'location',
-  order: commands.focus_location_bar.order + 1,
-}, (args) => {
-  commands.focus_location_bar.run(args)
-  args.vim.window.gURLBar.value = '* '
-})
+    name: 'search_bookmarks',
+    description: 'Search bookmarks',
+    category: 'location',
+    order: commands.focus_location_bar.order + 1,
+  }, (args) => {
+    commands.focus_location_bar.run(args)
+    args.vim.window.gURLBar.value = '* '
+  })
+  // }}} Search bookmarks //
+
+// Custom Sites {{{1 //
+let addShortcusForCustomSites = function(command, url, shortcut) {
+  vimfx.addCommand({
+    name: command,
+    description: 'Command ' + command,
+  }, ({
+    vim
+  }) => {
+    vim.window.gBrowser.loadTabs([url])
+  });
+  vimfx.set('custom.mode.normal.' + command, shortcut);
+};
+
+let siteAndUrls = [
+  ['goto_downloads', 'about:downloads', 'cd'],
+  ['goto_hackenews', 'https://news.ycombinator.com/news', 'ch'],
+  ['goto_github', 'github.com', 'cg'],
+  ['goto_config', 'about:config', 'cc']
+];
+
+siteAndUrls.forEach(site => {
+  addShortcusForCustomSites(
+    site[0],
+    site[1],
+    site[2]
+  );
+});
 
 
-// Open some 'about:' sites
-vimfx.addCommand({
-  name: 'goto_downloads',
-  description: 'Downloads',
-}, ({vim}) => {
-  vim.window.gBrowser.loadOneTab('about:downloads')
-})
-vimfx.set('custom.mode.normal.goto_downloads', 'gd')
+// 1}}} Custom Sites //
 
-// Move tab to index
+// Move tab to index {{{ //
 // This command moves the current tab before tab number count.
 vimfx.addCommand({
   name: 'tab_move_to_index',
   description: 'Move tab to index',
   category: 'tabs',
   order: commands.tab_move_forward.order + 1,
-}, ({vim, count}) => {
+}, ({
+  vim,
+  count
+}) => {
   if (count === undefined) {
     vim.notify('Provide a count')
     return
   }
-  let {window} = vim
+  let {
+    window
+  } = vim
   window.setTimeout(() => {
-    let {selectedTab} = window.gBrowser
+    let {
+      selectedTab
+    } = window.gBrowser
     if (selectedTab.pinned) {
       vim.notify('Run from a non-pinned tab')
       return
@@ -61,19 +96,25 @@ vimfx.addCommand({
     let newPosition = window.gBrowser._numPinnedTabs + count - 1
     window.gBrowser.moveTabTo(selectedTab, newPosition)
   }, 0)
-})
-vimfx.set('custom.mode.normal.tab_move_to_index','gm')
+});
+vimfx.set('custom.mode.normal.tab_move_to_index', 'gm')
+  // }}} Move tab to index //
 
-
-// Close tab to the left
+// Close tab to the leff {{{ //
 vimfx.addCommand({
   name: 'tab_close_to_start',
   description: 'Close tabs to the left',
   category: 'tabs',
   order: commands.tab_close_to_end.order + 1,
-}, ({vim}) => {
-  let {gBrowser} = vim.window
-  Array.slice(gBrowser.tabs, gBrowser._numPinnedTabs, gBrowser.selectedTab._tPos)
+}, ({
+  vim
+}) => {
+  let {
+    gBrowser
+  } = vim.window
+  Array.slice(gBrowser.tabs, gBrowser._numPinnedTabs, gBrowser.selectedTab
+      ._tPos)
     .forEach(tab => gBrowser.removeTab(tab))
-})
+});
 vimfx.set('custom.mode.normal.tab_close_to_start', 'gx^')
+  // }}} Close tab to the leff //
