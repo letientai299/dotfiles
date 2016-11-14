@@ -133,6 +133,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Helper
 "
 Plug 'scrooloose/syntastic'
+Plug 'mtth/scratch.vim'
 
 
 " Leave a place to try some new plugins, before add it into this list
