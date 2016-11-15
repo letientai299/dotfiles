@@ -2,7 +2,7 @@
 let {
   commands
 } = vimfx.modes.normal
-  // Zoom
+// Zoom
 vimfx.addCommand({
   name: 'zoom_in',
   description: 'Zoom in',
@@ -22,19 +22,19 @@ vimfx.addCommand({
   vim.window.FullZoom.reduce()
 });
 vimfx.set('custom.mode.normal.zoom_out', 'zo')
-  // }}} Zoom functions //
+// }}} Zoom functions //
 
 // Search bookmarks {{{ //
 vimfx.addCommand({
-    name: 'search_bookmarks',
-    description: 'Search bookmarks',
-    category: 'location',
-    order: commands.focus_location_bar.order + 1,
-  }, (args) => {
-    commands.focus_location_bar.run(args)
-    args.vim.window.gURLBar.value = '* '
-  })
-  // }}} Search bookmarks //
+  name: 'search_bookmarks',
+  description: 'Search bookmarks',
+  category: 'location',
+  order: commands.focus_location_bar.order + 1,
+}, (args) => {
+  commands.focus_location_bar.run(args)
+  args.vim.window.gURLBar.value = '* '
+})
+// }}} Search bookmarks //
 
 // Custom Sites {{{1 //
 let addShortcusForCustomSites = function(command, url, shortcut) {
@@ -52,8 +52,7 @@ let addShortcusForCustomSites = function(command, url, shortcut) {
 let siteAndUrls = [
   ['goto_downloads', 'about:downloads', 'cd'],
   ['goto_hackenews', 'https://news.ycombinator.com/news', 'ch'],
-  ['goto_github', 'github.com', 'cg'],
-  ['goto_config', 'about:config', 'cc']
+  ['goto_config', 'about:config', 'cC']
 ];
 
 siteAndUrls.forEach(site => {
@@ -98,7 +97,7 @@ vimfx.addCommand({
   }, 0)
 });
 vimfx.set('custom.mode.normal.tab_move_to_index', 'gm')
-  // }}} Move tab to index //
+// }}} Move tab to index //
 
 // Close tab to the leff {{{ //
 vimfx.addCommand({
@@ -113,8 +112,22 @@ vimfx.addCommand({
     gBrowser
   } = vim.window
   Array.slice(gBrowser.tabs, gBrowser._numPinnedTabs, gBrowser.selectedTab
-      ._tPos)
+    ._tPos)
     .forEach(tab => gBrowser.removeTab(tab))
 });
 vimfx.set('custom.mode.normal.tab_close_to_start', 'gx^')
-  // }}} Close tab to the leff //
+// }}} Close tab to the leff //
+
+// Search for selected text {{{ //
+vimfx.addCommand({
+  name: 'search_selected_text',
+  description: 'Search for the selected text',
+}, ({vim}) => {
+  let {messageManager} = vim.window.gBrowser.selectedBrowser
+  vimfx.send(vim, 'getSelection', null, selection => {
+    let inTab = true // Change to `false` if you’d like to search in current tab.
+    vim.window.BrowserSearch.loadSearch(selection, inTab)
+  })
+})
+vimfx.set('custom.mode.normal.search_selected_text', 'cc')
+// }}} Search for selected text //
