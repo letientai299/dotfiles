@@ -42,7 +42,6 @@ Plug 'rking/ag.vim', { 'on' : 'Ag'}
 "
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
-Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'ntpeters/vim-better-whitespace'
@@ -118,7 +117,7 @@ Plug 'sheerun/vim-polyglot', {'do': './build'}
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'heavenshell/vim-jsdoc'
 Plug 'chikamichi/mediawiki.vim', { 'for': 'mediawiki'}
-Plug 'heavenshell/vim-pydocstring', {'for': 'python'}
+" Plug '~/Project/letientai299/vim-pydocstring', {'for': 'python'}
 
 
 " Setup for nodejs
