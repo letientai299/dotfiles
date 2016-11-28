@@ -78,6 +78,9 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 " Gist
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 
+" Resize panel quickly
+Plug 'tomtom/tinykeymap_vim' | Plug 'tomtom/tlib_vim'
+
 
 "------------------------------------------------------------------------------
 " Custom keymap

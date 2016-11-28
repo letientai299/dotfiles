@@ -51,8 +51,9 @@ let addShortcusForCustomSites = function(command, url, shortcut) {
 
 let siteAndUrls = [
   ['goto_downloads', 'about:downloads', 'cd'],
-  ['goto_downloads', 'about:preferences', 'cp'],
+  ['goto_preferences', 'about:preferences', 'cp'],
   ['goto_hackenews', 'https://news.ycombinator.com/news', 'ch'],
+  ['goto_github', 'github.com', 'cg'],
   ['goto_config', 'about:config', 'cC']
 ];
 
