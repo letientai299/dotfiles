@@ -24,3 +24,8 @@ set fo+=t
 nnoremap <buffer> <Leader>l yypVr-
 nnoremap <buffer> <Leader>L yypVr=
 
+" Change header level, this works well if the current line is already a header,
+" and not work for the opposite.
+nnoremap <buffer> = V:HeaderIncrease<CR><ESC><ESC>
+nnoremap <buffer> + V:HeaderIncrease<CR><ESC><ESC>
+nnoremap <buffer> - V:HeaderDecrease<CR><ESC><ESC>
