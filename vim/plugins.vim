@@ -31,7 +31,7 @@ Plug 'Konfekt/FastFold'
 "------------------------------------------------------------------------------
 " Searching
 "
-Plug 'haya14busa/incsearch.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rking/ag.vim', { 'on' : 'Ag'}
@@ -182,5 +182,6 @@ augroup PlugGx
   autocmd!
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
+
 
 
