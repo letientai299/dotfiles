@@ -136,3 +136,36 @@ vimfx.addCommand({
 })
 vimfx.set('custom.mode.normal.search_selected_text', 'cc')
 // }}} Search for selected text //
+
+
+// Increment/Decrement the last number in the URL {{{1 //
+vimfx.addCommand({
+  name: 'go_increment',
+  description: 'Increment the last number in the URL',
+  category: 'location',
+  order: commands.go_to_root.order + 1,
+}, ({vim, count = 1}) => {
+  let url = vim.browser.currentURI.spec
+  let newUrl = url.replace(/(\d+)(?=\D*$)/, match =>
+    Math.max(0, Number(match) + count)
+  )
+  if (newUrl === url) {
+    vim.notify('Cannot increment/decrement URL')
+  } else {
+    vim.window.gBrowser.loadURI(newUrl)
+  }
+})
+
+vimfx.set('custom.mode.normal.' + 'go_increment', 'c]');
+
+vimfx.addCommand({
+  name: 'go_decrement',
+  description: 'Decrement last number in the URL',
+  category: 'location',
+  order: commands.go_increment.order + 1,
+}, ({vim, count = 1}) => {
+  commands.go_increment.run({vim, count: -count})
+})
+
+vimfx.set('custom.mode.normal.' + 'go_decrement', 'c[');
+// 1}}}
