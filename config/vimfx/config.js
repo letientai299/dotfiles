@@ -50,6 +50,9 @@ let addShortcusForCustomSites = function(command, url, shortcut) {
 };
 
 let siteAndUrls = [
+  ['goto_twitter', 'twitter.com', 'ct'],
+  ['goto_fb', 'fb.com', 'cf'],
+  ['goto_my_site', 'letientai299.github.io', 'cl'],
   ['goto_downloads', 'about:downloads', 'cd'],
   ['goto_preferences', 'about:preferences', 'cp'],
   ['goto_hackenews', 'https://news.ycombinator.com/news', 'ch'],
