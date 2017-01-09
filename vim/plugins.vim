@@ -24,7 +24,7 @@ Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 Plug 'Konfekt/FastFold'
 
 
