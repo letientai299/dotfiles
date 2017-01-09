@@ -50,6 +50,7 @@ let addShortcusForCustomSites = function(command, url, shortcut) {
 };
 
 let siteAndUrls = [
+  ['goto_notes', 'github.com/letientai299/notes/issues', 'cn'],
   ['goto_twitter', 'twitter.com', 'ct'],
   ['goto_fb', 'fb.com', 'cf'],
   ['goto_my_site', 'letientai299.github.io', 'cl'],
