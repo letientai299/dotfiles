@@ -20,8 +20,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'flazz/vim-colorschemes'
-Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
-Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
+" Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
+" Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 " Plug 'majutsushi/tagbar'
@@ -42,14 +42,14 @@ Plug 'rking/ag.vim', { 'on' : 'Ag'}
 "
 Plug 'Chiel92/vim-autoformat'
 Plug 'raimondi/delimitmate'
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-session'
+" Plug 'xolox/vim-misc'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
-Plug 'alvan/vim-closetag'
-Plug 'tpope/vim-endwise', { 'for': 'ruby'}
+" Plug 'alvan/vim-closetag'
+" Plug 'tpope/vim-endwise', { 'for': 'ruby'}
 
 
 " deoplete completion engine can only work with neovim
@@ -62,7 +62,7 @@ if(has('nvim'))
   Plug 'zchee/deoplete-jedi', { 'for': 'python' }
   Plug 'davidhalter/jedi-vim', { 'for': 'python' }
   " deoplete source for Go
-  Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+  " Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
 
   let g:deoplete#auto_completion_start_length=1
 else
@@ -71,12 +71,10 @@ endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
-
-Plug 'tpope/vim-endwise', {'for': 'ruby'}
+" Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
 
 " Gist
-Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
+" Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 
 " Resize panel quickly
 Plug 'tomtom/tinykeymap_vim' | Plug 'tomtom/tlib_vim'
@@ -92,7 +90,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-speeddating'
+" Plug 'tpope/vim-speeddating'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-titlecase'
@@ -104,7 +102,7 @@ Plug 'mattn/emmet-vim'
 "
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-line'
-Plug 'thalesmello/vim-textobj-methodcall'
+" Plug 'thalesmello/vim-textobj-methodcall'
 Plug 'reedes/vim-textobj-sentence'
 Plug 'kana/vim-textobj-user'
 
@@ -115,9 +113,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'godlygeek/tabular', {'on': 'Tabularize'}| Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'vimwiki/vimwiki'
-Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
+" Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
-Plug 'fatih/vim-go', { 'for': 'go' }
+" Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'heavenshell/vim-jsdoc'
 Plug 'chikamichi/mediawiki.vim', { 'for': 'mediawiki'}
 " Plug '~/Project/letientai299/vim-pydocstring', {'for': 'python'}
