@@ -84,7 +84,11 @@ Plug 'tomtom/tinykeymap_vim' | Plug 'tomtom/tlib_vim'
 " Custom keymap
 "
 Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-sensible'
+
+if !has('nvim')
+  Plug 'tpope/vim-sensible'
+endif
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
