@@ -37,6 +37,9 @@
     bindsym $mod+F5 exec cmus-remote --prev
 #  }}} Multimedia keys #
 
+# Map Caplocks to ESC
+exec xmodmap -e "remove Lock = Caps_Lock"
+exec xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
 
 #  UI setting {{{ #
 
@@ -60,8 +63,8 @@
 #  }}} UI setting #
 
 #  Auto start application {{{ #
-exec --no-startup-id pidgin.orig
-exec --no-startup-id conky
+# exec --no-startup-id pidgin.orig
+# exec --no-startup-id conky
 exec --no-startup-id xrandr --output VGA1 --left-of HDMI2
 #  }}} Auto start application #
 
