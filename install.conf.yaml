@@ -28,6 +28,8 @@
     ~/.config/i3status: 'config/i3status'
     ~/.config/conky: 'config/conky'
     ~/.config/vimfx: 'config/vimfx'
+    ~/.config/translate-shell: 'config/translate-shell'
+    ~/.config/youtube-dl: 'config/youtube-dl'
     ~/.cmus/rc: 'cmus/rc'
 
     ~/.config/powerline:

@@ -1,0 +1,7 @@
+{
+ :verbose         true
+ :hl              "en"
+ :tl              "vi"
+ :indent          2
+ :view            true
+}
