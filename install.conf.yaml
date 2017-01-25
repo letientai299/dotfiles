@@ -49,6 +49,10 @@
     # Ag
     ~/.agignore: 'agignore'
 
+    # W3M
+    ~/.w3m/config: 'w3m/config'
+    ~/.w3m/keymap: 'w3m/keymap'
+
 
 - shell:
     # Git
