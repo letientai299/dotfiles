@@ -77,7 +77,7 @@
 # Other {{{ #
 
   alias so="source"
-  alias r="sudo ranger"
+  alias r="ranger"
 
   # Get current day, useful for some lazy commands.
   alias today="date +%Y-%m-%d"
