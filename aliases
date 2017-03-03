@@ -52,11 +52,9 @@
   alias vw="vim +VimwikiIndex"
   alias vd="vim +VimwikiDiaryIndex"
   alias sv="sudo vim"
-  # Help to send Ctrl-S to vim. I map <C-S> to save current editing file.
-  alias vim="stty stop '' -ixoff; nvim"
+  alias vim=nvim
 
 # }}} Vim  #
-
 
 # Cmus {{{ #
 
@@ -72,7 +70,6 @@
   alias crvd="cmus-remote -v -10%"
 
 # }}} Cmus #
-
 
 # Other {{{ #
 
