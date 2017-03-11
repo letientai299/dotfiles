@@ -48,15 +48,6 @@ unset file;
 
 #  Install favorite software {{{ #
 
-# nvim
-if ! hash nvim 2>/dev/null; then
-  sudo apt-get install -y software-properties-common
-  sudo add-apt-repository -y ppa:neovim-ppa/unstable
-  sudo apt-get update
-  sudo apt-get install -y neovim
-fi
-
-
 # fzf .
 if [ ! -f ~/.fzf.zsh ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf

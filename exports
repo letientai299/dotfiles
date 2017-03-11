@@ -8,13 +8,3 @@ export FZF_DEFAULT_COMMAND='ag --path-to-agignore ~/.agignore -g ""'
 # Also apply to the Ctrl-T command.
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Make less output colored
-GNU_SOURCE_HIGHLIGHT="/usr/bin/source-highlight-esc.sh"
-if [ ! -f $GNU_SOURCE_HIGHLIGHT ]; then
-  echo "Installl GNU source-highlight"
-  sudo apt-get install source-highlight
-  echo "Done install source-highlight."
-fi
-
-export LESSOPEN="| $GNU_SOURCE_HIGHLIGHT %s"
-export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
