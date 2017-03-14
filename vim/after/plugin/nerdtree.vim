@@ -2,7 +2,9 @@
 "------------------------------------------------------
 
 nnoremap <C-F12> :NERDTreeToggle<CR>
+nnoremap <F36> :NERDTreeToggle<CR>
 nnoremap <S-F12> :NERDTreeFind<CR>
+nnoremap <F24> :NERDTreeFind<CR>
 
 " Command to highlight by file extension
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
