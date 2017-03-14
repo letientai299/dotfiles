@@ -46,17 +46,6 @@ unset file;
 
 #  }}} zsh config #
 
-#  Install favorite software {{{ #
-
-# fzf .
-if [ ! -f ~/.fzf.zsh ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-fi
-source ~/.fzf.zsh
-
-#  }}} Install favorite software #
-
 #  Finalize {{{ #
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
@@ -67,8 +56,9 @@ fi
 typeset -U PATH
 #  }}} Finalize  #
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/letientai299/.sdkman"
-[[ -s "/home/letientai299/.sdkman/bin/sdkman-init.sh" ]] && source "/home/letientai299/.sdkman/bin/sdkman-init.sh"
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
