@@ -18,7 +18,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] 
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ntpeters/vim-airline-colornum'
 Plug 'flazz/vim-colorschemes'
 " Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 " Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
