@@ -89,3 +89,6 @@ nmap ds<space> F<space>xf<space>x
 
 " Insert mode delete forward one char
 inoremap <C-d> <Del>
+
+" Look up for help with vim keyword
+autocmd FileType vim setlocal keywordprg=:help
