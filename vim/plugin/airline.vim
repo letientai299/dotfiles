@@ -9,6 +9,6 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline_detect_iminsert=1
 
-let g:airline_colornum_enabled = 1
+let g:airline_colornum_enabled = 0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
