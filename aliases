@@ -29,7 +29,7 @@
     mp4 flv avi mkv
 
   # Image
-  make_alias_open eog\
+  make_alias_open viewnior\
     jpg png jpeg bmp
 
   # Music
