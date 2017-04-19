@@ -47,6 +47,9 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
+
+" Clang comlete with header include completion
+Plug 'Rip-Rip/clang_complete' | Plug 'xaizek/vim-inccomplete' "
 " Plug 'alvan/vim-closetag'
 " Plug 'tpope/vim-endwise', { 'for': 'ruby'}
 
@@ -57,7 +60,7 @@ if(has('nvim'))
     UpdateRemotePlugins
   endfunction
   " The completion engine
-  Plug 'Shougo/deoplete.nvim', { 'tag': '1.1', 'do': function('DoRemote') }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi', { 'for': 'python' }
   Plug 'davidhalter/jedi-vim', { 'for': 'python' }
   " deoplete source for Go
@@ -131,6 +134,8 @@ Plug 'moll/vim-node'
 " Typescript
 Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+
+" C/C++
 
 "------------------------------------------------------------------------------
 " Helper
