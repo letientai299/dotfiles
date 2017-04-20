@@ -8,7 +8,7 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = {
     \ "mode": "passive",
-    \ "active_filetypes": ["sh", "zsh", "py", "php", "js"],
+    \ "active_filetypes": ["sh", "zsh", "py", "php", "js", "json", "c"],
     \ "passive_filetypes": ["json"] }
 
 " Don't check .json files
