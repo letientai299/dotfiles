@@ -46,12 +46,6 @@ unset file;
 
 #  }}} zsh config #
 
-#  Finalize {{{ #
-# Load per machine setting
-if [ -f ~/.zshrc_local ]; then
-    source ~/.zshrc_local
-fi
-
 # Remove the duplicated entries in path
 typeset -U PATH
 #  }}} Finalize  #
@@ -64,3 +58,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#  Finalize {{{ #
+# Load per machine setting
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
+
