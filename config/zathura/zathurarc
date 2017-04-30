@@ -6,3 +6,5 @@ map <Space> scroll half-down
 
 set recolor-keephue
 set guioptions shv
+
+set selection-clipboard clipboard
