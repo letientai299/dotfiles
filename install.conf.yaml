@@ -18,7 +18,7 @@
     ~/.ideavimrc: 'vim/idearc.vim'
 
     # Emacs settings
-    ~/.emacs: 'emacs'
+    ~/.emacs.d: 'emacs.d'
 
     # Config files
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
