@@ -4,3 +4,5 @@ vim/spell
 vim/sessions
 vim/autoload/plug.vim.old
 vim/autoload/plug.vim
+
+emacs.d/elpa

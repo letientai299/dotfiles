@@ -6,7 +6,11 @@
 	monokai-theme
 	powerline
 	nlinum
-	))
+	smex
+	markdown-mode
+	flycheck
+	recentf
+	)); Need to convert tabs to spaces
 
 ;; List the repositories containing them
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
@@ -40,7 +44,7 @@
 (set-default 'cursor-type 'bar)
 
 ;; Disable menu bar
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 
 ;; Disable toolbar also
 (tool-bar-mode -1)
@@ -68,6 +72,7 @@
 (windmove-default-keybindings)
 
 ;; Turn on line number with package nlinum
+(setq nlinum-format "%d \u2502 ")
 (global-nlinum-mode t)
 
 ;; Remap command search shortcut key to active smex
@@ -86,6 +91,28 @@
 ;; Show whitespace
 (global-whitespace-mode)
 
+;; Vim can detect filetype and turn on plugin automaticaly, but for emacs,
+;; I don't know how to do that. Right now, I have to associate filetype
+;; with mode manually.
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;; Turn on and set a keyboard shortcut for recent mode
+(recentf-mode)
+(setq recentf-max-menu-items 25)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+;; Auto wrap
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook 'flyspell-mode)
+
+;; Config for abbreviations
+(setq abbrev-file-name "~/.emacs.d/abbrev_defs")
+(setq save-abbrevs t)
+(setq-default abbrev-mode t)
+(setq default-abbrev-mode t)
+
+
 ;; Auto generate stuff
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -94,7 +121,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (powerline autopair undo-tree monokai-theme nlinum auto-complete smex))))
+    (auto-capitalize flycheck markdown-mode powerline autopair undo-tree monokai-theme nlinum auto-complete smex))))
 
 ;; Auto generaete stuff
 (custom-set-faces

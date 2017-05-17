@@ -5,6 +5,7 @@ filetype plugin indent on
 source ~/.vim/plugins.vim
 
 let mapleader="\<SPACE>"
+let maplocalleader="\<SPACE>"
 
 " Quickly open vimrc and apply change
 nnoremap <Leader>ve :tabedit $MYVIMRC<CR>
