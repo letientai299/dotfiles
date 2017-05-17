@@ -5,4 +5,6 @@ vim/sessions
 vim/autoload/plug.vim.old
 vim/autoload/plug.vim
 
-emacs.d/elpa
+emacs.d/elpa/
+emacs.d/ac-comphist.dat
+emacs.d/network-security.data
