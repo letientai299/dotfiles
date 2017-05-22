@@ -15,3 +15,7 @@ let wiki.nested_syntaxes ={
 let g:vimwiki_list = [wiki]
 
 let g:vimwiki_hl_cb_checked = 1
+
+" Open new line after a checkbox-line without the checkbox.
+nmap <Leader>wo o<C-W><C-w><C-w><ESC>>>A
+nmap <Leader>wO O<C-W><C-w><C-w><ESC>>>A
