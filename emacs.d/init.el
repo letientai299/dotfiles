@@ -13,8 +13,8 @@
 	)); Need to convert tabs to spaces
 
 ;; List the repositories containing them
-(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("melpa-stable" . "https://stable.melpa.org/packages/")
+       ("gnu" . "https://elpa.gnu.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 ;; Activate all the packages

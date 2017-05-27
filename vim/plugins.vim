@@ -19,7 +19,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
-" Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
+Plug 'junegunn/goyo.vim', { 'on':  ['Goyo'] }
 " Plug 'junegunn/limelight.vim', { 'on':  ['Limelight'] }
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
