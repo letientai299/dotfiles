@@ -121,7 +121,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auto-capitalize flycheck markdown-mode powerline autopair undo-tree monokai-theme nlinum auto-complete smex))))
+    (slime ## auto-capitalize flycheck markdown-mode powerline autopair undo-tree monokai-theme nlinum auto-complete smex))))
 
 ;; Auto generaete stuff
 (custom-set-faces
