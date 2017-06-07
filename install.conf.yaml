@@ -56,6 +56,10 @@
     # Clang-format cofig
     ~/.clang-format: './.clang-format'
 
+    # Tidy HTML
+    ~/.tidy.conf: 'tidy.conf'
+
+    ~/.highlight: 'highlight'
 
 - shell:
     # Git
