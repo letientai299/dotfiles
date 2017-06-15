@@ -64,3 +64,7 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/john/.config/yarn/global/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/john/.config/yarn/global/node_modules/tabtab/.completions/electron-forge.zsh
