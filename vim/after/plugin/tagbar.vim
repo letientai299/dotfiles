@@ -1,6 +1,6 @@
 " Map <C-F1> to view tagbar
 nmap <C-F11> :TagbarToggle<CR>
-let g:tagbar_autoclose=1
+let g:tagbar_autoclose=0
 let g:tagbar_autofocus=1
 
 let g:tagbar_type_vimwiki = {
