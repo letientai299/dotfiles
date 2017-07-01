@@ -15,7 +15,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ivalkeen/nerdtree-execute', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
