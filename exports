@@ -2,3 +2,5 @@
 # vim: syntax=sh
 
 export LANG=en_US.UTF-8
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.npm-global/bin"
