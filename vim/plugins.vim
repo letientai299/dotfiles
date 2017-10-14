@@ -48,7 +48,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
 
-" Clang comlete with header include completion
+" Clang complete with header include completion
 Plug 'Rip-Rip/clang_complete' | Plug 'xaizek/vim-inccomplete' "
 " Plug 'alvan/vim-closetag'
 " Plug 'tpope/vim-endwise', { 'for': 'ruby'}
@@ -142,6 +142,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 "
 Plug 'scrooloose/syntastic'
 Plug 'mtth/scratch.vim'
+Plug 'beloglazov/vim-online-thesaurus'
 
 
 " Leave a place to try some new plugins, before add it into this list
