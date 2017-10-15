@@ -136,7 +136,8 @@ Plug 'moll/vim-node'
 Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
-" C/C++
+" Rest client
+Plug 'diepm/vim-rest-console'
 
 "------------------------------------------------------------------------------
 " Helper
