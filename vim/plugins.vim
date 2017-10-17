@@ -11,7 +11,6 @@ call plug#begin()
 " UI
 "
 Plug 'kshenoy/vim-signature'
-Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'ivalkeen/nerdtree-execute', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -26,6 +25,8 @@ Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'majutsushi/tagbar'
 Plug 'Konfekt/FastFold'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 
 "------------------------------------------------------------------------------
@@ -81,6 +82,7 @@ Plug 'honza/vim-snippets'
 
 " Resize panel quickly
 Plug 'tomtom/tinykeymap_vim' | Plug 'tomtom/tlib_vim'
+Plug 'airblade/vim-rooter'
 
 
 "------------------------------------------------------------------------------
@@ -138,6 +140,9 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
 " Rest client
 Plug 'diepm/vim-rest-console'
+
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'artur-shaik/vim-javacomplete2'
 
 "------------------------------------------------------------------------------
 " Helper
