@@ -3,23 +3,8 @@
 # Put the dotfile location into path
 export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 
-#  Install and load Zplug {{{ #
-
-# Install if not installed
-if [ ! -f ~/.zplug/zplug ]; then
-  echo "Zplug not found, installing to home..."
-  git clone https://github.com/b4b4r07/zplug ~/.zplug
-  # There's a problem with v2 that make theme not load correctly
-  cd ~/.zplug/
-  git checkout v1
-  cd ~
-  echo "Done."
-fi
-
 # Load zplug config
 source "$DOTFILES"/zplugconfig;
-
-# }}} #
 
 #  zsh config {{{ #
 
