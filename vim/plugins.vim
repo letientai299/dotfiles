@@ -18,12 +18,10 @@ Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'majutsushi/tagbar'
 
-
 "------------------------------------------------------------------------------
 " Searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'rking/ag.vim', { 'on' : 'Ag'}
 
 
 "------------------------------------------------------------------------------
