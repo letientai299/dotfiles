@@ -32,7 +32,6 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "------------------------------------------------------------------------------
 " Searching
 "
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rking/ag.vim', { 'on' : 'Ag'}
@@ -120,7 +119,7 @@ Plug 'kana/vim-textobj-user'
 " Additional language plugins
 "
 Plug 'godlygeek/tabular', {'on': 'Tabularize'}| Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
-Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
+" Plug 'tfnico/vim-gradle', { 'for': 'gradle' }
 Plug 'vimwiki/vimwiki'
 " Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
