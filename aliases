@@ -1,85 +1,71 @@
-#!/bin/bash
-# vim: syntax=sh foldenable foldmethod=marker
+#!/bin/sh
 
-# Alias open file based on extention {{{ #
+# Alias open file based on extention
 
-  # Create surfix alias to open a file with the associated application.
-  # Input:
-  # - First varialbe: Application name
-  # - The rest: List of file extentions, separated by white space.
-  make_alias_open(){
-      # App name should be the fisrt input,
-      local app="$1"
+# Create surfix alias to open a file with the associated application.
+# Input:
+# - First varialbe: Application name
+# - The rest: List of file extentions, separated by white space.
+make_alias_open(){
+  # App name should be the fisrt input,
+  local app="$1"
 
-      shift # Ignore the first param, which is the app name.
+  shift # Ignore the first param, which is the app name.
 
-      # Loop through the rest of argument list to make surfix alias
-      for ext; do
-        alias -s $ext=$app
-      done
-      unset ext # otherwise, ext will remain in ENV
-  }
+  # Loop through the rest of argument list to make surfix alias
+  for ext; do
+    alias -s $ext=$app
+  done
+  unset ext # otherwise, ext will remain in ENV
+}
 
-  # Text file
-  make_alias_open vim\
-    vim md c cpp cs css xml rc tex py java scala xtext xtend wiki
+# Text file
+make_alias_open vim\
+  vim md c cpp cs css xml rc tex py java scala xtext xtend wiki
 
-  # Video
-  make_alias_open vlc\
-    mp4 flv avi mkv
+# Video
+make_alias_open vlc\
+  mp4 flv avi mkv
 
-  # Image
-  make_alias_open viewnior\
-    jpg png jpeg bmp
+# Image
+make_alias_open viewnior\
+  jpg png jpeg bmp
 
-  # Music
-  make_alias_open mpv\
-    mp3 3gpp m4a opus
+# Music
+make_alias_open mpv\
+  mp3 3gpp m4a opus
 
-  # PDF document
-  make_alias_open zathura\
-    pdf
+# PDF document
+make_alias_open zathura\
+  pdf
 
-  # I cannot remember the LibreOffice binary name
-  make_alias_open soffice\
-    doc docx xls xlsx ppt pptx
+# I cannot remember the LibreOffice binary name
+make_alias_open soffice\
+  doc docx xls xlsx ppt pptx
 
-# }}} #
 
-# Vim {{{ #
+alias v="vim -R"
+alias vw="vim +VimwikiIndex"
+alias vd="vim +VimwikiDiaryIndex"
+alias sv="sudo vim"
+alias vim=nvim
 
-  alias v="vim -R"
-  alias vw="vim +VimwikiIndex"
-  alias vd="vim +VimwikiDiaryIndex"
-  alias sv="sudo vim"
-  alias vim=nvim
+# Alias for the cmus player
+alias cr="cmus-remote"
+alias crst="cmus-remote -Q" # Status
+alias crn="cmus-remote --next"
+alias crr="cmus-remote --prev"
+alias crp="cmus-remote --play"
+alias cru="cmus-remote --pause"
+alias crs="cmus-remote --stop"
+alias crvu="cmus-remote -v +10%"
+alias crvd="cmus-remote -v -10%"
 
-# }}} Vim  #
+alias so="source"
+alias r="ranger"
 
-# Cmus {{{ #
+# Get current day, useful for some lazy commands.
+alias today="date +%Y-%m-%d"
 
-  # Alias for the cmus player
-  alias cr="cmus-remote"
-  alias crst="cmus-remote -Q" # Status
-  alias crn="cmus-remote --next"
-  alias crr="cmus-remote --prev"
-  alias crp="cmus-remote --play"
-  alias cru="cmus-remote --pause"
-  alias crs="cmus-remote --stop"
-  alias crvu="cmus-remote -v +10%"
-  alias crvd="cmus-remote -v -10%"
-
-# }}} Cmus #
-
-# Other {{{ #
-
-  alias so="source"
-  alias r="ranger"
-
-  # Get current day, useful for some lazy commands.
-  alias today="date +%Y-%m-%d"
-
-  # Use ag with the global agignore file and with aykamko/tag plugin
-  alias ag='tag --path-to-ignore ~/.agignore'
-
-# }}} Other #
+# Use ag with the global agignore file and with aykamko/tag plugin
+alias ag='tag --path-to-ignore ~/.agignore'
