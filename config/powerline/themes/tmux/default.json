@@ -5,20 +5,6 @@
   "segments": {
     "right": [
       {
-        "function": "powerline.segments.common.players.rhythmbox",
-        "name": "player",
-        "args": {
-          "format": "{state_symbol} {title} [{elapsed}/{total}]"
-        }
-      },
-      {
-        "function": "powerline.segments.common.players.cmus",
-        "name": "player",
-        "args": {
-          "format": "{state_symbol} {title} [{elapsed}/{total}]"
-        }
-      },
-      {
         "function": "powerline.segments.common.net.network_load",
         "args": {
           "recv_format": "{value:>8}⬇",
