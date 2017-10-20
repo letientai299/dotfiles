@@ -69,3 +69,4 @@ alias today="date +%Y-%m-%d"
 
 # Use ag with the global agignore file and with aykamko/tag plugin
 alias ag='tag --path-to-ignore ~/.agignore'
+alias :q='exit'
