@@ -1,6 +1,7 @@
 " Mapping selecting mappings
 nmap <c-p> :FZF<CR>
 nmap <F13> :Tags<CR>
+nmap <S-F11> :Tags<CR>
 
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)

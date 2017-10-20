@@ -33,16 +33,11 @@ Plug 'raimondi/delimitmate'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
+Plug 'w0rp/ale'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
-  " The completion engine
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-  Plug 'davidhalter/jedi-vim', { 'for': 'python' }
   let g:deoplete#auto_completion_start_length=1
 else
   Plug 'Shougo/neocomplete.vim'
@@ -68,21 +63,14 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
-Plug 'christoomey/vim-titlecase'
 
 
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
-Plug 'heavenshell/vim-jsdoc'
 Plug 'diepm/vim-rest-console'
-
-"------------------------------------------------------------------------------
-" Helper
-Plug 'scrooloose/syntastic'
 
 
 " Leave a place to try some new plugins, before add it into this list
@@ -91,21 +79,3 @@ if !empty(glob('~/.local.plugins.vim'))
 endif
 
 call plug#end()
-
-" H to open help docs
-function! s:plug_doc()
-  let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
-  if has_key(g:plugs, name)
-    for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
-      execute 'tabe' doc
-    endfor
-  endif
-endfunction
-
-augroup PlugHelp
-  autocmd!
-  autocmd FileType vim-plug nnoremap <buffer> <silent> H :call <sid>plug_doc()<cr>
-augroup END
-
-
-
