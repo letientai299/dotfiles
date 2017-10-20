@@ -68,6 +68,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
+Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'diepm/vim-rest-console'
 
 
