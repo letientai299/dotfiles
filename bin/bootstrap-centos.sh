@@ -16,6 +16,8 @@ sudo yum install -y git python python-devel python3 python3-devel python-pip pyt
 echo 'export PATH=$PATH:$HOME/.local/bin' >> $HOME/.profile
 
 task "Neovim"
+yum -y install epel-release
+curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo
 sudo yum -y install neovim python2-neovim python3-neovim
 
 task "Xclip and xsel (for neovim clipboard)"
