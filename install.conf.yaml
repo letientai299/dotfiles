@@ -20,11 +20,16 @@
     # Config files
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
     ~/.config/nvim: 'vim'
-    ~/.config/ranger/rc.conf: 'config/ranger/rc.conf'
+    ~/.config/ranger/rc.conf:
+      path: 'config/ranger/rc.conf'
+      force: true
     ~/.config/translate-shell: 'config/translate-shell'
     ~/.config/youtube-dl: 'config/youtube-dl'
 
-    ~/.zshrc:       'zshrc'
+    ~/.zshrc:
+      path: 'zshrc'
+      force: true
+
     ~/.gitignore: 'gitignore'
     ~/.tmux.conf: 'tmux.conf'
     ~/.agignore: 'agignore'
