@@ -15,6 +15,16 @@ task "Install softwares"
 sudo yum install -y git python python-devel python3 python3-devel python-pip python3-pip gcc-c++ make which
 echo 'export PATH=$PATH:$HOME/.local/bin' >> $HOME/.profile
 
+task "Python"
+sudo yum -y install yum-utils
+sudo yum -y groupinstall development
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install python36u
+sudo yum -y install python36u-pip
+sudo yum -y install python36u-devel
+sudo ln -s /usr/bin/python36 /usr/bin/python3
+sudo ln -s /usr/bin/pip36 /usr/bin/pip3
+
 task "Neovim"
 sudo yum -y install epel-release
 sudo curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo
