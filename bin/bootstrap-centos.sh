@@ -29,7 +29,9 @@ sudo ln -s /usr/bin/pip3.6 /usr/bin/pip3
 task "Neovim"
 sudo yum -y install epel-release
 sudo curl -o /etc/yum.repos.d/dperson-neovim-epel-7.repo https://copr.fedorainfracloud.org/coprs/dperson/neovim/repo/epel-7/dperson-neovim-epel-7.repo
-sudo yum -y install neovim python2-neovim python3-neovim
+sudo yum -y install neovim
+sudo pip3 install neovim
+sudo pip install neovim
 
 task "Xclip and xsel (for neovim clipboard)"
 sudo yum install xclip xsel -y
@@ -38,9 +40,12 @@ task "Ruby and neovim binding"
 sudo yum install ruby-devel ruby -y
 sudo gem install neovim
 
+task "tmux"
+curl https://gist.githubusercontent.com/letientai299/001999f745e05e8f3ea370956cbdacf7/raw/b9b65d2fed6238faad5264db5ca61ae2587e3293/centos7-tmux.sh | bash -
+
 task "Ranger"
-sudo yum install -y ranger w3m w3m-img highlight
-ranger --copy-config=all
+sudo yum install -y w3m w3m-img highlight
+curl https://gist.githubusercontent.com/letientai299/001999f745e05e8f3ea370956cbdacf7/raw/eddd3aed749b313668b3e05f82b5ba624b36523a/centos7-ranger.sh | bash -
 
 task 'Zathura'
 sudo yum install -y zathura
@@ -48,7 +53,7 @@ sudo yum install -y zathura
 task "ag search"
 sudo yum install the_silver_searcher -y
 wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_linux_amd64.tar.gz
-tag -zxf tag_linux_amd64.tar.gz
+tar -zxf tag_linux_amd64.tar.gz
 mv tag ~/.local/bin
 rm tag_linux_amd64.tar.gz
 
@@ -101,3 +106,7 @@ echo 'export PATH="$PATH:$HOME/.npm-global/bin"' >> ~/.profile
 
 task "sdkman"
 curl -s "https://get.sdkman.io" | bash
+task "Term 256 color"
+wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
+tic xterm-256color-italic.terminfo
+rm xterm-256color-italic.terminfo

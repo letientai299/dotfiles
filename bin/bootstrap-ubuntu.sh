@@ -115,3 +115,9 @@ echo 'export PATH="$PATH:$HOME/.npm-global/bin"' >> ~/.profile
 
 task "sdkman"
 curl -s "https://get.sdkman.io" | bash
+
+task "Term 256 color"
+wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
+tic xterm-256color-italic.terminfo
+rm xterm-256color-italic.terminfo
+
