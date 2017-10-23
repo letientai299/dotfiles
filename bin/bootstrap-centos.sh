@@ -22,8 +22,8 @@ sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 sudo yum -y install python36u
 sudo yum -y install python36u-pip
 sudo yum -y install python36u-devel
-sudo ln -s /usr/bin/python36 /usr/bin/python3
-sudo ln -s /usr/bin/pip36 /usr/bin/pip3
+sudo ln -s /usr/bin/python3.6 /usr/bin/python3
+sudo ln -s /usr/bin/pip3.6 /usr/bin/pip3
 
 task "Neovim"
 sudo yum -y install epel-release
