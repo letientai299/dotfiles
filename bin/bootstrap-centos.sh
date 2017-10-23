@@ -11,7 +11,8 @@ task() {
 task "Make sure everything is up-to-date"
 sudo yum upgrade -y
 
-task "Install softwares"
+task "Install Development tools"
+sudo yum groupinstall -y "Development Tools"
 sudo yum install -y git python python-devel python3 python3-devel python-pip python3-pip gcc-c++ make which
 echo 'export PATH=$PATH:$HOME/.local/bin' >> $HOME/.profile
 
@@ -36,9 +37,6 @@ sudo yum install xclip xsel -y
 task "Ruby and neovim binding"
 sudo yum install ruby-devel ruby -y
 sudo gem install neovim
-
-task "Tmux"
-sudo yum install tmux -y
 
 task "Ranger"
 sudo yum install -y ranger w3m w3m-img highlight
