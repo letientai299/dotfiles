@@ -62,6 +62,18 @@ sudo apt install -y zathura
 
 task "ag search"
 sudo apt install silversearcher-ag -y
+wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_linux_amd64.tar.gz
+tag -zxf tag_linux_amd64.tar.gz
+mv tag ~/.local/bin
+rm tag_linux_amd64.tar.gz
+
+cat << HERE >> $HOME/.zshrc_local
+if (( $+commands[tag] )); then
+  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
+  alias ag=tag  # replace with rg for ripgrep
+fi
+HERE
 
 task "curl and wget"
 sudo apt install -y curl wget
@@ -84,7 +96,8 @@ task "Nodemon"
 npm install -g nodemon
 
 task "Diff-so-fancy"
-npm install -g nodemon
+npm install -g diff-so-fancy
+git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
 git config --global color.ui true
 git config --global color.diff-highlight.oldNormal "red bold"
 git config --global color.diff-highlight.oldHighlight "red bold 52"
