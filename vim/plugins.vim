@@ -5,7 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
-call plug#begin()
+call plug#begin('$HOME/.vim-plugged')
 
 "------------------------------------------------------------------------------
 " UI
