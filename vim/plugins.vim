@@ -17,6 +17,9 @@ Plug 'flazz/vim-colorschemes'
 Plug 'yggdroot/indentline'
 Plug 'mhinz/vim-startify'
 Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "------------------------------------------------------------------------------
 " Searching
