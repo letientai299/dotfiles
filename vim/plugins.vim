@@ -35,6 +35,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
 Plug 'w0rp/ale'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -71,6 +73,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
 Plug 'sheerun/vim-polyglot', {'do': './build'}
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] }
 Plug 'diepm/vim-rest-console'
 
