@@ -1,0 +1,34 @@
+# vim:set et sw=2 ts=2 tw=79 ft=dosini:
+
+[All]
+  title = All
+  sortexpr = desc:importance
+  groupexpr = project
+  show_all = 0
+
+
+[Starred]
+  title = Starred
+  filterexpr = star:1
+  show_all = 1
+
+[Today]
+  title = Today
+  filterexpr = due:today
+  sortexpr = desc:importance
+  groupexpr = project
+  show_all = 0
+
+[Tomorrow]
+  title = Tomorrow
+  filterexpr = due:tomorrow
+  sortexpr = desc:importance
+  groupexpr = project
+  show_all = 0
+
+
+[Overdue]
+  title = Overdue
+  filterexpr = due:<today
+  sortexpr = desc:due
+  show_all = 1

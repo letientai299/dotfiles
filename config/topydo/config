@@ -1,0 +1,26 @@
+# vim:set et sw=2 ts=2 tw=79 ft=dosini:
+
+[edit]
+  editor = vim
+
+[topydo]
+  filename = ~/.todo/todo.txt
+  archive_filename = ~/.todo/done.txt
+
+[column_keymap]
+  * = cmd star {}
+  ; press * twice to unstar an item
+  ** = cmd unstar {}
+  q = cmd quit
+  dp = cmd depri {}
+  d =
+
+[colorscheme]
+  focus_background_color = black
+
+[aliases]
+  a = add
+  q = quit
+  # starring
+  star = tag {} star 1
+  unstar = tag {} star

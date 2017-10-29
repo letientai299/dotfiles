@@ -35,8 +35,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
 Plug 'w0rp/ale'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
+Plug 'craigemery/vim-autotag'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))

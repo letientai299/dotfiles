@@ -2,7 +2,7 @@
 export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 
 # Load zplug config
-source "$DOTFILES"/zplugconfig;
+source "$DOTFILES/zplugconfig";
 
 # Disable <C-D> logout
 setopt ignore_eof

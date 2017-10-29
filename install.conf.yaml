@@ -25,6 +25,7 @@
       force: true
     ~/.config/translate-shell: 'config/translate-shell'
     ~/.config/youtube-dl: 'config/youtube-dl'
+    ~/.config/topydo: 'config/topydo'
 
     ~/.zshrc:
       path: 'zshrc'
