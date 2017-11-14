@@ -143,3 +143,7 @@ rabbitmq
 pgTAP
 pgTap
 sudo
+postgres
+postgresql
+jdbc
+plpgsql

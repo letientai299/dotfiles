@@ -14,8 +14,8 @@
 " Avoid using the Escape key
 inoremap jk <ESC>
 inoremap kj <ESC>
-vnoremap jk <ESC>
-vnoremap kj <ESC>
+xnoremap jk <ESC>
+xnoremap kj <ESC>
 
 " Always show the line number
 set number
@@ -24,6 +24,7 @@ set number
 set expandtab
 
 " Use 2-spaces per tab
+" set tabstop=2 softtabstop=2 shiftwidth=2
 set tabstop=2 softtabstop=2 shiftwidth=2
 set ignorecase smartcase incsearch hls
 set textwidth=79
@@ -67,7 +68,7 @@ vnoremap <Leader>y "+y
 nnoremap Y y$
 
 " Quickly toggle the color column
-function! g:ToggleColorColumn()
+function! g:ToggleColorColumn() abort
     if &colorcolumn != ''
         setlocal colorcolumn&
     else
@@ -91,4 +92,9 @@ nmap ds<space> F<space>xf<space>x
 inoremap <C-d> <Del>
 
 " Look up for help with vim keyword
-autocmd FileType vim setlocal keywordprg=:help
+
+augroup AutoCmdVim
+    autocmd!
+    autocmd FileType vim setlocal keywordprg=:help
+augroup END
+
