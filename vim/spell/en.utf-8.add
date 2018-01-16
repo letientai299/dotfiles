@@ -147,3 +147,6 @@ postgres
 postgresql
 jdbc
 plpgsql
+online
+txt
+env

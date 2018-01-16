@@ -4,5 +4,4 @@
 export EDITOR="nvim"
 export LANG=en_US.UTF-8
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.npm-global/bin"
 export FZF_DEFAULT_OPTS='--height 80% --reverse --preview "highlight -O ansi -l {} 2> /dev/null || ls -lah {}"'

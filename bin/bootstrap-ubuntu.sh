@@ -84,14 +84,9 @@ sudo apt install -y zsh
 chsh  -s "$(which zsh)"
 
 task "Nodejs"
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt install -y nodejs
-
-task "Fix NPM permissions"
-mkdir ~/.npm-global
-npm config set prefix "$HOME/.npm-global"
-echo '# Fix npm permissions' >> $HOME/.profile
-echo 'export PATH=$PATH:$HOME/.npm-global/bin' >> $HOME/.profile
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+source ~/.nvm/nvm.sh
+nvm install node && nvm alias default node
 
 task "Nodemon"
 npm install -g nodemon
@@ -110,9 +105,6 @@ git config --global color.diff.commit "227 bold"
 git config --global color.diff.old "red bold"
 git config --global color.diff.new "green bold"
 git config --global color.diff.whitespace "red reverse"
-
-task "Update path to load nodejs binaries"
-echo 'export PATH="$PATH:$HOME/.npm-global/bin"' >> ~/.profile
 
 task "sdkman"
 curl -s "https://get.sdkman.io" | bash

@@ -67,7 +67,9 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
-
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'glts/vim-textobj-comment'
 
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
