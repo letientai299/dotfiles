@@ -63,6 +63,7 @@ alias crvd="cmus-remote -v -10%"
 
 alias so="source"
 alias r="ranger"
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 # Get current day, useful for some lazy commands.
 alias today="date +%Y-%m-%d"

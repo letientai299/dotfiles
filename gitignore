@@ -34,3 +34,5 @@ out/
 node_modules
 .tern-port
 hs_err*
+
+.vscode
