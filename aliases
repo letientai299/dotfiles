@@ -45,7 +45,7 @@ make_alias_open soffice\
 
 
 alias v="vim -R"
-alias vw="vim +VimwikiIndex"
+alias vv="vim +VimwikiIndex"
 alias vd="vim +VimwikiDiaryIndex"
 alias sv="sudo vim"
 alias vim=nvim

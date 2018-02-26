@@ -36,6 +36,7 @@ Plug 'schickling/vim-bufonly'
 Plug 'wellle/tmux-complete.vim'
 Plug 'w0rp/ale'
 Plug 'craigemery/vim-autotag'
+Plug 'mattn/emmet-vim'
 
 " deoplete completion engine can only work with neovim
 if(has('nvim'))
@@ -70,6 +71,9 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'glts/vim-textobj-comment'
+Plug 'lucapette/vim-textobj-underscore'
+Plug 'kana/vim-textobj-indent'
+Plug 'thinca/vim-textobj-between'
 
 Plug 'vimwiki/vimwiki'
 Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
