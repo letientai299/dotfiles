@@ -1,6 +1,6 @@
 "Set up for vimwiki
 let wiki = {}
-let wiki.path = '$NOTE/vimwiki/'
+let wiki.path = '$NOTE/'
 
 let wiki.nested_syntaxes ={
             \'python': 'python',
