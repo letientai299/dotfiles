@@ -22,7 +22,24 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'mbbill/undotree'
+Plug 'kannokanno/previm'
+Plug 'ryanoasis/vim-devicons'
+Plug 'andymass/vim-matchup'
+Plug 'junegunn/goyo.vim'
 
+Plug 'lifepillar/pgsql.vim'
+Plug 'freitass/todo.txt-vim'
+Plug 'dzeban/vim-log-syntax'
+Plug 'alcesleo/vim-uppercase-sql'
+Plug 'tpope/vim-obsession'
+
+Plug 'dracula/vim'
+
+
+Plug 'rhysd/vim-grammarous'
+Plug 'jparise/vim-graphql'
+Plug 'ap/vim-css-color'
 "------------------------------------------------------------------------------
 " Searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
