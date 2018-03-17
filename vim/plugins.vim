@@ -19,6 +19,8 @@ Plug 'mhinz/vim-startify'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "------------------------------------------------------------------------------

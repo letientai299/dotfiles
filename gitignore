@@ -36,3 +36,5 @@ node_modules
 hs_err*
 
 .vscode
+
+yarn-error.log

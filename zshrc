@@ -47,3 +47,5 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
+
+[[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"

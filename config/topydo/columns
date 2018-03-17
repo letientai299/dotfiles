@@ -6,12 +6,6 @@
   groupexpr = project
   show_all = 0
 
-
-[Starred]
-  title = Starred
-  filterexpr = star:1
-  show_all = 1
-
 [Today]
   title = Today
   filterexpr = due:today
@@ -19,13 +13,17 @@
   groupexpr = project
   show_all = 0
 
+[Starred]
+  title = Starred
+  filterexpr = star:1
+  show_all = 1
+
 [Tomorrow]
   title = Tomorrow
   filterexpr = due:tomorrow
   sortexpr = desc:importance
   groupexpr = project
   show_all = 0
-
 
 [Overdue]
   title = Overdue
