@@ -1,5 +1,15 @@
 # Put the dotfile location into path
-export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
+rl="readlink -f"
+
+if ! ${rl} "${0}" >/dev/null 2>&1; then
+  rl="realpath"
+
+  if ! hash ${rl}; then
+    echo "\"${rl}\" not found !" && exit 1
+  fi
+fi
+
+export DOTFILES="$(dirname $(${rl} ~/.zshrc))"
 
 # Load zplug config
 source "$DOTFILES/zplugconfig";
@@ -46,6 +56,5 @@ export NVM_DIR="$HOME/.nvm"
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
-
 
 [[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"
