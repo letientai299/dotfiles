@@ -25,7 +25,6 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'mbbill/undotree'
 Plug 'kannokanno/previm'
 Plug 'ryanoasis/vim-devicons'
-Plug 'andymass/vim-matchup'
 Plug 'junegunn/goyo.vim'
 
 Plug 'lifepillar/pgsql.vim'
