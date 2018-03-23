@@ -9,7 +9,9 @@ let wiki.nested_syntaxes ={
             \'c':      'c',
             \'scala':  'scala',
             \'java':   'java',
-            \'js':   'javascript'
+            \'js':   'javascript',
+            \'gql':   'graphql',
+            \'graphql':   'graphql'
             \}
 
 let g:vimwiki_list = [wiki]

@@ -1,8 +1,7 @@
-nnoremap <C-F12> :NERDTreeToggle<CR>
-nnoremap <F36> :NERDTreeToggle<CR>
+nnoremap <F12> :NERDTreeToggle<CR>
+
 nnoremap <S-F12> :NERDTreeFind<CR>
 nnoremap <F24> :NERDTreeFind<CR>
-
 
 " For https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1

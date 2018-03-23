@@ -23,7 +23,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'mbbill/undotree'
-Plug 'kannokanno/previm'
+Plug 'kannokanno/previm' | Plug 'tyru/open-browser.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/goyo.vim'
 

@@ -2,8 +2,8 @@
 # vim: syntax=sh tw=200:
 
 export EDITOR="nvim"
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 export PATH="$PATH:$HOME/.local/bin"
 export FZF_DEFAULT_OPTS='--height 80% --reverse --preview "highlight -O ansi -l {} 2> /dev/null || ls -lah {} 2> /dev/null || true"'
