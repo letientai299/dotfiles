@@ -69,3 +69,4 @@ alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir
 alias today="date +%Y-%m-%d"
 
 alias :q='exit'
+

@@ -1,15 +1,10 @@
 # Put the dotfile location into path
-rl="readlink -f"
 
-if ! ${rl} "${0}" >/dev/null 2>&1; then
-  rl="realpath"
-
-  if ! hash ${rl}; then
-    echo "\"${rl}\" not found !" && exit 1
-  fi
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export DOTFILES="$(dirname $(realpath ~/.zshrc))"
+else
+  export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 fi
-
-export DOTFILES="$(dirname $(${rl} ~/.zshrc))"
 
 # Load zplug config
 source "$DOTFILES/zplugconfig";
