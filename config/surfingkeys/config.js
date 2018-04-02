@@ -31,6 +31,7 @@ mapkey("gp", "Toggle pin tab", function() {
 // Theme {{{ //
 settings.theme = `
 .sk_theme {
+    background-color: #000;
     color: #fff;
 }
 .sk_theme tbody {
