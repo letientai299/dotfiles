@@ -18,22 +18,10 @@ mapkey("gp", "Toggle pin tab", function() {
   RUNTIME("togglePinTab");
 });
 
-mapkey("I", "#1Go to edit box", function() {
+mapkey("i", "Passthrough mode", function() {
   PassThrough.enter();
 });
 
-mapkey("gi", "#1Go to the first edit box", function() {
-  Hints.createInputLayer();
-});
-
-mapkey("i", "#1Go to edit box with vim editor", function() {
-  Hints.create(
-    "input:visible, textarea:visible, *[contenteditable=true], select:visible",
-    function(element) {
-      Front.showEditor(element);
-    }
-  );
-});
 // }}}1
 
 // Search {{{1 //
