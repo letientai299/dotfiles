@@ -8,7 +8,6 @@ aceVimMap("kj", "<Esc>", "insert");
 aceVimMap("gQ", "gqap", "insert");
 // }}}1
 
-// SurfindKeys Mapping {{{1
 vmapkey("<Ctrl-[>", "Leave visual mode", function() {
   Visual.visualClear();
   Visual.exit();
@@ -22,7 +21,19 @@ mapkey("i", "Passthrough mode", function() {
   PassThrough.enter();
 });
 
-// }}}1
+mapkey(
+  "sU",
+  "#4Edit current URL with vim editor and open within the current tab",
+  function() {
+    Front.showEditor(
+      window.location.href,
+      function(data) {
+        window.location.href = data;
+      },
+      "url"
+    );
+  }
+);
 
 // Search {{{1 //
 addSearchAlias("y", "youtube", "https://www.youtube.com/search?q=");
