@@ -32,3 +32,56 @@ git push
 }
 
 alias lg="lazygit" # And even more lazy
+
+# Update software {{{2 #
+update-software() {
+
+#  Ubuntu {{{1 #
+if command -v apt-get > /dev/null 2>&1; then
+  echo "--------------------------------------------------------------------------------"
+  echo "- Update software for Ubuntu"
+  echo "----------------------------------------"
+  sudo apt update
+  sudo apt full-upgrade -y
+  sudo apt autoremove -y
+fi
+# 1}}} #
+
+#  Centos {{{1 #
+if command -v yum > /dev/null 2>&1; then
+  echo "--------------------------------------------------------------------------------"
+  echo "- Update software for Centos"
+  echo "----------------------------------------"
+  sudo yum update -y
+fi
+#  1}}} #
+
+#  Mac {{{1 #
+if command -v brew > /dev/null 2>&1; then
+  echo "--------------------------------------------------------------------------------"
+  echo "- Update software for macOS"
+  echo "----------------------------------------"
+  brew update
+  brew upgrade
+  brew cask upgrade
+fi
+#  }}} #
+
+#  Zplug {{{ #
+echo "--------------------------------------------------------------------------------"
+echo "- Update zplug"
+echo "----------------------------------------"
+zplug update
+#  }}} Zplug #
+
+#  Vim {{{1 #
+echo "--------------------------------------------------------------------------------"
+echo "- Vim plugins"
+echo "----------------------------------------"
+# Execute vim-plug upgrade, then update all plugins
+vim -c "PlugUpgrade" -c "qa!"
+vim -c "PlugUpdate" -c "qa!"
+vim -c "UpdateRemotePlugins" -c "qa!"
+# 1}}} #
+}
+# 2}}} #
