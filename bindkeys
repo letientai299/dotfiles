@@ -1,5 +1,5 @@
 #!/bin/bash
 # vim: syntax=sh
 # Custom key binding
-bindkey -s "^j" "|less^m"
+bindkey -s "^k" "|less^m"
 bindkey "^ " "autosuggest-accept"
