@@ -49,10 +49,10 @@ ln -s $(brew --prefix zathura-pdf-poppler)/lib/pdf.dylib $(brew --prefix zathura
 task "ag search"
 brew install the_silver_searcher
 wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_darwin_amd64.zip
-tar -zxf tag_linux_amd64.tar.gz
+tar -zxf tag_darwin_amd64.zip
 mkdir -p ~/.local/bin
 mv tag ~/.local/bin
-rm tag_darwin_amd64.zio
+rm tag_darwin_amd64.zip
 
 cat << HERE >> $HOME/.zshrc_local
 if (( $+commands[tag] )); then
