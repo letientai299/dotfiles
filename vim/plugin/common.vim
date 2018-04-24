@@ -46,11 +46,6 @@ nnoremap gQ gqap
 " Settings that required Leader key
 "------------------------------------------------------------------------------
 
-" Insert an blank line below or above the current line in normal mode
-nnoremap <silent> <leader>o :<C-u>call append(line("."),   repeat([""], v:count1))<CR>
-nnoremap <silent> <leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
-
-
 " Toggle foldenable
 nnoremap <Leader>f :set foldenable!<CR>
 
