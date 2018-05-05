@@ -87,7 +87,6 @@ nmap ds<space> F<space>xf<space>x
 inoremap <C-d> <Del>
 
 " Look up for help with vim keyword
-
 augroup AutoCmdVim
     autocmd!
     autocmd FileType vim setlocal keywordprg=:help

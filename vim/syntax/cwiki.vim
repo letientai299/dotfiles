@@ -1,1 +1,0 @@
-confluencewiki.vim
