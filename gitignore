@@ -42,3 +42,7 @@ hs_err*
 
 yarn-error.log
 yarn.lock
+
+.env
+.envrc
+.direnv
