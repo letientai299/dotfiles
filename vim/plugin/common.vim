@@ -46,10 +46,6 @@ nnoremap gQ gqap
 " Settings that required Leader key
 "------------------------------------------------------------------------------
 
-" Toggle foldenable
-nnoremap <Leader>f :set foldenable!<CR>
-
-
 " Quickly paste from clipboard
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
