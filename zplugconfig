@@ -11,7 +11,7 @@ source ~/.zplug/init.zsh
 zplug 'robbyrussell/oh-my-zsh', use:oh-my-zsh.sh
 
 # Plugins from oh-my-zsh
-for p in {git,z};
+for p in {per-directory-history,git,z};
 do
   zplug "plugins/$p", from:oh-my-zsh
 done
