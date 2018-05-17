@@ -57,7 +57,7 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 " Vimwiki {{{ "
 "Set up for vimwiki
 let wiki = {}
-let wiki.path = '$NOTE/'
+let wiki.path = "$NOTE/"
 
 let wiki.nested_syntaxes ={
             \'python': 'python',

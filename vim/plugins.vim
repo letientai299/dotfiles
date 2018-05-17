@@ -48,6 +48,9 @@ Plug 'sheerun/vim-polyglot', {'do': './build'}
 Plug 'vimwiki/vimwiki'
 Plug 'lifepillar/pgsql.vim'
 Plug 'alcesleo/vim-uppercase-sql'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
 
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))
