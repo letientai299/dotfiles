@@ -2,8 +2,8 @@
 
 set -e
 
-export WORKING_DIR=$(dirname "$(readlink -f "$0")")
-$WORKING_DIR/bin/bootstrap.sh
+# export WORKING_DIR=$(dirname "$(readlink -f "$0")")
+# $WORKING_DIR/bin/bootstrap.sh
 
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
