@@ -172,6 +172,7 @@ Abolish specificaly{,l}	specifically
 Abolish statment{,s}	statement{}
 Abolish successful{l,y,yl}	successful{,ly,ly}
 Abolish supris{e,ed,es,ing}	surpris{}
+Abolish teh                                               the
 Abolish thnig{,s}	thing{}
 Abolish thn{a,e}	th{}n
 Abolish tka{e,es,ing}	tak{}
