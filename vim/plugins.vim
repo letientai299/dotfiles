@@ -13,9 +13,9 @@ Plug 'mhinz/vim-signify'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 
-" Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-rhubarb'
-" Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'kannokanno/previm' | Plug 'tyru/open-browser.vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -45,12 +45,14 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'js', 'ts'] }
 Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] } | Plug 'godlygeek/tabular'
 
 Plug 'sheerun/vim-polyglot', {'do': './build'}
+Plug 'flazz/vim-colorschemes'
 Plug 'vimwiki/vimwiki'
 Plug 'lifepillar/pgsql.vim'
 Plug 'alcesleo/vim-uppercase-sql'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
+Plug 'freitass/todo.txt-vim'
 
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))

@@ -13,6 +13,10 @@ vmapkey("<Ctrl-[>", "Leave visual mode", function() {
   Visual.exit();
 });
 
+vmapkey("<Shift-Enter>", "Open link in the new tab", function() {
+  RUNTIME("openLink", { tab: { tabbed: true, active: false }, url:  document.getSelection().focusNode.parentNode.href });
+});
+
 mapkey("gp", "Toggle pin tab", function() {
   RUNTIME("togglePinTab");
 });
