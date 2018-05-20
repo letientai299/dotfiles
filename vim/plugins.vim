@@ -36,6 +36,15 @@ Plug 'tpope/vim-abolish'
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot', {'do': './build'}
 
+" Vim-polyglot only provide filetype detection and syntax highlighting. I need
+" more than that for editing markdown
+Plug 'plasticboy/vim-markdown', {'for': ['md','markdown']}
+Plug 'godlygeek/tabular', {'for': ['md','markdown']}
+
+" Live-review markdown
+Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
+Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
+
 " Another plugin that provide many themes. Unnecessary if I can settle down
 " for just one single theme. But, fuck it, I can't.
 Plug 'flazz/vim-colorschemes'
@@ -49,41 +58,80 @@ Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'kshenoy/vim-signature'
-Plug 'mhinz/vim-signify'
-Plug 'vim-airline/vim-airline'
-Plug 'mhinz/vim-startify'
-
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'kannokanno/previm' | Plug 'tyru/open-browser.vim'
-
-Plug 'Chiel92/vim-autoformat'
+" Auto close the bracket and quotation pairs
 Plug 'raimondi/delimitmate'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'wellle/tmux-complete.vim'
-Plug 'w0rp/ale'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'simeji/winresizer'
-Plug 'airblade/vim-rooter'
 
-Plug 'junegunn/vim-easy-align'
-Plug 'scrooloose/nerdcommenter'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'js', 'ts'] }
-Plug 'plasticboy/vim-markdown', { 'for': ['md','markdown'] } | Plug 'godlygeek/tabular'
-
-Plug 'lifepillar/pgsql.vim'
-Plug 'alcesleo/vim-uppercase-sql'
+" The snippets engine and the a big collection of snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'freitass/todo.txt-vim'
 
+" Quickly toggle line or block comment.
+" I've considered switching to another commenting plugins (tcomment and
+" commentary), but I hate switching my muscle memory for commenting code.
+Plug 'scrooloose/nerdcommenter'
+
+" Can't live without autoformating. Can't also live with unformatted code
+Plug 'Chiel92/vim-autoformat'
+
+" Pair with autoformat is auto stripping whitespace. This plugin also provide
+" highlighting for trailing whitespsaces
+Plug 'ntpeters/vim-better-whitespace'
+
+" Linting engine
+Plug 'w0rp/ale'
+
+" Completion engine and supporting plugins
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'wellle/tmux-complete.vim'
+
+" Auto cd to git project root when open a file in vim
+Plug 'airblade/vim-rooter'
+
+" Quickly resize vim split windows. Rarely use, but very annoying when doing
+" that without this plugin
+Plug 'simeji/winresizer'
+
+" More text objects
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+
+" Yeah, just make vim GUI more beautiful.
+Plug 'vim-airline/vim-airline'
+
+" Useful for review and reopen recent editing files, also serves as a bookmark.
+Plug 'mhinz/vim-startify'
+
+" More GUI stuffs
+Plug 'kshenoy/vim-signature'
+Plug 'mhinz/vim-signify'
+
+" Vim-tabular provide a function to align text, and is required by vim-markdown
+" for formatting table. But, it doens't provide any easy keymap to formatting
+" text manually. Easy-align really does a better job in this case. But, it's
+" ironic that I have to keep 2 plugins with the same feature within my vim.
+Plug 'junegunn/vim-easy-align'
+
+" Everyone say that this is a most powerful Git integrating for vim. I actually
+" have a todo item for learning fugitive. But, right now, I use this mostly as a
+" Commit browser and some nice syntax. Hope that I can find time to really learn
+" it (or remove it, as oh-my-zsh with its git plugins is really enough for
+" my work right now).
+Plug 'tpope/vim-fugitive'
+
+" Polyglot provided SQL syntax doensn't play nice with postgres code.
+Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
+
+" For SQL, I also follow the convention of making all SQL keyword uppercase.
+Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
+
+" For editing todo note
+Plug 'freitass/todo.txt-vim', {'for': ['todo']}
+
+" Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))
   source ~/.local.plugins.vim
 endif
 
 call plug#end()
+" 1}}} "

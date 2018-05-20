@@ -31,7 +31,3 @@ nmap <c-s-s> :w<CR>:e %<CR>
 " :W sudo saves the file
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
-
-
-" If there's no filetype, set it to markdown
-autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
