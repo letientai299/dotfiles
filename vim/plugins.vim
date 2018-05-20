@@ -44,7 +44,7 @@ Plug 'flazz/vim-colorschemes'
 " emacs and org mode despite all the times I've tried.
 Plug 'vimwiki/vimwiki'
 
-" Fuzzy finder for ... everthing in vim, from Files, Buffers to Colors theme and
+" Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
