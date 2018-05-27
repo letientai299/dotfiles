@@ -8,3 +8,5 @@ set recolor-keephue
 set guioptions shv
 
 set selection-clipboard clipboard
+
+set font "liberation mono 12"

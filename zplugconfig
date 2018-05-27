@@ -35,3 +35,6 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
+
+# Use global history by default
+_per-directory-history-set-global-history && $_per_directory_history_is_global = true
