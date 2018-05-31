@@ -54,27 +54,6 @@ let g:rooter_silent_chdir = 1
 let g:rooter_change_directory_for_non_project_files = 'current'
 " }}} "
 
-" Vimwiki {{{ "
-"Set up for vimwiki
-let wiki = {}
-let wiki.path = "$NOTE/"
-
-let wiki.nested_syntaxes ={
-            \'python': 'python',
-            \'py':     'python',
-            \'c++':    'cpp',
-            \'c':      'c',
-            \'scala':  'scala',
-            \'java':   'java',
-            \'js':   'javascript',
-            \'gql':   'graphql',
-            \'graphql':   'graphql'
-            \}
-
-let g:vimwiki_list = [wiki]
-let g:vimwiki_hl_cb_checked = 1
-" }}} Vimwiki "
-
 " tagbar {{{ "
 " Map <C-F1> to view tagbar
 nmap <C-F11> :TagbarToggle<CR>
