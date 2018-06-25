@@ -19,17 +19,6 @@ sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt update
 sudo apt install git -y
 
-task "Grub Customizer"
-sudo add-apt-repository ppa:danielrichter2007/grub-customizer -y
-sudo apt update
-sudo apt install grub-customizer -y
-
-task "Numix color theme"
-sudo add-apt-repository ppa:numix/ppa -y
-sudo apt update
-sudo apt install -y numix-gtk-theme numix-icon-theme-circle
-sudo apt install -y gnome-tweak-tool
-
 task "Neovim"
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
