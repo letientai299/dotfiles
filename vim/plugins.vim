@@ -127,6 +127,9 @@ Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
+" To run script or command without blocking vim
+Plug 'skywind3000/asyncrun.vim'
+
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))

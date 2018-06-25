@@ -49,6 +49,8 @@ alias vv="vim +VimwikiIndex"
 alias vd="vim +VimwikiMakeDiaryNote"
 alias sv="sudo vim"
 alias vim=nvim
+alias ve="vim ~/.zshenv"
+alias vt="vim ~/.todo/todo.txt"
 
 # Alias for the cmus player
 alias cr="cmus-remote"
