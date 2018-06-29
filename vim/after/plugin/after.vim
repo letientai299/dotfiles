@@ -120,3 +120,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 " }}} Ultisnips "
 
+let g:asyncrun_open = 8
+fun! TranslateCurrentWord()
+  " Get the word under cursor for translation
+  let word_under_cursor = expand("<cword>")
+  " After translate, open the quickfix list and immediately back to previous
+  " buffer
+  " execute 'AsyncRun! -post='.post_command.' trans :vi -no-ansi --brief '.word_under_cursor
+  execute 'AsyncRun! trans :vi -no-ansi '.word_under_cursor
+endfun
