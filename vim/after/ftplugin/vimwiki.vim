@@ -12,7 +12,9 @@ endfun!
 nmap <buffer> <Leader>dd :call PrepareDateHheader()<CR>
 
 " This one will insert the current time as H2
-nmap <buffer> <Leader>dt Godtt <BS><ESC>==<<o
+nmap <buffer> <Leader>dt Go<CR><CR>dtt <BS><ESC>==<<o
 
 " Delete link syntax arround the current token
 nmap <buffer> <Leader><CR> ds]ds]
+
+setlocal spell
