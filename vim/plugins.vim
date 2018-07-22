@@ -130,6 +130,10 @@ Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 " To run script or command without blocking vim
 Plug 'skywind3000/asyncrun.vim'
 
+" Distraction free mode
+Plug 'junegunn/goyo.vim'
+
+Plug 'mattn/emmet-vim'
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))

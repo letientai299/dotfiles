@@ -1,3 +1,5 @@
+settings.nexstLinkRegex = />|=>|->|>>|\b(next)\b|\b(more)\b|Chap kế/i;
+
 // Vim ACE Editor Mappings{{{1
 
 // Quickly exit insert mode
@@ -14,7 +16,10 @@ vmapkey("<Ctrl-[>", "Leave visual mode", function() {
 });
 
 vmapkey("<Shift-Enter>", "Open link in the new tab", function() {
-  RUNTIME("openLink", { tab: { tabbed: true, active: false }, url:  document.getSelection().focusNode.parentNode.href });
+  RUNTIME("openLink", {
+    tab: { tabbed: true, active: false },
+    url: document.getSelection().focusNode.parentNode.href
+  });
 });
 
 mapkey("gp", "Toggle pin tab", function() {

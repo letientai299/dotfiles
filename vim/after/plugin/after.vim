@@ -21,14 +21,14 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview(),
-  \                 <bang>0)
+      \ call fzf#vim#ag(<q-args>,
+      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+      \                         : fzf#vim#with_preview(),
+      \                 <bang>0)
 
 "" Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " 1}}} "
 
@@ -62,36 +62,36 @@ let g:tagbar_autoclose=0
 let g:tagbar_autofocus=1
 
 let g:tagbar_type_vimwiki = {
-          \   'ctagstype':'vimwiki'
-          \ , 'kinds':['h:header']
-          \ , 'sro':'&&&'
-          \ , 'kind2scope':{'h':'header'}
-          \ , 'sort':0
-          \ , 'ctagsbin':'~/.vim/after/plugin/vwtags.py'
-          \ , 'ctagsargs': 'default'
-          \ }
+      \   'ctagstype':'vimwiki'
+      \ , 'kinds':['h:header']
+      \ , 'sro':'&&&'
+      \ , 'kind2scope':{'h':'header'}
+      \ , 'sort':0
+      \ , 'ctagsbin':'~/.vim/after/plugin/vwtags.py'
+      \ , 'ctagsargs': 'default'
+      \ }
 
 
 " Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
-          \ 'ctagstype': 'markdown',
-          \ 'ctagsbin' : '~/.vim/after/plugin/markdown2ctags.py',
-          \ 'ctagsargs' : '-f - --sort=yes',
-          \ 'kinds' : [
-          \ 's:sections',
-          \ 'i:images'
-          \ ],
-          \ 'sro' : '|',
-          \ 'kind2scope' : {
-          \ 's' : 'section',
-          \ },
-          \ 'sort': 0,
-          \ }
+      \ 'ctagstype': 'markdown',
+      \ 'ctagsbin' : '~/.vim/after/plugin/markdown2ctags.py',
+      \ 'ctagsargs' : '-f - --sort=yes',
+      \ 'kinds' : [
+      \ 's:sections',
+      \ 'i:images'
+      \ ],
+      \ 'sro' : '|',
+      \ 'kind2scope' : {
+      \ 's' : 'section',
+      \ },
+      \ 'sort': 0,
+      \ }
 " }}} tagbar "
 
 " startify {{{ "
 " Disable random header
-let g:startify_custom_header = []
+" let g:startify_custom_header = []
 
 " Make vim-session and startify use the same dir
 let g:startify_session_dir='~/.vim/sessions'
@@ -109,6 +109,7 @@ let g:startify_list_order = [
 
 let g:startify_session_persistence = 1
 let g:startify_files_number = 20
+let g:startify_session_autoload = 1
 let g:startify_update_oldfiles = 1
 " }}} startify "
 

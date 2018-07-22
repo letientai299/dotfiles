@@ -32,3 +32,6 @@ nmap <c-s-s> :w<CR>:e %<CR>
 " :W sudo saves the file
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
+
+" Reduce time waiting for mapped sequence
+set timeoutlen=300
