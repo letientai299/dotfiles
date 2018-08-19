@@ -13,9 +13,9 @@
 
 " Avoid using the Escape key
 inoremap jk <ESC>
-inoremap kj <ESC>
+" inoremap kj <ESC>
 xnoremap jk <ESC>
-xnoremap kj <ESC>
+" xnoremap kj <ESC>
 
 " Always show the line number
 set number
@@ -60,11 +60,11 @@ nnoremap Y y$
 
 " Quickly toggle the color column
 function! g:ToggleColorColumn() abort
-    if &colorcolumn != ''
-        setlocal colorcolumn&
-    else
-        setlocal colorcolumn=+1
-    endif
+  if &colorcolumn != ''
+    setlocal colorcolumn&
+  else
+    setlocal colorcolumn=+1
+  endif
 endfunction
 
 nnoremap <silent> <leader>q :call g:ToggleColorColumn()<CR>
@@ -84,7 +84,7 @@ inoremap <C-d> <Del>
 
 " Look up for help with vim keyword
 augroup AutoCmdVim
-    autocmd!
-    autocmd FileType vim setlocal keywordprg=:help
+  autocmd!
+  autocmd FileType vim setlocal keywordprg=:help
 augroup END
 
