@@ -83,6 +83,7 @@ Plug 'w0rp/ale'
 " Completion engine and supporting plugins
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'wellle/tmux-complete.vim'
+Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
 Plug 'airblade/vim-rooter'
@@ -134,6 +135,7 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
+Plug 'fatih/vim-go', {'for': ['go']}
 
 
 

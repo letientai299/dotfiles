@@ -21,7 +21,7 @@ make_alias_open(){
 
 # Text file
 make_alias_open vim\
-  vim md c cpp cs css xml rc tex py java scala xtext xtend wiki
+  vim md c cpp cs css xml rc tex java scala xtext xtend wiki
 
 # Video
 make_alias_open vlc\

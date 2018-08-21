@@ -7,13 +7,14 @@ nmap <buffer> <Leader>dt <Plug>(go-def-tab)
 nmap <buffer> <Leader>gd <Plug>(go-doc)
 nmap <buffer> <Leader>gv <Plug>(go-doc-vertical)
 nmap <buffer> <Leader>gb <Plug>(go-doc-browser)
+nmap <buffer> <leader>ga <Plug>(go-alternate-edit)
 nmap <buffer> <Leader>s <Plug>(go-implements)
 nmap <buffer> <Leader>i <Plug>(go-info)
 nmap <buffer> <Leader>e <Plug>(go-rename)
 "
 " ----------------------
 " Using with Neovim (beta)
-nmap <buffer> <Leader>r  <Plug>(go-run-vertical)
+nmap <buffer> <Leader>r  <Plug>(go-run)
 
 " By default new terminals are opened in a vertical split. To change it
 let g:go_term_mode = "split"
