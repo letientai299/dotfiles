@@ -18,3 +18,5 @@ nmap <buffer> <Leader>dt Go<CR><CR>dtt <BS><ESC>==<<o
 nmap <buffer> <Leader><CR> ds]ds]
 
 setlocal spell
+
+nnoremap <leader>o yyp>>S-<space>
