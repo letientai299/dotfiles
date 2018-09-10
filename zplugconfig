@@ -1,4 +1,5 @@
 # vim:set et sw=2 ts=2 tw=79 ft=sh:
+export DISABLE_UPDATE_PROMPT=true
 
 # Install if not installed
 if [ ! -f ~/.zplug/init.zsh ]; then
@@ -8,10 +9,11 @@ fi
 
 source ~/.zplug/init.zsh
 
+# For general aliases and completions
 zplug 'robbyrussell/oh-my-zsh', use:oh-my-zsh.sh
 
 # Plugins from oh-my-zsh
-for p in {per-directory-history,git,z};
+for p in {git,z};
 do
   zplug "plugins/$p", from:oh-my-zsh
 done
@@ -25,8 +27,8 @@ zplug "zsh-users/zsh-completions"
 zplug "hlissner/zsh-autopair", defer:2
 
 # Theme
-zplug "xfanwu/oh-my-zsh-custom-xxf", use:"themes/*.zsh-theme", defer:2
-# zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
+# zplug "xfanwu/oh-my-zsh-custom-xxf", use:"themes/*.zsh-theme", defer:2
+zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -37,4 +39,4 @@ fi
 zplug load
 
 # Use global history by default
-_per-directory-history-set-global-history && $_per_directory_history_is_global = true
+# _per-directory-history-set-global-history && $_per_directory_history_is_global = true

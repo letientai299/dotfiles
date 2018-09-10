@@ -1,5 +1,4 @@
 # Put the dotfile location into path
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export DOTFILES="$(dirname $(realpath ~/.zshrc))"
 else
@@ -43,13 +42,32 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# NVM setup is about the only thing in this script that takes any noticeable time to run.
+# Which is not something you want in your .bashrc...
+# So, we use a 'just in time' approach. Setup a function that loads the 'real' nvm on first
+# use. Note that the 'nvm' function defined here gets over-ridden via sourcing nvm.sh:
+# (So you get the ~600ms delay only on first use, in any shell)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+function nvm() {
+  echo "🚨 NVM not loaded! Loading now..."
+  unset -f nvm
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+	nvm "$*"
+}
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
-[[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"
+# [[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"
+
+# ZSH checking the cached .zcompdump to see if it needs regenerating. The
+# simplest fix is to only do that once a day.
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
