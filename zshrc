@@ -42,19 +42,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# NVM setup is about the only thing in this script that takes any noticeable time to run.
-# Which is not something you want in your .bashrc...
-# So, we use a 'just in time' approach. Setup a function that loads the 'real' nvm on first
-# use. Note that the 'nvm' function defined here gets over-ridden via sourcing nvm.sh:
-# (So you get the ~600ms delay only on first use, in any shell)
 export NVM_DIR="$HOME/.nvm"
-function nvm() {
-  echo "🚨 NVM not loaded! Loading now..."
-  unset -f nvm
-	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-	nvm "$*"
-}
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
