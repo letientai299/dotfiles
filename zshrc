@@ -5,8 +5,8 @@ else
   export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 fi
 
-# Load zplug config
-source "$DOTFILES/zplugconfig";
+# Load zgen config
+source "$DOTFILES/zgenconfig";
 
 # Disable <C-D> logout
 setopt ignore_eof
