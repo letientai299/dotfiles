@@ -110,34 +110,34 @@ Plug 'mhinz/vim-signify'
 " for formatting table. But, it doens't provide any easy keymap to formatting
 " text manually. Easy-align really does a better job in this case. But, it's
 " ironic that I have to keep 2 plugins with the same feature within my vim.
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 
 " Everyone say that this is a most powerful Git integrating for vim. I actually
 " have a todo item for learning fugitive. But, right now, I use this mostly as a
 " Commit browser and some nice syntax. Hope that I can find time to really learn
 " it (or remove it, as oh-my-zsh with its git plugins is really enough for
 " my work right now).
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
-Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
+" Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
 
 " For SQL, I also follow the convention of making all SQL keyword uppercase.
-Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
+" Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
 
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " To run script or command without blocking vim
-Plug 'skywind3000/asyncrun.vim'
+" Plug 'skywind3000/asyncrun.vim'
 
 " Distraction free mode
-Plug 'junegunn/goyo.vim'
-Plug 'mattn/emmet-vim'
+" Plug 'junegunn/goyo.vim'
+" Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go', {'for': ['go']}
-
-
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list

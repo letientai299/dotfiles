@@ -17,9 +17,6 @@ inoremap jk <ESC>
 xnoremap jk <ESC>
 " xnoremap kj <ESC>
 
-" Always show the line number
-set number
-
 " Use space (I hate tab)
 set expandtab
 
@@ -31,7 +28,8 @@ set textwidth=79
 if !has('nvim')
   set encoding=utf8
 endif
-set cursorline
+set lazyredraw
+set synmaxcol=200
 set nofoldenable
 
 " Set spelling language to English, not sure if this setting could be included
