@@ -20,6 +20,8 @@ if ! zgen saved; then
   zgen load hlissner/zsh-autopair
   zgen load denysdovhan/spaceship-prompt spaceship
 
+  zgen load wfxr/forgit
+
   # generate the init script from plugins above
   zgen save
 fi
