@@ -37,3 +37,6 @@
 - shell:
     # Git
     - git config --global core.excludesfile '~/.gitignore'
+    - git config --global user.name 'Tai'
+    - git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+    - git config --global --add url."git@gitlab.com:".insteadOf "https://gitlab.com/"

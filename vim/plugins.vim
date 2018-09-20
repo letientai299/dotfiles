@@ -35,10 +35,12 @@ Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot', {'do': './build'}
+let g:polyglot_disabled = ['markdown']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
 Plug 'plasticboy/vim-markdown', {'for': ['md','markdown']}
+" Plug 'gabrielelana/vim-markdown', {'for': ['md','markdown']}
 Plug 'godlygeek/tabular', {'for': ['md','markdown']}
 
 " Live-review markdown
@@ -110,14 +112,14 @@ Plug 'mhinz/vim-signify'
 " for formatting table. But, it doens't provide any easy keymap to formatting
 " text manually. Easy-align really does a better job in this case. But, it's
 " ironic that I have to keep 2 plugins with the same feature within my vim.
-" Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 " Everyone say that this is a most powerful Git integrating for vim. I actually
 " have a todo item for learning fugitive. But, right now, I use this mostly as a
 " Commit browser and some nice syntax. Hope that I can find time to really learn
 " it (or remove it, as oh-my-zsh with its git plugins is really enough for
 " my work right now).
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
 " Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}

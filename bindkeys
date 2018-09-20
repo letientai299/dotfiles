@@ -4,3 +4,4 @@
 bindkey -s "^k" "|less^m"
 bindkey "^ " "autosuggest-accept"
 bindkey -e
+
