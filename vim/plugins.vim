@@ -88,7 +88,8 @@ Plug 'wellle/tmux-complete.vim'
 Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
-Plug 'airblade/vim-rooter'
+" This seems doesn't work well with tmux continuum
+" Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
@@ -120,6 +121,8 @@ Plug 'junegunn/vim-easy-align'
 " it (or remove it, as oh-my-zsh with its git plugins is really enough for
 " my work right now).
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'tpope/vim-rhubarb'
 
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
 " Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
