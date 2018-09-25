@@ -46,8 +46,8 @@ brew install zathura-pdf-poppler
 mkdir -p $(brew --prefix zathura)/lib/zathura
 ln -s $(brew --prefix zathura-pdf-poppler)/lib/pdf.dylib $(brew --prefix zathura)/lib/zathura/pdf.so
 
-task "ag search"
-brew install the_silver_searcher
+task "rg search"
+brew install ripgrep
 wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_darwin_amd64.zip
 tar -zxf tag_darwin_amd64.zip
 mkdir -p ~/.local/bin
@@ -56,9 +56,9 @@ rm tag_darwin_amd64.zip
 
 cat << HERE >> $HOME/.zshrc_local
 if (( $+commands[tag] )); then
-  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+  export TAG_SEARCH_PROG=rg  # replace with rg for ripgrep
   tag() { command tag "\$@"; source "\${TAG_ALIAS_FILE:-/tmp/tag_aliases}" 2>/dev/null }
-  alias ag=tag  # replace with rg for ripgrep
+  alias rg=tag  # replace with rg for ripgrep
 fi
 HERE
 

@@ -50,8 +50,8 @@ curl https://gist.githubusercontent.com/letientai299/001999f745e05e8f3ea370956cb
 task 'Zathura'
 sudo yum install -y zathura
 
-task "ag search"
-sudo yum install the_silver_searcher -y
+task "rg search"
+sudo yum install ripgrep -y
 wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_linux_amd64.tar.gz
 tar -zxf tag_linux_amd64.tar.gz
 mv tag ~/.local/bin
@@ -59,9 +59,9 @@ rm tag_linux_amd64.tar.gz
 
 cat << HERE >> $HOME/.zshrc_local
 if (( $+commands[tag] )); then
-  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+  export TAG_SEARCH_PROG=rg  # replace with rg for ripgrep
   tag() { command tag "\$@"; source \${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
-  alias ag=tag  # replace with rg for ripgrep
+  alias rg=tag  # replace with rg for ripgrep
 fi
 HERE
 
