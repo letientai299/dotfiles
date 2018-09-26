@@ -45,9 +45,8 @@ let NERDSpaceDelims=1
 " 1}}} "
 
 " nerdtree {{{1 "
-" nnoremap <F12> :NERDTreeToggle<CR>
-" nnoremap <S-F12> :NERDTreeFind<CR>
-" nnoremap <F24> :NERDTreeFind<CR>
+nnoremap <C-\> :NERDTreeToggle<CR>
+nnoremap <A-\> :NERDTreeFind<CR>
 
 " " For https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 " let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -138,3 +137,8 @@ fun! TranslateCurrentWord()
   " execute 'AsyncRun! -post='.post_command.' trans :vi -no-ansi --brief '.word_under_cursor
   execute 'AsyncRun! trans :vi -no-ansi '.word_under_cursor
 endfun
+
+
+call deoplete#custom#option({
+\ 'min_pattern_length': 1,
+\ })
