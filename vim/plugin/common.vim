@@ -29,7 +29,7 @@ if !has('nvim')
   set encoding=utf8
 endif
 set lazyredraw
-set synmaxcol=200
+set synmaxcol=120
 set nofoldenable
 
 " Set spelling language to English, not sure if this setting could be included
