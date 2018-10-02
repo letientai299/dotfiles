@@ -24,6 +24,7 @@
     ~/.config/translate-shell: 'config/translate-shell'
     ~/.config/youtube-dl: 'config/youtube-dl'
     ~/.config/topydo: 'config/topydo'
+    ~/.config/mpv: 'config/mpv'
 
     ~/.zshrc:
       path: 'zshrc'
