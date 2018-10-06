@@ -5,13 +5,14 @@ nmap <buffer> <Leader>ds <Plug>(go-def-split)
 nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
 nmap <buffer> <Leader>dt <Plug>(go-def-tab)
 nmap <buffer> <Leader>gd <Plug>(go-doc)
+nmap <buffer> <Leader>gs <Plug>(go-decls)
 nmap <buffer> <Leader>gv <Plug>(go-doc-vertical)
 nmap <buffer> <Leader>gb <Plug>(go-doc-browser)
 nmap <buffer> <leader>ga <Plug>(go-alternate-edit)
 nmap <buffer> <Leader>s <Plug>(go-implements)
 nmap <buffer> <Leader>i <Plug>(go-info)
 nmap <buffer> <Leader>e <Plug>(go-rename)
-"
+
 " ----------------------
 " Using with Neovim (beta)
 nmap <buffer> <Leader>r  <Plug>(go-run)

@@ -143,6 +143,7 @@ Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'schickling/vim-bufonly'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
