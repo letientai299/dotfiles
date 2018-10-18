@@ -25,6 +25,7 @@
     ~/.config/youtube-dl: 'config/youtube-dl'
     ~/.config/topydo: 'config/topydo'
     ~/.config/mpv: 'config/mpv'
+    ~/.config/ripgrep: 'config/ripgrep'
 
     ~/.zshrc:
       path: 'zshrc'
