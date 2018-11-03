@@ -133,6 +133,9 @@ Plug 'tpope/vim-rhubarb'
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
+" Rails development
+Plug 'tpope/vim-rails'
+
 " To run script or command without blocking vim
 " Plug 'skywind3000/asyncrun.vim'
 

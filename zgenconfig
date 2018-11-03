@@ -9,12 +9,11 @@ if ! zgen saved; then
   # specify plugins here
   zgen oh-my-zsh
 
-  zgen oh-my-zsh
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/docker
   zgen oh-my-zsh plugins/z
-  zgen oh-my-zsh plugins/tmux
+  zgen oh-my-zsh plugins/rails
 
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
