@@ -140,5 +140,7 @@ endfun
 
 
 call deoplete#custom#option({
-\ 'min_pattern_length': 1,
-\ })
+      \ 'min_pattern_length': 1,
+      \ })
+
+

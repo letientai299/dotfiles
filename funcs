@@ -4,78 +4,90 @@
 # Because the functions is self-defined, their aliases should be kept here, not
 # in the ~/.aliases file.
 
-
 # Open the ebook from command line using zathura, this also make za an alias to
 # zathura.
 # Usage:
 #   za [file_name]
 # If file_name is not provided, simply open zathura.
-za(){
-if [ $# -eq 0 ]; then
+za() {
+  if [ $# -eq 0 ]; then
     (zathura &)
-else
+  else
     (zathura "$1" &)
-fi
+  fi
 }
-
 
 # Add, commit and push in single call. For lazy people.
 # Shouldn't use this on serious project. It's would pollute your git history!
-function lazygit() {
-if [ $# -eq 0 ]; then # Check for commit message
-  echo "Need a commit message"
-  return 1
-fi
-git add .
-git commit -a -m "$*"
-git push
+lazygit() {
+  if [ $# -eq 0 ]; then # Check for commit message
+    echo "Need a commit message"
+    return 1
+  fi
+  git add .
+  git commit -a -m "$*"
+  git push
 }
 
 alias lg="lazygit" # And even more lazy
 
-# Update software {{{2 #
+fancy-echo(){
+    echo "--------------------------------------------------------------------------------"
+    echo "- $*"
+    echo "----------------------------------------"
+}
+
+# Update software
 update-software() {
 
-#  Ubuntu {{{1 #
-if command -v apt-get > /dev/null 2>&1; then
-  echo "--------------------------------------------------------------------------------"
-  echo "- Update software for Ubuntu"
-  echo "----------------------------------------"
-  sudo apt update
-  sudo apt full-upgrade -y
-  sudo apt autoremove -y
-fi
-# 1}}} #
+  #  Ubuntu
+  if command -v apt-get >/dev/null 2>&1; then
+    fancy-echo "Update software for Ubuntu"
+    sudo apt update
+    sudo apt full-upgrade -y
+    sudo apt autoremove -y
+  fi
 
-#  Centos {{{1 #
-if command -v yum > /dev/null 2>&1; then
-  echo "--------------------------------------------------------------------------------"
-  echo "- Update software for Centos"
-  echo "----------------------------------------"
-  sudo yum update -y
-fi
-#  1}}} #
+  #  Centos
+  if command -v yum >/dev/null 2>&1; then
+    fancy-echo "Update software for Centos"
+    sudo yum update -y
+  fi
 
-#  Mac {{{1 #
-if command -v brew > /dev/null 2>&1; then
-  echo "--------------------------------------------------------------------------------"
-  echo "- Update software for macOS"
-  echo "----------------------------------------"
-  brew update
-  brew upgrade
-  brew cask upgrade
-fi
-#  }}} #
+  #  Mac
+  if command -v brew >/dev/null 2>&1; then
+    fancy-echo "Update software for MacOs"
+    brew update
+    brew upgrade
+    brew cask upgrade
+  fi
 
-#  Vim {{{1 #
-echo "--------------------------------------------------------------------------------"
-echo "- Vim plugins"
-echo "----------------------------------------"
-# Execute vim-plug upgrade, then update all plugins
-vim -c "PlugUpgrade" -c "qa!"
-vim -c "PlugUpdate" -c "qa!"
-vim -c "UpdateRemotePlugins" -c "qa!"
-# 1}}} #
+  # Update sdkman softwares
+  if command -v brew >/dev/null 2>&1; then
+    fancy-echo "Update SDKMAN"
+    echo y | sdk update
+    echo y | sdk ug
+  fi
+
+  if command -v nvm >/dev/null 2>&1; then
+    fancy-echo "Update NodeJs with nvm"
+    nvm i node
+    npm update -g
+  fi
+
+  if command -v yarn >/dev/null 2>&1; then
+    fancy-echo "Update yarn global tools"
+    yarn global upgrade
+  fi
+
+  #  Vim
+  echo "--------------------------------------------------------------------------------"
+  echo "- Vim plugins"
+  echo "----------------------------------------"
+  # Execute vim-plug upgrade, then update all plugins
+  vim -c "PlugUpgrade" -c "qa!"
+  vim -c "PlugUpdate" -c "qa!"
+  vim -c "UpdateRemotePlugins" -c "qa!"
 }
-# 2}}} #
+
 

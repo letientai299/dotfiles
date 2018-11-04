@@ -20,7 +20,7 @@
     # Config files
     ~/.config/direnv/direnvrc: 'config/direnv/direnvrc'
     ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
-    ~/.config/nvim: 'vim'
+    ~/.config/nvim/init.vim: 'vim/init.vim'
     ~/.config/translate-shell: 'config/translate-shell'
     ~/.config/youtube-dl: 'config/youtube-dl'
     ~/.config/topydo: 'config/topydo'

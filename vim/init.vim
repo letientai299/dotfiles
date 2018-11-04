@@ -1,3 +1,4 @@
+set rtp+=~/.vim,~/.vim/after
 source ~/.vim/vimrc
 " Use deoplete
 let g:deoplete#enable_at_startup = 1
