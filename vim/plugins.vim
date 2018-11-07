@@ -135,6 +135,7 @@ Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Rails development
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
 
 " To run script or command without blocking vim
 " Plug 'skywind3000/asyncrun.vim'
