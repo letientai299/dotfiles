@@ -48,3 +48,5 @@ yarn.lock
 .direnv
 
 vendor/
+
+.local.vimrc

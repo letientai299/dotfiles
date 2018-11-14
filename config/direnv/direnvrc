@@ -27,3 +27,8 @@ export_alias() {
   echo "$@" >> "$target"
   chmod +x "$target"
 }
+
+nvm() {
+  . ~/.nvm/nvm.sh
+  nvm "$@"
+}

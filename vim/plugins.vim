@@ -142,12 +142,14 @@ Plug 'tpope/vim-endwise'
 
 " Distraction free mode
 " Plug 'junegunn/goyo.vim'
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'schickling/vim-bufonly'
+Plug 'mxw/vim-jsx'
+Plug 'editorconfig/editorconfig-vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
