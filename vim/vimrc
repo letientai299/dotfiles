@@ -45,6 +45,7 @@ let wiki.template_default = 'default'
 let wiki.template_ext = ".html"
 let wiki.nested_syntaxes ={
       \'python': 'python',
+      \'ruby': 'ruby',
       \'py':     'python',
       \'sql':     'pgsql',
       \'c++':    'cpp',
