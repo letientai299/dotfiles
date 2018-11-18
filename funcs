@@ -81,13 +81,14 @@ update-software() {
   fi
 
   #  Vim
-  echo "--------------------------------------------------------------------------------"
-  echo "- Vim plugins"
-  echo "----------------------------------------"
+  fancy_echo "Vim plugins"
   # Execute vim-plug upgrade, then update all plugins
   vim -c "PlugUpgrade" -c "qa!"
   vim -c "PlugUpdate" -c "qa!"
   vim -c "UpdateRemotePlugins" -c "qa!"
+
+  fancy_echo "ZSH plugins"
+  zgen update
 }
 
 
