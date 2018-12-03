@@ -102,3 +102,10 @@ brew tap zegervdv/zathura
 tic xterm-256color-italic.terminfo
 rm xterm-256color-italic.terminfo
 
+
+
+task "Askpass, for vim with sudo trick"
+brew tap theseal/ssh-askpass
+brew install ssh-askpass
+
+

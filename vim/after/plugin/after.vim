@@ -33,6 +33,8 @@ command! -bang -nargs=* Rg
       \         : fzf#vim#with_preview(),
       \ <bang>0)
 
+cnoreabbrev rg Rg
+
 "" Files command with preview window
 "" Files command with preview window
 command! -bang -nargs=? -complete=dir Files
@@ -144,4 +146,9 @@ call deoplete#custom#option({
       \ 'min_pattern_length': 1,
       \ })
 
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
 
