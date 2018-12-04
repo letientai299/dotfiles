@@ -89,7 +89,7 @@ Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-" Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
@@ -154,6 +154,14 @@ Plug 'fatih/vim-go', {'for': ['go']}
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
+let g:ranger_map_keys = 0
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " Helpful to quickly remove a lot of buffer. I'm not good as manage many things
 " as the same time, and I get used to [b and ]b to navigate between buffers, the

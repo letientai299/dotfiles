@@ -2,6 +2,8 @@
 let g:ale_sign_column_always = 1
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 " }}} "
 
 " Fzf {{{1 "
@@ -36,7 +38,6 @@ command! -bang -nargs=* Rg
 cnoreabbrev rg Rg
 
 "" Files command with preview window
-"" Files command with preview window
 command! -bang -nargs=? -complete=dir Files
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
@@ -46,7 +47,7 @@ command! -bang -nargs=? -complete=dir Files
 let NERDSpaceDelims=1
 " 1}}} "
 
-" nerdtree {{{1 "
+" nerdtree and ranger {{{1 "
 nnoremap <C-\> :NERDTreeToggle<CR>
 nnoremap <A-\> :NERDTreeFind<CR>
 
@@ -54,6 +55,15 @@ nnoremap <A-\> :NERDTreeFind<CR>
 " let g:NERDTreeFileExtensionHighlightFullName = 1
 " let g:NERDTreeExactMatchHighlightFullName = 1
 " let g:NERDTreePatternMatchHighlightFullName = 1
+augroup nerdtreedisablecursorline
+	autocmd!
+	autocmd FileType nerdtree setlocal nocursorline
+augroup end
+
+map <leader>rf :RangerCurrentFile<CR>
+map <leader>rt :RangerCurrentFileNewTab<CR>
+map <leader>rr :RangerWorkingDirectory<CR>
+map <leader>rT :RangerWorkingDirectoryNewTab<CR>
 " 1}}} "
 
 " rooter {{{ "
