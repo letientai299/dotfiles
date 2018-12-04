@@ -47,9 +47,8 @@ Plug 'godlygeek/tabular', {'for': ['md','markdown']}
 Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
-" Another plugin that provide many themes. Unnecessary if I can settle down
-" for just one single theme. But, fuck it, I can't.
-Plug 'flazz/vim-colorschemes'
+" The single colortheme that stay with me for a long time
+Plug 'NNLKNguyen/papercolor-theme'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.

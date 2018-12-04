@@ -60,3 +60,18 @@ let wiki.nested_syntaxes ={
 let g:vimwiki_list = [wiki]
 let g:vimwiki_hl_headers=1
 let g:vimwiki_hl_cb_checked=1
+
+" colorscheme config
+let g:PaperColor_Theme_Options = {
+      \   'theme': {
+      \     'default': {
+      \       'allow_italic': 1,
+      \       'allow_bold': 1,
+      \       'transparent_background': 1
+      \     }
+      \   }
+      \ }
+
+set bg=dark
+set termguicolors
+colo PaperColor
