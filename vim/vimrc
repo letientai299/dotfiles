@@ -67,7 +67,6 @@ let g:PaperColor_Theme_Options = {
       \     'default': {
       \       'allow_italic': 1,
       \       'allow_bold': 1,
-      \       'transparent_background': 1
       \     }
       \   }
       \ }

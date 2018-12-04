@@ -48,7 +48,7 @@ Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
 " The single colortheme that stay with me for a long time
-Plug 'NNLKNguyen/papercolor-theme'
+Plug 'NLKNguyen/papercolor-theme'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.

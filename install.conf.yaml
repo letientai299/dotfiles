@@ -1,40 +1,41 @@
 - defaults:
     link:
-        create: true
-        relink: true
+      create: true
+      relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 # Update git submodules
 - shell:
-    - ['git submodule update --init --recursive', 'Installing submodules']
+    - ["git submodule update --init --recursive", "Installing submodules"]
 
 - link:
     # Vim related setting.
     ~/.vim:
-        force: true
-        path: 'vim/'
-    ~/.vrapperrc: 'vim/vrapper.vim'
-    ~/.ideavimrc: 'vim/idearc.vim'
+      force: true
+      path: "vim/"
+    ~/.vrapperrc: "vim/vrapper.vim"
+    ~/.ideavimrc: "vim/idearc.vim"
 
     # Config files
-    ~/.config/direnv/direnvrc: 'config/direnv/direnvrc'
-    ~/.config/zathura/zathurarc: 'config/zathura/zathurarc'
-    ~/.config/nvim/init.vim: 'vim/init.vim'
-    ~/.config/translate-shell: 'config/translate-shell'
-    ~/.config/youtube-dl: 'config/youtube-dl'
-    ~/.config/topydo: 'config/topydo'
-    ~/.config/mpv: 'config/mpv'
-    ~/.config/ripgrep: 'config/ripgrep'
+    ~/.config/direnv/direnvrc: "config/direnv/direnvrc"
+    ~/.config/zathura/zathurarc: "config/zathura/zathurarc"
+    ~/.config/nvim/init.vim: "vim/init.vim"
+    ~/.config/translate-shell: "config/translate-shell"
+    ~/.config/youtube-dl: "config/youtube-dl"
+    ~/.config/topydo: "config/topydo"
+    ~/.config/mpv: "config/mpv"
+    ~/.config/ripgrep: "config/ripgrep"
+    ~/.config/kitty: "config/kitty"
 
     ~/.zshrc:
-      path: 'zshrc'
+      path: "zshrc"
       force: true
 
-    ~/.gitignore: 'gitignore'
-    ~/.tmux.conf: 'tmux.conf'
-    ~/.agignore: 'agignore'
-    ~/.highlight: 'highlight'
+    ~/.gitignore: "gitignore"
+    ~/.tmux.conf: "tmux.conf"
+    ~/.agignore: "agignore"
+    ~/.highlight: "highlight"
 
 - shell:
     # Git
