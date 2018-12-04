@@ -150,6 +150,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'schickling/vim-bufonly'
 Plug 'mxw/vim-jsx'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'pbrisbin/vim-mkdir'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
