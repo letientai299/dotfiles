@@ -1,4 +1,4 @@
-" vim:set et sw=2 ts=2 tw=80 spell:
+" vim:set et sw=2 ts=2 tw=80:
 " Auto install on the first time if there no plug.vim found {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -89,7 +89,7 @@ Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-" Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
@@ -143,14 +143,41 @@ Plug 'tpope/vim-endwise'
 " Distraction free mode
 " Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
+
+" For a quickly outline of what to expect in a new/big source code file
 Plug 'majutsushi/tagbar'
+
+" This plugin is a god send to work with Go in vim (but it can't replace
+" Goland, sadly)
 Plug 'fatih/vim-go', {'for': ['go']}
+
+" Still few more familiar with nerdtree than the built-in netrw
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
+let g:ranger_map_keys = 0
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+
+" Helpful to quickly remove a lot of buffer. I'm not good as manage many things
+" as the same time, and I get used to [b and ]b to navigate between buffers, the
+" less buffers, the better for me.
 Plug 'schickling/vim-bufonly'
+
+" Helpful for working with react and react-native
 Plug 'mxw/vim-jsx'
+Plug 'Galooshi/vim-import-js'
+
+" To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
 Plug 'pbrisbin/vim-mkdir'
+
+" To load vim settings per project
+Plug 'thinca/vim-localrc'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
