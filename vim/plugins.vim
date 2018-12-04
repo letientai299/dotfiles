@@ -100,6 +100,7 @@ Plug 'kana/vim-textobj-line'
 
 " Yeah, just make vim GUI more beautiful.
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Useful for review and reopen recent editing files, also serves as a bookmark.
 Plug 'mhinz/vim-startify'
@@ -123,6 +124,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-rhubarb'
 
+" gitk browser within vim. The more I use the terminal and vim, the more I want
+" to do everything within them.
+Plug 'gregsexton/gitv'
+
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
 " Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
 
@@ -140,7 +145,7 @@ Plug 'tpope/vim-endwise'
 " Plug 'skywind3000/asyncrun.vim'
 
 " Distraction free mode
-" Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
@@ -177,6 +182,9 @@ Plug 'pbrisbin/vim-mkdir'
 
 " To load vim settings per project
 Plug 'thinca/vim-localrc'
+
+" Focus a specified region of current buffer.
+Plug 'chrisbra/NrrwRgn'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
