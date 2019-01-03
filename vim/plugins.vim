@@ -186,6 +186,9 @@ Plug 'thinca/vim-localrc'
 " Focus a specified region of current buffer.
 Plug 'chrisbra/NrrwRgn'
 
+" I keep getting mistakes
+Plug 'mbbill/undotree'
+
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
 if !empty(glob('~/.local.plugins.vim'))

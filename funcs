@@ -91,4 +91,6 @@ update-software() {
   zgen update
 }
 
-
+pwdd(){
+  basename "$PWD"
+}

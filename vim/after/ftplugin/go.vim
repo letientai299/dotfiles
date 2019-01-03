@@ -1,5 +1,6 @@
 nmap <buffer> <leader>b <Plug>(go-build)
-nmap <buffer> <leader>t <Plug>(go-test)
+nmap <buffer> <leader>tt <Plug>(go-test)
+nmap <buffer> <leader>tf <Plug>(go-test-func)
 nmap <buffer> <leader>c <Plug>(go-coverage)
 nmap <buffer> <Leader>ds <Plug>(go-def-split)
 nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
