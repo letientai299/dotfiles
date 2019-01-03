@@ -31,7 +31,7 @@ lazygit() {
 
 alias lg="lazygit" # And even more lazy
 
-fancy-echo(){
+fancy_echo(){
     echo "--------------------------------------------------------------------------------"
     echo "- $*"
     echo "----------------------------------------"
@@ -42,7 +42,7 @@ update-software() {
 
   #  Ubuntu
   if command -v apt-get >/dev/null 2>&1; then
-    fancy-echo "Update software for Ubuntu"
+    fancy_echo "Update software for Ubuntu"
     sudo apt update
     sudo apt full-upgrade -y
     sudo apt autoremove -y
@@ -50,13 +50,13 @@ update-software() {
 
   #  Centos
   if command -v yum >/dev/null 2>&1; then
-    fancy-echo "Update software for Centos"
+    fancy_echo "Update software for Centos"
     sudo yum update -y
   fi
 
   #  Mac
   if command -v brew >/dev/null 2>&1; then
-    fancy-echo "Update software for MacOs"
+    fancy_echo "Update software for MacOs"
     brew update
     brew upgrade
     brew cask upgrade
@@ -64,19 +64,19 @@ update-software() {
 
   # Update sdkman softwares
   if command -v brew >/dev/null 2>&1; then
-    fancy-echo "Update SDKMAN"
+    fancy_echo "Update SDKMAN"
     echo y | sdk update
     echo y | sdk ug
   fi
 
   if command -v nvm >/dev/null 2>&1; then
-    fancy-echo "Update NodeJs with nvm"
+    fancy_echo "Update NodeJs with nvm"
     nvm i node
     npm update -g
   fi
 
   if command -v yarn >/dev/null 2>&1; then
-    fancy-echo "Update yarn global tools"
+    fancy_echo "Update yarn global tools"
     yarn global upgrade
   fi
 
