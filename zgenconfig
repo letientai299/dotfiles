@@ -20,9 +20,10 @@ if ! zgen saved; then
   zgen load hlissner/zsh-autopair
 
   zgen load denysdovhan/spaceship-prompt spaceship
-
   # generate the init script from plugins above
   zgen save
 fi
 
 autoload -U compinit && compinit
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_EXIT_CODE_SHOW=true
