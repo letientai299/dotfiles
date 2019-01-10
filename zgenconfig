@@ -25,5 +25,4 @@ if ! zgen saved; then
 fi
 
 autoload -U compinit && compinit
-SPACESHIP_TIME_SHOW=true
 SPACESHIP_EXIT_CODE_SHOW=true
