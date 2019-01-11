@@ -162,3 +162,6 @@ let g:user_emmet_settings = {
     \  },
   \}
 
+
+" Define yaml formatter
+let g:formatters_yaml=['prettier']
