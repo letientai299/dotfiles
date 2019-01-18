@@ -44,7 +44,8 @@ Plug 'plasticboy/vim-markdown', {'for': ['md','markdown']}
 Plug 'godlygeek/tabular', {'for': ['md','markdown']}
 
 " Live-review markdown
-Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+" Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
 " The single colortheme that stay with me for a long time
