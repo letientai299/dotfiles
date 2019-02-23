@@ -8,6 +8,8 @@ fi
 # Load zgen config
 source "$DOTFILES/zgenconfig";
 
+SPACESHIP_KUBECONTEXT_SHOW="false"
+
 # Disable <C-D> logout
 setopt ignore_eof
 
