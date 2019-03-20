@@ -34,7 +34,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
-Plug 'sheerun/vim-polyglot', {'do': './build'}
+Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
