@@ -165,3 +165,7 @@ let g:user_emmet_settings = {
 
 " Define yaml formatter
 let g:formatters_yaml=['prettier']
+
+" https://github.com/darold/pgFormatter
+let g:formatdef_pg_format='"pg_format"'
+let g:formatters_sql=['pg_format']

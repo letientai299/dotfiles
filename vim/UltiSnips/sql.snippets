@@ -1,0 +1,40 @@
+snippet ct "CREATE TABLE IF NOT EXISTS"
+CREATE TABLE IF NOT EXISTS $1 (
+	id serial PRIMARY KEY,
+	$0
+	status int NOT NULL DEFAULT 0,
+	ctime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
+	mtime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+);
+endsnippet
+
+snippet id "id serial"
+id serial PRIMARY KEY,
+endsnippet
+
+snippet nn "not null"
+NOT NULL
+endsnippet
+
+snippet name "name"
+name text NOT NULL,
+endsnippet
+
+snippet pk "primary key"
+PRIMARY KEY
+endsnippet
+
+snippet ctr "create translation table"
+CREATE TABLE IF NOT EXISTS $1_tr (
+	$2_id int REFERENCES $1(id),
+	lang varchar(10) NOT NULL,
+	PRIMARY KEY($2_id, lang),
+	$0
+	ctime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
+	mtime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+);
+endsnippet
+
+snippet ref "REFERENCES"
+$1 int REFERENCES $2,
+endsnippet

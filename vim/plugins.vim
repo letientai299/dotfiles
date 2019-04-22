@@ -39,9 +39,9 @@ let g:polyglot_disabled = ['markdown']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
-Plug 'plasticboy/vim-markdown', {'for': ['md','markdown']}
+Plug 'plasticboy/vim-markdown'
 " Plug 'gabrielelana/vim-markdown', {'for': ['md','markdown']}
-Plug 'godlygeek/tabular', {'for': ['md','markdown']}
+Plug 'godlygeek/tabular'
 
 " Live-review markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -130,7 +130,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'gregsexton/gitv'
 
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
-" Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
+Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
 
 " For SQL, I also follow the convention of making all SQL keyword uppercase.
 " Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
