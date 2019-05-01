@@ -26,7 +26,7 @@ endsnippet
 
 snippet ctr "create translation table"
 CREATE TABLE IF NOT EXISTS $1_tr (
-	$2_id int REFERENCES $1(id),
+	$2_id int REFERENCES $1,
 	lang varchar(10) NOT NULL,
 	PRIMARY KEY($2_id, lang),
 	$0

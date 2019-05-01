@@ -15,6 +15,10 @@ export_function() {
   fi
 }
 
+ef() {
+    export_function $*
+}
+
 # Example: export_alias zz "ls -la"
 export_alias() {
   local name=$1
@@ -27,6 +31,10 @@ export_alias() {
   echo "#!$SHELL -e" > "$target"
   echo "$@" >> "$target"
   chmod +x "$target"
+}
+
+ea() {
+    export_alias $*
 }
 
 nvm() {
