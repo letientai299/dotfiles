@@ -34,6 +34,9 @@ for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
 done;
 unset file;
 
+source $DOTFILES/spaceship/watson.zsh
+source $DOTFILES/spaceship/config.zsh
+
 
 # Remove the duplicated entries in path
 typeset -U PATH
