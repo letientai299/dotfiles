@@ -34,6 +34,7 @@ for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
 done;
 unset file;
 
+source $DOTFILES/spaceship/last-commit.zsh
 source $DOTFILES/spaceship/watson.zsh
 source $DOTFILES/spaceship/config.zsh
 
