@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # ------------------------------------------------------------------------------
 # Configuration
@@ -32,7 +32,7 @@ spaceship_watson() {
 
   # Exit section if variable is empty
   [[ -z $watson_status ]] && return
-  [[ $watson_status = 'No project started' ]] && return
+  [[ $watson_status =~ 'No project started' ]] && return
 
   # Display watson section
   spaceship::section \

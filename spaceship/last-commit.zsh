@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 SPACESHIP_GIT_LAST_COMMIT_SHOW="${SPACESHIP_GIT_LAST_COMMIT_SHOW=true}"
 SPACESHIP_GIT_LAST_COMMIT_SYMBOL="${SPACESHIP_GIT_LAST_COMMIT_SYMBOL=""}"
@@ -20,7 +20,7 @@ spaceship_git_last_commit() {
   spaceship::is_git || return
 
   local 'git_last_commit_status'
-  git_last_commit_status=$(git log --pretty='format:%s 🕑 %cr' -- 'HEAD^..HEAD' | head -n 1)
+  git_last_commit_status=$(git log --pretty='format:%s 🕑 %cr' HEAD^..HEAD | head -n 1)
 
   # Exit section if variable is empty
   [[ -z $git_last_commit_status ]] && return
