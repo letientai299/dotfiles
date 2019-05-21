@@ -1,5 +1,8 @@
 # vim:set et sw=2 ts=2 tw=79 ft=sh:
 
+# Disable oh-my-zsh update
+export DISABLE_AUTO_UPDATE=true
+
 # Load zgen
 . "$HOME/.zgen/zgen.zsh"
 
