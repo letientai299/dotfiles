@@ -109,6 +109,12 @@ update-software() {
     yarn global upgrade
   fi
 
+  if command -v rustup >/dev/null 2>&1; then
+    fancy_echo "Update rust"
+    rustup update
+  fi
+
+
   #  Vim
   fancy_echo "Vim plugins"
   # Execute vim-plug upgrade, then update all plugins
