@@ -35,7 +35,7 @@ Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown']
+let g:polyglot_disabled = ['markdown', 'log']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
@@ -100,8 +100,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
 " Yeah, just make vim GUI more beautiful.
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " Useful for review and reopen recent editing files, also serves as a bookmark.
 Plug 'mhinz/vim-startify'
@@ -127,27 +127,27 @@ Plug 'tpope/vim-rhubarb'
 
 " gitk browser within vim. The more I use the terminal and vim, the more I want
 " to do everything within them.
-Plug 'gregsexton/gitv'
+" Plug 'gregsexton/gitv'
 
 " Polyglot provided SQL syntax doensn't play nice with postgres code.
-Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
+" Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
 
 " For SQL, I also follow the convention of making all SQL keyword uppercase.
 " Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
 
 " For editing todo note
-Plug 'freitass/todo.txt-vim', {'for': ['todo']}
+" Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Rails development
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-endwise'
 
 " To run script or command without blocking vim
 " Plug 'skywind3000/asyncrun.vim'
 
 " Distraction free mode
-Plug 'junegunn/goyo.vim'
-Plug 'mattn/emmet-vim'
+" Plug 'junegunn/goyo.vim'
+" Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
 Plug 'majutsushi/tagbar'
@@ -159,10 +159,10 @@ Plug 'fatih/vim-go', {'for': ['go']}
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
+" Plug 'francoiscabrol/ranger.vim'
+" Plug 'rbgrouleff/bclose.vim'
 let g:NERDTreeHijackNetrw = 0
 let g:ranger_replace_netrw = 1
 let g:ranger_map_keys = 0
@@ -171,26 +171,26 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 " Helpful to quickly remove a lot of buffer. I'm not good as manage many things
 " as the same time, and I get used to [b and ]b to navigate between buffers, the
 " less buffers, the better for me.
-Plug 'schickling/vim-bufonly'
+" Plug 'schickling/vim-bufonly'
 
 " Helpful for working with react and react-native
-Plug 'mxw/vim-jsx'
-Plug 'Galooshi/vim-import-js'
+" Plug 'mxw/vim-jsx'
+" Plug 'Galooshi/vim-import-js'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
-Plug 'pbrisbin/vim-mkdir'
+" Plug 'pbrisbin/vim-mkdir'
 
 " To load vim settings per project
 Plug 'thinca/vim-localrc'
 
 " Focus a specified region of current buffer.
-Plug 'chrisbra/NrrwRgn'
+" Plug 'chrisbra/NrrwRgn'
 
 " I keep getting mistakes
-Plug 'mbbill/undotree'
+" Plug 'mbbill/undotree'
 
-Plug 'andymass/vim-matchup'
+" Plug 'andymass/vim-matchup'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
