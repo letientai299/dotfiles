@@ -27,7 +27,7 @@ bindkey '^x^e' edit-command-line
 
 
 # Load custom shell script
-for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
+for file in "$DOTFILES"/{path,exports,aliases,ouncs,bindkeys}; do
     if [ -r "$file" ] && [ -f "$file" ]; then
         source "$file";
     fi
@@ -35,14 +35,13 @@ done;
 unset file;
 
 source $DOTFILES/spaceship/last-commit.zsh
-source $DOTFILES/spaceship/watson.zsh
+# source $DOTFILES/spaceship/watson.zsh
 source $DOTFILES/spaceship/config.zsh
 
 
 # Remove the duplicated entries in path
 typeset -U PATH
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 

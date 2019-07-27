@@ -35,7 +35,7 @@ alias lg="lazygit" # And even more lazy
 alias gbm='git checkout master'
 alias gbt='git checkout test'
 alias gbu='git checkout uat'
-unalias gbs # I don't use git bisect yet
+# unalias gbs # I don't use git bisect yet
 alias gbs='git checkout staging'
 
 # Cache the current branch to allow fast switching later.
