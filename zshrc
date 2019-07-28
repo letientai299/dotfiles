@@ -27,7 +27,7 @@ bindkey '^x^e' edit-command-line
 
 
 # Load custom shell script
-for file in "$DOTFILES"/{path,exports,aliases,ouncs,bindkeys}; do
+for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
     if [ -r "$file" ] && [ -f "$file" ]; then
         source "$file";
     fi
