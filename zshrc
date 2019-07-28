@@ -67,4 +67,3 @@ done
 compinit -C
 
 
-[[ -s "/home/tai/.gvm/scripts/gvm" ]] && source "/home/tai/.gvm/scripts/gvm"
