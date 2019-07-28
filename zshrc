@@ -66,3 +66,5 @@ for dump in ~/.zcompdump(N.mh+24); do
 done
 compinit -C
 
+
+[[ -s "/home/tai/.gvm/scripts/gvm" ]] && source "/home/tai/.gvm/scripts/gvm"
