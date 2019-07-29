@@ -21,6 +21,7 @@
     ~/.config/direnv/direnvrc: "config/direnv/direnvrc"
     ~/.config/zathura/zathurarc: "config/zathura/zathurarc"
     ~/.config/nvim/init.vim: "vim/init.vim"
+    ~/.config/nvim/coc-settings.json: "vim/coc-settings.json"
     ~/.config/translate-shell: "config/translate-shell"
     ~/.config/youtube-dl: "config/youtube-dl"
     ~/.config/topydo: "config/topydo"

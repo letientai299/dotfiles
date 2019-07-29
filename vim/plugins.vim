@@ -44,8 +44,8 @@ Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular'
 
 " Live-review markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-" Plug 'kannokanno/previm', {'for': ['md','markdown', 'wiki']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
+let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
 " The single colortheme that stay with me for a long time
@@ -83,9 +83,14 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'wellle/tmux-complete.vim'
-Plug 'zchee/deoplete-go'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
@@ -93,7 +98,7 @@ Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
-Plug 'simeji/winresizer'
+" Plug 'simeji/winresizer'
 
 " More text objects
 Plug 'kana/vim-textobj-user'
@@ -136,7 +141,7 @@ Plug 'tpope/vim-rhubarb'
 " Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
 
 " For editing todo note
-" Plug 'freitass/todo.txt-vim', {'for': ['todo']}
+Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Rails development
 " Plug 'tpope/vim-rails'
@@ -154,13 +159,13 @@ Plug 'majutsushi/tagbar'
 
 " This plugin is a god send to work with Go in vim (but it can't replace
 " Goland, sadly)
-Plug 'fatih/vim-go', {'for': ['go']}
+" Plug 'fatih/vim-go', {'for': ['go']}
 
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 " Plug 'francoiscabrol/ranger.vim'
 " Plug 'rbgrouleff/bclose.vim'
 let g:NERDTreeHijackNetrw = 0

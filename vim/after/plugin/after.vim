@@ -152,15 +152,15 @@ fun! TranslateCurrentWord()
 endfun
 
 
-call deoplete#custom#option({
-      \ 'min_pattern_length': 1,
-      \ })
+" call deoplete#custom#option({
+      " \ 'min_pattern_length': 1,
+      " \ })
 
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
+" let g:user_emmet_settings = {
+  " \  'javascript.jsx' : {
+    " \      'extends' : 'jsx',
+    " \  },
+  " \}
 
 
 " Define yaml formatter

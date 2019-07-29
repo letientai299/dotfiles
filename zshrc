@@ -8,8 +8,6 @@ fi
 # Load zgen config
 source "$DOTFILES/zgenconfig";
 
-SPACESHIP_KUBECONTEXT_SHOW="false"
-
 # Disable <C-D> logout
 setopt ignore_eof
 
@@ -35,7 +33,6 @@ done;
 unset file;
 
 source $DOTFILES/spaceship/last-commit.zsh
-# source $DOTFILES/spaceship/watson.zsh
 source $DOTFILES/spaceship/config.zsh
 
 
