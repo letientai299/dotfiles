@@ -27,7 +27,6 @@
     ~/.config/topydo: "config/topydo"
     ~/.config/mpv: "config/mpv"
     ~/.config/ripgrep: "config/ripgrep"
-    ~/.config/kitty: "config/kitty"
 
     ~/.zshrc:
       path: "zshrc"
