@@ -89,7 +89,7 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'wellle/tmux-complete.vim'
+Plug 'wellle/tmux-complete.vim'
 " Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
@@ -105,8 +105,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
 " Yeah, just make vim GUI more beautiful.
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Useful for review and reopen recent editing files, also serves as a bookmark.
 Plug 'mhinz/vim-startify'
