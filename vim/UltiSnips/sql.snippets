@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS $1 (
 	id serial PRIMARY KEY,
 	$0
 	status int NOT NULL DEFAULT 0,
-	ctime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
-	mtime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
+	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
 );
 endsnippet
 
@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS $1_tr (
 	lang varchar(10) NOT NULL,
 	PRIMARY KEY($2_id, lang),
 	$0
-	ctime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
-	mtime int NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
+	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
 );
 endsnippet
 
