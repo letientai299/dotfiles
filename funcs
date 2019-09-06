@@ -98,12 +98,6 @@ update-software() {
     echo y | sdk ug
   fi
 
-  if command -v nvm >/dev/null 2>&1; then
-    fancy_echo "Update NodeJs with nvm"
-    nvm i node
-    npm update -g
-  fi
-
   if command -v yarn >/dev/null 2>&1; then
     fancy_echo "Update yarn global tools"
     yarn global upgrade
