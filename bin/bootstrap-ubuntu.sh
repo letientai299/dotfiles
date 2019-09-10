@@ -33,7 +33,7 @@ pip install --upgrade pip
 pip install --user neovim
 pip3 install --upgrade pip
 pip3 install --user neovim
-echo 'export PATH=$PATH:$HOME/.local/bin' >> $HOME/.profile
+echo 'export PATH=$PATH:$HOME/.local/bin' >>$HOME/.profile
 
 task "Ruby and neovim binding"
 sudo apt install ruby-dev ruby -y
@@ -57,7 +57,7 @@ mkdir -p ~/.local/bin
 mv tag ~/.local/bin
 rm tag_linux_amd64.tar.gz
 
-cat << HERE >> $HOME/.zshrc_local
+cat <<HERE >>$HOME/.zshrc_local
 if (( $+commands[tag] )); then
   export TAG_SEARCH_PROG=rg  # replace with rg for ripgrep
   tag() { command tag "\$@"; source "\${TAG_ALIAS_FILE:-/tmp/tag_aliases}" 2>/dev/null }
@@ -70,7 +70,10 @@ sudo apt install -y curl wget
 
 task "zsh"
 sudo apt install -y zsh
-chsh  -s "$(which zsh)"
+chsh -s "$(which zsh)"
+
+task "zgen"
+git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
 task "Nodejs"
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
@@ -102,4 +105,3 @@ task "Term 256 color"
 wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
 tic xterm-256color-italic.terminfo
 rm xterm-256color-italic.terminfo
-

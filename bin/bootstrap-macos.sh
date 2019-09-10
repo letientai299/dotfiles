@@ -25,7 +25,7 @@ pip3 install --upgrade pip
 pip2 install --upgrade pip
 pip3 install --user neovim
 pip2 install --user neovim
-echo 'export PATH=$PATH:$HOME/.local/bin' >> $HOME/.profile
+echo 'export PATH=$PATH:$HOME/.local/bin' >>$HOME/.profile
 
 task "Ruby and neovim binding"
 brew install ruby
@@ -54,7 +54,7 @@ mkdir -p ~/.local/bin
 mv tag ~/.local/bin
 rm tag_darwin_amd64.zip
 
-cat << HERE >> $HOME/.zshrc_local
+cat <<HERE >>$HOME/.zshrc_local
 if (( $+commands[tag] )); then
   export TAG_SEARCH_PROG=rg  # replace with rg for ripgrep
   tag() { command tag "\$@"; source "\${TAG_ALIAS_FILE:-/tmp/tag_aliases}" 2>/dev/null }
@@ -67,7 +67,10 @@ brew install curl wget
 
 task "zsh"
 brew install zsh
-chsh  -s "$(which zsh)"
+chsh -s "$(which zsh)"
+
+task "zgen"
+git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
 task "Nodejs"
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
@@ -102,10 +105,6 @@ brew tap zegervdv/zathura
 tic xterm-256color-italic.terminfo
 rm xterm-256color-italic.terminfo
 
-
-
 task "Askpass, for vim with sudo trick"
 brew tap theseal/ssh-askpass
 brew install ssh-askpass
-
-
