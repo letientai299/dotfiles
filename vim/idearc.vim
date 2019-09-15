@@ -5,4 +5,5 @@ source ~/.vim/plugin/common.vim
 
 " Use the new surround plugin
 set surround
+set commentary
 set ideajoin

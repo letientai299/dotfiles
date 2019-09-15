@@ -2,7 +2,7 @@
 # vim: syntax=sh
 # Custom key binding
 bindkey -s "^k" "| less^m"
-bindkey -s "^n" "^e | clipcopy^m"
+bindkey -s "^]" "^e | clipcopy^m"
 bindkey "^ " "autosuggest-accept"
 bindkey -e
 
