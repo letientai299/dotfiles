@@ -8,5 +8,5 @@ export LC_ALL="en_US.UTF-8"
 export PATH="$HOME/.local/bin:$PATH"
 export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--height 80% --reverse --preview "highlight -O ansi -l {} 2> /dev/null || ls -lah {} 2> /dev/null || true"'
+export FZF_DEFAULT_OPTS='--height 80% --reverse'
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/rgrc"
