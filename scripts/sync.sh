@@ -9,5 +9,5 @@ cd "$WORKING_DIR/.." || exit
 git pull
 git add .
 now=$(date '+%F %a %T')
-git commit -m "Sync note $now"
+git commit -m "Sync dot $now"
 git push
