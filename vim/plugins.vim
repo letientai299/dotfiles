@@ -98,7 +98,7 @@ Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
-" Plug 'simeji/winresizer'
+Plug 'simeji/winresizer'
 
 " More text objects
 Plug 'kana/vim-textobj-user'

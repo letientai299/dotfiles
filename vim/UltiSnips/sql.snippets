@@ -1,10 +1,12 @@
-snippet ct "CREATE TABLE IF NOT EXISTS"
-CREATE TABLE IF NOT EXISTS $1 (
-	id serial PRIMARY KEY,
+snippet ct "create table if not exists"
+create table if not exists $1 (
+	id serial primary key,
 	$0
-	status int NOT NULL DEFAULT 0,
-	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
-	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+	status int not null default 0,
+	/* creation time, milliseconds since Epoch */
+	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000,
+	/* modified time, milliseconds since Epoch */
+	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000
 );
 endsnippet
 
@@ -25,16 +27,29 @@ PRIMARY KEY
 endsnippet
 
 snippet ctr "create translation table"
-CREATE TABLE IF NOT EXISTS $1_tr (
-	$2_id int REFERENCES $1,
-	lang varchar(10) NOT NULL,
-	PRIMARY KEY($2_id, lang),
+create table if not exists $1_tr (
+	$2_id int references $1 not null,
+	lang varchar(10) not null,
+	primary key($2_id, lang),
 	$0
-	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))), -- creation time
-	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) -- modified time
+	/* creation time, milliseconds since Epoch */
+	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000,
+	/* modified time, milliseconds since Epoch */
+	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000
 );
 endsnippet
 
-snippet ref "REFERENCES"
-$1 int REFERENCES $2,
+snippet ref "references"
+$1 int references $2 not null,
+endsnippet
+
+snippet ctime "ctime"
+	/* creation time, milliseconds since Epoch */
+	ctime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000,
+endsnippet
+
+
+snippet mtime "mtime"
+	/* modified time, milliseconds since Epoch */
+	mtime bigint NOT NULL DEFAULT extract(epoch FROM (timezone('utc', now()))) * 1000
 endsnippet

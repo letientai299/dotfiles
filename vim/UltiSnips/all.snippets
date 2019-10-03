@@ -3,6 +3,12 @@ from vimsnippets import get_comment_format
 endglobal
 
 snippet td "TODO"
-`!p snip.rv=get_comment_format()[0]` TODO (tai): $0
+`!p snip.rv=get_comment_format()[0]`TODO (tai): $0 `!p snip.rv=get_comment_format()[2]`
+endsnippet
+
+snippet docs "comment documents"
+`!p snip.rv=get_comment_format()[0]`
+`!p snip.rv=get_comment_format()[1]` $0
+`!p snip.rv=get_comment_format()[2]`
 endsnippet
 
