@@ -44,7 +44,6 @@ make_alias_open soffice\
   doc docx xls xlsx ppt pptx
 
 
-alias v="vim -R"
 alias vv="vim +VimwikiIndex"
 alias vd="vim +VimwikiMakeDiaryNote"
 alias sv="sudo vim"
