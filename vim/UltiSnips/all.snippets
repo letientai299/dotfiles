@@ -1,9 +1,10 @@
 global !p
 from vimsnippets import get_comment_format
+from os import environ
 endglobal
 
 snippet td "TODO"
-`!p snip.rv=get_comment_format()[0]`TODO (tai): $0 `!p snip.rv=get_comment_format()[2]`
+`!p snip.rv=get_comment_format()[0]` TODO (`!p snip.rv=environ['USER']`): $0 `!p snip.rv=get_comment_format()[2]`
 endsnippet
 
 snippet docs "comment documents"
