@@ -1,0 +1,49 @@
+# espanso configuration file
+# vim:set et sw=2 ts=2 tw=120 spell:
+
+# This is the default configuration file, change it as you like it
+# You can refer to the official documentation:
+# https://espanso.org/docs/
+
+# Matches are the substitution rules, when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # Dates
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y/%m/%d"
+
+  # Shell commands
+  - trigger: ":gbr"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"
+
+  #------------------------------------------------------------
+  # Common abbreviations
+  #------------------------------------------------------------
+  - trigger: ":eb"
+    replace: "Elastic beanstalk"
+  - trigger: ":elb"
+    replace: "Elastic load balancing"
+  - trigger: ":cw"
+    replace: "CloudWatch"
+  - trigger: ":cf"
+    replace: "CloudFlare"
+  - trigger: ":ws"
+    replace: "Websocket"
+  - trigger: ":alb"
+    replace: "Application Load Balancer"
+  - trigger: ":clb"
+    replace: "Classic Load Balancer"
