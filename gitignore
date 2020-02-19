@@ -1,3 +1,5 @@
+.dump/
+
 # Vim
 # temp file
 *.vim~
