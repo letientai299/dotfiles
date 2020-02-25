@@ -21,15 +21,6 @@ matches:
         params:
           format: "%Y/%m/%d"
 
-  # Shell commands
-  - trigger: ":cgb"
-    replace: "{{output}}"
-    vars:
-      - name: output
-        type: shell
-        params:
-          cmd: "cd /Users/tai.le/Project/jl299/d-poker/cards && git rev-parse HEAD | tr -d '\n'"
-
   #------------------------------------------------------------
   # Common abbreviations
   #------------------------------------------------------------
