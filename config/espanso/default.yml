@@ -38,3 +38,5 @@ matches:
     replace: "Application Load Balancer"
   - trigger: ":clb"
     replace: "Classic Load Balancer"
+  - trigger: "ebx"
+    replace: "ebextension"
