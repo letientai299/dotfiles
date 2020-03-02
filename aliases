@@ -43,6 +43,7 @@ make_alias_open zathura\
 make_alias_open soffice\
   doc docx xls xlsx ppt pptx
 
+alias rm='trash'
 
 alias vv="vim +VimwikiIndex"
 alias vd="vim +VimwikiMakeDiaryNote"

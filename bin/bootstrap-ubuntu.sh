@@ -12,7 +12,7 @@ task "Make sure everything is up-to-date"
 sudo apt update && sudo apt dist-upgrade -y && sudo apt full-upgrade -y
 
 task "Build essential"
-sudo apt install -y build-essential software-properties-common
+sudo apt install -y build-essential software-properties-common trash-cli
 
 task "Git PPA for latest release"
 sudo add-apt-repository ppa:git-core/ppa -y
