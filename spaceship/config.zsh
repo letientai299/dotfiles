@@ -1,4 +1,5 @@
 SPACESHIP_PROMPT_ORDER=(
+  user
   aws
   time        # Time stamps section
   dir         # Current directory section
