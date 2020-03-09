@@ -57,3 +57,4 @@ _notes/
 .*pid*
 tmux-client*.log
 nohup.out
+*.gen.go
