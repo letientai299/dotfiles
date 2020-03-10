@@ -30,9 +30,7 @@ cnoremap <C-n> <Down>
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
 " Save and also reload the file, use when change Vim modeline config
-nmap <c-s-s> :w<CR>:e %<CR>
-
-" :W sudo saves the file
+nmap <c-s-s> :w<CR>:e %<CR> " :W sudo saves the file
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
 
