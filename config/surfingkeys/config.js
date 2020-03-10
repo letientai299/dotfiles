@@ -46,6 +46,9 @@ mapkey(
 
 // Search {{{1 //
 addSearchAlias("y", "youtube", "https://www.youtube.com/search?q=");
+addSearchAlias("gt", "translate", "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text=");
+// TODO (tai): add search for jira and confluence //
+addSearchAlias("c", "confluence", "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text=");
 
 mapkey("oy", "#8Open Search with alias y", function() {
   Front.openOmnibar({ type: "SearchEngine", extra: "y" });
