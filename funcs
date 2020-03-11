@@ -123,3 +123,11 @@ update-software() {
 pwdd(){
   basename "$PWD"
 }
+
+# go get
+gget(){
+  url="$*"
+  pj=$(echo $url |sed 's/^https\?:\/\///')
+  echo $pj
+  go get $pj
+}
