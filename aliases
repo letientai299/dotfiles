@@ -81,3 +81,4 @@ alias lsport="sudo lsof -n -P -i +c 13"
 # Git
 alias gcf!="git commit --amend --no-edit"
 alias gll='git log --pretty="%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s"'
+alias gwho="git config --list | grep user"
