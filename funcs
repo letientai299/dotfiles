@@ -83,16 +83,15 @@ update-software() {
     sudo yum update -y
   fi
 
-  #  Mac
   if command -v brew >/dev/null 2>&1; then
-    fancy_echo "Update software for MacOs"
+    fancy_echo "Update software installed by homebrew"
     brew update
     brew upgrade
     brew cask upgrade
   fi
 
   # Update sdkman softwares
-  if command -v brew >/dev/null 2>&1; then
+  if command -v sdk >/dev/null 2>&1; then
     fancy_echo "Update SDKMAN"
     echo y | sdk update
     echo y | sdk ug
