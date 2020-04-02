@@ -53,8 +53,6 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
-# [[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"
-
 # ZSH checking the cached .zcompdump to see if it needs regenerating. The
 # simplest fix is to only do that once a day.
 autoload -Uz compinit
@@ -64,3 +62,4 @@ done
 compinit -C
 
 
+[[ -s "/Users/tai.le/.gvm/scripts/gvm" ]] && source "/Users/tai.le/.gvm/scripts/gvm"
