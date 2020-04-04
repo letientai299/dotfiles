@@ -84,7 +84,7 @@ alias gll='git log --pretty="%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%
 alias gwho="git config --list | grep user"
 alias gs='git status'
 alias gon='git open'
-alias cm="git add . && git commit"
+alias cm="git add . && git commit -v"
 alias gdo='git diff origin/HEAD..HEAD'
 
 # docker
