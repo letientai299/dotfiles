@@ -65,3 +65,4 @@ compinit -C
 [[ -s "/Users/tai.le/.gvm/scripts/gvm" ]] && source "/Users/tai.le/.gvm/scripts/gvm"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=/Users/tai.le/.tiup/bin:$PATH
