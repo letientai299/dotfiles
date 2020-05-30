@@ -126,7 +126,6 @@ Plug 'junegunn/vim-easy-align'
 " it (or remove it, as oh-my-zsh with its git plugins is really enough for
 " my work right now).
 Plug 'tpope/vim-fugitive'
-Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-rhubarb'
 
 " gitk browser within vim. The more I use the terminal and vim, the more I want
