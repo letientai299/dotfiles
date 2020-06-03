@@ -53,9 +53,7 @@ Plug 'NLKNguyen/papercolor-theme'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
-Plug 'vimwiki/vimwiki'
-" https://github.com/vimwiki/vimwiki/issues/431
-autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+Plug 'vimwiki/vimwiki', {'for': ['wiki']}
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
