@@ -80,6 +80,11 @@ nmap <F35> :TagbarToggle<CR>
 let g:tagbar_autoclose=0
 let g:tagbar_autofocus=1
 
+
+autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+let g:vimwiki_global_ext = 0
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
 let g:tagbar_type_vimwiki = {
       \   'ctagstype':'vimwiki'
       \ , 'kinds':['h:header']
