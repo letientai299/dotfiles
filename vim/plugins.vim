@@ -193,10 +193,8 @@ Plug 'thinca/vim-localrc'
 " Focus a specified region of current buffer.
 " Plug 'chrisbra/NrrwRgn'
 
-" I keep getting mistakes
-" Plug 'mbbill/undotree'
-
-" Plug 'andymass/vim-matchup'
+" Show git commit message of the current line
+Plug 'rhysd/git-messenger.vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
