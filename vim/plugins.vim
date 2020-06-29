@@ -130,6 +130,7 @@ Plug 'junegunn/vim-easy-align'
 " my work right now).
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-git'
 
 " gitk browser within vim. The more I use the terminal and vim, the more I want
 " to do everything within them.
