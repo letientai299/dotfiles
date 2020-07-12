@@ -35,13 +35,14 @@ Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown', 'log']
+let g:polyglot_disabled = ['md', 'markdown', 'log']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
-Plug 'plasticboy/vim-markdown'
+" Plug 'godlygeek/tabular'
+" Plug 'plasticboy/vim-markdown'
+" let g:vim_markdown_folding_disabled = 1
 " Plug 'gabrielelana/vim-markdown', {'for': ['md','markdown']}
-Plug 'godlygeek/tabular'
 
 " Live-review markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
@@ -51,8 +52,8 @@ Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 " The single colortheme that stay with me for a long time
 Plug 'NLKNguyen/papercolor-theme'
 
-autocmd FileReadPost,BufEnter,BufRead,BufNewFile *.md set filetype=markdown
-" let g:vimwiki_global_ext = 0
+autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+let g:vimwiki_global_ext = 0
 " let g:vimwiki_syntax = 'vimwiki'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
