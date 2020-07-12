@@ -51,12 +51,13 @@ Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 " The single colortheme that stay with me for a long time
 Plug 'NLKNguyen/papercolor-theme'
 
+autocmd FileReadPost,BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+" let g:vimwiki_global_ext = 0
+" let g:vimwiki_syntax = 'vimwiki'
+
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
 Plug 'vimwiki/vimwiki'
-" autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
-let g:vimwiki_global_ext = 0
-" let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
