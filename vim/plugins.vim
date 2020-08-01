@@ -88,12 +88,12 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Shougo/neco-vim'
-Plug 'neoclide/coc-neco'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'Shougo/neco-vim'
+" Plug 'neoclide/coc-neco'
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'wellle/tmux-complete.vim'
+" Plug 'wellle/tmux-complete.vim'
 " Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
