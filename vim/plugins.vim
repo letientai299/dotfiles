@@ -69,8 +69,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'raimondi/delimitmate'
 
 " The snippets engine and the a big collection of snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " Quickly toggle line or block comment.
 " I've considered switching to another commenting plugins (tcomment and
@@ -88,12 +88,12 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'Shougo/neco-vim'
-" Plug 'neoclide/coc-neco'
-" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc-neco'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'wellle/tmux-complete.vim'
+Plug 'wellle/tmux-complete.vim'
 " Plug 'zchee/deoplete-go'
 
 " Auto cd to git project root when open a file in vim
