@@ -20,7 +20,7 @@ if ! zgen saved; then
   zgen load zsh-users/zsh-completions
   # zgen load hlissner/zsh-autopair
 
-  zgen load denysdovhan/spaceship-prompt spaceship
+  # zgen load denysdovhan/spaceship-prompt spaceship
 
   # generate the init script from plugins above
   zgen save

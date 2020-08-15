@@ -1,7 +1,4 @@
 SPACESHIP_PROMPT_ORDER=(
-  user
-  aws
-  time        # Time stamps section
   dir         # Current directory section
   git         # Git section (git_branch + git_status)
   git_last_commit
