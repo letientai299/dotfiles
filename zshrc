@@ -5,6 +5,8 @@ else
   export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 fi
 
+# zmodload zsh/zprof
+
 # Load zgen config
 source "$DOTFILES/zgenconfig";
 
@@ -26,43 +28,52 @@ bindkey '^x^e' edit-command-line
 
 # Load custom shell script
 for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
-    if [ -r "$file" ] && [ -f "$file" ]; then
-        source "$file";
-    fi
+  if [ -r "$file" ] && [ -f "$file" ]; then
+    source "$file";
+  fi
 done;
 unset file;
 
 source $DOTFILES/spaceship/last-commit.zsh
 source $DOTFILES/spaceship/config.zsh
 
-
 # Remove the duplicated entries in path
 typeset -U PATH
-
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+nvm() {
+  echo "NVM not loaded! Loading now..."
+  unset -f nvm
+  export NVM_PREFIX=$(brew --prefix nvm)  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"  nvm "$@"
+}
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
-    source ~/.zshrc_local
+  source ~/.zshrc_local
 fi
-
-# ZSH checking the cached .zcompdump to see if it needs regenerating. The
-# simplest fix is to only do that once a day.
-autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
 
 
 [[ -s "/Users/tai.le/.gvm/scripts/gvm" ]] && source "/Users/tai.le/.gvm/scripts/gvm"
 
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH=/Users/tai.le/.tiup/bin:$PATH
+
+
+# On slow systems, checking the cached .zcompdump file to see if it must be
+# regenerated adds a noticable delay to zsh startup.  This little hack restricts
+# it to once a day.  It should be pasted into your own completion file.
+#
+# The globbing is a little complicated here:
+# - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
+# - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
+# - '.' matches "regular files"
+# - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit;
+else
+  compinit -C;
+fi;
+
+# zprof
