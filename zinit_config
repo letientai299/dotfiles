@@ -1,0 +1,19 @@
+# vim:set et sw=2 ts=2 tw=79 ft=sh:
+
+skip_global_compinit=1
+
+zinit ice wait lucid atload'_zsh_autosuggest_start'
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice wait lucid
+zinit light zsh-users/zsh-completions
+
+zinit ice wait lucid
+zinit snippet OMZ::plugins/git
+
+zinit ice wait lucid
+zinit light OMZ::plugins/z
+
+zinit ice wait lucid
+zinit light denysdovhan/spaceship-prompt
+
