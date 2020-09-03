@@ -12,7 +12,7 @@ zinit ice wait lucid
 zinit snippet OMZ::plugins/git
 
 zinit ice wait lucid
-zinit light OMZ::plugins/z
+zinit snippet https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 zinit ice wait lucid
 zinit light denysdovhan/spaceship-prompt
