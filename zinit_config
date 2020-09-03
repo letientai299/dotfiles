@@ -9,11 +9,18 @@ zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
 zinit ice wait lucid
-zinit snippet OMZ::plugins/git
+zinit snippet OMZP::git
+
+zinit ice as"completion"
+zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
 zinit ice wait lucid
 zinit snippet https://raw.githubusercontent.com/rupa/z/master/z.sh
 
-zinit ice wait lucid
+zinit ice lucid
 zinit light denysdovhan/spaceship-prompt
 
+zinit from"gh-r" as"program" mv"direnv* -> direnv" \
+    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+    pick"direnv" src="zhook.zsh" for \
+        direnv/direnv
