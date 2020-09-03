@@ -8,8 +8,12 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait lucid
-zinit snippet OMZP::git
+zinit ice depth"1" multisrc="lib/*.zsh" pick"/dev/null"
+zinit light ohmyzsh/ohmyzsh
+
+zinit wait lucid for \
+  OMZL::git.zsh \
+  OMZP::git
 
 zinit ice as"completion"
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
@@ -21,6 +25,6 @@ zinit ice lucid
 zinit light denysdovhan/spaceship-prompt
 
 zinit from"gh-r" as"program" mv"direnv* -> direnv" \
-    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
-    pick"direnv" src="zhook.zsh" for \
-        direnv/direnv
+  atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+  pick"direnv" src="zhook.zsh" for \
+  direnv/direnv
