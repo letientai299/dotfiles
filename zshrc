@@ -42,13 +42,6 @@ typeset -U PATH
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export NVM_DIR="$HOME/.nvm"
-nvm() {
-  echo "NVM not loaded! Loading now..."
-  unset -f nvm
-  export NVM_PREFIX=$(brew --prefix nvm)  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"  nvm "$@"
-}
-
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
