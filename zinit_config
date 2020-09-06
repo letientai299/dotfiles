@@ -21,8 +21,10 @@ zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_
 zinit ice wait lucid
 zinit snippet https://raw.githubusercontent.com/rupa/z/master/z.sh
 
-zinit ice lucid
-zinit light denysdovhan/spaceship-prompt
+# zinit ice lucid
+# zinit light denysdovhan/spaceship-prompt
+
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 zinit from"gh-r" as"program" mv"direnv* -> direnv" \
   atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
