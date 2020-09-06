@@ -96,3 +96,6 @@ source "$DOTFILES/zinit_config";
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/Projects/mine/dotfiles/p10k.zsh.
+[[ ! -f ~/Projects/mine/dotfiles/p10k.zsh ]] || source ~/Projects/mine/dotfiles/p10k.zsh
