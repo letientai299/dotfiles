@@ -1,5 +1,6 @@
 # vim:set et sw=2 ts=2 tw=79 ft=sh:
 
+setopt promptsubst
 skip_global_compinit=1
 
 zinit ice wait lucid atload'_zsh_autosuggest_start'
@@ -8,12 +9,13 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice depth"1" multisrc="lib/*.zsh plugins/git/*.zsh" pick"/dev/null"
+zinit ice depth"1" multisrc="lib/*.zsh" pick"/dev/null"
 zinit light ohmyzsh/ohmyzsh
 
-zinit wait lucid for \
-    OMZ::lib/git.zsh \
-    OMZ::plugins/git/git.plugin.zsh
+zinit snippet OMZP::git
+
+zinit ice as"completion" multisrc"plugins/gitfast/*sh"
+zinit snippet OMZ::plugins/gitfast/_git
 
 zinit ice as"completion"
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
