@@ -8,12 +8,12 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice depth"1" multisrc="lib/*.zsh" pick"/dev/null"
+zinit ice depth"1" multisrc="lib/*.zsh plugins/git/*.zsh" pick"/dev/null"
 zinit light ohmyzsh/ohmyzsh
 
 zinit wait lucid for \
-  OMZL::git.zsh \
-  OMZP::git
+    OMZ::lib/git.zsh \
+    OMZ::plugins/git/git.plugin.zsh
 
 zinit ice as"completion"
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
