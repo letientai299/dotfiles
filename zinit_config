@@ -17,6 +17,9 @@ zinit snippet OMZP::git
 zinit ice wait lucid as"completion"
 zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
 
+zinit ice lucid
+zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+
 zinit ice as"completion"
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
