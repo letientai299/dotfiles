@@ -9,7 +9,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice depth"1" multisrc="lib/{git,completion,directories}.zsh" pick"/dev/null"
+zinit ice depth"1" multisrc="lib/*.zsh" pick"/dev/null"
 zinit light ohmyzsh/ohmyzsh
 
 zinit snippet OMZP::git
