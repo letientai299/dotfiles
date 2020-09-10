@@ -73,19 +73,6 @@ task "zsh"
 sudo yum install -y zsh util-linux-user
 sudo chsh  -s "$(which zsh)" $USER
 
-task "Nodejs"
-curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
-sudo yum install -y nodejs
-
-task "Fix NPM permissions"
-mkdir ~/.npm-global
-npm config set prefix "$HOME/.npm-global"
-echo '# Fix npm permissions' >> $HOME/.profile
-echo 'export PATH=$PATH:$HOME/.npm-global/bin' >> $HOME/.profile
-
-task "Nodemon"
-npm install -g nodemon
-
 task "Diff-so-fancy"
 npm install -g diff-so-fancy
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
@@ -101,11 +88,6 @@ git config --global color.diff.old "red bold"
 git config --global color.diff.new "green bold"
 git config --global color.diff.whitespace "red reverse"
 
-task "Update path to load nodejs binaries"
-echo 'export PATH="$PATH:$HOME/.npm-global/bin"' >> ~/.profile
-
-task "sdkman"
-curl -s "https://get.sdkman.io" | bash
 task "Term 256 color"
 wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
 tic xterm-256color-italic.terminfo

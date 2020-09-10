@@ -72,17 +72,6 @@ task "zsh"
 sudo apt install -y zsh
 chsh -s "$(which zsh)"
 
-task "zgen"
-git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
-
-task "Nodejs"
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-source ~/.nvm/nvm.sh
-nvm install node && nvm alias default node
-
-task "Nodemon"
-npm install -g nodemon
-
 task "Diff-so-fancy"
 npm install -g diff-so-fancy
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
@@ -97,9 +86,6 @@ git config --global color.diff.commit "227 bold"
 git config --global color.diff.old "red bold"
 git config --global color.diff.new "green bold"
 git config --global color.diff.whitespace "red reverse"
-
-task "sdkman"
-curl -s "https://get.sdkman.io" | bash
 
 task "Term 256 color"
 wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
