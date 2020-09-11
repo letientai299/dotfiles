@@ -163,10 +163,10 @@ Plug 'majutsushi/tagbar'
 " Plug 'fatih/vim-go', {'for': ['go']}
 
 " Still few more familiar with nerdtree than the built-in netrw
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 " Plug 'francoiscabrol/ranger.vim'
 " Plug 'rbgrouleff/bclose.vim'
 let g:NERDTreeHijackNetrw = 0
