@@ -8,7 +8,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Fzf {{{1 "
 " Mapping selecting mappings
-nmap <c-p> :Files<CR>
+nmap <c-p> :GFiles<CR>
+nmap <a-p> :Files<CR>
+nmap <leader><c-p> :DFiles<CR>
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
@@ -23,23 +25,26 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-      \ call fzf#vim#ag(<q-args>,
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview(),
-      \                 <bang>0)
+                  \ call fzf#vim#ag(<q-args>,
+                  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+                  \                         : fzf#vim#with_preview(),
+                  \                 <bang>0)
 
 command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \ <bang>0 ? fzf#vim#with_preview('up:60%')
-      \         : fzf#vim#with_preview(),
-      \ <bang>0)
+                  \ call fzf#vim#grep(
+                  \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+                  \ <bang>0 ? fzf#vim#with_preview('up:60%')
+                  \         : fzf#vim#with_preview(),
+                  \ <bang>0)
+
+command! -bang -nargs=? -complete=dir DFiles
+                  \ call fzf#vim#files(expand('%:p:h'), fzf#vim#with_preview(), <bang>0)
 
 cnoreabbrev rg Rg
 
 "" Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+                  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " 1}}} "
 
@@ -56,8 +61,8 @@ nnoremap <A-\> :NERDTreeFind<CR>
 " let g:NERDTreeExactMatchHighlightFullName = 1
 " let g:NERDTreePatternMatchHighlightFullName = 1
 augroup nerdtreedisablecursorline
-	autocmd!
-	autocmd FileType nerdtree setlocal nocursorline
+      autocmd!
+      autocmd FileType nerdtree setlocal nocursorline
 augroup end
 
 map <leader>rf :RangerCurrentFile<CR>
@@ -82,31 +87,31 @@ let g:tagbar_autofocus=1
 
 
 let g:tagbar_type_vimwiki = {
-      \   'ctagstype':'vimwiki'
-      \ , 'kinds':['h:header']
-      \ , 'sro':'&&&'
-      \ , 'kind2scope':{'h':'header'}
-      \ , 'sort':0
-      \ , 'ctagsbin':'~/.vim/after/plugin/vwtags.py'
-      \ , 'ctagsargs': 'default'
-      \ }
+                  \   'ctagstype':'vimwiki'
+                  \ , 'kinds':['h:header']
+                  \ , 'sro':'&&&'
+                  \ , 'kind2scope':{'h':'header'}
+                  \ , 'sort':0
+                  \ , 'ctagsbin':'~/.vim/after/plugin/vwtags.py'
+                  \ , 'ctagsargs': 'default'
+                  \ }
 
 
 " Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
-      \ 'ctagstype': 'markdown',
-      \ 'ctagsbin' : '~/.vim/after/plugin/markdown2ctags.py',
-      \ 'ctagsargs' : '-f - --sort=yes',
-      \ 'kinds' : [
-      \ 's:sections',
-      \ 'i:images'
-      \ ],
-      \ 'sro' : '|',
-      \ 'kind2scope' : {
-      \ 's' : 'section',
-      \ },
-      \ 'sort': 0,
-      \ }
+                  \ 'ctagstype': 'markdown',
+                  \ 'ctagsbin' : '~/.vim/after/plugin/markdown2ctags.py',
+                  \ 'ctagsargs' : '-f - --sort=yes',
+                  \ 'kinds' : [
+                  \ 's:sections',
+                  \ 'i:images'
+                  \ ],
+                  \ 'sro' : '|',
+                  \ 'kind2scope' : {
+                  \ 's' : 'section',
+                  \ },
+                  \ 'sort': 0,
+                  \ }
 " }}} tagbar "
 
 " startify {{{ "
@@ -117,15 +122,15 @@ let g:tagbar_type_markdown = {
 let g:startify_session_dir='~/.vim/sessions'
 
 let g:startify_list_order = [
-      \ ['Recently used files:'],
-      \ 'files',
-      \ ['Sessions:'],
-      \ 'sessions',
-      \ ['Recently used files in the current directory:'],
-      \ 'dir',
-      \ ['Bookmarks:'],
-      \ 'bookmarks',
-      \ ]
+                  \ ['Recently used files:'],
+                  \ 'files',
+                  \ ['Sessions:'],
+                  \ 'sessions',
+                  \ ['Recently used files in the current directory:'],
+                  \ 'dir',
+                  \ ['Bookmarks:'],
+                  \ 'bookmarks',
+                  \ ]
 
 let g:startify_session_persistence = 1
 let g:startify_files_number = 20
@@ -144,24 +149,24 @@ au! BufEnter *.jsx UltiSnipsAddFiletypes javascript-es6-react
 
 let g:asyncrun_open = 8
 fun! TranslateCurrentWord()
-  " Get the word under cursor for translation
-  let word_under_cursor = expand("<cword>")
-  " After translate, open the quickfix list and immediately back to previous
-  " buffer
-  " execute 'AsyncRun! -post='.post_command.' trans :vi -no-ansi --brief '.word_under_cursor
-  execute 'AsyncRun! trans :vi -no-ansi '.word_under_cursor
+      " Get the word under cursor for translation
+      let word_under_cursor = expand("<cword>")
+      " After translate, open the quickfix list and immediately back to previous
+      " buffer
+      " execute 'AsyncRun! -post='.post_command.' trans :vi -no-ansi --brief '.word_under_cursor
+      execute 'AsyncRun! trans :vi -no-ansi '.word_under_cursor
 endfun
 
 
 " call deoplete#custom#option({
-      " \ 'min_pattern_length': 1,
-      " \ })
+" \ 'min_pattern_length': 1,
+" \ })
 
 " let g:user_emmet_settings = {
-  " \  'javascript.jsx' : {
-    " \      'extends' : 'jsx',
-    " \  },
-  " \}
+" \  'javascript.jsx' : {
+" \      'extends' : 'jsx',
+" \  },
+" \}
 
 
 " Define yaml formatter
