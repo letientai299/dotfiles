@@ -47,7 +47,6 @@ source $DOTFILES/spaceship/config.zsh
 # Remove the duplicated entries in path
 typeset -U PATH
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
@@ -99,3 +98,5 @@ source "$DOTFILES/zinit_config";
 
 # To customize prompt, run `p10k configure` or edit ~/Projects/mine/dotfiles/p10k.zsh.
 [[ ! -f ~/Projects/mine/dotfiles/p10k.zsh ]] || source ~/Projects/mine/dotfiles/p10k.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
