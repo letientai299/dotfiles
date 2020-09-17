@@ -49,8 +49,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
 let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
-" The single colortheme that stay with me for a long time
-Plug 'NLKNguyen/papercolor-theme'
+" Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
 let g:vimwiki_global_ext = 0
