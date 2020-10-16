@@ -26,23 +26,6 @@ setopt no_beep
 # Ignore dups
 setopt hist_ignore_dups
 
-# enable edit-command-line
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
-
-
-# Load custom shell script
-for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
-  if [ -r "$file" ] && [ -f "$file" ]; then
-    source "$file";
-  fi
-done;
-unset file;
-
-source $DOTFILES/spaceship/last-commit.zsh
-source $DOTFILES/spaceship/config.zsh
 
 # Remove the duplicated entries in path
 typeset -U PATH
@@ -92,6 +75,15 @@ autoload -Uz _zinit
 ### End of Zinit's installer chunk
 
 source "$DOTFILES/zinit_config";
+
+# Load custom shell script
+for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
+  if [ -r "$file" ] && [ -f "$file" ]; then
+    source "$file";
+  fi
+done;
+unset file;
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
