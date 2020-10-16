@@ -8,7 +8,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Fzf {{{1 "
 " Mapping selecting mappings
-nmap <c-p> :GFiles<CR>
+nmap <c-p> :OFiles<CR>
 nmap <a-p> :Files<CR>
 nmap <leader><c-p> :DFiles<CR>
 
@@ -38,7 +38,7 @@ command! -bang -nargs=* Rg
                   \ <bang>0)
 
 command! -bang -nargs=? -complete=dir DFiles
-                  \ call fzf#vim#files(expand('%:p:h'), fzf#vim#with_preview(), <bang>0)
+                  " \ call fzf#vim#files(expand('%:p:h'), fzf#vim#with_preview(), <bang>0)
 
 cnoreabbrev rg Rg
 
@@ -46,6 +46,10 @@ cnoreabbrev rg Rg
 command! -bang -nargs=? -complete=dir Files
                   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
+
+"" Non ignored files
+command! -bang -nargs=? -complete=dir OFiles
+  \ call fzf#run(fzf#wrap({'source': '(git status --short --untracked-files | grep "^?" | cut -d\  -f2- && git ls-files) | sort -u'}))
 " 1}}} "
 
 " NerdCommenter {{{1 "
