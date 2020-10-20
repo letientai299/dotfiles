@@ -18,3 +18,4 @@ nmap <buffer> <Leader><CR> ds]ds]
 setlocal spell
 
 nnoremap <leader>o yyp>>S-<space>
+nmap <leader>t<leader>t :VimwikiMakeTomorrowDiaryNote<ESC>
