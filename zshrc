@@ -94,5 +94,5 @@ unset file;
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/tai.le/.sdkman"
-[[ -s "/Users/tai.le/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tai.le/.sdkman/bin/sdkman-init.sh"
+# export SDKMAN_DIR="/Users/tai.le/.sdkman"
+# [[ -s "/Users/tai.le/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tai.le/.sdkman/bin/sdkman-init.sh"
