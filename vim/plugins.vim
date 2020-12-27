@@ -58,6 +58,8 @@ let g:vimwiki_global_ext = 0
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
+let g:vimwiki_conceal_onechar_markers=0
+let g:vimwiki_conceallevel=2
 Plug 'vimwiki/vimwiki'
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
