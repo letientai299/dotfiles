@@ -1,6 +1,7 @@
 # vim:set et sw=2 ts=2 ft=conf tw=79:
 # Save to the ~/Downloads folder
--c -o "~/Downloads/%(title)s.%(ext)s"
+# -c -o "~/Downloads/%(title)s.%(ext)s"
+-c -o "~/Downloads/mit-6.172-performance-engineering-of-software-system/%(title)s.%(ext)s"
 --write-sub
 --write-auto-sub
 --external-downloader aria2c
