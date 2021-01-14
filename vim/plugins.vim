@@ -95,9 +95,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 " Plug 'zchee/deoplete-go'
 
+" For c/c++
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
