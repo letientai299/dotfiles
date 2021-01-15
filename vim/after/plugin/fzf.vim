@@ -2,6 +2,11 @@
 nmap <c-p> :OFiles<CR>
 nmap <a-p> :Files<CR>
 nmap <leader><c-p> :DFiles<CR>
+nmap <leader><c-l> :Buffers<CR>
+nmap <leader>gh :Commits<CR>
+nmap <leader>bh :BCommits<CR>
+nmap <leader><c-m> :Marks<CR>
+nmap <leader>gf :GitFiles<CR>
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
