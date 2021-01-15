@@ -115,7 +115,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Useful for review and reopen recent editing files, also serves as a bookmark.
-Plug 'mhinz/vim-startify'
+" No need startify if we have fzf History command
+" Plug 'mhinz/vim-startify'
 
 " More GUI stuffs
 Plug 'kshenoy/vim-signature'
