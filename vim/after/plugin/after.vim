@@ -1,3 +1,6 @@
+" NerdCommenter
+let NERDSpaceDelims=1
+
 " ALE {{{ "
 let g:ale_sign_column_always = 1
 " Set this. Airline will handle the rest.
