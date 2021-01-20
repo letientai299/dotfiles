@@ -87,7 +87,6 @@ update-software() {
     fancy_echo "Update software installed by homebrew"
     brew update
     brew upgrade
-    brew cask upgrade
   fi
 
   # Update sdkman softwares
