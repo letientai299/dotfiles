@@ -14,6 +14,7 @@ nmap <buffer> <Leader>dt Go<CR>dtt <BS><ESC>==<<o
 
 " Delete link syntax arround the current token
 nmap <buffer> <Leader><CR> ds]ds]
+nmap <buffer> <leader>a yyp4WbhWDA
 
 setlocal spell
 
