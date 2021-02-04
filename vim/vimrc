@@ -61,8 +61,8 @@ let wiki.nested_syntaxes ={
 let g:vimwiki_list = [wiki]
 let g:vimwiki_hl_headers=1
 let g:vimwiki_hl_cb_checked=1
+let g:vimwiki_conceallevel=0
 let g:vimwiki_conceal_onechar_markers=0
-let g:vimwiki_concealleve=1
 let g:vimwiki_global_ext=0
 
 " colorscheme config
