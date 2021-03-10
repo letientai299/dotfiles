@@ -155,7 +155,7 @@ Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Distraction free mode
 " Plug 'junegunn/goyo.vim'
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
 Plug 'majutsushi/tagbar'
