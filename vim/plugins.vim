@@ -67,8 +67,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'raimondi/delimitmate'
 
 " The snippets engine and the a big collection of snippets
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Quickly toggle line or block comment.
 " I've considered switching to another commenting plugins (tcomment and
