@@ -154,7 +154,7 @@ Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 " Plug 'skywind3000/asyncrun.vim'
 
 " Distraction free mode
-" Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
