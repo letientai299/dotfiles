@@ -1,4 +1,4 @@
-settings.nexstLinkRegex = />|=>|->|>>|\b(next)\b|\b(more)\b|Chap kế/i;
+settings.nexstLinkRegex = />|=>|->|>>|\b(next)\b|\b(more)\b|▶|Chap kế/i;
 
 // Vim ACE Editor Mappings{{{1
 
@@ -46,9 +46,17 @@ mapkey(
 
 // Search {{{1 //
 addSearchAlias("y", "youtube", "https://www.youtube.com/search?q=");
-addSearchAlias("t", "translate", "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text=");
+addSearchAlias(
+  "t",
+  "translate",
+  "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text="
+);
 // TODO (tai): add search for jira and confluence //
-addSearchAlias("c", "confluence", "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text=");
+addSearchAlias(
+  "c",
+  "confluence",
+  "https://translate.google.com/#view=home&op=translate&sl=auto&tl=vi&text="
+);
 
 mapkey("oy", "#8Open Search with alias y", function() {
   Front.openOmnibar({ type: "SearchEngine", extra: "y" });
