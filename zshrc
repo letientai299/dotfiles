@@ -62,11 +62,11 @@ fi;
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    print -P "%F{33}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})Ã¢ÂÂ¦%f"
     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
     command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+        print -P "%F{33}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ The clone has failed.%f%b"
 fi
 
 source "$HOME/.zinit/bin/zinit.zsh"
@@ -96,4 +96,5 @@ unset file;
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 # export SDKMAN_DIR="/Users/tai.le/.sdkman"
 # [[ -s "/Users/tai.le/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tai.le/.sdkman/bin/sdkman-init.sh"
+
 
