@@ -84,7 +84,6 @@ for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
 done;
 unset file;
 
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -92,9 +91,4 @@ unset file;
 [[ ! -f ~/Projects/mine/dotfiles/p10k.zsh ]] || source ~/Projects/mine/dotfiles/p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# export SDKMAN_DIR="/Users/tai.le/.sdkman"
-# [[ -s "/Users/tai.le/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tai.le/.sdkman/bin/sdkman-init.sh"
-
 
