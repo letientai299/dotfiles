@@ -115,7 +115,7 @@ update-software() {
   vim -c "UpdateRemotePlugins" -c "qa!"
 
   fancy_echo "ZSH plugins"
-  zinit update
+  zinit update -p -a
 }
 
 pwdd(){
