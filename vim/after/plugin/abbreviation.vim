@@ -14,7 +14,6 @@ iab Gui GUI
 iab ok OK
 iab wtf WTF
 iab Ok OK
-iab DO DevOps
 iab SD Software Development
 iab SE Software Engineer
 iab SSE Senior Software Engineer
