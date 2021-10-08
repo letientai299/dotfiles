@@ -36,8 +36,3 @@ export_alias() {
 ea() {
     export_alias $*
 }
-
-nvm() {
-  . ~/.nvm/nvm.sh
-  nvm "$@"
-}
