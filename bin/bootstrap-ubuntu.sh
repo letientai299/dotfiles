@@ -19,10 +19,8 @@ sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt update
 sudo apt install git -y
 
-task "Neovim"
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt update
-sudo apt install neovim -y
+task "Nvim"
+sudo snap install nvim --classic
 
 task "Xclip and xsel (for neovim clipboard)"
 sudo apt install xclip xsel -y
