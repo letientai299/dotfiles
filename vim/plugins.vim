@@ -87,9 +87,7 @@ Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'wellle/tmux-complete.vim'
-" Plug 'zchee/deoplete-go'
 
 " For c/c++
 Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -110,10 +108,6 @@ Plug 'kana/vim-textobj-line'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Useful for review and reopen recent editing files, also serves as a bookmark.
-" No need startify if we have fzf History command
-" Plug 'mhinz/vim-startify'
-
 " More GUI stuffs
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
@@ -124,34 +118,11 @@ Plug 'mhinz/vim-signify'
 " ironic that I have to keep 2 plugins with the same feature within my vim.
 Plug 'junegunn/vim-easy-align'
 
-" Everyone say that this is a most powerful Git integrating for vim. I actually
-" have a todo item for learning fugitive. But, right now, I use this mostly as a
-" Commit browser and some nice syntax. Hope that I can find time to really learn
-" it (or remove it, as oh-my-zsh with its git plugins is really enough for
-" my work right now).
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-git'
-
-" gitk browser within vim. The more I use the terminal and vim, the more I want
-" to do everything within them.
-" Plug 'gregsexton/gitv'
-
-" Polyglot provided SQL syntax doensn't play nice with postgres code.
-" Plug 'lifepillar/pgsql.vim', {'for': ['sql', 'pgsql']}
-
-" For SQL, I also follow the convention of making all SQL keyword uppercase.
-" Plug 'alcesleo/vim-uppercase-sql', {'for': ['sql', 'pgsql']}
+Plug 'junegunn/gv.vim'
 
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
-
-" Rails development
-" Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-endwise'
-
-" To run script or command without blocking vim
-" Plug 'skywind3000/asyncrun.vim'
 
 " Distraction free mode
 Plug 'junegunn/goyo.vim'
@@ -160,40 +131,22 @@ Plug 'mattn/emmet-vim'
 " For a quickly outline of what to expect in a new/big source code file
 Plug 'majutsushi/tagbar'
 
-" This plugin is a god send to work with Go in vim (but it can't replace
-" Goland, sadly)
-" Plug 'fatih/vim-go', {'for': ['go']}
-
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'francoiscabrol/ranger.vim'
-" Plug 'rbgrouleff/bclose.vim'
+
 let g:NERDTreeHijackNetrw = 0
 let g:ranger_replace_netrw = 1
 let g:ranger_map_keys = 0
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
-" Helpful to quickly remove a lot of buffer. I'm not good as manage many things
-" as the same time, and I get used to [b and ]b to navigate between buffers, the
-" less buffers, the better for me.
-" Plug 'schickling/vim-bufonly'
-
-" Helpful for working with react and react-native
-" Plug 'mxw/vim-jsx'
-" Plug 'Galooshi/vim-import-js'
-
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'pbrisbin/vim-mkdir'
 
 " To load vim settings per project
 Plug 'thinca/vim-localrc'
-
-" Focus a specified region of current buffer.
-" Plug 'chrisbra/NrrwRgn'
 
 " Show git commit message of the current line
 Plug 'rhysd/git-messenger.vim'
