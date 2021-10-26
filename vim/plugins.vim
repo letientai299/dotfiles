@@ -94,7 +94,7 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
@@ -118,8 +118,8 @@ Plug 'mhinz/vim-signify'
 " ironic that I have to keep 2 plugins with the same feature within my vim.
 Plug 'junegunn/vim-easy-align'
 
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'junegunn/gv.vim'
 
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
@@ -133,7 +133,7 @@ Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
