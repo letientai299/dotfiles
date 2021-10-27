@@ -34,8 +34,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['md', 'markdown', 'log']
+" Plug 'sheerun/vim-polyglot'
+" let g:polyglot_disabled = ['md', 'markdown', 'log']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
@@ -87,10 +87,10 @@ Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wellle/tmux-complete.vim'
+" Plug 'wellle/tmux-complete.vim'
 
 " For c/c++
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
@@ -109,8 +109,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " More GUI stuffs
-Plug 'kshenoy/vim-signature'
-Plug 'mhinz/vim-signify'
+" Plug 'kshenoy/vim-signature'
+" Plug 'mhinz/vim-signify'
 
 " Vim-tabular provide a function to align text, and is required by vim-markdown
 " for formatting table. But, it doens't provide any easy keymap to formatting
@@ -146,10 +146,10 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
-Plug 'thinca/vim-localrc'
+" Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
-Plug 'rhysd/git-messenger.vim'
+" Plug 'rhysd/git-messenger.vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
