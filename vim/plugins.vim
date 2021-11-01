@@ -34,15 +34,21 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
-" Plug 'sheerun/vim-polyglot'
-" let g:polyglot_disabled = ['md', 'markdown', 'log']
+Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['md', 'markdown', 'log']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-" let g:vim_markdown_folding_disabled = 1
-" Plug 'gabrielelana/vim-markdown', {'for': ['md','markdown']}
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_fenced_languages = [
+      \'viml=vim',
+      \'bash=sh',
+      \'ini=dosini',
+      \'yaml',
+      \'go'
+      \]
 
 " Live-review markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
@@ -87,14 +93,14 @@ Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'wellle/tmux-complete.vim'
+Plug 'wellle/tmux-complete.vim'
 
 " For c/c++
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-" Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
@@ -109,8 +115,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " More GUI stuffs
-" Plug 'kshenoy/vim-signature'
-" Plug 'mhinz/vim-signify'
+Plug 'kshenoy/vim-signature'
+Plug 'mhinz/vim-signify'
 
 " Vim-tabular provide a function to align text, and is required by vim-markdown
 " for formatting table. But, it doens't provide any easy keymap to formatting
@@ -118,8 +124,8 @@ Plug 'vim-airline/vim-airline-themes'
 " ironic that I have to keep 2 plugins with the same feature within my vim.
 Plug 'junegunn/vim-easy-align'
 
-" Plug 'tpope/vim-fugitive'
-" Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
@@ -133,7 +139,7 @@ Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'preservim/nerdtree'
-"" Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
