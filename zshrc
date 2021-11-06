@@ -15,7 +15,7 @@ fi
 # zmodload zsh/zprof
 
 # Load zgen config
-# source "$DOTFILES/zgenconfig";
+source "$DOTFILES/zgenconfig";
 
 # Disable <C-D> logout
 setopt ignore_eof
@@ -36,11 +36,9 @@ if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
 
-
 [[ -s "/Users/tai.le/.gvm/scripts/gvm" ]] && source "/Users/tai.le/.gvm/scripts/gvm"
 
 export PATH="$HOME/.cargo/bin:$PATH"
-
 
 # On slow systems, checking the cached .zcompdump file to see if it must be
 # regenerated adds a noticable delay to zsh startup.  This little hack restricts
@@ -60,22 +58,6 @@ fi;
 
 # zprof
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})Ã¢ÂÂ¦%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk
-
-source "$DOTFILES/zinit_config";
-
 # Load custom shell script
 for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
   if [ -r "$file" ] && [ -f "$file" ]; then
@@ -86,9 +68,6 @@ unset file;
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/Projects/mine/dotfiles/p10k.zsh.
-[[ ! -f ~/Projects/mine/dotfiles/p10k.zsh ]] || source ~/Projects/mine/dotfiles/p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
