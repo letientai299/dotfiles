@@ -152,10 +152,10 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
-" Plug 'thinca/vim-localrc'
+Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
-" Plug 'rhysd/git-messenger.vim'
+Plug 'rhysd/git-messenger.vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list

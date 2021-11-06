@@ -30,7 +30,6 @@ setopt hist_ignore_dups
 # Remove the duplicated entries in path
 typeset -U PATH
 
-
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
