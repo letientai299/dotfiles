@@ -93,6 +93,7 @@ Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_disable_transparent_cursor = 1
 Plug 'wellle/tmux-complete.vim'
 
 " For c/c++

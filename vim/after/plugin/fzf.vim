@@ -45,5 +45,5 @@ command! -bang -nargs=? -complete=dir Files
 
 
 "" Non ignored files
-command! -bang -nargs=? -complete=dir OFiles
+command! -bang -nargs=? -complete=dir DFiles
   \ call fzf#run(fzf#wrap({'source': '(git status --short --untracked-files | grep "^?" | cut -d\  -f2- && git ls-files) | sort -u'}))

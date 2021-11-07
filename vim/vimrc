@@ -2,7 +2,7 @@
 " https://unix.stackexchange.com/questions/36467/why-inode-value-changes-when-we-edit-in-vi-editor
 set backupcopy=yes
 set nocompatible
-set termguicolors
+" set termguicolors
 syntax on
 filetype plugin indent on
 
