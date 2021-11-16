@@ -40,7 +40,9 @@ let g:polyglot_disabled = ['md', 'markdown', 'log']
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
+" slow with large file and many code fences
+" Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = [
       \'viml=vim',
