@@ -64,7 +64,7 @@ autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
-Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+" Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
@@ -91,12 +91,12 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'ntpeters/vim-better-whitespace'
 
 " Linting engine
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_disable_transparent_cursor = 1
-Plug 'wellle/tmux-complete.vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" let g:coc_disable_transparent_cursor = 1
+" Plug 'wellle/tmux-complete.vim'
 
 " For c/c++
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -127,24 +127,24 @@ Plug 'mhinz/vim-signify'
 " ironic that I have to keep 2 plugins with the same feature within my vim.
 Plug 'junegunn/vim-easy-align'
 
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'junegunn/gv.vim'
 
 " For editing todo note
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Distraction free mode
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
 
 let g:NERDTreeHijackNetrw = 0
 let g:ranger_replace_netrw = 1
@@ -155,10 +155,10 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
-Plug 'thinca/vim-localrc'
+" Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
-Plug 'rhysd/git-messenger.vim'
+" Plug 'rhysd/git-messenger.vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
