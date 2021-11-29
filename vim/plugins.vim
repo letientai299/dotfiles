@@ -145,7 +145,6 @@ Plug 'mhinz/vim-signify'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-fugitive'
-set shell=bash
 Plug 'junegunn/gv.vim'
 
 " For editing todo note
@@ -170,7 +169,7 @@ let g:NERDTreeHijackNetrw = 0
 Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
-Plug 'thinca/vim-localrc'
+" Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
 Plug 'rhysd/git-messenger.vim'
