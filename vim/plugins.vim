@@ -114,8 +114,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
 " Yeah, just make vim GUI more beautiful.
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " More GUI stuffs
 Plug 'kshenoy/vim-signature'
@@ -128,6 +129,7 @@ Plug 'mhinz/vim-signify'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-fugitive'
+set shell=bash
 Plug 'junegunn/gv.vim'
 
 " For editing todo note
