@@ -115,9 +115,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
 " Yeah, just make vim GUI more beautiful.
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'itchyny/lightline.vim'
 function! StatusLine(current)
   return (a:current ? crystalline#mode() . crystalline#right_mode_sep('') : '%#CrystallineInactive#')
         \ . ' %f%h%w%m%r '
@@ -130,11 +127,9 @@ function! TabLine()
   let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
   return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
 endfunction
-
 let g:crystalline_statusline_fn = 'StatusLine'
 let g:crystalline_tabline_fn = 'TabLine'
 let g:crystalline_theme = 'onedark'
-
 set showtabline=2
 set laststatus=2
 Plug 'rbong/vim-crystalline'
@@ -164,7 +159,7 @@ Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
-" Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
