@@ -57,10 +57,11 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
 let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
-Plug 'NLKNguyen/papercolor-theme'
+" Plug 'NLKNguyen/papercolor-theme'
+Plug 'navarasu/onedark.nvim'
 " Plug 'dracula/vim', { 'as': 'dracula' }
 
-autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
+" autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
@@ -99,7 +100,7 @@ let g:coc_disable_transparent_cursor = 1
 Plug 'wellle/tmux-complete.vim'
 
 " For c/c++
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
@@ -116,10 +117,30 @@ Plug 'kana/vim-textobj-line'
 " Yeah, just make vim GUI more beautiful.
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+function! StatusLine(current)
+  return (a:current ? crystalline#mode() . crystalline#right_mode_sep('') : '%#CrystallineInactive#')
+        \ . ' %f%h%w%m%r '
+        \ . (a:current ? crystalline#right_sep('', 'Fill') . ' %{fugitive#head()}' : '')
+        \ . '%=' . (a:current ? crystalline#left_sep('', 'Fill') . ' %{&spell?"SPELL ":""}' . crystalline#left_mode_sep('') : '')
+        \ . ' %{&ft}[%{&enc}][%{&ffs}] %l/%L %c%V %P '
+endfunction
+
+function! TabLine()
+  let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
+  return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
+endfunction
+
+let g:crystalline_statusline_fn = 'StatusLine'
+let g:crystalline_tabline_fn = 'TabLine'
+let g:crystalline_theme = 'onedark'
+
+set showtabline=2
+set laststatus=2
+Plug 'rbong/vim-crystalline'
 
 " More GUI stuffs
-Plug 'kshenoy/vim-signature'
+" Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
 " Vim-tabular provide a function to align text, and is required by vim-markdown
@@ -136,22 +157,19 @@ Plug 'junegunn/gv.vim'
 Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
 " Distraction free mode
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'preservim/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
 
 let g:NERDTreeHijackNetrw = 0
-let g:ranger_replace_netrw = 1
-let g:ranger_map_keys = 0
-let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
