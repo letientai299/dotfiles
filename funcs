@@ -126,3 +126,16 @@ gget(){
   echo $pj
   go get $pj
 }
+
+dkpg() {
+  echo "> Starting postgres via docker"
+  docker run --rm -d --name dkpg -e POSTGRES_PASSWORD=123 -p 5432:5432 postgres
+  export PGPASSWORD=123
+}
+
+
+dkmy() {
+  echo "> Starting mysql via docker"
+  docker run --rm -d --name dkmy -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 mysql
+}
+
