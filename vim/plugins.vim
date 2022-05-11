@@ -113,27 +113,9 @@ Plug 'simeji/winresizer'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
-" Yeah, just make vim GUI more beautiful.
-function! StatusLine(current)
-  return (a:current ? crystalline#mode() . crystalline#right_mode_sep('') : '%#CrystallineInactive#')
-        \ . ' %f%h%w%m%r '
-        \ . (a:current ? crystalline#right_sep('', 'Fill') . ' %{fugitive#head()}' : '')
-        \ . '%=' . (a:current ? crystalline#left_sep('', 'Fill') . ' %{&spell?"SPELL ":""}' . crystalline#left_mode_sep('') : '')
-        \ . ' %{&ft}[%{&enc}][%{&ffs}] %l/%L %c%V %P '
-endfunction
-
-function! TabLine()
-  let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
-  return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
-endfunction
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_tabline_fn = 'TabLine'
-let g:crystalline_theme = 'onedark'
-set showtabline=2
-set laststatus=2
-Plug 'rbong/vim-crystalline'
 
 " More GUI stuffs
+Plug 'vim-airline/vim-airline'
 " Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
