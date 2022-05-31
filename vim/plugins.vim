@@ -116,6 +116,8 @@ Plug 'kana/vim-textobj-line'
 
 " More GUI stuffs
 Plug 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+
 " Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
