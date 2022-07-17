@@ -6,6 +6,8 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
+set signcolumn=yes " avoid UI lagging when new sign appear
+
 source ~/.vim/plugins.vim
 
 let mapleader="\<SPACE>"
