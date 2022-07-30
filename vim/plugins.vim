@@ -118,7 +118,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'vim-airline/vim-airline'
 let g:airline#extensions#tabline#enabled = 1
 
-" Plug 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
 " Vim-tabular provide a function to align text, and is required by vim-markdown
