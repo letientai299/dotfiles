@@ -152,7 +152,7 @@ let g:NERDTreeHijackNetrw = 0
 Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
-" Plug 'thinca/vim-localrc'
+Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
 Plug 'rhysd/git-messenger.vim'
