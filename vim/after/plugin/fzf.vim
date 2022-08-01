@@ -1,7 +1,7 @@
 " Mapping selecting mappings
-nmap <c-p> :OFiles<CR>
-nmap <a-p> :Files<CR>
-nmap <leader><c-p> :DFiles<CR>
+nmap <leader>f :OFiles<CR>
+nmap <leader>af :Files<CR>
+nmap <leader>df :DFiles<CR>
 nmap <leader><c-l> :Buffers<CR>
 nmap <leader>h :History<CR>
 nmap <leader>gh :Commits<CR>
@@ -45,5 +45,5 @@ command! -bang -nargs=? -complete=dir Files
 
 
 "" Non ignored files
-command! -bang -nargs=? -complete=dir DFiles
+command! -bang -nargs=? -complete=dir OFiles
   \ call fzf#run(fzf#wrap({'source': '(git status --short --untracked-files | grep "^?" | cut -d\  -f2- && git ls-files) | sort -u'}))
