@@ -1,31 +1,27 @@
-" NerdCommenter
-let NERDSpaceDelims=1
-
 " ALE {{{ "
 let g:ale_sign_column_always = 1
 " }}} "
+
+" Allow netrw to remove non-empty local dirs
+let g:netrw_localrmdir='rm'
+let g:netrw_localrmdiropt='-rf'
 
 " NerdCommenter {{{1 "
 let NERDSpaceDelims=1
 " 1}}} "
 
-" nerdtree and ranger {{{1 "
-nnoremap <C-\> :NERDTreeToggle<CR>
-nnoremap <A-\> :NERDTreeFind<CR>
+" nerdtree {{{1 "
+" nnoremap <C-\> :NERDTreeToggle<CR>
+" nnoremap <A-\> :NERDTreeFind<CR>
 
 " " For https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 " let g:NERDTreeFileExtensionHighlightFullName = 1
 " let g:NERDTreeExactMatchHighlightFullName = 1
 " let g:NERDTreePatternMatchHighlightFullName = 1
-augroup nerdtreedisablecursorline
-      autocmd!
-      autocmd FileType nerdtree setlocal nocursorline
-augroup end
-
-map <leader>rf :RangerCurrentFile<CR>
-map <leader>rt :RangerCurrentFileNewTab<CR>
-map <leader>rr :RangerWorkingDirectory<CR>
-map <leader>rT :RangerWorkingDirectoryNewTab<CR>
+" augroup nerdtreedisablecursorline
+      " autocmd!
+      " autocmd FileType nerdtree setlocal nocursorline
+" augroup end
 " 1}}} "
 
 " rooter {{{ "
