@@ -11,9 +11,7 @@
 " Abolish cannot handle auto convert to upper case.
 iab gui GUI
 iab Gui GUI
-iab ok OK
 iab wtf WTF
-iab Ok OK
 iab SD Software Development
 iab SE Software Engineer
 iab SSE Senior Software Engineer
