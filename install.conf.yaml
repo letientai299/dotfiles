@@ -18,6 +18,7 @@
     ~/.ideavimrc: "vim/idearc.vim"
 
     # Config files
+    ~/.config/rustfmt/rustfmt.toml: "config/rustfmt/rustfmt.toml"
     ~/.config/direnv/direnvrc: "config/direnv/direnvrc"
     ~/.config/zathura/zathurarc: "config/zathura/zathurarc"
     ~/.config/nvim/init.vim: "vim/init.vim"
