@@ -57,7 +57,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
 let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
 Plug 'NLKNguyen/papercolor-theme'
 
 " autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
