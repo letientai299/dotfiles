@@ -35,7 +35,7 @@ Plug 'tpope/vim-abolish'
 
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['md', 'markdown', 'log', 'rust']
+let g:polyglot_disabled = ['md', 'markdown', 'log']
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown

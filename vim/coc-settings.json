@@ -17,5 +17,16 @@
         "highlight": { "lsRanges" : true }
       }
     }
-  }
+  },
+
+  "rust-analyzer.debug.runtime": "vimspector",
+  "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
+  "rust-analyzer.workspace.symbol.search.limit": 256,
+  "rust-analyzer.lru.capacity": 256,
+  "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
+  "rust-analyzer.imports.granularity.enforce": true,
+  "rust-analyzer.completion.postfix.enable": true,
+  "rust-analyzer.completion.autoself.enable": true,
+  "rust-analyzer.completion.autoimport.enable": true,
+  "rust-analyzer.restartServerOnConfigChange":  true
 }
