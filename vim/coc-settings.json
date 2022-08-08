@@ -1,9 +1,9 @@
 {
   // coc specific
+  "suggest.virtualText": true,
+  "notification.border": false,
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextLevel": "hint",
-  "suggest.virtualText": true,
-
   "diagnostic.hintSign": "⏵",
   "diagnostic.infoSign": "ℹ",
   "diagnostic.errorSign": "♺", // "⊘",
