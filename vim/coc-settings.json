@@ -1,26 +1,17 @@
 {
-  "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [
-        ".ccls",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        },
-        "highlight": { "lsRanges" : true }
-      }
-    }
-  },
+  // coc specific
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextLevel": "hint",
+  "suggest.virtualText": true,
+
+  "diagnostic.hintSign": "💡",
+  "diagnostic.infoSign": "ℹ",
+  "diagnostic.errorSign": "⊘",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "notification.focusable": false,
 
   // rust
-  "rust-analyzer.debug.runtime": "vimspector",
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
   "rust-analyzer.workspace.symbol.search.limit": 256,
   "rust-analyzer.lru.capacity": 256,
