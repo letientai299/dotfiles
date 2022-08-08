@@ -4,9 +4,9 @@
   "diagnostic.virtualTextLevel": "hint",
   "suggest.virtualText": true,
 
-  "diagnostic.hintSign": "💡",
+  "diagnostic.hintSign": "⏵",
   "diagnostic.infoSign": "ℹ",
-  "diagnostic.errorSign": "⊘",
+  "diagnostic.errorSign": "♺", // "⊘",
   "diagnostic.warningSign": "⚠",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "notification.focusable": false,

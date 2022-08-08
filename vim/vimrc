@@ -71,7 +71,24 @@ let g:vimwiki_global_ext=0
 
 set bg=dark
 set termguicolors
+
+let g:PaperColor_Theme_Options = {
+\   'theme': {
+\     'default.dark': {
+\       'override' : {
+\        'error_bg' : ['#080808', '232'],
+\       }
+\     }
+\   }
+\ }
 colo PaperColor
+LspDiagnosticsDefaultError xxx guifg=#af005f guibg=#080808
+LspDiagnosticsDefaultWarning xxx cterm=bold gui=bold guifg=#ff8700 guibg=#1c1c1c
+LspDiagnosticsDefaultInformation xxx cterm=bold gui=bold guifg=#ff8700 guibg=#1c1c1c
+LspDiagnosticsDefaultHint xxx cterm=bold gui=bold guifg=#ff8700 guibg=#1c1c1c
+LspDiagnosticsUnderlineError xxx cterm=undercurl gui=undercurl guisp=#af005f
+
+
 
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
