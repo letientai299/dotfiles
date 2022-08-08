@@ -10,6 +10,7 @@
   "diagnostic.warningSign": "⚠",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "notification.focusable": false,
+  "notification.winblend": 0,
 
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
