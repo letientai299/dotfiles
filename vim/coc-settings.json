@@ -24,8 +24,11 @@
   "rust-analyzer.completion.autoself.enable": true,
   "rust-analyzer.completion.autoimport.enable": true,
   "rust-analyzer.restartServerOnConfigChange":  true,
-  "rust-analyzer.lens.enable": true,
   "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.cargo.buildScripts.enable": true,
+  "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
+  "rust-analyzer.updates.prompt": false,
+  "rust-analyzer.cargo.autoreload": true,
 
   // Go
   "go.goplsUseDaemon": true
