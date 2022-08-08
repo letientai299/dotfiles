@@ -60,8 +60,6 @@ Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 " Plug 'flazz/vim-colorschemes'
 Plug 'NLKNguyen/papercolor-theme'
 
-" autocmd BufEnter,BufRead,BufNewFile *.md set filetype=markdown
-
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
@@ -115,8 +113,8 @@ Plug 'kana/vim-textobj-line'
 
 
 " More GUI stuffs
+let g:airline_extensions = ['branch', 'tabline']
 Plug 'vim-airline/vim-airline'
-let g:airline#extensions#tabline#enabled = 1
 
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
@@ -131,10 +129,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 
 " For editing todo note
-Plug 'freitass/todo.txt-vim', {'for': ['todo']}
+" Plug 'freitass/todo.txt-vim', {'for': ['todo']}
 
-" Distraction free mode
-" Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
@@ -145,8 +141,7 @@ Plug 'majutsushi/tagbar'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
-
-let g:NERDTreeHijackNetrw = 0
+" let g:NERDTreeHijackNetrw = 0
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'

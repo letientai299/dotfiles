@@ -8,6 +8,8 @@ filetype plugin indent on
 
 set signcolumn=yes " avoid UI lagging when new sign appear
 
+set undofile
+
 source ~/.vim/plugins.vim
 
 let mapleader="\<SPACE>"
