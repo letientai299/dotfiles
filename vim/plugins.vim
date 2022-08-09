@@ -113,7 +113,7 @@ Plug 'kana/vim-textobj-line'
 
 
 " More GUI stuffs
-let g:airline_extensions = ['branch', 'tabline']
+" let g:airline_extensions = ['branch', 'tabline']
 Plug 'vim-airline/vim-airline'
 
 Plug 'kshenoy/vim-signature'
