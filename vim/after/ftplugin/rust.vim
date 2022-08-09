@@ -1,2 +1,2 @@
-nnoremap <leader>d <ESC>:CocCommmand rust-analyzer.debug<cr>
-nnoremap <leader>r <ESC>:CocCommmand rust-analyzer.run<cr>
+nnoremap <leader>d <ESC>:CocCommand rust-analyzer.debug<cr>
+nnoremap <leader>r <ESC>:CocCommand rust-analyzer.run<cr>
