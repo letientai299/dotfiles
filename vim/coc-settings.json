@@ -16,6 +16,7 @@
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
   "rust-analyzer.debug.runtime": "vimspector",
+  "rust-analyzer.debug.vimspector.configuration.name": "launchxxx",
   "rust-analyzer.workspace.symbol.search.limit": 256,
   "rust-analyzer.lru.capacity": 256,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
