@@ -6,7 +6,8 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-set signcolumn=yes " avoid UI lagging when new sign appear
+" avoid UI lagging when new sign appear and show more than 1 sign
+set signcolumn=yes:2
 
 set undofile
 

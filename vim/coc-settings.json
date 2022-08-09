@@ -11,7 +11,7 @@
   "diagnostic.virtualTextCurrentLineOnly": false,
   "notification.focusable": false,
   "notification.winblend": 0,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
 
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
