@@ -137,11 +137,11 @@ Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
-" Plug 'preservim/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plug 'ryanoasis/vim-devicons'
-" let g:NERDTreeHijackNetrw = 0
+let g:NERDTreeHijackNetrw = 1
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'

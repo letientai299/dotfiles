@@ -11,17 +11,17 @@ let NERDSpaceDelims=1
 " 1}}} "
 
 " nerdtree {{{1 "
-" nnoremap <C-\> :NERDTreeToggle<CR>
-" nnoremap <A-\> :NERDTreeFind<CR>
+nnoremap <C-\> :NERDTreeToggle<CR>
+nnoremap <A-\> :NERDTreeFind<CR>
 
-" " For https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-" let g:NERDTreeFileExtensionHighlightFullName = 1
-" let g:NERDTreeExactMatchHighlightFullName = 1
-" let g:NERDTreePatternMatchHighlightFullName = 1
-" augroup nerdtreedisablecursorline
-      " autocmd!
-      " autocmd FileType nerdtree setlocal nocursorline
-" augroup end
+" For https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+augroup nerdtreedisablecursorline
+      autocmd!
+      autocmd FileType nerdtree setlocal nocursorline
+augroup end
 " 1}}} "
 
 " rooter {{{ "

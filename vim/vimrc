@@ -24,6 +24,9 @@ nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>vL :tabedit ~/.local.plugins.vim<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 
+" remap key to escape terminal mode
+tnoremap <Leader><c-c> <c-\><c-n>
+
 
 " Search in the command line
 cnoremap <C-p> <Up>
