@@ -80,8 +80,8 @@ function! FixPaperColor()
       hi CocHintSign                      cterm=italic gui=italic guifg=#ff8700 guibg=None
       hi LspDiagnosticsDefaultError       cterm=italic gui=italic guifg=#af005f guibg=None
       hi LspDiagnosticsDefaultWarning     cterm=italic gui=italic guifg=#d7af5f guibg=None
-      hi LspDiagnosticsDefaultHint        cterm=italic gui=italic guifg=#808080 guibg=None
-      hi LspDiagnosticsDefaultInformation cterm=italic gui=italic guifg=#00afaf guibg=None
+      hi LspDiagnosticsDefaultHint        cterm=italic gui=italic guifg=#00afaf guibg=None
+      hi LspDiagnosticsDefaultInformation cterm=italic gui=italic guifg=#808080 guibg=None
       hi LspDiagnosticsUnderlineError     cterm=italic gui=italic guisp=#af005f guibg=None
 endfunction
 
