@@ -32,5 +32,6 @@
   "rust-analyzer.cargo.autoreload": true,
 
   // Go
-  "go.goplsUseDaemon": true
+  "go.goplsUseDaemon": true,
+  "coc.preferences.extensionUpdateCheck": "daily"
 }
