@@ -12,13 +12,11 @@
   "notification.focusable": false,
   "notification.winblend": 0,
   "codeLens.enable": false,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "rust",
-    "go"
-  ],
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
 
   // css
   "css.lint.unknownAtRules": "ignore",
+  "prettier.formatterPriority": 2,
 
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
