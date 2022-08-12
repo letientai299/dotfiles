@@ -12,6 +12,20 @@
   "notification.focusable": false,
   "notification.winblend": 0,
   "codeLens.enable": false,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "typescript",
+    "typescriptreact",
+    "css",
+    "html",
+    "scss"
+  ],
+
+  // css
+  "css.lint.unknownAtRules": "ignore",
+
 
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
