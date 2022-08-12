@@ -94,11 +94,11 @@ let g:startify_update_oldfiles = 1
 
 " Ultisnips {{{ "
 " Trigger configuration.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-au! BufEnter *.jsx UltiSnipsAddFiletypes javascript-es6-react
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+" au! BufEnter *.jsx UltiSnipsAddFiletypes javascript-es6-react
 " }}} Ultisnips "
 
 let g:asyncrun_open = 8
