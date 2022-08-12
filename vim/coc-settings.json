@@ -14,11 +14,11 @@
   "codeLens.enable": false,
 
   // rust
-  "rust-analyzer.workspace.symbol.search.scope": "workspace",
+  "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
   "rust-analyzer.debug.runtime": "vimspector",
   "rust-analyzer.debug.vimspector.configuration.name": "launch",
-  "rust-analyzer.workspace.symbol.search.limit": 256,
-  "rust-analyzer.lru.capacity": 256,
+  "rust-analyzer.workspace.symbol.search.limit": 1024,
+  "rust-analyzer.lru.capacity": 1024,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.imports.granularity.enforce": true,
   "rust-analyzer.completion.postfix.enable": true,
@@ -28,7 +28,8 @@
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.cargo.buildScripts.enable": true,
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
-  "rust-analyzer.updates.prompt": false,
+  "rust-analyzer.updates.checkOnStartup": true,
+  "rust-analyzer.updates.prompt": true,
   "rust-analyzer.cargo.autoreload": true,
 
   // Go
