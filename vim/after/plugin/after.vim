@@ -126,7 +126,6 @@ endfun
 " Define yaml formatter
 let g:formatters_yaml=['prettier']
 let g:formatters_html=['prettier']
-let g:formatters_js=['prettier']
 
 " https://github.com/darold/pgFormatter
 let g:formatdef_pg_format='"pg_format"'

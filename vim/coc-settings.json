@@ -13,18 +13,12 @@
   "notification.winblend": 0,
   "codeLens.enable": false,
   "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "javascriptreact",
-    "markdown",
-    "typescript",
-    "css",
-    "html",
-    "scss"
+    "rust",
+    "go"
   ],
 
   // css
   "css.lint.unknownAtRules": "ignore",
-
 
   // rust
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
@@ -37,7 +31,7 @@
   "rust-analyzer.completion.postfix.enable": true,
   "rust-analyzer.completion.autoself.enable": true,
   "rust-analyzer.completion.autoimport.enable": true,
-  "rust-analyzer.restartServerOnConfigChange":  true,
+  "rust-analyzer.restartServerOnConfigChange": true,
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.cargo.buildScripts.enable": true,
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
