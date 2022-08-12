@@ -14,7 +14,7 @@
   "codeLens.enable": false,
 
   // rust
-  "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
+  "rust-analyzer.workspace.symbol.search.scope": "workspace",
   "rust-analyzer.debug.runtime": "vimspector",
   "rust-analyzer.debug.vimspector.configuration.name": "launch",
   "rust-analyzer.workspace.symbol.search.limit": 256,
