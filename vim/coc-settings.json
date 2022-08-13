@@ -25,9 +25,13 @@
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
   "rust-analyzer.debug.runtime": "vimspector",
   "rust-analyzer.debug.vimspector.configuration.name": "launch",
-  "rust-analyzer.workspace.symbol.search.limit": 1024,
+  "rust-analyzer.workspace.symbol.search.limit": 128,
   "rust-analyzer.cachePriming.enable": true,
   "rust-analyzer.lru.capacity": 512,
+
+  "rust-analyzer.inlayHints.closingBraceHints.enable": true,
+  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "with_block",
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.imports.granularity.enforce": true,
   "rust-analyzer.completion.postfix.enable": true,
@@ -38,7 +42,7 @@
   "rust-analyzer.cargo.buildScripts.enable": true,
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
   "rust-analyzer.updates.checkOnStartup": true,
-  "rust-analyzer.updates.prompt": true,
+  "rust-analyzer.updates.prompt": false,
   "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
   "rust-analyzer.cargo.autoreload": true,
 
