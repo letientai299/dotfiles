@@ -35,8 +35,8 @@
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.prompt": true,
-  "rust-analyzer.cargo.autoreload": true,
   "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
+  "rust-analyzer.cargo.autoreload": true,
 
   // Go
   "go.goplsUseDaemon": true,
