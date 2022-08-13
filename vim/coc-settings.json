@@ -9,6 +9,8 @@
   "diagnostic.errorSign": "♺", // "⊘",
   "diagnostic.warningSign": "⚠",
   "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.enableHighlightLineNumber": false,
+  "diagnostic.enableMessage": "jump",
   "notification.focusable": false,
   "notification.winblend": 0,
   "codeLens.enable": false,
