@@ -36,6 +36,7 @@
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.prompt": true,
   "rust-analyzer.cargo.autoreload": true,
+  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
 
   // Go
   "go.goplsUseDaemon": true,
