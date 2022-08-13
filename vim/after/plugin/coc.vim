@@ -31,7 +31,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gK <Plug>(coc-float-jump)
+nmap <silent> <c-k> <Plug>(coc-float-jump)
 
 nmap <silent> <leader>dn :call CocAction('diagnosticNext')<cr>
 nmap <silent> <leader>dp :call CocAction('diagnosticPrevious')<cr>
