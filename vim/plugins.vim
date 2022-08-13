@@ -94,6 +94,20 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+      \'coc-snippets',
+      \'coc-highlight',
+      \'coc-json',
+      \'coc-go',
+      \'coc-rust-analyzer',
+      \'coc-html',
+      \'coc-tsserver',
+      \'coc-css',
+      \'coc-cssmodules',
+      \'coc-prettier',
+      \'coc-toml'
+      \]
+
 let g:coc_disable_transparent_cursor = 1
 Plug 'wellle/tmux-complete.vim'
 
@@ -142,7 +156,7 @@ let g:NERDTreeHijackNetrw = 1
 Plug 'preservim/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
