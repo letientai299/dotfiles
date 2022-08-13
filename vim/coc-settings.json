@@ -1,7 +1,6 @@
 {
   // coc specific
   "suggest.virtualText": true,
-  "notification.border": false,
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextLevel": "hint",
   "diagnostic.hintSign": "⏵",
@@ -12,6 +11,7 @@
   "diagnostic.enableHighlightLineNumber": false,
   "diagnostic.enableMessage": "jump",
   "notification.focusable": false,
+  "notification.border": false,
   "notification.winblend": 0,
   "codeLens.enable": false,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
