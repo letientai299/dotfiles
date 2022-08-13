@@ -74,7 +74,8 @@ Plug 'raimondi/delimitmate'
 
 " The snippets engine and the a big collection of snippets
 " Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+" Required for coc-snippets to works
+Plug 'honza/vim-snippets'
 
 " Quickly toggle line or block comment.
 " I've considered switching to another commenting plugins (tcomment and
@@ -95,7 +96,6 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_disable_transparent_cursor = 1
 Plug 'wellle/tmux-complete.vim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " For c/c++
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -140,8 +140,8 @@ Plug 'majutsushi/tagbar'
 " Still few more familiar with nerdtree than the built-in netrw
 let g:NERDTreeHijackNetrw = 1
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
 " To respect editorconfig file
