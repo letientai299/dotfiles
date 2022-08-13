@@ -1,5 +1,6 @@
 {
   // coc specific
+  //------------------------------------------------------------
   "suggest.virtualText": true,
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextLevel": "hint",
@@ -18,19 +19,25 @@
   "colors.filetypes": ["*"],
 
   // css
+  //------------------------------------------------------------
   "css.lint.unknownAtRules": "ignore",
   "prettier.formatterPriority": 2,
 
   // rust
+  //------------------------------------------------------------
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
   "rust-analyzer.debug.runtime": "vimspector",
   "rust-analyzer.debug.vimspector.configuration.name": "launch",
   "rust-analyzer.workspace.symbol.search.limit": 128,
   "rust-analyzer.cachePriming.enable": true,
   "rust-analyzer.lru.capacity": 512,
-
   "rust-analyzer.inlayHints.closingBraceHints.enable": true,
-  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "with_block",
+
+  // only need hint for method chain or return
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "never",
+
   "rust-analyzer.inlayHints.parameterHints.enable": false,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.imports.granularity.enforce": true,
