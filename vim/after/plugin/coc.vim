@@ -31,8 +31,13 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references-used)
 nmap <silent> gc <Plug>(coc-callHierarchy)
+
+# Rename and refactoring
 nmap <silent> <leader>rn <Plug>(coc-rename)
 nmap <silent> <leader>rf <Plug>(coc-refactor)
+
+# Repeat last coc action
+nmap <leader>. <plug>(coc-command-repeat)
 
 " Function text object
 xmap if <Plug>(coc-funcobj-i)
