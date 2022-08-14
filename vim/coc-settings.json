@@ -8,7 +8,7 @@
   "diagnostic.infoSign": "ℹ",
   "diagnostic.errorSign": "♺", // "⊘",
   "diagnostic.warningSign": "⚠",
-  "diagnostic.virtualTextCurrentLineOnly": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
   "diagnostic.enableHighlightLineNumber": false,
   "diagnostic.enableMessage": "jump",
   "notification.focusable": false,
