@@ -128,6 +128,7 @@ Plug 'kana/vim-textobj-line'
 
 " More GUI stuffs
 let g:airline_extensions = ['branch', 'tabline']
+let g:airline_symbols_ascii = 1
 Plug 'vim-airline/vim-airline'
 
 Plug 'kshenoy/vim-signature'
