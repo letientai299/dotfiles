@@ -70,9 +70,6 @@ unset file;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PNPM_HOME="/Users/tai.le/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
 # pnpm
 export PNPM_HOME="/Users/tai.le/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
