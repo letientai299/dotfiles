@@ -96,7 +96,6 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = [
       \'coc-snippets',
-      \'coc-highlight',
       \'coc-json',
       \'coc-go',
       \'coc-rust-analyzer',
