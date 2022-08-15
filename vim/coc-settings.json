@@ -34,11 +34,10 @@
   "rust-analyzer.inlayHints.closingBraceHints.enable": true,
 
   // only need hint for method chain or return
-  "rust-analyzer.inlayHints.typeHints.enable": false,
-  "rust-analyzer.inlayHints.parameterHints.enable": false,
-  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "never",
-
-  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": true,
+  "rust-analyzer.inlayHints.parameterHints.enable": true,
+  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
+  "rust-analyzer.inlayHints.parameterHints.enable": true,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.imports.granularity.enforce": true,
   "rust-analyzer.completion.postfix.enable": true,

@@ -76,24 +76,25 @@ let g:vimwiki_global_ext=0
 set bg=dark
 set termguicolors
 
-colo PaperColor
+colo tokyonight
+" colo PaperColor
 
 
-function! FixPaperColor()
-      hi CocHintSign                      cterm=italic gui=italic guifg=#22f57b guibg=None
-      hi LspDiagnosticsDefaultInformation cterm=italic gui=italic guifg=#808080 guibg=None
-      hi LspDiagnosticsDefaultHint        cterm=italic gui=italic guifg=#00afaf guibg=None
-      hi LspDiagnosticsDefaultWarning     cterm=italic gui=italic guifg=#d7af5f guibg=None
-      hi LspDiagnosticsDefaultError       cterm=italic gui=italic guifg=#fa8989 guibg=None
-      hi LspDiagnosticsUnderlineError     cterm=italic gui=italic guisp=#fa8989 guibg=None
-endfunction
+" function! FixPaperColor()
+      " hi CocHintSign                      cterm=italic gui=italic guifg=#22f57b guibg=None
+      " hi LspDiagnosticsDefaultInformation cterm=italic gui=italic guifg=#808080 guibg=None
+      " hi LspDiagnosticsDefaultHint        cterm=italic gui=italic guifg=#00afaf guibg=None
+      " hi LspDiagnosticsDefaultWarning     cterm=italic gui=italic guifg=#d7af5f guibg=None
+      " hi LspDiagnosticsDefaultError       cterm=italic gui=italic guifg=#fa8989 guibg=None
+      " hi LspDiagnosticsUnderlineError     cterm=italic gui=italic guisp=#fa8989 guibg=None
+" endfunction
 
-call FixPaperColor() " on startup
+" call FixPaperColor() " on startup
 
-augroup override_paper_color
-    au!
-    au ColorScheme PaperColor call FixPaperColor()
-augroup END
+" augroup override_paper_color
+    " au!
+    " au ColorScheme PaperColor call FixPaperColor()
+" augroup END
 
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
