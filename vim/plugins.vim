@@ -58,7 +58,8 @@ let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
 " Plug 'flazz/vim-colorschemes'
-Plug 'NLKNguyen/papercolor-theme'
+" Plug 'NLKNguyen/papercolor-theme'
+Plug 'folke/tokyonight.nvim'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
