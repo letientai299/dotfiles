@@ -154,8 +154,10 @@ Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 
 " Still few more familiar with nerdtree than the built-in netrw
-let g:NERDTreeHijackNetrw = 1
-Plug 'preservim/nerdtree'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+" let g:NERDTreeHijackNetrw = 1
+" Plug 'preservim/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
