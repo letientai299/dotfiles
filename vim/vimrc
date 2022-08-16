@@ -76,6 +76,8 @@ let g:vimwiki_global_ext=0
 set bg=dark
 set termguicolors
 
+let g:tokyonight_style = "night"
+let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
 colo tokyonight
 " colo PaperColor
 
