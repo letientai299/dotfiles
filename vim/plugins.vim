@@ -7,7 +7,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('$HOME/.vim-plugged')
-" }}}
 
 " I'm try hard to reduce at much as possible the list of vim plugins I'm using,
 " yet I keep experience with new stuff, while compare them with built-in vim
@@ -129,9 +128,11 @@ Plug 'kana/vim-textobj-line'
 
 
 " More GUI stuffs
-let g:airline_extensions = ['branch', 'tabline']
-let g:airline_symbols_ascii = 1
-Plug 'vim-airline/vim-airline'
+" let g:airline_extensions = ['branch', 'tabline']
+" let g:airline_symbols_ascii = 1
+" Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
@@ -156,11 +157,12 @@ Plug 'majutsushi/tagbar'
 " Still few more familiar with nerdtree than the built-in netrw
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
-" let g:NERDTreeHijackNetrw = 1
-" Plug 'preservim/nerdtree'
+
+let g:NERDTreeHijackNetrw = 1
+Plug 'preservim/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
@@ -178,4 +180,4 @@ if !empty(glob('~/.local.plugins.vim'))
 endif
 
 call plug#end()
-" 1}}} "
+lua require("config")
