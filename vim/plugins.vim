@@ -133,6 +133,7 @@ Plug 'kana/vim-textobj-line'
 " Plug 'vim-airline/vim-airline'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
