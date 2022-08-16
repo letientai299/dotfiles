@@ -18,6 +18,10 @@
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "colors.filetypes": ["*"],
 
+  // lua
+  //------------------------------------------------------------
+  "sumneko-lua.enableNvimLuaDev": true,
+
   // css
   //------------------------------------------------------------
   "css.lint.unknownAtRules": "ignore",
@@ -55,8 +59,5 @@
   // Go
   "go.goplsUseDaemon": true,
   "coc.preferences.extensionUpdateCheck": "daily",
-
-  // lua for nvim
-  "lua.enable": true,
-  "lua.checkForUpdates": true
+  "Lua.telemetry.enable": true
 }
