@@ -60,6 +60,7 @@ Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 " Plug 'flazz/vim-colorschemes'
 " Plug 'NLKNguyen/papercolor-theme'
 Plug 'folke/tokyonight.nvim'
+Plug 'EdenEast/nightfox.nvim'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
