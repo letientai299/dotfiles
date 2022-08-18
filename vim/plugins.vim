@@ -63,6 +63,7 @@ Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 " Plug 'flazz/vim-colorschemes'
 " Plug 'NLKNguyen/papercolor-theme'
 Plug 'folke/tokyonight.nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'EdenEast/nightfox.nvim'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
@@ -161,11 +162,8 @@ Plug 'mattn/emmet-vim'
 " For a quickly outline of what to expect in a new/big source code file
 Plug 'majutsushi/tagbar'
 
-" Still few more familiar with nerdtree than the built-in netrw
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
-
-Plug 'preservim/nerdtree'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'

@@ -1,5 +1,31 @@
+local nightfox = require('nightfox')
+nightfox.compile()
+
+vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
+require("catppuccin").setup({
+  dim_inactive = {
+    enabled = true,
+    shade = "dark",
+    percentage = 0.3,
+  },
+
+  compile = {
+    enabled = true,
+  },
+
+  integration = {
+    dap = {
+      enabled = true,
+    },
+    which_key = true,
+  },
+})
+vim.cmd([[CatppuccinCompile]])
+vim.cmd([[colorscheme catppuccin]])
+
+require("nvim-tree").setup({})
 require("bufferline").setup({})
-require("lualine").setup({})
+require("lualine").setup({ theme = 'catppuccin' })
 
 require("toggleterm").setup({
   insert_mappings = true,

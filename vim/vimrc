@@ -77,8 +77,8 @@ let g:vimwiki_global_ext=0
 set bg=dark
 set termguicolors
 
-let g:tokyonight_style = "night"
-colo tokyonight
+" let g:tokyonight_style = "night"
+" colo tokyonight
 
 " colo PaperColor
 
