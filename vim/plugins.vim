@@ -32,9 +32,13 @@ Plug 'tpope/vim-repeat'
 " honest, I only uses it to fix some common typos.
 Plug 'tpope/vim-abolish'
 
+
+" Reduce load time for vim builtin filetype
+Plug 'nathom/filetype.nvim'
+
 " One plugins to rule all the different syntax and filetypes.
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['md', 'markdown', 'log']
+let g:polyglot_disabled = ['md', 'markdown', 'log', "wiki", 'autoindent', 'sensible' ]
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
@@ -108,6 +112,8 @@ let g:coc_global_extensions = [
       \'coc-toml'
       \]
 
+let g:vimspector_enable_mappings = 'HUMAN'
+Plug 'puremourning/vimspector'
 let g:coc_disable_transparent_cursor = 1
 Plug 'wellle/tmux-complete.vim'
 
@@ -159,11 +165,7 @@ Plug 'majutsushi/tagbar'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
-let g:NERDTreeHijackNetrw = 1
 Plug 'preservim/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
