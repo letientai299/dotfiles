@@ -10,6 +10,11 @@ require("catppuccin").setup({
     Comment = { fg = colors.lavender }
   },
 
+  styles = {
+    comments = { "italic" },
+    keywords = { "italic" },
+  },
+
   dim_inactive = {
     enabled = true,
     shade = "dark",
@@ -31,7 +36,8 @@ require("catppuccin").setup({
       enabled = true,
       show_root = true,
       transparent_panel = true,
-    }
+    },
+    coc_nvim = true,
   },
 })
 

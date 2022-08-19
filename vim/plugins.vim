@@ -96,10 +96,6 @@ let g:coc_global_extensions = [
 
 " let g:vimspector_enable_mappings = 'HUMAN'
 " Plug 'puremourning/vimspector'
-" Plug 'wellle/tmux-complete.vim'
-
-" For c/c++
-" Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
@@ -131,7 +127,10 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
-" Debugging
+
+" Debugging for rust
+Plug 'neovim/nvim-lspconfig'
+Plug 'simrat39/rust-tools.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
