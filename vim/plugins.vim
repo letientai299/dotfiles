@@ -80,6 +80,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_disable_transparent_cursor = 1
 let g:coc_global_extensions = [
       \'coc-snippets',
       \'coc-json',
@@ -93,9 +94,8 @@ let g:coc_global_extensions = [
       \'coc-toml'
       \]
 
-let g:vimspector_enable_mappings = 'HUMAN'
-Plug 'puremourning/vimspector'
-let g:coc_disable_transparent_cursor = 1
+" let g:vimspector_enable_mappings = 'HUMAN'
+" Plug 'puremourning/vimspector'
 " Plug 'wellle/tmux-complete.vim'
 
 " For c/c++

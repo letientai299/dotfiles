@@ -36,8 +36,6 @@
   "rust-analyzer.cachePriming.enable": true,
   "rust-analyzer.lru.capacity": 512,
   "rust-analyzer.inlayHints.closingBraceHints.enable": true,
-
-  // only need hint for method chain or return
   "rust-analyzer.inlayHints.typeHints.enable": true,
   "rust-analyzer.inlayHints.parameterHints.enable": true,
   "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
