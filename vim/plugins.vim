@@ -73,7 +73,7 @@ Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'ibhagwan/fzf-lua'
 
 " Auto close the bracket and quotation pairs
 Plug 'raimondi/delimitmate'
@@ -94,9 +94,6 @@ Plug 'Chiel92/vim-autoformat'
 " Pair with autoformat is auto stripping whitespace. This plugin also provide
 " highlighting for trailing whitespsaces
 Plug 'ntpeters/vim-better-whitespace'
-
-" Linting engine
-" Plug 'w0rp/ale'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
