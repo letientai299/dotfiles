@@ -114,8 +114,6 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 Plug 'folke/which-key.nvim'
-
-Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
 Plug 'tpope/vim-fugitive'
