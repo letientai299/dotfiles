@@ -25,10 +25,6 @@ Plug 'tpope/vim-repeat'
 " Reduce load time for vim builtin filetype
 Plug 'nathom/filetype.nvim'
 
-" One plugins to rule all the different syntax and filetypes.
-" Plug 'sheerun/vim-polyglot'
-" let g:polyglot_disabled = ['md', 'markdown', 'log', 'wiki', 'autoindent', 'sensible' ]
-
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
 Plug 'godlygeek/tabular'
@@ -67,7 +63,6 @@ Plug 'ibhagwan/fzf-lua'
 Plug 'raimondi/delimitmate'
 
 " The snippets engine and the a big collection of snippets
-" Plug 'SirVer/ultisnips'
 " Required for coc-snippets to works
 Plug 'honza/vim-snippets'
 
@@ -123,27 +118,24 @@ Plug 'folke/which-key.nvim'
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
-" Vim-tabular provide a function to align text, and is required by vim-markdown
-" for formatting table. But, it doens't provide any easy keymap to formatting
-" text manually. Easy-align really does a better job in this case. But, it's
-" ironic that I have to keep 2 plugins with the same feature within my vim.
-" Plug 'junegunn/vim-easy-align'
-
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-
-" For editing todo note
-" Plug 'freitass/todo.txt-vim', {'for': ['todo']}
+Plug 'rhysd/git-messenger.vim'
 
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
-" Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
@@ -152,7 +144,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
-Plug 'rhysd/git-messenger.vim'
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
