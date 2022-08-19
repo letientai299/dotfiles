@@ -18,27 +18,16 @@ if !has('nvim')
   Plug 'tpope/vim-sensible'
 endif
 
-" This plugin is said that should be built-in with Vim instead.
 Plug 'tpope/vim-surround'
-
-" Many keymap that felt natural enough for a wide range of built-in vim
-" commands
 Plug 'tpope/vim-unimpaired'
-
-" This provide the repeat functionality for vim-surround and some other Tim Pope plugins
 Plug 'tpope/vim-repeat'
-
-" A strong enhancement for vim built-in abbreviation functions, but, to be
-" honest, I only uses it to fix some common typos.
-Plug 'tpope/vim-abolish'
-
 
 " Reduce load time for vim builtin filetype
 Plug 'nathom/filetype.nvim'
 
 " One plugins to rule all the different syntax and filetypes.
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['md', 'markdown', 'log', "wiki", 'autoindent', 'sensible' ]
+" Plug 'sheerun/vim-polyglot'
+" let g:polyglot_disabled = ['md', 'markdown', 'log', 'wiki', 'autoindent', 'sensible' ]
 
 " Vim-polyglot only provide filetype detection and syntax highlighting. I need
 " more than that for editing markdown
@@ -52,16 +41,15 @@ let g:vim_markdown_fenced_languages = [
       \'bash=sh',
       \'ini=dosini',
       \'yaml',
-      \'go'
+      \'go',
+      \'rust'
       \]
 
 " Live-review markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm i' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
 
-" Plug 'flazz/vim-colorschemes'
-" Plug 'NLKNguyen/papercolor-theme'
 Plug 'folke/tokyonight.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'EdenEast/nightfox.nvim'
@@ -113,7 +101,7 @@ let g:coc_global_extensions = [
 let g:vimspector_enable_mappings = 'HUMAN'
 Plug 'puremourning/vimspector'
 let g:coc_disable_transparent_cursor = 1
-Plug 'wellle/tmux-complete.vim'
+" Plug 'wellle/tmux-complete.vim'
 
 " For c/c++
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -126,18 +114,11 @@ Plug 'airblade/vim-rooter'
 " that without this plugin
 Plug 'simeji/winresizer'
 
-" More text objects
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'
-
-
 " More GUI stuffs
-" let g:airline_extensions = ['branch', 'tabline']
-" let g:airline_symbols_ascii = 1
-" Plug 'vim-airline/vim-airline'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+Plug 'folke/which-key.nvim'
 
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
@@ -146,7 +127,7 @@ Plug 'mhinz/vim-signify'
 " for formatting table. But, it doens't provide any easy keymap to formatting
 " text manually. Easy-align really does a better job in this case. But, it's
 " ironic that I have to keep 2 plugins with the same feature within my vim.
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
@@ -157,7 +138,7 @@ Plug 'junegunn/gv.vim'
 Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'

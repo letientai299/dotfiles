@@ -33,13 +33,6 @@ tnoremap <Leader><c-c> <c-\><c-n>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-
-" Save the file using Ctrl-S, this work in conjunction with disable Ctrl-S for
-" Gnome temrinal
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-" Save and also reload the file, use when change Vim modeline config
-nmap <c-s-s> :w<CR>:e %<CR> " :W sudo saves the file
 " " (useful for handling the permission-denied error)
 command! SW w !sudo tee % > /dev/null
 
@@ -76,28 +69,6 @@ let g:vimwiki_global_ext=0
 
 set bg=dark
 set termguicolors
-
-" let g:tokyonight_style = "night"
-" colo tokyonight
-
-" colo PaperColor
-
-
-" function! FixPaperColor()
-      " hi CocHintSign                      cterm=italic gui=italic guifg=#22f57b guibg=None
-      " hi LspDiagnosticsDefaultInformation cterm=italic gui=italic guifg=#808080 guibg=None
-      " hi LspDiagnosticsDefaultHint        cterm=italic gui=italic guifg=#00afaf guibg=None
-      " hi LspDiagnosticsDefaultWarning     cterm=italic gui=italic guifg=#d7af5f guibg=None
-      " hi LspDiagnosticsDefaultError       cterm=italic gui=italic guifg=#fa8989 guibg=None
-      " hi LspDiagnosticsUnderlineError     cterm=italic gui=italic guisp=#fa8989 guibg=None
-" endfunction
-
-" call FixPaperColor() " on startup
-
-" augroup override_paper_color
-    " au!
-    " au ColorScheme PaperColor call FixPaperColor()
-" augroup END
 
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
