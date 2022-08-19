@@ -163,7 +163,9 @@ Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
 
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'

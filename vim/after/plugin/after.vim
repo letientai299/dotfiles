@@ -8,8 +8,8 @@ let g:netrw_localrmdiropt='-rf'
 
 let NERDSpaceDelims=1
 
-nnoremap <C-\> :NvimTreeToggle<CR>
-nnoremap <A-\> :NvimTreeFindFile<CR>
+nnoremap <C-\> :Neotree toggle<CR>
+nnoremap <A-\> :Neotree reveal toggle<CR>
 
 " rooter {{{ "
 " Resolve project root from a symbol link.
