@@ -2,7 +2,14 @@ local nightfox = require("nightfox")
 nightfox.compile()
 
 vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
+
+-- fetch colors from g:catppuccin_flavour palette
+local colors = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
+  custom_highlights = {
+    Comment = { fg = colors.lavender }
+  },
+
   dim_inactive = {
     enabled = true,
     shade = "dark",
@@ -15,11 +22,19 @@ require("catppuccin").setup({
 
   integration = {
     dap = {
-      enabled = true,
+      enabled   = true,
+      enable_ui = true,
     },
+
     which_key = true,
+    neotree = {
+      enabled = true,
+      show_root = true,
+      transparent_panel = true,
+    }
   },
 })
+
 vim.cmd([[CatppuccinCompile]])
 vim.cmd([[colorscheme catppuccin]])
 
