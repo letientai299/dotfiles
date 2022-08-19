@@ -1,5 +1,4 @@
-nnoremap <F2> <ESC>:VimspectorReset<CR>
-
+nnoremap <F2> <Plug>VimspectorReset
 " for normal mode - the word under the cursor
 nmap <Leader>e <Plug>VimspectorBalloonEval
 " for visual mode, the visually selected text
