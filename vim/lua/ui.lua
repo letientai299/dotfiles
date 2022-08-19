@@ -1,24 +1,14 @@
-require("bufferline").setup({})
-require("lualine").setup({ theme = "catppuccin" })
-
 --------------------------------------------------------------------------------
 -- nightfox
 --------------------------------------------------------------------------------
 local nightfox = require("nightfox")
 nightfox.setup({
   options = {
-    transparent = true,
-    terminal_colors = true,
     dim_inactive = true,
     styles = { -- Style to be applied to different syntax groups
       comments = "italic", -- Value is any valid attr-list value `:help attr-list`
       constants = "bold",
-      keywords = "italic,bold",
-    },
-    inverse = { -- Inverse highlight for different types
-      match_paren = true,
-      visual = true,
-      search = true,
+      keywords = "italic",
     },
     modules = { -- List of various plugins and additional options
       -- ...
@@ -30,6 +20,7 @@ nightfox.setup({
 })
 
 nightfox.compile()
+vim.cmd([[colorscheme nightfox]])
 
 --------------------------------------------------------------------------------
 -- catppuccin
@@ -40,7 +31,7 @@ vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 local colors = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
   custom_highlights = {
-    Comment = { fg = colors.lavender }
+    Comment = { fg = colors.lavender },
   },
 
   styles = {
@@ -60,7 +51,7 @@ require("catppuccin").setup({
 
   integration = {
     dap = {
-      enabled   = true,
+      enabled = true,
       enable_ui = true,
     },
 
@@ -89,7 +80,6 @@ require("neo-tree").setup({
   popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
 })
 
-
 --------------------------------------------------------------------------------
 -- toggleterm
 --------------------------------------------------------------------------------
@@ -107,3 +97,14 @@ end
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 require("which-key").setup()
+
+--------------------------------------------------------------------------------
+-- misc
+--------------------------------------------------------------------------------
+-- should call these after set colorscheme
+require("bufferline").setup({})
+require("lualine").setup({
+  options = {
+    theme = "auto"
+  },
+})
