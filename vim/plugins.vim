@@ -124,6 +124,7 @@ Plug 'mattn/emmet-vim'
 
 " For a quickly outline of what to expect in a new/big source code file
 Plug 'liuchengxu/vista.vim'
+let g:vista_default_executive='coc'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
