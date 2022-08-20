@@ -85,11 +85,12 @@ require("neo-tree").setup({
 --------------------------------------------------------------------------------
 require("toggleterm").setup({
   insert_mappings = true,
-  open_mapping = [[<c-t>]],
+  open_mapping = [[<space>t]],
 })
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
+  vim.cmd [[DisableWhitespace]]
   vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
   vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 end
