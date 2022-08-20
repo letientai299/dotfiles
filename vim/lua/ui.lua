@@ -84,8 +84,12 @@ require("neo-tree").setup({
 -- toggleterm
 --------------------------------------------------------------------------------
 require("toggleterm").setup({
+  direction = "float",
   insert_mappings = true,
-  open_mapping = [[<space>t]],
+  float_opts = {
+    border = "curved",
+  },
+  open_mapping = [[<f36>]],
 })
 
 function _G.set_terminal_keymaps()
