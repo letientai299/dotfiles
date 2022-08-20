@@ -108,6 +108,8 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 Plug 'folke/which-key.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'xiyaowong/virtcolumn.nvim'
 
 let g:signify_priority=1  " don't overwrite other sign
 Plug 'mhinz/vim-signify'
