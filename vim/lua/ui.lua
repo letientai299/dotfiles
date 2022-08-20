@@ -65,7 +65,7 @@ require("catppuccin").setup({
   },
 })
 
-vim.cmd([[CatppuccinCompile]])
+vim.cmd([[sil CatppuccinCompile]])
 
 --------------------------------------------------------------------------------
 -- tokyonight
