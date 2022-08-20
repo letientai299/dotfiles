@@ -89,7 +89,7 @@ require("toggleterm").setup({
   float_opts = {
     border = "curved",
   },
-  open_mapping = [[<f36>]],
+  open_mapping = [[<a-q>]]
 })
 
 function _G.set_terminal_keymaps()
