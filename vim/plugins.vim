@@ -21,6 +21,7 @@ endif
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
+Plug 'romainl/vim-cool'
 
 " Reduce load time for vim builtin filetype
 Plug 'nathom/filetype.nvim'
