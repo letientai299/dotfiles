@@ -25,12 +25,12 @@ Plug 'tpope/vim-repeat'
 " Reduce load time for vim builtin filetype
 Plug 'nathom/filetype.nvim'
 
-" Vim-polyglot only provide filetype detection and syntax highlighting. I need
-" more than that for editing markdown
+" Markdown
 Plug 'godlygeek/tabular'
-" Plug 'gabrielelana/vim-markdown'
-" slow with large file and many code fences
-Plug 'plasticboy/vim-markdown'
+Plug 'preservim/vim-markdown'
+let g:vim_markdown_math = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = [
       \'viml=vim',
@@ -38,10 +38,11 @@ let g:vim_markdown_fenced_languages = [
       \'ini=dosini',
       \'yaml',
       \'go',
-      \'rust'
+      \'rust',
+      \'jsx=javacsriptreact',
+      \'tsx=typescriptreact',
       \]
 
-" Live-review markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_echo_preview_url = 1
 Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
