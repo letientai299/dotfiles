@@ -26,7 +26,7 @@ Plug 'tpope/vim-repeat'
 Plug 'nathom/filetype.nvim'
 
 " Markdown
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
@@ -36,10 +36,7 @@ let g:vim_markdown_fenced_languages = [
       \'viml=vim',
       \'bash=sh',
       \'ini=dosini',
-      \'yaml',
-      \'go',
-      \'rust',
-      \'jsx=javacsriptreact',
+      \'jsx=javascriptreact',
       \'tsx=typescriptreact',
       \]
 
