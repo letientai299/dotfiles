@@ -103,12 +103,8 @@ require("which-key").setup()
 --------------------------------------------------------------------------------
 -- should call these after set colorscheme
 require("bufferline").setup({})
-require("lualine").setup({
-  options = {
-    theme = "auto"
-  },
-})
+require("lualine").setup({ options = { theme = "ayu" } })
 
-require("indent_blankline").setup {
+require("indent_blankline").setup({
   show_current_context = true,
-}
+})

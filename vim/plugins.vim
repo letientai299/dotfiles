@@ -129,6 +129,11 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
+" config fold using treesitter, however, by default, don't fold on enter
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+autocmd BufReadPost,FileReadPost * normal zR
+
 " To respect editorconfig file
 Plug 'editorconfig/editorconfig-vim'
 
