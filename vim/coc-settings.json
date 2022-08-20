@@ -40,7 +40,6 @@
   "rust-analyzer.inlayHints.typeHints.enable": true,
   "rust-analyzer.inlayHints.parameterHints.enable": true,
   "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
-  "rust-analyzer.inlayHints.parameterHints.enable": true,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.imports.granularity.enforce": true,
   "rust-analyzer.completion.postfix.enable": true,
