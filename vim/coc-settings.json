@@ -56,6 +56,5 @@
 
   // Go
   "go.goplsUseDaemon": true,
-  "coc.preferences.extensionUpdateCheck": "daily",
-  "Lua.telemetry.enable": true
+  "Lua.telemetry.enable": false
 }
