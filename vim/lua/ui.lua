@@ -89,12 +89,12 @@ require("toggleterm").setup({
   float_opts = {
     border = "curved",
   },
-  open_mapping = [[<a-q>]]
+  open_mapping = [[<a-q>]],
 })
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
-  vim.cmd [[DisableWhitespace]]
+  vim.cmd([[DisableWhitespace]])
   vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
   vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 end
