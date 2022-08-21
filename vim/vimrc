@@ -57,6 +57,7 @@ let wiki.nested_syntaxes ={
       \'java':   'java',
       \'js':   'javascript',
       \'gql':   'graphql',
+      \'go':   'go',
       \'graphql':   'graphql'
       \}
 
@@ -77,7 +78,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 " Notification after file change
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 
 command! BufOnly silent! execute "%bd|e#|bd#"
