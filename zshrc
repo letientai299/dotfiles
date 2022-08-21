@@ -35,8 +35,6 @@ if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
 
-[[ -s "/Users/tai.le/.gvm/scripts/gvm" ]] && source "/Users/tai.le/.gvm/scripts/gvm"
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # On slow systems, checking the cached .zcompdump file to see if it must be
