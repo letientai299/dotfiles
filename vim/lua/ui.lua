@@ -31,6 +31,7 @@ vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 local colors = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
   custom_highlights = {
+    ---@diagnostic disable-next-line: need-check-nil
     Comment = { fg = colors.lavender },
   },
 
@@ -107,10 +108,37 @@ require("which-key").setup()
 -- misc
 --------------------------------------------------------------------------------
 -- should call these after set colorscheme
+require('gitsigns').setup({
+  word_diff = true,
+
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, { expr = true })
+
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, { expr = true })
+  end
+})
+
+require('dressing').setup({})
 require("bufferline").setup({})
 require('feline').setup()
 require('feline').winbar.setup()
--- require("lualine").setup({ options = { theme = "ayu" } })
 
 require("indent_blankline").setup({
   show_current_context = true,
