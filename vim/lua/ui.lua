@@ -105,9 +105,8 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 require("which-key").setup()
 
 --------------------------------------------------------------------------------
--- misc
+-- Gitsign
 --------------------------------------------------------------------------------
--- should call these after set colorscheme
 require('gitsigns').setup({
   word_diff = true,
 
@@ -135,6 +134,11 @@ require('gitsigns').setup({
   end
 })
 
+--------------------------------------------------------------------------------
+-- misc
+--------------------------------------------------------------------------------
+-- should call these after set colorscheme
+require('neoscroll').setup()
 require('dressing').setup({})
 require("bufferline").setup({})
 require('feline').setup()

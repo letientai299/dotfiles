@@ -27,7 +27,6 @@ Plug 'romainl/vim-cool'
 Plug 'nathom/filetype.nvim'
 
 " Markdown
-" Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
@@ -93,7 +92,11 @@ let g:coc_global_extensions = [
       \'coc-toml'
       \]
 
+let g:cursorhold_updatetime = 100
+Plug 'antoinemadec/FixCursorHold.nvim'
+
 let g:vimspector_enable_mappings = 'HUMAN'
+
 Plug 'puremourning/vimspector'
 
 " Auto cd to git project root when open a file in vim
@@ -104,8 +107,7 @@ Plug 'airblade/vim-rooter'
 " that without this plugin
 Plug 'simeji/winresizer'
 
-" More GUI stuffs
-" Plug 'nvim-lualine/lualine.nvim'
+" More GUI stuffs, mostly lua for nvim
 Plug 'feline-nvim/feline.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
@@ -114,33 +116,29 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
 Plug 'stevearc/dressing.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-
-" let g:signify_priority=1  " don't overwrite other sign
-" Plug 'mhinz/vim-signify'
-
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-Plug 'rhysd/git-messenger.vim'
-
-Plug 'mattn/emmet-vim'
-
-" For a quickly outline of what to expect in a new/big source code file
 Plug 'liuchengxu/vista.vim'
 let g:vista_default_executive='coc'
-
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'karb94/neoscroll.nvim'
 
 " config fold using treesitter, however, by default, don't fold on enter
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 autocmd BufReadPost,FileReadPost * normal zR
 
+
+" Git related
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'rhysd/git-messenger.vim'
+
+Plug 'mattn/emmet-vim'
+
 " To respect editorconfig file
-Plug 'editorconfig/editorconfig-vim'
 
 " To load vim settings per project
 Plug 'thinca/vim-localrc'
