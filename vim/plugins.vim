@@ -125,6 +125,12 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'karb94/neoscroll.nvim'
 
+Plug 'nvim-neotest/neotest'
+Plug 'https://github.com/rouge8/neotest-rust'
+Plug 'https://github.com/nvim-neotest/neotest-go'
+Plug 'https://github.com/nvim-neotest/neotest-vim-test'
+Plug 'https://github.com/vim-test/vim-test'
+
 " config fold using treesitter, however, by default, don't fold on enter
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -139,8 +145,8 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'mattn/emmet-vim'
 
 " To respect editorconfig file
+Plug 'gpanders/editorconfig.nvim'
 
-" To load vim settings per project
 Plug 'thinca/vim-localrc'
 
 " Show git commit message of the current line
