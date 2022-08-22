@@ -105,16 +105,18 @@ Plug 'airblade/vim-rooter'
 Plug 'simeji/winresizer'
 
 " More GUI stuffs
-Plug 'nvim-lualine/lualine.nvim'
+" Plug 'nvim-lualine/lualine.nvim'
+Plug 'feline-nvim/feline.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 Plug 'folke/which-key.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
 Plug 'stevearc/dressing.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 
-let g:signify_priority=1  " don't overwrite other sign
-Plug 'mhinz/vim-signify'
+" let g:signify_priority=1  " don't overwrite other sign
+" Plug 'mhinz/vim-signify'
 
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
