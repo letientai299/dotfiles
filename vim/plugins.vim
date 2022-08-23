@@ -22,6 +22,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'romainl/vim-cool'
+Plug 'https://github.com/wellle/targets.vim'
 
 " Reduce load time for vim builtin filetype
 Plug 'nathom/filetype.nvim'
