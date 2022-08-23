@@ -2,7 +2,6 @@ let g:formatdef_rustfmt_nightly='"rustup run nightly -- rustfmt --unstable-featu
 let g:formatters_rust = ["rustfmt_nightly"]
 
 nnoremap <leader>d <ESC>:CocCommand rust-analyzer.debug<cr>
-nnoremap <leader>D <ESC>:CocCommand rust-analyzer.debug<cr>
 nnoremap <leader>r <ESC>:CocCommand rust-analyzer.run<cr>
 nnoremap gK <ESC>:CocCommand rust-analyzer.openDocs<cr>
 

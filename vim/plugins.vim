@@ -126,6 +126,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'karb94/neoscroll.nvim'
 Plug 'folke/todo-comments.nvim'
 
+Plug 'https://github.com/rest-nvim/rest.nvim'
 
 Plug 'nvim-neotest/neotest'
 Plug 'https://github.com/rouge8/neotest-rust'
