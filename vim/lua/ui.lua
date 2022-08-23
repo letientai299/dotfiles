@@ -108,8 +108,6 @@ require("which-key").setup()
 -- Gitsign
 --------------------------------------------------------------------------------
 require('gitsigns').setup({
-  word_diff = true,
-
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
@@ -137,6 +135,8 @@ require('gitsigns').setup({
 --------------------------------------------------------------------------------
 -- misc
 --------------------------------------------------------------------------------
+vim.cmd([[hi VirtColumn gui= guifg=#252525]])
+
 -- should call these after set colorscheme
 require('neoscroll').setup()
 require('dressing').setup({})
