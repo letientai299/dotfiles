@@ -16,3 +16,4 @@ nmap <leader>fg :FzfLua live_grep_native<CR>
 nmap <leader>fh :FzfLua oldfiles<CR>
 nmap <leader>f' :FzfLua marks<CR>
 
+lua require('fzf-lua').register_ui_select()

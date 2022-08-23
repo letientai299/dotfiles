@@ -124,6 +124,8 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'karb94/neoscroll.nvim'
+Plug 'folke/todo-comments.nvim'
+
 
 Plug 'nvim-neotest/neotest'
 Plug 'https://github.com/rouge8/neotest-rust'
@@ -135,7 +137,6 @@ Plug 'https://github.com/vim-test/vim-test'
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 autocmd BufReadPost,FileReadPost * normal zR
-
 
 " Git related
 Plug 'tpope/vim-fugitive'
@@ -160,4 +161,3 @@ endif
 call plug#end()
 
 lua require("config")
-hi VirtColumn guifg=#ff0000
