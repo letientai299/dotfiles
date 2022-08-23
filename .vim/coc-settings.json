@@ -1,9 +1,0 @@
-{
-  "Lua.workspace.library": [
-    "/usr/local/Cellar/neovim/0.7.2_1/share/nvim/runtime/lua",
-    "/Users/tai.le/.vim-plugged/lualine.nvim/lua",
-    "/Users/tai.le/.vim-plugged/catppuccin/lua",
-    "/Users/tai.le/.vim-plugged/indent-blankline.nvim/lua"
-  ],
-  "Lua.completion.autoRequire": false
-}
