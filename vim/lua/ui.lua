@@ -135,8 +135,6 @@ require('gitsigns').setup({
 --------------------------------------------------------------------------------
 -- misc
 --------------------------------------------------------------------------------
-vim.cmd([[hi VirtColumn gui= guifg=#252525]])
-
 -- should call these after set colorscheme
 require('neoscroll').setup()
 require('dressing').setup({})

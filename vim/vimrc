@@ -3,7 +3,8 @@
 set backupcopy=yes
 set nocompatible
 set mouse=ar
-" set termguicolors
+set nu
+
 syntax on
 filetype plugin indent on
 
@@ -20,14 +21,12 @@ let maplocalleader="\<SPACE>"
 " Quickly open vimrc and apply change
 nnoremap <Leader>ve :tabedit $MYVIMRC<CR>
 nnoremap <Leader>vp :tabedit ~/.vim/plugins.vim<CR>
-nnoremap <Leader>vi :tabedit ~/.vim/after/plugin/abbreviation.vim<CR>
 nnoremap <Leader>vl :tabedit ~/.vimrc_local<CR>
 nnoremap <Leader>vL :tabedit ~/.local.plugins.vim<CR>
 nnoremap <Leader>va :so $MYVIMRC<CR>
 
 " remap key to escape terminal mode
 tnoremap <Leader><c-c> <c-\><c-n>
-
 
 " Search in the command line
 cnoremap <C-p> <Up>
@@ -67,9 +66,6 @@ let g:vimwiki_hl_cb_checked=1
 let g:vimwiki_conceallevel=0
 let g:vimwiki_conceal_onechar_markers=0
 let g:vimwiki_global_ext=0
-
-set bg=dark
-set termguicolors
 
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044

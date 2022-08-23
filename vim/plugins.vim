@@ -158,4 +158,6 @@ if !empty(glob('~/.local.plugins.vim'))
 endif
 
 call plug#end()
+
 lua require("config")
+hi VirtColumn guifg=#ff0000

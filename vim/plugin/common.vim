@@ -13,15 +13,12 @@
 
 " Avoid using the Escape key
 inoremap jk <ESC>
-" inoremap kj <ESC>
 xnoremap jk <ESC>
-" xnoremap kj <ESC>
 
 " Use space (I hate tab)
 set expandtab
 
 " Use 2-spaces per tab
-" set tabstop=2 softtabstop=2 shiftwidth=2
 set tabstop=2 softtabstop=2 shiftwidth=2
 set ignorecase smartcase incsearch hls
 set textwidth=80
@@ -54,18 +51,6 @@ vnoremap <Leader>y "+y
 
 " Make Y copy to end the line like the D command
 nnoremap Y y$
-
-" Quickly toggle the color column
-function! g:ToggleColorColumn() abort
-  if &colorcolumn != ''
-    setlocal colorcolumn&
-  else
-    setlocal colorcolumn=+1
-  endif
-endfunction
-
-nnoremap <silent> <leader>q :call g:ToggleColorColumn()<CR>
-
 
 " Center the cursor on the screen after a search
 nnoremap n nzz
