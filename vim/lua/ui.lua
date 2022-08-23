@@ -78,7 +78,11 @@ vim.g.tokyonight_colors = { comment = "#8c9fee" }
 --------------------------------------------------------------------------------
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 require("neo-tree").setup({
-  popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
+  use_libuv_file_watcher = true,
+  filesystem = {
+    follow_current_file = true,
+    popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
+  }
 })
 
 --------------------------------------------------------------------------------
