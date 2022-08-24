@@ -23,6 +23,13 @@ require 'nvim-treesitter.configs'.setup {
     disable = { "rust", "markdown" },
     additional_vim_regex_highlighting = false,
   },
+
+  rainbow = {
+    enable = true,
+    -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    extended_mode = true,
+  },
+
   incremental_selection = { enable = true },
   textobjects = { enable = true },
 }
