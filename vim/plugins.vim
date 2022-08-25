@@ -41,16 +41,14 @@ let g:vim_markdown_fenced_languages = [
       \'tsx=typescriptreact',
       \]
 
-Plug 'iamcco/markdown-preview.nvim', \
-  { 'do': { -> mkdp#util#install() }, \
-  'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_theme = 'light'
 let g:mkdp_echo_preview_url = 1
 
-Plug 'tyru/open-browser.vim', {'for': ['md','markdown', 'wiki']}
+Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
 
 Plug 'folke/tokyonight.nvim'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'catppuccin/nvim', { 'as': 'catppuccin'}
 Plug 'EdenEast/nightfox.nvim'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
