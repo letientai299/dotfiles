@@ -145,7 +145,7 @@ require('neoscroll').setup()
 require('dressing').setup({})
 require("bufferline").setup({})
 require('feline').setup()
-require('feline').winbar.setup()
+-- require('feline').winbar.setup()
 
 require("indent_blankline").setup({
   show_current_context = true,
