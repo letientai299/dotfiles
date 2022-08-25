@@ -1,2 +1,2 @@
-nnoremap <leader>r <Plug>RestNvim
-nnoremap <leader>R <Plug>RestNvimLast
+nnoremap <buffer> <leader>r <Plug>RestNvim
+nnoremap <buffer> <leader>R <Plug>RestNvimLast
