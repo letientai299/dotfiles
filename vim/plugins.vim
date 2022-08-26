@@ -55,6 +55,8 @@ Plug 'EdenEast/nightfox.nvim'
 " emacs and org mode despite all the times I've tried.
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
+Plug 'https://github.com/jxnblk/vim-mdx-js'
+
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
