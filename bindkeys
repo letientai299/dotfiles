@@ -1,6 +1,7 @@
 #!/bin/bash
 # vim: syntax=sh
 # Custom key binding
+# pressing ctlr-k to pipe output to less
 bindkey -s "^k" "| less^m"
 bindkey -s "^]" "^e | clipcopy^m"
 bindkey "^ " "autosuggest-accept"
