@@ -140,7 +140,6 @@ require('gitsigns').setup({
 -- misc
 --------------------------------------------------------------------------------
 -- should call these after set colorscheme
-require("todo-comments").setup({})
 require('neoscroll').setup()
 require('dressing').setup({})
 require("bufferline").setup({})

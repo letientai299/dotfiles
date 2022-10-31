@@ -129,7 +129,6 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'karb94/neoscroll.nvim'
-Plug 'folke/todo-comments.nvim'
 Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'https://github.com/rest-nvim/rest.nvim'
