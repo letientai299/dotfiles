@@ -1,5 +1,6 @@
 .jira.d/
 .dump/
+dump/
 index.md
 
 # Vim
