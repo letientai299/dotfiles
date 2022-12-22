@@ -18,5 +18,5 @@ let g:formatters_html=['prettier']
 let g:formatters_lua=['stylua']
 
 " See also https://github.com/darold/pgFormatter
-let g:formatdef_pg_format='"sql-formatter"'
-let g:formatters_sql=['sql-formatter']
+let g:formatdef_sql_formatter='"sql-formatter"'
+let g:formatters_sql=['sql_formatter']
