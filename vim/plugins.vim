@@ -21,11 +21,8 @@ endif
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-Plug 'romainl/vim-cool'
-Plug 'https://github.com/wellle/targets.vim'
-
-" Reduce load time for vim builtin filetype
-Plug 'nathom/filetype.nvim'
+Plug 'romainl/vim-cool' " disables search highlighting when done
+Plug 'wellle/targets.vim'
 
 " Markdown
 Plug 'preservim/vim-markdown'
@@ -55,7 +52,6 @@ Plug 'EdenEast/nightfox.nvim'
 " emacs and org mode despite all the times I've tried.
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
-Plug 'https://github.com/jxnblk/vim-mdx-js'
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
@@ -114,8 +110,8 @@ Plug 'simeji/winresizer'
 
 " More GUI stuffs, mostly lua for nvim
 Plug 'feline-nvim/feline.nvim'
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
-Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+Plug 'akinsho/bufferline.nvim'
+Plug 'akinsho/toggleterm.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
