@@ -16,6 +16,7 @@ let g:rooter_change_directory_for_non_project_files = ''
 let g:formatters_yaml=['prettier']
 let g:formatters_html=['prettier']
 let g:formatters_lua=['stylua']
-" https://github.com/darold/pgFormatter
-let g:formatdef_pg_format='"pg_format"'
-let g:formatters_sql=['pg_format']
+
+" See also https://github.com/darold/pgFormatter
+let g:formatdef_pg_format='"sql-formatter"'
+let g:formatters_sql=['sql-formatter']
