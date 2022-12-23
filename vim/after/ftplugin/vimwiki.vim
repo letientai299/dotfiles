@@ -4,13 +4,24 @@ fun! PrepareDateHheader()
   " Insert date tag: like 2018-06-29 Friday
   call append(0, '= '.strftime("%Y-%m-%d %A").' =')
 
-  let view.lnum += 2
+  let view.lnum += 1
   call winrestview(view)
 endfun!
+
+
+fun! PrepareTimeHheader()
+  let view=winsaveview()
+
+  call append(view.lnum, '== '.strftime("%T").' ==')
+
+  let view.lnum += 1
+  call winrestview(view)
+endfun!
+
 nmap <buffer> <Leader>dd :call PrepareDateHheader()<CR>
 
 " This one will insert the current time as H2
-nmap <buffer> <Leader>dt Go<CR>time<c-y><ESC>==<<o
+nmap <buffer> <Leader>dt :call PrepareTimeHheader()<CR>
 
 " Delete link syntax arround the current token
 nmap <buffer> <Leader><CR> ds]ds]
