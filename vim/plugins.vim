@@ -93,11 +93,8 @@ let g:coc_global_extensions = [
       \'coc-toml'
       \]
 
-let g:cursorhold_updatetime = 100
-Plug 'antoinemadec/FixCursorHold.nvim'
 
 let g:vimspector_enable_mappings = 'HUMAN'
-
 Plug 'puremourning/vimspector'
 
 " Auto cd to git project root when open a file in vim
@@ -124,11 +121,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'karb94/neoscroll.nvim'
-Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'https://github.com/rest-nvim/rest.nvim'
-
 Plug 'nvim-neotest/neotest'
 Plug 'https://github.com/rouge8/neotest-rust'
 Plug 'https://github.com/nvim-neotest/neotest-go'
