@@ -81,6 +81,6 @@ nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Show commands
 nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
-nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+" nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <leader>s  :<C-u>CocList --interactive --auto-preview symbols<cr>
