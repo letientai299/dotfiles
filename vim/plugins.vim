@@ -128,7 +128,6 @@ Plug 'https://github.com/rest-nvim/rest.nvim'
 
 Plug 'nvim-neotest/neotest'
 Plug 'rouge8/neotest-rust'
-Plug 'marilari88/neotest-vitest'
 Plug 'nvim-neotest/neotest-go'
 Plug 'nvim-neotest/neotest-vim-test'
 Plug 'vim-test/vim-test'
