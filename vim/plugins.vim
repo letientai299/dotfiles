@@ -124,11 +124,14 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
 Plug 'https://github.com/rest-nvim/rest.nvim'
+
+
 Plug 'nvim-neotest/neotest'
-Plug 'https://github.com/rouge8/neotest-rust'
-Plug 'https://github.com/nvim-neotest/neotest-go'
-Plug 'https://github.com/nvim-neotest/neotest-vim-test'
-Plug 'https://github.com/vim-test/vim-test'
+Plug 'rouge8/neotest-rust'
+Plug 'marilari88/neotest-vitest'
+Plug 'nvim-neotest/neotest-go'
+Plug 'nvim-neotest/neotest-vim-test'
+Plug 'vim-test/vim-test'
 
 " config fold using treesitter, however, by default, don't fold on enter
 set foldmethod=expr

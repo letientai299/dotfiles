@@ -40,6 +40,7 @@ require 'nvim-treesitter.configs'.setup {
 --------------------------------------------------------------------------------
 require("neotest").setup({
   adapters = {
+    require("neotest-vitest"),
     require("neotest-rust"),
     require("neotest-go"),
     require("neotest-vim-test")({
