@@ -125,7 +125,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 
 Plug 'https://github.com/rest-nvim/rest.nvim'
 
-
 Plug 'nvim-neotest/neotest'
 Plug 'rouge8/neotest-rust'
 Plug 'nvim-neotest/neotest-go'
@@ -139,6 +138,7 @@ autocmd BufReadPost,FileReadPost * normal zR
 
 " Git related
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' " for GBrowse
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/git-messenger.vim'
 
