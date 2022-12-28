@@ -160,3 +160,4 @@ endif
 call plug#end()
 
 lua require("config")
+

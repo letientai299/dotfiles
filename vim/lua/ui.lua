@@ -64,7 +64,6 @@ require("catppuccin").setup({
     coc_nvim = true,
   },
 })
-
 vim.cmd([[sil CatppuccinCompile]])
 
 --------------------------------------------------------------------------------
@@ -81,6 +80,12 @@ require("neo-tree").setup({
   filesystem = {
     follow_current_file = true,
     use_libuv_file_watcher = true,
+    window = {
+      mappings = {
+        ["/"] = "none", -- this should use default vim text search
+        ["f"] = "fuzzy_finder",
+      }
+    }
   }
 })
 

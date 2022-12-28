@@ -1,8 +1,9 @@
 let NERDSpaceDelims=1
 
-nnoremap <C-\> :Neotree toggle<CR>
-nnoremap <A-\> :Neotree reveal toggle<CR>
+nnoremap <A-\> :Neotree toggle<CR>
+nnoremap <C-\> :Neotree reveal toggle<CR>
 
+nnoremap <c-g> :Vista finder<CR>
 nnoremap <c-f11> :Vista!!<CR>
 nnoremap <f35> :Vista!!<CR>
 

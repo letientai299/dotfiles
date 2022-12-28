@@ -4,6 +4,7 @@ set backupcopy=yes
 set nocompatible
 set mouse=ar
 set nu
+set termguicolors
 
 syntax on
 filetype plugin indent on
