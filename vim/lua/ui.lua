@@ -20,7 +20,6 @@ nightfox.setup({
 })
 
 nightfox.compile()
-vim.cmd([[colorscheme nightfox]])
 
 --------------------------------------------------------------------------------
 -- catppuccin
