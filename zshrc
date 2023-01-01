@@ -70,3 +70,8 @@ unset file;
 
 
 
+
+# pnpm
+export PNPM_HOME="/Users/tai.le/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
