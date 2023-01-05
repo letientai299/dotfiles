@@ -1,6 +1,3 @@
-" Mapping selecting mappings
-"-------------------------------------------------------------------------------
-" anythings
 nmap <leader>fa :FzfLua<CR>
 
 nmap <leader>fb :FzfLua buffers<CR>

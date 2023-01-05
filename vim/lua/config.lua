@@ -38,19 +38,19 @@ require 'nvim-treesitter.configs'.setup {
 --------------------------------------------------------------------------------
 -- Test UI
 --------------------------------------------------------------------------------
-require("neotest").setup({
-  adapters = {
-    require("neotest-rust"),
-    require("neotest-go"),
-    require("neotest-vim-test")({
-      ignore_file_types = { "rust", "go" },
-    }),
-  },
-})
+-- require("neotest").setup({
+-- adapters = {
+-- require("neotest-rust"),
+-- require("neotest-go"),
+-- require("neotest-vim-test")({
+-- ignore_file_types = { "rust", "go" },
+-- }),
+-- },
+-- })
 
 --------------------------------------------------------------------------------
 -- Rest client
 --------------------------------------------------------------------------------
-require("rest-nvim").setup({
-  result_split_in_place = true
-})
+-- require("rest-nvim").setup({
+-- result_split_in_place = true
+-- })

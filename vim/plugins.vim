@@ -96,9 +96,6 @@ let g:coc_global_extensions = [
       \]
 
 
-let g:vimspector_enable_mappings = 'HUMAN'
-Plug 'puremourning/vimspector'
-
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
 Plug 'airblade/vim-rooter'
@@ -124,13 +121,17 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
-Plug 'https://github.com/rest-nvim/rest.nvim'
+" Test and debugging plugins
+" --------------------------
+" Plug 'https://github.com/rest-nvim/rest.nvim'
+" Plug 'nvim-neotest/neotest'
+" Plug 'rouge8/neotest-rust'
+" Plug 'nvim-neotest/neotest-go'
+" Plug 'nvim-neotest/neotest-vim-test'
+" Plug 'vim-test/vim-test'
+" let g:vimspector_enable_mappings = 'HUMAN'
+" Plug 'puremourning/vimspector'
 
-Plug 'nvim-neotest/neotest'
-Plug 'rouge8/neotest-rust'
-Plug 'nvim-neotest/neotest-go'
-Plug 'nvim-neotest/neotest-vim-test'
-Plug 'vim-test/vim-test'
 
 " config fold using treesitter, however, by default, don't fold on enter
 set foldmethod=expr

@@ -1,9 +1,6 @@
 " This file include the common settings that be shared between Vim and other
 " IDE Vim-plugins. They includes:
 " - IdeaVim for JetBrains family
-" - Vrapper for Eclipse family
-" - (hopefully someday I could add VsVim here, when I have some project that
-"   need Visual Studio)
 "
 " Unsurprisingly, some of following settings are not work on all the IDE
 " plugins. But since they are not harm at all, I still keep them here.
