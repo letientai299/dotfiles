@@ -19,6 +19,14 @@
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "colors.filetypes": ["*"],
 
+  // typescripts
+  "eslint.autoFixOnSave": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.packageManager": "pnpm",
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
