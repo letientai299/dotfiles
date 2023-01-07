@@ -65,5 +65,6 @@
   // Go
   "go.goplsUseDaemon": true,
   "Lua.telemetry.enable": false,
-  "svelte.enable-ts-plugin": true
+  "svelte.enable-ts-plugin": true,
+  "markdown-preview-enhanced.previewTheme": "one-light.css"
 }
