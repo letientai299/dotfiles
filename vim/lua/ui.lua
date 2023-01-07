@@ -84,6 +84,10 @@ require("neo-tree").setup({
       position = "float",
       mappings = {
         ["/"] = "none", -- this should use default vim text search
+        ["]g"] = "none",
+        ["[g"] = "none",
+        ["[c"] = "prev_git_modified",
+        ["]c"] = "next_git_modified",
         ["f"] = "fuzzy_finder",
         ["h"] = function(state)
           local node = state.tree:get_node()
