@@ -89,24 +89,6 @@ update-software() {
     brew upgrade
   fi
 
-  # Update sdkman softwares
-  if command -v sdk >/dev/null 2>&1; then
-    fancy_echo "Update SDKMAN"
-    echo y | sdk update
-    echo y | sdk ug
-  fi
-
-  if command -v yarn >/dev/null 2>&1; then
-    fancy_echo "Update yarn global tools"
-    yarn global upgrade
-  fi
-
-  if command -v rustup >/dev/null 2>&1; then
-    fancy_echo "Update rust"
-    rustup update
-  fi
-
-
   #  Vim
   fancy_echo "Vim plugins"
   # Execute vim-plug upgrade, then update all plugins
@@ -117,14 +99,6 @@ update-software() {
 
 pwdd(){
   basename "$PWD"
-}
-
-# go get
-gget(){
-  url="$*"
-  pj=$(echo $url |sed 's/^https\?:\/\///')
-  echo $pj
-  go get $pj
 }
 
 dkpg() {

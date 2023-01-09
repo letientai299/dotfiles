@@ -6,6 +6,8 @@ set mouse=ar
 set nu
 set termguicolors
 
+let g:loaded_perl_provider = 0
+
 syntax on
 filetype plugin indent on
 
