@@ -83,3 +83,18 @@ autocmd FileChangedShellPost *
 
 
 command! BufOnly silent! execute "%bd|e#|bd#"
+
+function! CreateFile(tfilename)
+    " complete filepath from the file where this is called
+    let newfilepath=expand('%:p:h') .'/'. expand(a:tfilename)
+
+    if filereadable(newfilepath)
+       :norm gf
+    else
+        :sil execute "!touch ". expand(newfilepath)
+        :norm gf
+    endif
+
+endfunction
+noremap <leader>gf :call CreateFile(expand("<cfile>"))<CR>
+
