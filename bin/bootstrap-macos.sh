@@ -34,10 +34,6 @@ sudo gem install neovim
 task "Tmux"
 brew install tmux
 
-task "Ranger"
-brew install ranger w3m highlight
-ranger --copy-config=all
-
 task "rg search"
 brew install ripgrep
 wget https://github.com/aykamko/tag/releases/download/v1.4.0/tag_darwin_amd64.zip

@@ -23,6 +23,9 @@ if ! zgen saved; then
 
   zgen load romkatv/powerlevel10k powerlevel10k
 
+  # find shortest query for z to jump
+  zgen load mellbourn/zabb
+
   # generate the init script from plugins above
   zgen save
 fi
