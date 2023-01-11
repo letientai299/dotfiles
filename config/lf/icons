@@ -19,6 +19,10 @@
 # ex      x       # EXEC
 # fi      -       # FILE
 
+# special dirs
+.git/   
+node_modules/   
+
 # file types (with matching order)
 ln             # LINK
 or             # ORPHAN
