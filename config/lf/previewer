@@ -5,9 +5,38 @@ h=$3
 x=$4
 y=$5
 
-if [[ "$( file -Lb --mime-type "$file")" =~ ^image ]]; then
-    kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file"
-    exit 1
-fi
+MIME=$(file -Lb --mime-type "$file")
 
-pistol "$file"
+case "$MIME" in
+  *image/*)
+  kitty +icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file"
+  ;;
+  # .pdf
+  *application/pdf*)
+  pdftotext "$1" -
+  ;;
+  # .7z
+  *application/x-7z-compressed*)
+  7z l "$1"
+  ;;
+  # .tar .tar.Z
+  *application/x-tar*)
+  tar -tvf "$1"
+  ;;
+  # .tar.*
+  *application/x-compressed-tar*|*application/x-*-compressed-tar*)
+  tar -tvf "$1"
+  ;;
+  # .rar
+  *application/vnd.rar*)
+  unrar l "$1"
+  ;;
+  # .zip
+  *application/zip*)
+  unzip -l "$1"
+  ;;
+  *)
+  pistol "$file"
+  ;;
+esac
+
