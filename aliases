@@ -54,15 +54,15 @@ alias ve="vim ~/.zshenv"
 alias vt="vim ~/.todo/todo.txt"
 
 # Alias for the cmus player
-alias cr="cmus-remote"
-alias crst="cmus-remote -Q" # Status
-alias crn="cmus-remote --next"
-alias crr="cmus-remote --prev"
-alias crp="cmus-remote --play"
-alias cru="cmus-remote --pause"
-alias crs="cmus-remote --stop"
-alias crvu="cmus-remote -v +10%"
-alias crvd="cmus-remote -v -10%"
+# alias cr="cmus-remote"
+# alias crst="cmus-remote -Q" # Status
+# alias crn="cmus-remote --next"
+# alias crr="cmus-remote --prev"
+# alias crp="cmus-remote --play"
+# alias cru="cmus-remote --pause"
+# alias crs="cmus-remote --stop"
+# alias crvu="cmus-remote -v +10%"
+# alias crvd="cmus-remote -v -10%"
 
 alias so="source"
 alias r="ranger"
