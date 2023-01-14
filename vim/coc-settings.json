@@ -20,6 +20,7 @@
   "colors.filetypes": ["*"],
 
   // typescripts
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "eslint.autoFixOnSave": true,
   "eslint.codeAction.showDocumentation": {
     "enable": true
