@@ -27,7 +27,7 @@ cmd open ${{
   case $(file --mime-type "$f" -b) in
     text/*) $EDITOR $f;;
     audio/mpeg) mpv $f;;
-    video/*) setsid mpv $f > /dev/null 2 2>&1 & ;;
+    video/*) mpv $f > /dev/null 2>&1 & ;;
           *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
