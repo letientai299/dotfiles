@@ -14,19 +14,16 @@
     ~/.vim:
       force: true
       path: "vim/"
-    ~/.vrapperrc: "vim/vrapper.vim"
     ~/.ideavimrc: "vim/idearc.vim"
 
     # Config files
-    ~/.config/rf: "config/lf"
+    ~/.config/lf: "config/lf"
     ~/.config/rustfmt/rustfmt.toml: "config/rustfmt/rustfmt.toml"
     ~/.config/direnv/direnvrc: "config/direnv/direnvrc"
     ~/.config/zathura/zathurarc: "config/zathura/zathurarc"
     ~/.config/nvim/init.vim: "vim/init.vim"
     ~/.config/nvim/coc-settings.json: "vim/coc-settings.json"
-    ~/.config/translate-shell: "config/translate-shell"
     ~/.config/youtube-dl: "config/youtube-dl"
-    ~/.config/topydo: "config/topydo"
     ~/.config/mpv: "config/mpv"
     ~/.config/ripgrep: "config/ripgrep"
     ~/.p10k.zsh: "p10k.zsh"
@@ -37,7 +34,6 @@
 
     ~/.gitignore: "gitignore"
     ~/.tmux.conf: "tmux.conf"
-    ~/.agignore: "agignore"
     ~/.highlight: "highlight"
 
 - shell:

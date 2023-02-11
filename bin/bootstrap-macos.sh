@@ -20,16 +20,10 @@ task "Neovim"
 brew install neovim
 
 task "Python and neovim binding"
-brew install python python2
+brew install python3
 pip3 install --upgrade pip
-pip2 install --upgrade pip
 pip3 install --user neovim
-pip2 install --user neovim
 echo 'export PATH=$PATH:$HOME/.local/bin' >>$HOME/.profile
-
-task "Ruby and neovim binding"
-brew install ruby
-sudo gem install neovim
 
 task "Tmux"
 brew install tmux
@@ -53,10 +47,6 @@ HERE
 task "curl and wget"
 brew install curl wget
 
-task "zsh"
-brew install zsh
-chsh -s "$(which zsh)"
-
 task "Diff-so-fancy"
 yarn global add diff-so-fancy
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
@@ -74,10 +64,6 @@ git config --global color.diff.whitespace "red reverse"
 
 task "Term 256 color"
 wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
-brew tap zegervdv/zathura
 tic xterm-256color-italic.terminfo
 rm xterm-256color-italic.terminfo
 
-task "Askpass, for vim with sudo trick"
-brew tap theseal/ssh-askpass
-brew install ssh-askpass

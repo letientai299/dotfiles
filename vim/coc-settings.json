@@ -67,5 +67,6 @@
   "go.goplsUseDaemon": true,
   "Lua.telemetry.enable": false,
   "svelte.enable-ts-plugin": true,
-  "markdown-preview-enhanced.previewTheme": "one-light.css"
+  "markdown-preview-enhanced.previewTheme": "one-light.css",
+  "snippets.ultisnips.pythonPrompt": false
 }
