@@ -33,22 +33,18 @@ require("catppuccin").setup({
     ---@diagnostic disable-next-line: need-check-nil
     Comment = { fg = colors.lavender },
   },
-
   styles = {
     comments = { "italic" },
     keywords = { "italic" },
   },
-
   dim_inactive = {
     enabled = true,
     shade = "dark",
     percentage = 0.3,
   },
-
   compile = {
     enabled = true,
   },
-
   integration = {
     dap = {
       enabled = true,
@@ -169,8 +165,12 @@ require('gitsigns').setup({
 -- should call these after set colorscheme
 require('dressing').setup({})
 require("bufferline").setup({})
-require('feline').setup()
--- require('feline').winbar.setup()
+require('lualine').setup({
+  options = {
+    component_separators = {},
+    section_separators = {},
+  }
+})
 
 require("indent_blankline").setup({
   show_current_context = true,

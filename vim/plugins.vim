@@ -105,7 +105,7 @@ Plug 'airblade/vim-rooter'
 Plug 'simeji/winresizer'
 
 " More GUI stuffs, mostly lua for nvim
-Plug 'feline-nvim/feline.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'folke/which-key.nvim'
