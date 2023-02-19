@@ -9,7 +9,7 @@ MIME=$(file -Lb --mime-type "$file")
 
 case "$MIME" in
   *image/*)
-  kitten icat --silent --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file"
+  kitten icat --transfer-mode memory --stdin no --place "${w}x${h}@${x}x${y}" "$file" < /dev/null > /dev/tty
   ;;
   # .pdf
   *application/pdf*)
