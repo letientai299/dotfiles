@@ -9,6 +9,7 @@ nmap <leader>ff :FzfLua files<CR>
 nmap <leader>fF :FzfLua gitFiles<CR>
 
 nmap <leader>fm :FzfLua keymaps<CR>
+nmap <leader>fx :FzfLua commands<CR>
 
 nmap <leader>fg :FzfLua live_grep_native<CR>
 
