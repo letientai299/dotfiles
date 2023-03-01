@@ -150,6 +150,7 @@ Plug 'mattn/emmet-vim'
 Plug 'gpanders/editorconfig.nvim'
 
 Plug 'thinca/vim-localrc'
+Plug 'fladson/vim-kitty'
 
 " Show git commit message of the current line
 
