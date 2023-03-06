@@ -1,4 +1,5 @@
 set icons
+set info size:time
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -28,7 +29,7 @@ map D trash $fx
 cmd trash ${{
     set -f
     printf "$fx\n"
-    printf "delete?[y/n]"
+    printf "delete?[y/N]: "
     read ans
     [ "$ans" = "y" ] && trash $fx
 }}
