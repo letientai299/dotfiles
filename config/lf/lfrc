@@ -1,4 +1,5 @@
 set icons
+set hidden
 set info size:time
 
 # set '-eu' options for shell commands
