@@ -10,7 +10,6 @@ nnoremap <Leader>y "+y
 nnoremap <Leader>Y :.y+<CR>
 vnoremap <Leader>y "+y
 
-set number
 set mouse=a
 set scrollback=100000
 set termguicolors
