@@ -99,3 +99,9 @@ map alt+right send_text all \x1b\x66
 
 # Added by Gogh
 include colors.conf
+
+
+# BEGIN_KITTY_THEME
+# Jet Brains Darcula
+include current-theme.conf
+# END_KITTY_THEME
