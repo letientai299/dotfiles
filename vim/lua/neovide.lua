@@ -52,7 +52,7 @@ local bg_alpha = function()
   return string.format("%x", math.floor(255 * (vim.g.transparency)))
 end
 vim.g.neovide_transparency = 0.0
-vim.g.transparency = 0.8
+vim.g.transparency = 0.9
 vim.g.neovide_background_color = "#0f1117" .. bg_alpha()
 
 
