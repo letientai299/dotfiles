@@ -22,7 +22,7 @@ set textwidth=80
 if !has('nvim')
   set encoding=utf8
 endif
-set lazyredraw
+" set lazyredraw
 set nofoldenable
 
 " Set spelling language to English, not sure if this setting could be included
