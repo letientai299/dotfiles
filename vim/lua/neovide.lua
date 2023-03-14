@@ -27,7 +27,7 @@ vim.o.guifont = "JetBrainsMono Nerd Font Mono:style=Light,Regular:h15"
 vim.g.neovide_cursor_vfx_mode = "torpedo"
 
 -- dynamic scalling at runtime
-vim.g.neovide_scale_factor = 0.7
+vim.g.neovide_scale_factor = 1
 
 local change_scale_factor = function(delta)
   vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
