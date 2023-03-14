@@ -24,15 +24,6 @@ vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true 
 
 -- font
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:style=Light,Regular:h15"
-vim.opt.linespace = 1
-
--- background
-local alpha = function()
-  return string.format("%x", math.floor(255 * (vim.g.transparency)))
-end
-vim.g.neovide_transparency = 0.0
-vim.g.transparency = 0.8
-vim.g.neovide_background_color = "#0f1117" .. alpha()
 
 -- cursors
 vim.g.neovide_cursor_vfx_mode = "torpedo"
@@ -52,8 +43,19 @@ vim.keymap.set("n", "<C-->", function()
   change_scale_factor(1 / 1.25)
 end)
 
-vim.o.winblend = 20
-vim.o.pumblend = 20
+
+-- don't remember window size, always start
+vim.g.neovide_remember_window_size = false
 
 -- auto change dir when using GUI mode
 vim.g.rooter_manual_only = 0
+
+-- some transparency
+vim.o.winblend = 20
+vim.o.pumblend = 20
+local alpha = function()
+  return string.format("%x", math.floor(255 * (vim.g.transparency)))
+end
+vim.g.neovide_transparency = 0.0
+vim.g.transparency = 0.9
+vim.g.neovide_background_color = "#0f1117" .. alpha()
