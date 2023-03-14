@@ -1,3 +1,4 @@
+
 " vim:set et sw=2 ts=2 tw=80:
 " Auto install on the first time if there no plug.vim found {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -81,7 +82,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_disable_transparent_cursor = 1
+let g:coc_disable_transparent_cursor = 0
 let g:coc_global_extensions = [
       \'coc-snippets',
       \'coc-json',
@@ -113,18 +114,20 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
 Plug 'stevearc/dressing.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+
 Plug 'liuchengxu/vista.vim'
 let g:vista_default_executive='coc'
+
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'rcarriga/nvim-notify'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'https://github.com/max397574/better-escape.nvim'
 
-if exists("g:neovide")
-  Plug 'goolord/alpha-nvim'
-end
+Plug 'https://github.com/willothy/flatten.nvim'
+Plug 'goolord/alpha-nvim'
 
 " Test and debugging plugins
 " --------------------------
@@ -168,4 +171,3 @@ endif
 call plug#end()
 
 lua require("config")
-

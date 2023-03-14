@@ -16,7 +16,6 @@ BUF_NAME="/tmp/kitty_$RANDOM"
 
 
 /usr/local/bin/nvim \
-  -c "silent CocDisable" \
   -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
   -c "set tw=10000" \
   -c "autocmd TermEnter * stopinsert" \
