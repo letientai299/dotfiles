@@ -122,6 +122,10 @@ Plug 'rcarriga/nvim-notify'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
+if exists("g:neovide")
+  Plug 'goolord/alpha-nvim'
+end
+
 " Test and debugging plugins
 " --------------------------
 " Plug 'https://github.com/rest-nvim/rest.nvim'
