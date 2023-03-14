@@ -36,11 +36,11 @@ local change_scale_factor = function(delta)
 end
 
 vim.keymap.set("n", "<C-=>", function()
-  change_scale_factor(1.25)
+  change_scale_factor(1.1)
 end)
 
 vim.keymap.set("n", "<C-->", function()
-  change_scale_factor(1 / 1.25)
+  change_scale_factor(1 / 1.11)
 end)
 
 
