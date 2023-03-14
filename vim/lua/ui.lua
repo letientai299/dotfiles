@@ -174,8 +174,6 @@ require('gitsigns').setup({
       end)
       return '<Ignore>'
     end, { expr = true })
-
-    map('n', '<leader>hp', gs.preview_hunk)
   end
 })
 
