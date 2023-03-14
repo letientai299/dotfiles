@@ -11,16 +11,25 @@ else
   AUTOCMD_TERMCLOSE_CMD="normal G"
 fi
 
-
-
-/usr/local/bin/nvim 63<&0 0</dev/null \
+/usr/local/bin/nvim \
   -c "set nonumber" \
   -c "set laststatus=0" \
   -c "set colorcolumn=0" \
   -c "set tw=10000" \
   -c "silent CocDisable" \
-  -c "autocmd TermEnter * stopinsert" \
-  -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
   -c "map <silent> q :qa!<CR>" \
-  -c 'terminal sed </dev/fd/63 && sleep 0.01 && printf "\x1b]2;"'
+  -c "BufferLineGroupbaleiaToggle ungrouped" \
+
+
+# /usr/local/bin/nvim 63<&0 0</dev/null \
+#   -c "set nonumber" \
+#   -c "set laststatus=0" \
+#   -c "set colorcolumn=0" \
+#   -c "set tw=10000" \
+#   -c "silent CocDisable" \
+#   -c "autocmd TermEnter * stopinsert" \
+#   -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
+#   -c "map <silent> q :qa!<CR>" \
+#   -c 'terminal sed </dev/fd/63 && sleep 0.01 && printf "\x1b]2;"' \
+#   -c "BufferLineGroupToggle ungrouped"
 
