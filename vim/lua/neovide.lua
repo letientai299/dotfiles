@@ -43,8 +43,8 @@ vim.keymap.set("n", "<C-->", function()
   change_scale_factor(1 / 1.25)
 end)
 
-vim.o.winblend = 30
-vim.o.pumblend = 30
+vim.o.winblend = 20
+vim.o.pumblend = 20
 
 -- auto change dir when using GUI mode
 vim.g.rooter_manual_only = 0
