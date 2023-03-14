@@ -11,8 +11,6 @@ if vim.fn.getcwd() == '/' then
   vim.fn.chdir("$HOME")
 end
 
--- use a dashboard for nicer startup
-require('alpha').setup(require 'alpha.themes.startify'.config)
 
 -- Allow clipboard copy paste in neovim
 vim.g.neovide_input_use_logo = 1
@@ -29,7 +27,7 @@ vim.o.guifont = "JetBrainsMono Nerd Font Mono:style=Light,Regular:h15"
 vim.g.neovide_cursor_vfx_mode = "torpedo"
 
 -- dynamic scalling at runtime
-vim.g.neovide_scale_factor = 1.0
+vim.g.neovide_scale_factor = 0.7
 
 local change_scale_factor = function(delta)
   vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
@@ -50,9 +48,16 @@ vim.g.rooter_manual_only = 0
 -- some transparency
 vim.o.winblend = 20
 vim.o.pumblend = 20
-local alpha = function()
+local bg_alpha = function()
   return string.format("%x", math.floor(255 * (vim.g.transparency)))
 end
 vim.g.neovide_transparency = 0.0
 vim.g.transparency = 0.8
-vim.g.neovide_background_color = "#0f1117" .. alpha()
+vim.g.neovide_background_color = "#0f1117" .. bg_alpha()
+
+
+-- config a nice dashboard
+local alpha = require('alpha')
+local cfg = require 'alpha.themes.startify'
+cfg.section.header.val = {}
+alpha.setup(cfg.config)
