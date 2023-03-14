@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# modified from https://github.com/kovidgoyal/kitty/issues/719#issuecomment-952039731
+# based on https://github.com/kovidgoyal/kitty/issues/719#issuecomment-952039731
 
 if [ "$#" -eq 3 ]; then
   INPUT_LINE_NUMBER=${1:-0}
@@ -11,25 +11,18 @@ else
   AUTOCMD_TERMCLOSE_CMD="normal G"
 fi
 
-# /usr/local/bin/nvim \
-#   -c "set laststatus=0" \
-#   -c "set colorcolumn=0" \
-#   -c "set tw=10000 nowrap" \
-#   -c "silent CocDisable" \
-#   -c "map <silent> q :qa!<CR>" \
-#   -c "let baleia = luaeval(\"require('baleia').setup { }\")" \
-#   -c "call baleia.once(bufnr('%'))" \
-#   -c "BufferLineGroupToggle ungrouped"
+BUF_NAME="/tmp/kitty_$RANDOM"
+/bin/cat >> "$BUF_NAME"
 
-/usr/local/bin/nvim 63<&0 0</dev/null \
-  -c "set nonumber" \
-  -c "set laststatus=0" \
-  -c "set colorcolumn=0" \
+
+/usr/local/bin/nvim \
+  -c "CocDisable" \
+  -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
   -c "set tw=10000" \
-  -c "silent CocDisable" \
   -c "autocmd TermEnter * stopinsert" \
   -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
   -c "map <silent> q :qa!<CR>" \
-  -c 'terminal sed </dev/fd/63 && sleep 0.01 && printf "\x1b]2;"' \
+  -c "terminal /bin/cat $BUF_NAME && sleep 0.01 && printf '\x1b]2;'" \
   -c "BufferLineGroupToggle ungrouped"
 
+rm $BUF_NAME
