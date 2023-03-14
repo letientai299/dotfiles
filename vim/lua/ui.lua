@@ -5,7 +5,8 @@ local nightfox = require("nightfox")
 nightfox.setup({
   options = {
     dim_inactive = true,
-    styles = { -- Style to be applied to different syntax groups
+    styles = {
+      -- Style to be applied to different syntax groups
       comments = "italic", -- Value is any valid attr-list value `:help attr-list`
       constants = "bold",
       keywords = "italic",
@@ -50,7 +51,6 @@ require("catppuccin").setup({
       enabled = true,
       enable_ui = true,
     },
-
     which_key = true,
     neotree = {
       enabled = true,
@@ -102,6 +102,15 @@ require("neo-tree").setup({
               require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
             end
           end
+        end,
+        ["Y"] = function(state)
+          local node = state.tree:get_node()
+          local content = node.path
+          -- relative
+          -- local content = node.path:gsub(state.path, ""):sub(2)
+          vim.fn.setreg('"', content)
+          vim.fn.setreg("1", content)
+          vim.fn.setreg("+", content)
         end,
       }
     }
