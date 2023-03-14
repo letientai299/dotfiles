@@ -44,7 +44,7 @@ vim.keymap.set("n", "<C-->", function()
 end)
 
 
--- don't remember window size, always start
+-- don't remember window size, that's OS job.
 vim.g.neovide_remember_window_size = false
 
 -- auto change dir when using GUI mode
