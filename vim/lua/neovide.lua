@@ -3,7 +3,7 @@ vim.g.neovide_input_macos_alt_is_meta = true
 
 -- change dir if we start at root, to limit the file searching.
 if vim.fn.getcwd() == '/' then
-  vim.fn.chdir("$HOME/temp/")
+  vim.fn.chdir("$HOME")
 end
 
 -- use a dashboard for nicer startup
