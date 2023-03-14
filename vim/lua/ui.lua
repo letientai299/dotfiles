@@ -76,6 +76,35 @@ require("neo-tree").setup({
   filesystem = {
     follow_current_file = true,
     use_libuv_file_watcher = true,
+    commands = {
+      expand_node = function(state)
+        local node = state.tree:get_node()
+        if node.type == 'directory' then
+          if not node:is_expanded() then
+            require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          elseif node:has_children() then
+            require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+          end
+        end
+      end,
+      close_node = function(state)
+        local node = state.tree:get_node()
+        if node.type == 'directory' and node:is_expanded() then
+          require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+        else
+          require 'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+        end
+      end,
+      yank_path = function(state)
+        local node = state.tree:get_node()
+        local content = node.path
+        -- relative
+        -- local content = node.path:gsub(state.path, ""):sub(2)
+        vim.fn.setreg('"', content)
+        vim.fn.setreg("1", content)
+        vim.fn.setreg("+", content)
+      end,
+    },
     window = {
       position = "float",
       mappings = {
@@ -85,33 +114,9 @@ require("neo-tree").setup({
         ["[c"] = "prev_git_modified",
         ["]c"] = "next_git_modified",
         ["f"] = "fuzzy_finder",
-        ["h"] = function(state)
-          local node = state.tree:get_node()
-          if node.type == 'directory' and node:is_expanded() then
-            require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
-          else
-            require 'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
-          end
-        end,
-        ["l"] = function(state)
-          local node = state.tree:get_node()
-          if node.type == 'directory' then
-            if not node:is_expanded() then
-              require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
-            elseif node:has_children() then
-              require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
-            end
-          end
-        end,
-        ["Y"] = function(state)
-          local node = state.tree:get_node()
-          local content = node.path
-          -- relative
-          -- local content = node.path:gsub(state.path, ""):sub(2)
-          vim.fn.setreg('"', content)
-          vim.fn.setreg("1", content)
-          vim.fn.setreg("+", content)
-        end,
+        ["h"] = "close_node",
+        ["l"] = "expand_node",
+        ["Y"] = "yank_path",
       }
     }
   }
