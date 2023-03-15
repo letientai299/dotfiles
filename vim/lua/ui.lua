@@ -106,7 +106,7 @@ require("neo-tree").setup({
       end,
     },
     window = {
-      position = "float",
+      position = vim.g.neovide and "left" or "float",
       mappings = {
         ["/"] = "none", -- this should use default vim text search
         ["]g"] = "none",
@@ -126,7 +126,7 @@ require("neo-tree").setup({
 -- toggleterm
 --------------------------------------------------------------------------------
 require("toggleterm").setup({
-  direction = "float",
+  direction = vim.g.neovide and "horizontal" or "float",
   insert_mappings = true,
   float_opts = {
     border = "curved",
