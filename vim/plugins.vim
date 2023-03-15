@@ -150,7 +150,9 @@ autocmd BufReadPost,FileReadPost * normal zR
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " for GBrowse
 Plug 'junegunn/gv.vim'
-Plug 'rhysd/git-messenger.vim'
+
+" No need this as Gitsigns almost cover this git-messenger features
+" Plug 'rhysd/git-messenger.vim'
 
 Plug 'mattn/emmet-vim'
 

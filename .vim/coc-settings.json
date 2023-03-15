@@ -1,6 +1,7 @@
 {
   "Lua.workspace.library": [
     "/Users/tai/.vim-plugged/alpha-nvim/lua",
-    "/Users/tai.le/.vim-plugged/tokyonight.nvim/lua"
+    "/Users/tai.le/.vim-plugged/tokyonight.nvim/lua",
+    "/Users/tai.le/.vim-plugged/catppuccin/lua"
   ]
 }

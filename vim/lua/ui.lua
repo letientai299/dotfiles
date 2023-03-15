@@ -30,8 +30,8 @@ vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 -- fetch colors from g:catppuccin_flavour palette
 local colors = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
+  transparent_background = true,
   custom_highlights = {
-    ---@diagnostic disable-next-line: need-check-nil
     Comment = { fg = colors.lavender },
   },
   styles = {
@@ -51,6 +51,10 @@ require("catppuccin").setup({
       enabled = true,
       enable_ui = true,
     },
+    indent_blankline = {
+      enabled = true,
+      colored_indent_levels = true,
+    },
     which_key = true,
     neotree = {
       enabled = true,
@@ -67,6 +71,14 @@ vim.cmd([[sil CatppuccinCompile]])
 --------------------------------------------------------------------------------
 vim.g.tokyonight_colors = { comment = "#8c9fee" }
 require("tokyonight").setup({
+  styles = {
+    comments = { italic = true },
+    keywords = { italic = true },
+    functions = {},
+    variables = {},
+    sidebars = "transparent",
+    floats = "transparent",
+  },
   sidebars = { "qf", "vista_kind", "terminal", "packer" },
   transparent = true, -- Enable this to disable setting the background color
   hide_inactive_statusline = true,
@@ -165,7 +177,10 @@ require('gitsigns').setup({
       vim.keymap.set(mode, l, r, opts)
     end
 
-    -- Navigation
+    -- Keymaps
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+
     map('n', ']c', function()
       if vim.wo.diff then return ']c' end
       vim.schedule(function()
