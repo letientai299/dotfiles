@@ -178,8 +178,8 @@ require('gitsigns').setup({
     end
 
     -- Keymaps
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+    map('n', '<leader>th', gs.preview_hunk)
+    map('n', '<leader>tb', function() gs.blame_line { full = true } end)
 
     map('n', ']c', function()
       if vim.wo.diff then return ']c' end
