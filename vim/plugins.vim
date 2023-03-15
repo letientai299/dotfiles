@@ -87,6 +87,10 @@ let g:coc_global_extensions = [
       \'coc-snippets',
       \'coc-json',
       \'coc-go',
+      \'coc-sumneko-lua',
+      \'coc-yaml',
+      \'coc-docker',
+      \'coc-sh',
       \'coc-rust-analyzer',
       \'coc-html',
       \'coc-tsserver',
@@ -149,10 +153,11 @@ autocmd BufReadPost,FileReadPost * normal zR
 " Git related
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " for GBrowse
-Plug 'junegunn/gv.vim'
+Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 
 " No need this as Gitsigns almost cover this git-messenger features
 " Plug 'rhysd/git-messenger.vim'
+" Plug 'junegunn/gv.vim'
 
 Plug 'mattn/emmet-vim'
 
