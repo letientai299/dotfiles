@@ -14,10 +14,14 @@
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "notification.focusable": false,
   "notification.border": false,
-  "notification.winblend": 0,
-  "codeLens.enable": false,
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
-  "colors.filetypes": ["*"],
+  "notification.winblend": 40,
+  "codeLens.enable": true,
+  "coc.preferences.enableMarkdown": true,
+  "coc.preferences.formatOnSave": true,
+  "colors.enable": true,
+  "highlight.colors.enable": true,
+  "highlight.document.enable": true,
+  "highlight.colorNames.enable": true,
 
   // typescripts
   "eslint.workingDirectories": [{ "mode": "auto" }],
@@ -31,6 +35,7 @@
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
+  "sumneko-lua.enable": false,
 
   // css
   //------------------------------------------------------------
@@ -55,7 +60,6 @@
   "rust-analyzer.completion.autoself.enable": true,
   "rust-analyzer.completion.autoimport.enable": true,
   "rust-analyzer.restartServerOnConfigChange": true,
-  "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.cargo.buildScripts.enable": true,
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
   "rust-analyzer.updates.checkOnStartup": true,
@@ -65,8 +69,6 @@
 
   // Go
   "go.goplsUseDaemon": true,
-  "Lua.telemetry.enable": false,
   "svelte.enable-ts-plugin": true,
-  "markdown-preview-enhanced.previewTheme": "one-light.css",
   "snippets.ultisnips.pythonPrompt": false
 }
