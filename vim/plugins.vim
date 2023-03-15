@@ -136,11 +136,12 @@ Plug 'goolord/alpha-nvim'
 " Test and debugging plugins
 " --------------------------
 " Plug 'https://github.com/rest-nvim/rest.nvim'
-" Plug 'nvim-neotest/neotest'
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'nvim-neotest/neotest'
 " Plug 'rouge8/neotest-rust'
-" Plug 'nvim-neotest/neotest-go'
-" Plug 'nvim-neotest/neotest-vim-test'
-" Plug 'vim-test/vim-test'
+Plug 'nvim-neotest/neotest-go'
+Plug 'nvim-neotest/neotest-vim-test'
+Plug 'vim-test/vim-test'
 " let g:vimspector_enable_mappings = 'HUMAN'
 " Plug 'puremourning/vimspector'
 

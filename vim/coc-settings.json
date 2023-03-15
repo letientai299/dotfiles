@@ -15,7 +15,7 @@
   "notification.focusable": false,
   "notification.border": false,
   "notification.winblend": 40,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
   "coc.preferences.enableMarkdown": true,
   "coc.preferences.formatOnSave": true,
   "colors.enable": true,
