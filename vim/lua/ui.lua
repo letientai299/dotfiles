@@ -66,6 +66,13 @@ vim.cmd([[sil CatppuccinCompile]])
 -- tokyonight
 --------------------------------------------------------------------------------
 vim.g.tokyonight_colors = { comment = "#8c9fee" }
+require("tokyonight").setup({
+  sidebars = { "qf", "vista_kind", "terminal", "packer" },
+  transparent = true, -- Enable this to disable setting the background color
+  hide_inactive_statusline = true,
+  dim_inactive = true,
+})
+
 
 --------------------------------------------------------------------------------
 -- neotree
