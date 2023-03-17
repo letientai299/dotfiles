@@ -36,7 +36,6 @@ if vim.g.started_by_firenvim == true then
 	vim.o.showmode = 0
 	vim.o.signcolumn = "no"
 	vim.o.showcmd = 0
-	vim.o.spell = 1
 	vim.o.linespace = -2
 	vim.cmd("colo carbonfox")
 
@@ -45,6 +44,7 @@ if vim.g.started_by_firenvim == true then
 			local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
 			if client ~= nil and client.name == "Firenvim" then
 				vim.o.laststatus = 0
+				vim.o.spell = 1
 			end
 
 			vim.fn.timer_start(100, function()
@@ -77,4 +77,6 @@ if vim.g.started_by_firenvim == true then
 			end)
 		end,
 	})
+
+	-- avoid auto format move this line
 end
