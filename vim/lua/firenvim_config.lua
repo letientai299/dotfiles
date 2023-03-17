@@ -44,6 +44,12 @@ if vim.g.started_by_firenvim == true then
 			if client ~= nil and client.name == "Firenvim" then
 				vim.o.laststatus = 0
 			end
+
+			vim.fn.timer_start(100, function()
+				if vim.o.lines < 20 then
+					vim.o.lines = 20
+				end
+			end)
 		end,
 	})
 
@@ -51,9 +57,6 @@ if vim.g.started_by_firenvim == true then
 		pattern = { "*" },
 		callback = function()
 			vim.o.filetype = "markdown"
-			if vim.o.lines < 20 then
-				vim.o.lines = 20
-			end
 		end,
 	})
 
