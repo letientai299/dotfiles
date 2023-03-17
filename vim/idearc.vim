@@ -3,10 +3,14 @@ let mapleader=" "
 " Include common settings
 source ~/.vim/plugin/common.vim
 
+" https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
+
 " Use the new surround plugin
 set surround
 set commentary
 set ideajoin
+set ideamarks
+set argtextobj
 set NERDTree
 
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
