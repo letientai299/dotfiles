@@ -182,7 +182,4 @@ endif
 call plug#end()
 
 lua require("config")
-
-if exists('g:started_by_firenvim')
-  lua require("firenvim_config")
-end
+lua require("firenvim_config")
