@@ -26,8 +26,8 @@ Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
 " Markdown
-Plug 'preservim/vim-markdown'
-Plug 'jxnblk/vim-mdx-js'
+Plug 'preservim/vim-markdown', {'for': 'markdown'}
+Plug 'jxnblk/vim-mdx-js', {'for': 'markdown.mdx'}
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -181,5 +181,7 @@ endif
 
 call plug#end()
 
+lua require('impatient')
+lua require'impatient'.enable_profile()
 lua require("config")
 lua require("firenvim_config")

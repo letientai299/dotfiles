@@ -35,6 +35,7 @@ if vim.g.started_by_firenvim == true then
 	vim.o.showmode = 0
 	vim.o.signcolumn = "no"
 	vim.o.showcmd = 0
+	vim.o.spell = 1
 	vim.o.linespace = -2
 	vim.cmd("colo carbonfox")
 
@@ -48,6 +49,9 @@ if vim.g.started_by_firenvim == true then
 			vim.fn.timer_start(100, function()
 				if vim.o.lines < 20 then
 					vim.o.lines = 20
+				end
+				if vim.o.columns < 80 then
+					vim.o.columns = 80
 				end
 			end)
 		end,
