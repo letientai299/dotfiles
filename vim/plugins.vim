@@ -168,7 +168,10 @@ Plug 'gpanders/editorconfig.nvim'
 Plug 'thinca/vim-localrc'
 Plug 'fladson/vim-kitty'
 
-" Show git commit message of the current line
+
+" Editing text on web browser using embedded nvim
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
 
 " Loading local plugins {{{ "
 " Leave a place to try some new plugins, before add it into this list
@@ -179,3 +182,7 @@ endif
 call plug#end()
 
 lua require("config")
+
+if exists('g:started_by_firenvim')
+  lua require("firenvim_config")
+end
