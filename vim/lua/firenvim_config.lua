@@ -1,3 +1,5 @@
+-- TODO (tai.le): this works, but the UX is not good, we load too much plugins
+-- for using on the browser just too edit markdown
 vim.g.firenvim_config = {
 	globalSettings = { alt = "all" },
 	localSettings = {
@@ -10,6 +12,13 @@ vim.g.firenvim_config = {
 
 if vim.g.started_by_firenvim == true then
 	vim.o.guifont = "IosevkaTerm Nerd Font Light:h12"
+
+  -- disable various UI elements to have more text lines.
+	vim.o.showtabline = 1
+	vim.o.showmode = 0
+  vim.o.signcolumn = 'no'
+  vim.o.showcmd = 0
+
 	vim.api.nvim_create_autocmd({ "UIEnter" }, {
 		callback = function(event)
 			local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client

@@ -24,8 +24,8 @@
   "highlight.colorNames.enable": true,
 
   // typescripts
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "eslint.autoFixOnSave": true,
+  "eslint.workingDirectories": [{ "mode": "location" }],
+  "eslint.autoFixOnSave": false,
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
