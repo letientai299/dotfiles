@@ -11,7 +11,11 @@ set commentary
 set ideajoin
 set ideamarks
 set argtextobj
+
 set NERDTree
+map <c-\> :NERDTreeFind
+
+
 
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
 nnoremap [<space> O<esc>j
