@@ -9,6 +9,8 @@ endif
 
 call plug#begin('$HOME/.vim-plugged')
 
+Plug 'https://github.com/lewis6991/impatient.nvim'
+
 " I'm try hard to reduce at much as possible the list of vim plugins I'm using,
 " yet I keep experience with new stuff, while compare them with built-in vim
 " feature (if it has one). Following plugins is what I feel essential.
@@ -172,8 +174,7 @@ Plug 'fladson/vim-kitty', {'for': 'kitty'}
 
 " Editing text on web browser using embedded nvim
 Plug 'glacambre/firenvim',
-      \ exists('g:started_by_firenvim') ?
-      \ { 'do' : { _ -> firenvim#install(0) } } :  { 'on' : [] }
+      \ { 'do' : { _ -> firenvim#install(0) } }
 
 
 " Loading local plugins {{{ "
