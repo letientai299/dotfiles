@@ -57,13 +57,13 @@ nmap <silent> <leader>dn :call CocAction('diagnosticNext')<cr>
 nmap <silent> <leader>dp :call CocAction('diagnosticPrevious')<cr>
 
 " Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    call feedkeys('K', 'in')
   endif
 endfunction
 
