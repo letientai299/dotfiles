@@ -26,8 +26,8 @@ Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
 " Markdown
-Plug 'preservim/vim-markdown', {'for': 'markdown'}
-Plug 'jxnblk/vim-mdx-js', {'for': 'markdown.mdx'}
+Plug 'preservim/vim-markdown', { 'on': 'MarkdownPreview'}
+Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -45,6 +45,7 @@ let g:mkdp_theme = 'light'
 let g:mkdp_echo_preview_url = 1
 
 Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
+Plug 'https://github.com/MTDL9/vim-log-highlighting', {'for': 'log'}
 
 Plug 'folke/tokyonight.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin'}
@@ -74,11 +75,11 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 
 " Can't live without autoformating. Can't also live with unformatted code
-Plug 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }
 
 " Pair with autoformat is auto stripping whitespace. This plugin also provide
 " highlighting for trailing whitespsaces
-Plug 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace', { 'on': [ 'StripWhitespace', 'DisableWhitespace']}
 
 " Completion engine and supporting plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -107,19 +108,19 @@ Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
-Plug 'simeji/winresizer'
+Plug 'simeji/winresizer', { 'for': 'WinResizerStartResize' }
 
 " More GUI stuffs, mostly lua for nvim
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
-Plug 'akinsho/toggleterm.nvim'
+Plug 'akinsho/toggleterm.nvim', { 'on': 'ToggleTerm' }
 Plug 'folke/which-key.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
 Plug 'stevearc/dressing.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
-Plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }
 let g:vista_default_executive='coc'
 
 Plug 'nvim-tree/nvim-web-devicons'
@@ -131,7 +132,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/max397574/better-escape.nvim'
 
 Plug 'https://github.com/willothy/flatten.nvim'
-Plug 'goolord/alpha-nvim'
+Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
 
 " Test and debugging plugins
 " --------------------------
@@ -166,11 +167,13 @@ Plug 'mattn/emmet-vim'
 Plug 'gpanders/editorconfig.nvim'
 
 Plug 'thinca/vim-localrc'
-Plug 'fladson/vim-kitty'
+Plug 'fladson/vim-kitty', {'for': 'kitty'}
 
 
 " Editing text on web browser using embedded nvim
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'glacambre/firenvim',
+      \ exists('g:started_by_firenvim') ?
+      \ { 'do' : { _ -> firenvim#install(0) } } :  { 'on' : [] }
 
 
 " Loading local plugins {{{ "
@@ -181,7 +184,7 @@ endif
 
 call plug#end()
 
-lua require('impatient')
-lua require'impatient'.enable_profile()
+" lua require('impatient')
+" lua require'impatient'.enable_profile()
 lua require("config")
 lua require("firenvim_config")
