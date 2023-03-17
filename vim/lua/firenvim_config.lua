@@ -23,6 +23,7 @@ vim.g.firenvim_config = {
 	localSettings = {
 		[".*"] = {
 			takeover = "never",
+			cmdline = "neovim",
 		},
 	},
 }
@@ -47,8 +48,8 @@ if vim.g.started_by_firenvim == true then
 			end
 
 			vim.fn.timer_start(100, function()
-				if vim.o.lines < 20 then
-					vim.o.lines = 20
+				if vim.o.lines < 10 then
+					vim.o.lines = 10
 				end
 				if vim.o.columns < 80 then
 					vim.o.columns = 80

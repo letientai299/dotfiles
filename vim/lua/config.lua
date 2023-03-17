@@ -60,13 +60,13 @@ require("better_escape").setup({
 -- Test UI
 --------------------------------------------------------------------------------
 -- require("neotest").setup({
-	-- adapters = {
-		-- -- require("neotest-rust"),
-		-- require("neotest-go"),
-		-- require("neotest-vim-test")({
-			-- ignore_file_types = { "go" },
-		-- }),
-	-- },
+-- adapters = {
+-- -- require("neotest-rust"),
+-- require("neotest-go"),
+-- require("neotest-vim-test")({
+-- ignore_file_types = { "go" },
+-- }),
+-- },
 -- })
 
 --------------------------------------------------------------------------------

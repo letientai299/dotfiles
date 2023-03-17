@@ -26,7 +26,7 @@ Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
 " Markdown
-Plug 'preservim/vim-markdown', { 'on': 'MarkdownPreview'}
+Plug 'preservim/vim-markdown', { 'for': 'markdown'}
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
@@ -40,7 +40,7 @@ let g:vim_markdown_fenced_languages = [
       \'tsx=typescriptreact',
       \]
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
 let g:mkdp_theme = 'light'
 let g:mkdp_echo_preview_url = 1
 
@@ -184,7 +184,7 @@ endif
 
 call plug#end()
 
-" lua require('impatient')
+lua require('impatient')
 " lua require'impatient'.enable_profile()
 lua require("config")
 lua require("firenvim_config")
