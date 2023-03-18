@@ -110,7 +110,7 @@ Plug 'airblade/vim-rooter'
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
-Plug 'simeji/winresizer', { 'for': 'WinResizerStartResize' }
+Plug 'simeji/winresizer'
 
 " More GUI stuffs, mostly lua for nvim
 Plug 'nvim-lualine/lualine.nvim'
@@ -135,7 +135,8 @@ Plug 'https://github.com/max397574/better-escape.nvim'
 
 " Plug 'https://github.com/willothy/flatten.nvim'
 Plug 'https://github.com/willothy/flatten.nvim', { 'commit': '25b9aec'}
-" The plugin seem broken after that commit
+" The plugin seems broken with my config after that commit. Pin it first. Will
+" consider debug it later.
 
 Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
 
