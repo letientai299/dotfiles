@@ -30,4 +30,3 @@ if ! zgen saved; then
   zgen save
 fi
 
-SPACESHIP_EXIT_CODE_SHOW=true
