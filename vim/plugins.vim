@@ -133,7 +133,8 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/max397574/better-escape.nvim'
 
-Plug 'https://github.com/willothy/flatten.nvim', { 'commit': '25b9aec'}
+" Plug 'https://github.com/willothy/flatten.nvim', { 'commit': '25b9aec'}
+Plug 'https://github.com/willothy/flatten.nvim'
 Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
 
 " Test and debugging plugins
