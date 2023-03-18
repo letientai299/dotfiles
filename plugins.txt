@@ -1,0 +1,8 @@
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/git    kit:defer
+ohmyzsh/ohmyzsh path:plugins/z      kind:defer
+ohmyzsh/ohmyzsh path:plugins/docker kind:defer
+
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+romkatv/powerlevel10k
