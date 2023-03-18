@@ -29,7 +29,7 @@ vim.g.firenvim_config = {
 }
 
 if vim.g.started_by_firenvim == true then
-	vim.o.guifont = "IosevkaTerm Nerd Font Light:h11"
+	vim.o.guifont = "IosevkaTerm Nerd Font Light:h15"
 
 	-- disable various UI elements to have more text lines.
 	vim.o.showtabline = 1
