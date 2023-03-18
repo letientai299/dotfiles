@@ -6,6 +6,7 @@ set nocompatible
 set mouse=ar
 set nu
 set termguicolors
+set cmdheight=0
 
 let g:loaded_perl_provider = 0
 
