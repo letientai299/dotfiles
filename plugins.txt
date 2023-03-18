@@ -1,8 +1,20 @@
+# vim:set et sw=2 ts=2 tw=80 ft=conf:
+
 ohmyzsh/ohmyzsh path:lib
-ohmyzsh/ohmyzsh path:plugins/git    kit:defer
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:defer
+ohmyzsh/ohmyzsh path:plugins/git    kind:defer
 ohmyzsh/ohmyzsh path:plugins/z      kind:defer
 ohmyzsh/ohmyzsh path:plugins/docker kind:defer
 
+# can't defer
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 romkatv/powerlevel10k
+
+mroth/evalcache
+
+# for benchmarking
+romkatv/zsh-bench     kind:path
+
+# config and run compinit
+belak/zsh-utils path:completion

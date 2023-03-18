@@ -14,7 +14,6 @@ else
   export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 fi
 
-
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 zsh_plugins=${DOTFILES}/plugins.zsh
 # Ensure you have a .zsh_plugins.txt file where you can add plugins.
@@ -29,6 +28,13 @@ if [[ ! $zsh_plugins -nt ${zsh_plugins:r}.txt ]]; then
   (antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins)
 fi
 source $zsh_plugins
+
+# Load custom shell script
+for file in "$DOTFILES"/{exports,aliases,funcs,bindkeys}; do
+  source "$file"
+done;
+unset file;
+
 
 # Disable <C-D> logout
 setopt ignore_eof
@@ -48,23 +54,16 @@ if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # zprof
-
-# Load custom shell script
-for file in "$DOTFILES"/{path,exports,aliases,funcs,bindkeys}; do
-  if [ -r "$file" ] && [ -f "$file" ]; then
-    source "$file";
-  fi
-done;
-unset file;
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+export PATH="$HOME/.cargo/bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

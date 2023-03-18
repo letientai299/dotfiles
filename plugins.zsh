@@ -23,6 +23,10 @@ if ! (( $+functions[zsh-defer] )); then
   fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-zsh-defer )
   source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-zsh-defer/zsh-defer.plugin.zsh
 fi
+fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/colored-man-pages )
+zsh-defer source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/colored-man-pages/colored-man-pages.plugin.zsh
+fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/git )
+zsh-defer source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/git/git.plugin.zsh
 fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/z )
 zsh-defer source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/z/z.plugin.zsh
 fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/docker )
@@ -34,3 +38,8 @@ source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.co
 fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k )
 source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k/powerlevel10k.zsh-theme
 source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k/powerlevel9k.zsh-theme
+fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-mroth-SLASH-evalcache )
+source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-mroth-SLASH-evalcache/evalcache.plugin.zsh
+export PATH="/Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-zsh-bench:$PATH"
+fpath+=( /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-belak-SLASH-zsh-utils/completion )
+source /Users/tai.le/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-belak-SLASH-zsh-utils/completion/completion.plugin.zsh
