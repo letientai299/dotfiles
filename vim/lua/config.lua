@@ -27,7 +27,7 @@ require("nvim-treesitter.configs").setup({
 
 	highlight = {
 		enable = true,
-		disable = { "rust", "markdown", "markdown_inline" },
+		disable = { "rust", "markdown" },
 		additional_vim_regex_highlighting = false,
 	},
 
@@ -40,7 +40,6 @@ require("nvim-treesitter.configs").setup({
 	incremental_selection = { enable = true },
 	textobjects = { enable = true },
 })
-vim.api.nvim_set_hl(0, "@text.literal.markdown_inline", { link = "Identifier" })
 
 --------------------------------------------------------------------------------
 -- Other

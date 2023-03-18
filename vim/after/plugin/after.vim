@@ -21,3 +21,4 @@ let g:formatters_lua=['stylua']
 " See also https://github.com/darold/pgFormatter
 let g:formatdef_sql_formatter='"sql-formatter"'
 let g:formatters_sql=['sql_formatter']
+

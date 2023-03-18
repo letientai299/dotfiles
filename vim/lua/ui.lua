@@ -79,7 +79,7 @@ require("tokyonight").setup({
 		sidebars = "transparent",
 		floats = "transparent",
 	},
-	sidebars = { "qf", "vista_kind", "terminal", "packer" },
+	sidebars = { "qf", "vista_kind", "terminal", "neo-tree" },
 	transparent = true, -- Enable this to disable setting the background color
 	hide_inactive_statusline = false,
 	dim_inactive = true,
