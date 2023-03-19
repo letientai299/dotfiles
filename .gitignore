@@ -10,3 +10,4 @@ emacs.d/network-security.data
 emacs.d/recentf
 
 *.zwc
+plugins.zsh
