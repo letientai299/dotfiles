@@ -14,9 +14,13 @@ else
   export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
 fi
 
+# must run it once before loading zsh-completions via antidote
+# as that plugin requires compdef
+autoload -Uz compinit
+compinit
+
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 zsh_plugins=${DOTFILES}/plugins.zsh
-# Ensure you have a .zsh_plugins.txt file where you can add plugins.
 [[ -f ${zsh_plugins:r}.txt ]] || touch ${zsh_plugins:r}.txt
 
 # Lazy-load antidote.
