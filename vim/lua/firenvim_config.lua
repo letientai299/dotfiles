@@ -29,7 +29,19 @@ vim.g.firenvim_config = {
 }
 
 if vim.g.started_by_firenvim == true then
-	vim.o.guifont = "IosevkaTerm Nerd Font Light:h15"
+	-- Allow clipboard copy paste in neovim
+	vim.g.neovide_input_use_logo = 1
+	vim.api.nvim_set_keymap("", "<D-c>", '"+y', { noremap = true, silent = true }) -- Copy
+	vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+
+	-- Make navigating long lines easier in the tight view
+	vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true, silent = true })
+
+	vim.o.guifont = "IosevkaTerm Nerd Font Light:h12"
 
 	-- disable various UI elements to have more text lines.
 	vim.o.showtabline = 1
@@ -48,11 +60,11 @@ if vim.g.started_by_firenvim == true then
 			end
 
 			vim.fn.timer_start(100, function()
-				if vim.o.lines < 10 then
-					vim.o.lines = 10
+				if vim.o.lines < 20 then
+					vim.o.lines = 20
 				end
-				if vim.o.columns < 80 then
-					vim.o.columns = 80
+				if vim.o.columns < 120 then
+					vim.o.columns = 120
 				end
 			end)
 		end,
@@ -62,19 +74,6 @@ if vim.g.started_by_firenvim == true then
 		pattern = { "*" },
 		callback = function()
 			vim.o.filetype = "markdown"
-		end,
-	})
-
-	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-		callback = function(e)
-			if vim.g.timer_started == true then
-				return
-			end
-			vim.g.timer_started = true
-			vim.fn.timer_start(10000, function()
-				vim.g.timer_started = false
-				return "write" -- raise MR for this bug in their docs
-			end)
 		end,
 	})
 
