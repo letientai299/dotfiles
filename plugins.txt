@@ -16,5 +16,9 @@ mroth/evalcache
 # for benchmarking
 romkatv/zsh-bench     kind:path
 
+# tab completion with fzf
+Aloxaf/fzf-tab
+
 # config and run compinit
 belak/zsh-utils path:completion
+
