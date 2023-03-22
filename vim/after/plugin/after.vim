@@ -25,5 +25,5 @@ let g:formatters_sql=['sql_formatter']
 augroup MarkdownColors
   autocmd!
   autocmd ColorScheme * hi! link mkdCodeDelimiter markdownCode
-  autocmd ColorScheme * hi VirtColumn guifg=#8758BC
+  autocmd ColorScheme * hi! link VirtColumn Label
 augroup END
