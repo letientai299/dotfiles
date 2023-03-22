@@ -12,12 +12,6 @@ set ideajoin
 set ideamarks
 set argtextobj
 
-" https://github.com/TheBlob42/idea-which-key
-set which-key
-let g:WhichKey_ShowVimActions = "true"
-
-set timeoutlen=5000
-
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
 set NERDTree
 map <c-\> :NERDTreeFind<cr>
