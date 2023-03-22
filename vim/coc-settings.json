@@ -35,7 +35,7 @@
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
-  "sumneko-lua.enable": false,
+  "sumneko-lua.enable": true,
 
   // css
   //------------------------------------------------------------

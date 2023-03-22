@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # based on https://github.com/kovidgoyal/kitty/issues/719#issuecomment-952039731
 
@@ -21,7 +21,7 @@ BUF_NAME="/tmp/kitty_$RANDOM"
   -c "autocmd TermEnter * stopinsert" \
   -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
   -c "map <silent> q :qa!<CR>" \
-  -c "terminal /bin/cat $BUF_NAME && sleep 0.01 && printf '\x1b]2;'" \
+  -c "terminal /bin/cat $BUF_NAME && sleep 0.001 && printf '\x1b]2;'" \
   -c "BufferLineGroupToggle ungrouped"
 
 rm $BUF_NAME
