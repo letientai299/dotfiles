@@ -35,10 +35,6 @@ nnoremap ]b :action NextTab<cr>
 nmap [e :action MoveLineUp<cr>
 nmap ]e :action MoveLineDown<cr>
 
-" Moving statements
-nmap [s :action MoveStatementUp<cr>
-nmap ]s :action MoveStatementDown<cr>
-
 nmap <A-p> :action PinActiveTabToggle<cr>
 nmap <leader>va :source ~/.ideavimrc<cr>
 

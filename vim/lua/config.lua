@@ -15,28 +15,22 @@ require("nvim-treesitter.configs").setup({
 		"json",
 		"kotlin",
 	},
-
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
-
 	-- Automatically install missing parsers when entering buffer
 	auto_install = true,
-
 	-- List of parsers to ignore installing (for "all")
 	ignore_install = { "javascript" },
-
 	highlight = {
 		enable = true,
-		disable = { "rust", "markdown" },
+		disable = { "rust", "markdown", "sql" },
 		additional_vim_regex_highlighting = false,
 	},
-
 	rainbow = {
 		enable = true,
 		-- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
 		extended_mode = true,
 	},
-
 	incremental_selection = { enable = true },
 	textobjects = { enable = true },
 })

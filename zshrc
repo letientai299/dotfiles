@@ -17,7 +17,6 @@ fi
 # must run it once before loading zsh-completions via antidote
 # as that plugin requires compdef
 autoload -Uz compinit
-compinit
 
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 zsh_plugins=${DOTFILES}/plugins.zsh
@@ -73,3 +72,4 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+compinit
