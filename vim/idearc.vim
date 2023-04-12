@@ -14,9 +14,6 @@ set argtextobj
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
 set NERDTree
-map <c-\> :NERDTreeFind<cr>
-
-
 
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
 nnoremap [<space> O<esc>j
