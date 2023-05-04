@@ -82,3 +82,7 @@ cmd fzf_jump ${{
     lf -remote "send $id $cmd \"$res\""
 }}
 map <c-f> :fzf_jump
+
+map gd :cd ~/Downloads
+map gt :cd ~/temp
+map gm :cd ~/mine
