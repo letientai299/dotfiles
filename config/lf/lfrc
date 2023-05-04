@@ -85,4 +85,5 @@ map <c-f> :fzf_jump
 
 map gd :cd ~/Downloads
 map gt :cd ~/temp
-map gm :cd ~/mine
+map gm :cd ~/Project/mine
+map gb :cd ~/Project/mine/books
