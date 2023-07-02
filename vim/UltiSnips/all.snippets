@@ -3,12 +3,20 @@ from vimsnippets import get_comment_format
 from os import environ
 endglobal
 
+snippet tdj "TODO"
+`!p snip.rv=get_comment_format()[0]` TODO (jl): $0 `!p snip.rv=get_comment_format()[2]`
+endsnippet
+
+snippet notej "NOTE"
+`!p snip.rv=get_comment_format()[0]` NOTE (jl): $0 `!p snip.rv=get_comment_format()[2]`
+endsnippet
+
 snippet td "TODO"
-`!p snip.rv=get_comment_format()[0]` TODO (`!p snip.rv=environ['USER']`): $0 `!p snip.rv=get_comment_format()[2]`
+`!p snip.rv=get_comment_format()[0]` TODO (tai): $0 `!p snip.rv=get_comment_format()[2]`
 endsnippet
 
 snippet note "NOTE"
-`!p snip.rv=get_comment_format()[0]` NOTE (`!p snip.rv=environ['USER']`): $0 `!p snip.rv=get_comment_format()[2]`
+`!p snip.rv=get_comment_format()[0]` NOTE (tai): $0 `!p snip.rv=get_comment_format()[2]`
 endsnippet
 
 snippet docs "comment documents"
