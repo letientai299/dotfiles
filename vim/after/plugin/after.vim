@@ -20,7 +20,8 @@ let g:formatters_lua=['stylua']
 
 " See also https://github.com/darold/pgFormatter
 let g:formatdef_sql_formatter='"sql-formatter"'
-let g:formatters_sql=['sql_formatter']
+let g:formatdef_pg_format='"pg_format"'
+let g:formatters_sql=['pg_format']
 
 augroup MarkdownColors
   autocmd!
