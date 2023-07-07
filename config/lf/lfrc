@@ -102,3 +102,7 @@ cmd edit-config ${{
     lf -remote "send $id source ~/.config/lf/lfrc"
 }}
 map .c edit-config
+
+# create new files and dirs
+map a push %touch<space>
+map A push %mkdir<space>-p<space>
