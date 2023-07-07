@@ -88,3 +88,17 @@ map gd :cd ~/Downloads
 map gt :cd ~/temp
 map gm :cd ~/Project/mine
 map gb :cd ~/Project/mine/books
+
+# move to next/prev sibling dir
+map J :updir; set dironly true; down; set dironly false; open
+map K :updir; set dironly true; up; set dironly false; open
+
+# open explorer in current directory
+map O !open .
+
+# Edit and reload config
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+map .c edit-config
