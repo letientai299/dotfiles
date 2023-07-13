@@ -98,7 +98,6 @@ let g:coc_global_extensions = [
       \'coc-tsserver',
       \'coc-css',
       \'coc-cssmodules',
-      \'coc-prettier',
       \'coc-toml'
       \]
 
