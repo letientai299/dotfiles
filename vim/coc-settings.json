@@ -22,26 +22,26 @@
   "highlight.colors.enable": true,
   "highlight.document.enable": true,
   "highlight.colorNames.enable": true,
-
   // typescripts
-  "eslint.workingDirectories": [{ "mode": "location" }],
+  "eslint.workingDirectories": [
+    {
+      "mode": "location"
+    }
+  ],
   "eslint.autoFixOnSave": false,
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
   "eslint.packageManager": "pnpm",
   "typescript.inlayHints.enumMemberValues.enabled": true,
-
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
   "sumneko-lua.enable": true,
-
   // css
   //------------------------------------------------------------
   "css.lint.unknownAtRules": "ignore",
   "prettier.formatterPriority": 2,
-
   // rust
   //------------------------------------------------------------
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
@@ -65,11 +65,15 @@
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.prompt": false,
-  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
+  "rust-analyzer.rustfmt.extraArgs": [
+    "+nightly"
+  ],
   "rust-analyzer.cargo.autoreload": true,
-
   // Go
   "go.goplsUseDaemon": true,
+  "go.goplsOptions": {
+    "gofumpt": true,
+  },
   "svelte.enable-ts-plugin": true,
   "snippets.ultisnips.pythonPrompt": false
 }
