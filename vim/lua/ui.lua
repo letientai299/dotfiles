@@ -208,6 +208,11 @@ require("gitsigns").setup({
 -- misc
 --------------------------------------------------------------------------------
 -- should call these after set colorscheme
+require("todo-comments").setup({
+  highlight = {
+    pattern = [[.*<(KEYWORDS).*:]]
+  }
+})
 require("dressing").setup({})
 require("bufferline").setup({})
 require("lualine").setup({

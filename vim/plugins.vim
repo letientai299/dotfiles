@@ -49,6 +49,7 @@ Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
 Plug 'https://github.com/MTDL9/vim-log-highlighting', {'for': 'log'}
 
 Plug 'folke/tokyonight.nvim'
+Plug 'folke/todo-comments.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin'}
 Plug 'EdenEast/nightfox.nvim'
 
