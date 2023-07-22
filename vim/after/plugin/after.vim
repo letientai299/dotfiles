@@ -15,7 +15,13 @@ let g:rooter_change_directory_for_non_project_files = ''
 
 " formatter
 let g:formatters_yaml=['prettier']
+let g:formatters_typescriptreact=['prettier']
+let g:formatters_javascriptreact=['prettier']
+let g:formatters_javascript=['prettier']
+let g:formatters_typescript=['prettier']
+let g:formatters_json=['prettier']
 let g:formatters_html=['prettier']
+let g:formatters_css=['prettier']
 let g:formatters_lua=['stylua']
 
 " See also https://github.com/darold/pgFormatter

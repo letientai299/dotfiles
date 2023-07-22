@@ -22,6 +22,8 @@
   "highlight.colors.enable": true,
   "highlight.document.enable": true,
   "highlight.colorNames.enable": true,
+  "prettier.onlyUseLocalVersion": true,
+
   // typescripts
   "eslint.workingDirectories": [
     {
@@ -34,6 +36,8 @@
   },
   "eslint.packageManager": "pnpm",
   "typescript.inlayHints.enumMemberValues.enabled": true,
+  "tsserver.useLocalTsdk": true, // prefer the local TS version instead of bundled
+
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
