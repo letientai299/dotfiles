@@ -79,6 +79,6 @@
   "svelte.enable-ts-plugin": true,
   "snippets.ultisnips.pythonPrompt": false,
   "yaml.schemas": {
-    "kubernetes": "/*.yaml"
+    "kubernetes": "k8s/*.yaml"
   }
 }
