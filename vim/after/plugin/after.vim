@@ -23,11 +23,12 @@ let g:formatters_json=['prettier']
 let g:formatters_html=['prettier']
 let g:formatters_css=['prettier']
 let g:formatters_lua=['stylua']
+let g:formatters_go=['gofumpt']
 
 " See also https://github.com/darold/pgFormatter
 let g:formatdef_sql_formatter='"sql-formatter"'
-let g:formatdef_pg_format='"pg_format"'
 let g:formatters_sql=['pg_format']
+
 
 augroup MarkdownColors
   autocmd!
