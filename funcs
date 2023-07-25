@@ -124,3 +124,25 @@ dkmy() {
   $cmd run --rm -d --name dkmy -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 mysql
 }
 
+dkr() {
+  if command -v podman >/dev/null 2>&1; then
+    cmd=podman
+  else
+    cmd=docker
+  fi
+
+  echo "> Starting redis container using $cmd"
+  $cmd run --rm -d --name dkr -p 6379:6379 redis
+}
+
+
+dkmg() {
+  if command -v podman >/dev/null 2>&1; then
+    cmd=podman
+  else
+    cmd=docker
+  fi
+
+  echo "> Starting mongo container using $cmd"
+  $cmd run --rm -d --name dkmg -p 27017:27017 mongo
+}
