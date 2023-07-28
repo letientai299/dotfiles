@@ -95,6 +95,9 @@ update-software() {
   vim -c "PlugUpgrade" -c "qa!"
   vim -c "PlugUpdate" -c "qa!"
   vim -c "UpdateRemotePlugins" -c "qa!"
+
+  # ensure zsh/kitty known about xterm-256color-italic
+  tic ./xterm-256color-italic.terminfo
 }
 
 pwdd(){
