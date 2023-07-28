@@ -38,25 +38,6 @@ alias gbu='git checkout uat'
 # unalias gbs # I don't use git bisect yet
 alias gbs='git checkout staging'
 
-# Cache the current branch to allow fast switching later.
-gb_cache(){
-  current_dir="$PWD"
-  cd "$(git rev-parse --show-toplevel)" || exit 1
-
-  # first, go to the top level git dir
-  git branch | grep '* ' | tr -d '* ' > .git/working_branch
-
-  cd "$current_dir" || exit 1
-}
-alias gbc=gb_cache
-
-gb_work(){
-  current_dir="$PWD"
-  cd "$(git rev-parse --show-toplevel)" || exit 1
-  git checkout "$( cat .git/working_branch)"
-  cd "$current_dir" || exit 1
-}
-
 # Switch to the working branch
 alias gbw=gb_work
 
@@ -97,7 +78,7 @@ update-software() {
   vim -c "UpdateRemotePlugins" -c "qa!"
 
   # ensure zsh/kitty known about xterm-256color-italic
-  tic ./xterm-256color-italic.terminfo
+  tic "$DOTFILES/xterm-256color-italic.terminfo"
 }
 
 pwdd(){
