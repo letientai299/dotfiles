@@ -130,3 +130,19 @@ dkmg() {
   echo "> Starting mongo container using $cmd"
   $cmd run --rm -d --name dkmg -p 27017:27017 mongo
 }
+
+function repeat() {
+  count=$1
+  shift
+  for i in $(seq $count); do
+    bash -c "$*"
+  done
+}
+
+
+function one_of() {
+  list=( "$@" )
+  one=${list[ $RANDOM % ${#list[@]} ]}
+  echo $one
+}
+
