@@ -141,7 +141,7 @@ Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
 
 " Test and debugging plugins
 " --------------------------
-Plug 'pfeiferj/nvim-hurl'
+" Plug 'pfeiferj/nvim-hurl'
 " Plug 'https://github.com/rest-nvim/rest.nvim'
 " Plug 'antoinemadec/FixCursorHold.nvim'
 " Plug 'nvim-neotest/neotest'
