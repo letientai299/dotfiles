@@ -10,3 +10,11 @@ Note to self:
 
 - If `nvim` having problem with `TERM` inside `tmux`, might need to install
   `tmux-256color` term info: https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95
+
+## Using Neovide as external editor in Jetbrains IDE
+
+Config external tools:
+
+- Program: `$DOTFILES/tools/nv.sh`
+- Args: `$FilePath$ $LineNumber$ $ColumnNumber$`
+- Working dir: `$ProjectFileDir$`
