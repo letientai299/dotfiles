@@ -6,7 +6,7 @@ nmap <leader>fc :FzfLua git_bcommits<CR>
 nmap <leader>fC :FzfLua git_commits<CR>
 
 nmap <leader>ff :FzfLua files<CR>
-nmap <leader>fF :FzfLua gitFiles<CR>
+nmap <leader>fF :FzfLua git_files<CR>
 
 nmap <leader>fm :FzfLua keymaps<CR>
 nmap <leader>fx :FzfLua commands<CR>

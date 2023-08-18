@@ -21,6 +21,7 @@ if !has('nvim')
   Plug 'tpope/vim-sensible'
 endif
 
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
