@@ -7,7 +7,7 @@ col=$3
 
 NVIM_SOCKET=/tmp/neovide.socket
 if [ ! -S $NVIM_SOCKET ]; then
-  neovide --noidle $file -- --listen $NVIM_SOCKET -c "+cal cursor($line,$col)"
+  neovide $file -- --listen $NVIM_SOCKET -c "+cal cursor($line,$col)"
 else
   nvim --server $NVIM_SOCKET --remote $file
   nvim --server $NVIM_SOCKET --remote-send "$line"G"$col"lh
