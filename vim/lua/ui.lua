@@ -54,6 +54,9 @@ require("catppuccin").setup({
     indent_blankline = {
       enabled = true,
       colored_indent_levels = true,
+      show_current_context = true,
+      show_current_context_start = true,
+      show_end_of_line = true,
     },
     which_key = true,
     neotree = {
