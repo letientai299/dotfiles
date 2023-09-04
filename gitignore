@@ -1,6 +1,9 @@
 .jira.d/
 .dump/
 dump/
+*.dump.*
+dump.*
+
 index.md
 
 # Vim
