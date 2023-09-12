@@ -3,9 +3,9 @@ let NERDSpaceDelims=1
 nnoremap <C-\> :Neotree toggle reveal_force_cwd<CR>
 nnoremap <A-\> :Neotree reveal toggle reveal_force_cwd<CR>
 
-nnoremap <c-g> :Vista finder<CR>
-nnoremap <c-f11> :Vista!!<CR>
-nnoremap <f35> :Vista!!<CR>
+nnoremap <c-g> :silent Vista finder<CR>
+nnoremap <c-f11> :silent Vista!!<CR>
+nnoremap <f35> :silent Vista!!<CR>
 
 " Resolve project root from a symbol link.
 let g:rooter_resolve_links = 1
