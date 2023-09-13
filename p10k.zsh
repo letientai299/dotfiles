@@ -1577,9 +1577,6 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
       doc*)
         color=51
         ;;
-      op*)
-        color=141
-        ;;
       *)
         color=33
         ;;
