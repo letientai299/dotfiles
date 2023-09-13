@@ -108,6 +108,7 @@ emulate -L zsh -o extended_glob
   # battery               # internal battery
   # wifi                  # wifi speed
   # example               # example user-defined segment (see prompt_example function below)
+  my_todo
 )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
@@ -1555,6 +1556,18 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
   # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
+
+  ####################################[ my_todo ]####################################
+  function prompt_my_todo() {
+    # line=$(head -n1 $(git rev-parse --show-toplevel 2>/dev/null || echo .)/.dump/todo.md 2>/dev/null || echo -n "")
+    # regex='- (\w+): (.*)'
+    # if [[ $line =~ $regex ]]; then
+      # kind=$match[0]
+      # task=$match[1]
+    # fi
+    p10k segment -f 208 -i '⭐' -t "$kind -> $task"
+  }
+
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
