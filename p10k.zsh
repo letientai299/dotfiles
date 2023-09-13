@@ -96,9 +96,9 @@ emulate -L zsh -o extended_glob
   # disk_usage            # disk usage
   # ram                   # free RAM
   # swap                  # used swap
-  todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
-  timewarrior             # timewarrior tracking status (https://timewarrior.net/)
-  taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
+  # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
+  # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
+  # taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
   time                    # current time
   # =========================[ Line #2 ]=========================
   newline
@@ -1559,13 +1559,33 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
 
   ####################################[ my_todo ]####################################
   function prompt_my_todo() {
-    # line=$(head -n1 $(git rev-parse --show-toplevel 2>/dev/null || echo .)/.dump/todo.md 2>/dev/null || echo -n "")
-    # regex='- (\w+): (.*)'
-    # if [[ $line =~ $regex ]]; then
-      # kind=$match[0]
-      # task=$match[1]
-    # fi
-    p10k segment -f 208 -i '⭐' -t "$kind -> $task"
+    task=$(
+      head -n1 $(git rev-parse --show-toplevel 2>/dev/null || echo .)/.dump/todo.md 2>/dev/null |
+        sed 's/- //' |
+        sed 's/\(.\{30\}\).*/\1.../' ||
+        echo -n "")
+
+    [[ -z $task ]] && return
+
+    case $task in
+      bug*)
+        color=208
+        ;;
+      feat*)
+        color=46
+        ;;
+      doc*)
+        color=51
+        ;;
+      op*)
+        color=141
+        ;;
+      *)
+        color=33
+        ;;
+    esac
+
+    p10k segment -f $color -t "$task"
   }
 
 
