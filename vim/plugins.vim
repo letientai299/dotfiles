@@ -138,7 +138,8 @@ Plug 'https://github.com/willothy/flatten.nvim', { 'commit': '25b9aec'}
 " The plugin seems broken with my config after that commit. Pin it first. Will
 " consider debug it later.
 
-Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
+" Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
+Plug 'goolord/alpha-nvim'
 
 " Test and debugging plugins
 " --------------------------
