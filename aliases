@@ -66,7 +66,7 @@ alias vt="vim ~/.todo/todo.txt"
 
 alias so="source"
 source ~/.config/lf/lfcd.sh
-alias r='lfcd'
+# alias r='lfcd'
 # alias r="ranger"
 # alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
