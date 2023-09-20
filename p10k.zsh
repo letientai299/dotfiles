@@ -268,7 +268,7 @@ typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 # directory will be shortened only when prompt doesn't fit or when other parameters demand it
 # (see POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS and POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT below).
 # If set to `0`, directory will always be shortened to its minimum length.
-typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=80
+typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=60
 # When `dir` segment is on the last prompt line, try to shorten it enough to leave at least this
 # many columns for typing commands.
 typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=40
@@ -414,16 +414,6 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
     [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] &&  # <-- this line
       res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
 
-    local commit_subj
-    if commit_subj=$(git log -n1 --format=%s 2>/dev/null); then
-      if [[ -n $commit_subj ]]; then
-        commit_subj=$(echo $commit_subj | sed 's/\(.\{25\}\).*/\1.../')
-        res+=" ${meta}💬${commit_subj//\%/%%}"
-      else
-        res+=" ${meta}[no message]"
-      fi
-    fi
-
     # Show tracking branch name if it differs from local branch.
     if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
       res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
@@ -464,6 +454,15 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
     # in the repository config. The number of staged and untracked files may also be unknown
     # in this case.
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
+
+    local commit_subj
+    if commit_subj=$(git log -n1 --format=%s 2>/dev/null); then
+      if [[ -n $commit_subj ]]; then
+        res+=" ${meta}💬${commit_subj//\%/%%}"
+      else
+        res+=" ${meta}[no message]"
+      fi
+    fi
 
     typeset -g my_git_format=$res
   }
@@ -552,13 +551,14 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
   # Show this many fractional digits. Zero means round to seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=4
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=101
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=147
   # Duration format: 1d 2h 3m 4s.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
   # typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
   # typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX='%ftook '
+  #
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Don't show the number of background jobs.
