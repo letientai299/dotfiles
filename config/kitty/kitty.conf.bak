@@ -6,6 +6,8 @@
 # term xterm-256color-italic
 term xterm-kitty
 
+include ./kitty-themes/themes/tokyonight_night.conf
+
 # Fully featured: == -> -->
 modify_font      cell_width 85%
 modify_font underline_position -3
@@ -86,7 +88,6 @@ map ctrl+shift+l>g goto_layout grid
 map ctrl+shift+l>f goto_layout fat
 map ctrl+shift+l>v goto_layout vertical
 map ctrl+shift+l>h goto_layout horizontal
-map ctrl+shift+l>l next_layout
 
 map ctrl+shift+alt+j resize_window taller 10
 map ctrl+shift+alt+k resize_window shorter 10
@@ -101,7 +102,9 @@ map ctrl+b>l neighboring_window right
 # remote control
 map f1 launch sh ~/.config/kitty/remote.sh
 
+
+
 # BEGIN_KITTY_THEME
-# Catppuccin-Macchiato
+# Nightfox
 include current-theme.conf
 # END_KITTY_THEME

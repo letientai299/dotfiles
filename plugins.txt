@@ -5,7 +5,6 @@ ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:defer
 ohmyzsh/ohmyzsh path:plugins/git    kind:defer
 ohmyzsh/ohmyzsh path:plugins/z
 ohmyzsh/ohmyzsh path:plugins/docker kind:defer
-ohmyzsh/ohmyzsh path:plugins/timer
 
 # can't defer
 zsh-users/zsh-autosuggestions

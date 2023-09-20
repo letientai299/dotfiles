@@ -46,8 +46,8 @@ emulate -L zsh -o extended_glob
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   # =========================[ Line #1 ]=========================
   status                  # exit code of the last command
-  command_execution_time  # duration of the last command
-  background_jobs         # presence of background jobs
+  # command_execution_time  # duration of the last command
+  # background_jobs         # presence of background jobs
   direnv                  # direnv status (https://direnv.net/)
   # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
   virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
@@ -88,6 +88,7 @@ emulate -L zsh -o extended_glob
   ranger                  # ranger shell (https://github.com/ranger/ranger)
   nnn                     # nnn shell (https://github.com/jarun/nnn)
   xplr                    # xplr shell (https://github.com/sayanarijit/xplr)
+  lf
   vim_shell               # vim shell indicator (:sh)
   midnight_commander      # midnight commander shell (https://midnight-commander.org/)
   nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
@@ -108,6 +109,8 @@ emulate -L zsh -o extended_glob
   # battery               # internal battery
   # wifi                  # wifi speed
   # example               # example user-defined segment (see prompt_example function below)
+  command_execution_time
+  background_jobs
   my_todo
 )
 
@@ -414,7 +417,8 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
     local commit_subj
     if commit_subj=$(git log -n1 --format=%s 2>/dev/null); then
       if [[ -n $commit_subj ]]; then
-        res+=" ${meta}(${commit_subj//\%/%%})"
+        commit_subj=$(echo $commit_subj | sed 's/\(.\{25\}\).*/\1.../')
+        res+=" ${meta}💬${commit_subj//\%/%%}"
       else
         res+=" ${meta}[no message]"
       fi
@@ -544,9 +548,9 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Show duration of the last command if takes at least this many seconds.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0.1
   # Show this many fractional digits. Zero means round to seconds.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=4
   # Execution time color.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=101
   # Duration format: 1d 2h 3m 4s.
@@ -1582,7 +1586,7 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
         ;;
     esac
 
-    p10k segment -f $color -t "$task"
+    p10k segment -i 📜 -f $color -t "$task"
   }
 
 
