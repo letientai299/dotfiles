@@ -78,7 +78,8 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 
 " Can't live without autoformating. Can't also live with unformatted code
-Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }
+" Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }
+Plug 'sbdchd/neoformat'
 
 " Pair with autoformat is auto stripping whitespace. This plugin also provide
 " highlighting for trailing whitespsaces
