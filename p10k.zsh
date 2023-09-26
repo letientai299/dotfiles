@@ -1572,6 +1572,9 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
     [[ -z $task ]] && return
 
     case $task in
+      fix*)
+        color=208
+        ;;
       bug*)
         color=208
         ;;
