@@ -78,7 +78,6 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 
 " Can't live without autoformating. Can't also live with unformatted code
-" Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }
 Plug 'sbdchd/neoformat'
 
 " Pair with autoformat is auto stripping whitespace. This plugin also provide
@@ -135,8 +134,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/max397574/better-escape.nvim'
 
-" Plug 'https://github.com/willothy/flatten.nvim'
-Plug 'https://github.com/willothy/flatten.nvim', { 'commit': '25b9aec'}
+Plug 'https://github.com/willothy/flatten.nvim'
 " The plugin seems broken with my config after that commit. Pin it first. Will
 " consider debug it later.
 
