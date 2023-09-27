@@ -1,6 +1,10 @@
 --------------------------------------------------------------------------------
 -- noice
 --------------------------------------------------------------------------------
+require("notify").setup({
+  background_colour = "#000000",
+})
+
 require("noice").setup({
   cmdline = {
     view = "cmdline"
@@ -25,6 +29,14 @@ require("noice").setup({
         event = "msg_show",
         kind = "",
         find = "written",
+      },
+      opts = { skip = true },
+    },
+    {
+      filter = {
+        event = "msg_show",
+        kind = "",
+        find = "INSERT",
       },
       opts = { skip = true },
     },
@@ -262,11 +274,35 @@ require("todo-comments").setup({
 })
 -- require("dressing").setup({})
 require("bufferline").setup({})
+
 require("lualine").setup({
   options = {
     component_separators = {},
     section_separators = {},
   },
+  sections = {
+    lualine_x = {
+      {
+        require("noice").api.status.message.get_hl,
+        cond = require("noice").api.status.message.has,
+      },
+      {
+        require("noice").api.status.command.get,
+        cond = require("noice").api.status.command.has,
+        color = { fg = "#ff9e64" },
+      },
+      {
+        require("noice").api.status.mode.get,
+        cond = require("noice").api.status.mode.has,
+        color = { fg = "#ff9e64" },
+      },
+      {
+        require("noice").api.status.search.get,
+        cond = require("noice").api.status.search.has,
+        color = { fg = "#ff9e64" },
+      },
+    },
+  }
 })
 
 require("indent_blankline").setup({
