@@ -62,7 +62,7 @@ Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ibhagwan/fzf-lua'
 
 " Auto close the bracket and quotation pairs
