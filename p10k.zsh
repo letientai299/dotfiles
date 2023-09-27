@@ -100,10 +100,10 @@
     # disk_usage            # disk usage
     # ram                   # free RAM
     # swap                  # used swap
-    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
+    # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    per_directory_history   # Oh My Zsh per-directory-history local/global indicator
+    # per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
     # time                    # current time
     # =========================[ Line #2 ]=========================
@@ -1447,8 +1447,8 @@
   ##########[ gcloud: google cloud account and project (https://cloud.google.com/) ]###########
   # Show gcloud only when the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show gcloud.
-  # typeset -g POWERLEVEL9K_GCLOUD_SHOW_ON_COMMAND='gcloud|gcs|gsutil'
-   # Google cloud color.
+  typeset -g POWERLEVEL9K_GCLOUD_SHOW_ON_COMMAND='gcloud|gcs|gsutil'
+  # Google cloud color.
   typeset -g POWERLEVEL9K_GCLOUD_FOREGROUND=32
 
   # Google cloud format. Change the value of POWERLEVEL9K_GCLOUD_PARTIAL_CONTENT_EXPANSION and/or
