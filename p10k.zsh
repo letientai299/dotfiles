@@ -268,7 +268,7 @@ typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 # directory will be shortened only when prompt doesn't fit or when other parameters demand it
 # (see POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS and POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT below).
 # If set to `0`, directory will always be shortened to its minimum length.
-typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=60
+typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=40
 # When `dir` segment is on the last prompt line, try to shorten it enough to leave at least this
 # many columns for typing commands.
 typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=40
@@ -458,7 +458,7 @@ typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
     local commit_subj
     if commit_subj=$(git log -n1 --format=%s 2>/dev/null); then
       if [[ -n $commit_subj ]]; then
-        res+=" ${meta}💬${commit_subj//\%/%%}"
+        res+=" ${meta}💬 ${commit_subj//\%/%%}"
       else
         res+=" ${meta}[no message]"
       fi
