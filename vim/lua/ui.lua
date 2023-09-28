@@ -1,9 +1,9 @@
 --------------------------------------------------------------------------------
 -- noice
 --------------------------------------------------------------------------------
-require("notify").setup({
-  background_colour = "#000000",
-})
+-- require("notify").setup({
+-- background_colour = "#000000",
+-- })
 
 require("noice").setup({
   cmdline = {
@@ -271,7 +271,4 @@ require("lualine").setup({
   },
 })
 
-require("ibl").setup {
-  -- indent = { highlight = highlight }
-  scope = { enabled = true },
-}
+require("ibl").setup {}

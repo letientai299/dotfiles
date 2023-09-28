@@ -1,4 +1,5 @@
 {
+  //------------------------------------------------------------
   // coc specific
   //------------------------------------------------------------
   "suggest.virtualText": true,
@@ -37,15 +38,17 @@
   "eslint.packageManager": "pnpm",
   "typescript.inlayHints.enumMemberValues.enabled": true,
   "tsserver.useLocalTsdk": true, // prefer the local TS version instead of bundled
-
+  //------------------------------------------------------------
   // lua
   //------------------------------------------------------------
   "sumneko-lua.enableNvimLuaDev": true,
   "sumneko-lua.enable": true,
+  //------------------------------------------------------------
   // css
   //------------------------------------------------------------
   "css.lint.unknownAtRules": "ignore",
   "prettier.formatterPriority": 2,
+  //------------------------------------------------------------
   // rust
   //------------------------------------------------------------
   "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
@@ -71,7 +74,10 @@
   "rust-analyzer.updates.prompt": false,
   "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
   "rust-analyzer.cargo.autoreload": true,
+  //------------------------------------------------------------
   // Go
+  //------------------------------------------------------------
+  "go.checkForUpdates": "install",
   "go.goplsUseDaemon": true,
   "go.goplsOptions": {
     "gofumpt": true
