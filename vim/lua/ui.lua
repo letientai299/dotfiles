@@ -271,6 +271,7 @@ require("lualine").setup({
   },
 })
 
-require("indent_blankline").setup({
-  show_current_context = true,
-})
+require("ibl").setup {
+  -- indent = { highlight = highlight }
+  scope = { enabled = true },
+}

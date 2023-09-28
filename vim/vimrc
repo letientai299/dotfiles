@@ -10,7 +10,7 @@ set cmdheight=0
 set colorcolumn=80
 
 let g:loaded_perl_provider = 0
-set listchars=tab:>—
+" set listchars=tab:>—
 set list
 
 syntax on
