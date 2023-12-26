@@ -41,16 +41,5 @@ vim.keymap.set("n", "<C-->", function()
   change_scale_factor(1 / 1.11)
 end)
 
-
 -- auto change dir when using GUI mode
 vim.g.rooter_manual_only = 0
-
--- some transparency
--- vim.o.winblend = 10
--- vim.o.pumblend = 10
-local bg_alpha = function()
-  return string.format("%x", math.floor(255 * (vim.g.transparency)))
-end
--- vim.g.neovide_transparency = 0.0
--- vim.g.transparency = 0.9
--- vim.g.neovide_background_color = "#0f1117" .. bg_alpha()
