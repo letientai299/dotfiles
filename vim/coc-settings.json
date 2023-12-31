@@ -83,7 +83,10 @@
     "gofumpt": true
   },
   "svelte.enable-ts-plugin": true,
-  "snippets.ultisnips.pythonPrompt": false,
+  "snippets.ultisnips.pythonPrompt": true,
+  "snippets.extends": {
+    "vue": ["javascript","typescript", "html", "css"]
+  },
   "yaml.schemas": {
     "kubernetes": "k8s/*.yaml"
   }
