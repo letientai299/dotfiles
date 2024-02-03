@@ -76,8 +76,6 @@ update-software() {
   vim -c "PlugUpgrade" -c "qa!"
   vim -c "PlugUpdate" -c "qa!"
   vim -c "UpdateRemotePlugins" -c "qa!"
-  vim -c "TSUpdateSync all" -c "qa!"
-  vim -c "TSInstsallSync all" -c "qa!"
 
   # ensure zsh/kitty known about xterm-256color-italic
   tic "$DOTFILES/xterm-256color-italic.terminfo"
