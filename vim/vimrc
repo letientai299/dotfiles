@@ -54,6 +54,7 @@ let wiki.template_path = vimwiki_html_path.'assets/'
 let wiki.template_default = 'default'
 let wiki.template_ext = ".html"
 let wiki.nested_syntaxes ={
+      \'rust': 'rust',
       \'python': 'python',
       \'ruby': 'ruby',
       \'py':     'python',
