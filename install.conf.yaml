@@ -26,6 +26,7 @@
     ~/.config/youtube-dl: "config/youtube-dl"
     ~/.config/mpv: "config/mpv"
     ~/.config/ripgrep: "config/ripgrep"
+    ~/.config/neovide: "config/neovide"
     ~/.p10k.zsh: "p10k.zsh"
 
     ~/.zshrc:
