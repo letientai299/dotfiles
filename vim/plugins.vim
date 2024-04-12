@@ -43,7 +43,7 @@ let g:vim_markdown_fenced_languages = [
       \]
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
-let g:mkdp_theme = 'light'
+let g:mkdp_theme = 'dark'
 let g:mkdp_echo_preview_url = 1
 
 Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
@@ -136,10 +136,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/max397574/better-escape.nvim'
 
 Plug 'https://github.com/willothy/flatten.nvim'
-" The plugin seems broken with my config after that commit. Pin it first. Will
-" consider debug it later.
 
-" Plug 'goolord/alpha-nvim', exists('g:neovide') ? {} : { 'on': [] }
 Plug 'goolord/alpha-nvim'
 
 " Test and debugging plugins
