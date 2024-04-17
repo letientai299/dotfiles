@@ -18,6 +18,7 @@ fun! PrepareTimeHheader()
   call winrestview(view)
 endfun!
 
+iunmap <buffer> <Tab>
 nmap <buffer> <Leader>dd :call PrepareDateHheader()<CR>
 
 " This one will insert the current time as H2
