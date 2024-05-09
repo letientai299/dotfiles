@@ -139,7 +139,9 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 require("neo-tree").setup({
   popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
   filesystem = {
-    follow_current_file = true,
+    follow_current_file = {
+      enabled = true,
+    },
     use_libuv_file_watcher = true,
     commands = {
       expand_node = function(state)
