@@ -83,7 +83,7 @@
     "gofumpt": true
   },
   "svelte.enable-ts-plugin": true,
-  "snippets.ultisnips.pythonPrompt": true,
+  "snippets.ultisnips.pythonPrompt": false,
   "snippets.extends": {
     "vue": ["javascript","typescript", "html", "css"]
   },
