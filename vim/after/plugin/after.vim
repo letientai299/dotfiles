@@ -13,17 +13,26 @@ let g:rooter_silent_chdir = 1
 let g:rooter_manual_only = 1
 let g:rooter_change_directory_for_non_project_files = ''
 
-" formatter
-let g:formatters_yaml=['prettier']
-let g:formatters_typescriptreact=['prettier']
-let g:formatters_javascriptreact=['prettier']
-let g:formatters_javascript=['prettier']
-let g:formatters_typescript=['prettier']
-let g:formatters_json=['prettier']
-let g:formatters_html=['prettier']
-let g:formatters_css=['prettier']
-let g:formatters_lua=['stylua']
-let g:formatters_go=['gofumpt']
+" old formatter config using  https://github.com/vim-autoformat/vim-autoformat
+" let g:formatters_yaml=['prettier']
+" let g:formatters_typescriptreact=['prettier']
+" let g:formatters_javascriptreact=['prettier']
+" let g:formatters_javascript=['prettier']
+" let g:formatters_typescript=['prettier']
+" let g:formatters_json=['prettier']
+" let g:formatters_html=['prettier']
+" let g:formatters_css=['prettier']
+" let g:formatters_lua=['stylua']
+" let g:formatters_go=['gofumpt']
+
+
+let g:neoformat_enabled_racket = ['raco']
+let g:neoformat_racket_raco = {
+      \ 'exe': 'raco',
+      \ 'args': ['fmt'],
+      \ 'stdin': 1,
+      \ }
+
 
 " See also https://github.com/darold/pgFormatter
 " let g:formatdef_sql_formatter='pg_format --inplace'

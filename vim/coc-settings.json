@@ -89,5 +89,13 @@
   },
   "yaml.schemas": {
     "kubernetes": "k8s/*.yaml"
-  }
+  },
+
+  "languageserver": {
+    "racket": {
+      "command": "racket",
+      "args": ["--lib", "racket-langserver"],
+      "filetypes": ["racket"]
+    }
+  },
 }
