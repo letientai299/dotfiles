@@ -29,7 +29,7 @@ let g:rooter_change_directory_for_non_project_files = ''
 let g:neoformat_enabled_racket = ['raco']
 let g:neoformat_racket_raco = {
       \ 'exe': 'raco',
-      \ 'args': ['fmt'],
+      \ 'args': ['fmt', '--limit', '60', '--width', '80'],
       \ 'stdin': 1,
       \ }
 
