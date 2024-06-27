@@ -36,8 +36,8 @@ let g:neoformat_racket_raco = {
 
 " See also https://github.com/darold/pgFormatter
 " let g:formatdef_sql_formatter='pg_format --inplace'
-let g:formatdef_pg_formatter=['pg_format --inplace']
-let g:formatters_sql=['pg_format']
+" let g:formatdef_pg_formatter=['pg_format --inplace']
+" let g:formatters_sql=['pg_format']
 
 
 augroup MarkdownColors

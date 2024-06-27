@@ -5,35 +5,35 @@
 -- background_colour = "#000000",
 -- })
 
-require("noice").setup({
-  cmdline = {
-    view = "cmdline"
-  },
-  lsp = {
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
-    },
-  },
-  presets = {
-    bottom_search = true,         -- use a classic bottom cmdline for search
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = true,            -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = true,        -- add a border to hover docs and signature help
-  },
-  -- Show @recording messages
-  routes = {
-    {
-      filter = {
-        event = "msg_show",
-        kind = "",
-        find = "written",
-      },
-      opts = { skip = true },
-    },
-  },
-})
+-- require("noice").setup({
+-- cmdline = {
+-- view = "cmdline"
+-- },
+-- lsp = {
+-- override = {
+-- ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+-- ["vim.lsp.util.stylize_markdown"] = true,
+-- ["cmp.entry.get_documentation"] = true,
+-- },
+-- },
+-- presets = {
+-- bottom_search = true,         -- use a classic bottom cmdline for search
+-- long_message_to_split = true, -- long messages will be sent to a split
+-- inc_rename = true,            -- enables an input dialog for inc-rename.nvim
+-- lsp_doc_border = true,        -- add a border to hover docs and signature help
+-- },
+-- -- Show @recording messages
+-- routes = {
+-- {
+-- filter = {
+-- event = "msg_show",
+-- kind = "",
+-- find = "written",
+-- },
+-- opts = { skip = true },
+-- },
+-- },
+-- })
 
 --------------------------------------------------------------------------------
 -- alpha
@@ -198,7 +198,7 @@ require("toggleterm").setup({
   float_opts = {
     border = "curved",
   },
-  open_mapping = [[<a-q>]],
+  open_mapping = [[<c-q>]],
 })
 
 function _G.set_terminal_keymaps()
