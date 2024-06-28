@@ -264,8 +264,8 @@ require 'nvim-web-devicons'.setup {
   override_by_extension = {
     ["rkt"] = {
       icon = "󰘧",
-      color = "#ff0000",
-      cterm_color = "9",
+      color = "#f94449",
+      name = "Racket",
     }
   },
 }
