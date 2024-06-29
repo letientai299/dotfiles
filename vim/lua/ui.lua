@@ -276,9 +276,14 @@ require 'nvim-web-devicons'.setup {
 -- should call these after set colorscheme
 require("todo-comments").setup({
   highlight = {
-    pattern = [[.*<(KEYWORDS).*:]]
-  }
+    pattern = [[.*<(KEYWORDS).*:?]]
+  },
+
+  search = {
+    pattern = [[\b(KEYWORDS)\b.*:?]]
+  },
 })
+
 
 -- require("dressing").setup({})
 require("bufferline").setup({})
