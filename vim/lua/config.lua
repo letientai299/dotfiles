@@ -63,6 +63,9 @@ require("better_escape").setup({
 require("fzf-lua").setup({
   files = {
     cmd = 'fd --hidden --no-ignore-vcs'
+  },
+  helpfiles = {
+    cmd = 'fd . --type f --extension=txt ~/.vim-plugged'
   }
 })
 
