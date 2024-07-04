@@ -173,7 +173,9 @@ Plug 'mattn/emmet-vim'
 " To respect editorconfig file
 Plug 'gpanders/editorconfig.nvim'
 
-Plug 'thinca/vim-localrc'
+let g:localvimrc_persistent=1
+Plug 'embear/vim-localvimrc'
+
 Plug 'fladson/vim-kitty', {'for': 'kitty'}
 
 

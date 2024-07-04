@@ -64,10 +64,22 @@ require("fzf-lua").setup({
   files = {
     cmd = 'fd --hidden --no-ignore-vcs'
   },
-  helpfiles = {
-    cmd = 'fd . --type f --extension=txt ~/.vim-plugged'
-  }
 })
+
+vim.api.nvim_create_user_command(
+  'Helpfiles',
+  function()
+    require("fzf-lua").fzf_exec(
+      "fd . --type f --extension=txt ~/.vim-plugged",
+      {
+        actions = {
+          ['default'] = require 'fzf-lua'.actions.file_edit,
+        }
+      }
+    )
+  end,
+  {}
+)
 
 --------------------------------------------------------------------------------
 -- Test UI and tools
