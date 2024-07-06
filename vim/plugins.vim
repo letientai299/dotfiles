@@ -1,4 +1,3 @@
-
 " vim:set et sw=2 ts=2 tw=80:
 " Auto install on the first time if there no plug.vim found {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -173,6 +172,7 @@ Plug 'mattn/emmet-vim'
 " To respect editorconfig file
 Plug 'gpanders/editorconfig.nvim'
 
+" https://github.com/embear/vim-localvimrc
 let g:localvimrc_persistent=1
 Plug 'embear/vim-localvimrc'
 
