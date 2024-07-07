@@ -6,9 +6,12 @@ export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export PATH="$HOME/.local/bin:$PATH"
-export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore'
+
+export RG_IGLOB='--iglob=!.git/ --iglob=!.idea/ --iglob=!.DS_store'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore $RG_IGLOB"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--height 80% --reverse'
+
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/rgrc"
 export HISTSIZE=10000000
 export SAVEHIST=10000000
