@@ -46,7 +46,7 @@ let g:mkdp_theme = 'dark'
 let g:mkdp_echo_preview_url = 1
 
 Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
-Plug 'https://github.com/MTDL9/vim-log-highlighting', {'for': 'log'}
+Plug 'MTDL9/vim-log-highlighting', {'for': 'log'}
 
 Plug 'folke/tokyonight.nvim'
 Plug 'folke/todo-comments.nvim'
@@ -133,9 +133,9 @@ Plug 'MunifTanjim/nui.nvim'
 " Plug 'rcarriga/nvim-notify'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'https://github.com/max397574/better-escape.nvim'
+Plug 'max397574/better-escape.nvim'
 
-Plug 'https://github.com/willothy/flatten.nvim'
+Plug 'willothy/flatten.nvim'
 
 Plug 'goolord/alpha-nvim'
 
