@@ -296,3 +296,4 @@ require("lualine").setup({
 })
 
 require("ibl").setup {}
+require('hl-mdcodeblock').setup({})
