@@ -280,6 +280,10 @@ require("todo-comments").setup({
     comments_only = false,
   },
 
+  colors = {
+    info = { "#34eb92" },
+  },
+
   search = {
     pattern = [[\b(KEYWORDS)\b.*:?]]
   },
