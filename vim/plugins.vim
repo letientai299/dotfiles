@@ -28,7 +28,7 @@ Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
 " Markdown
-Plug 'preservim/vim-markdown', { 'for': 'markdown'}
+" Plug 'preservim/vim-markdown', { 'for': 'markdown'}
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
@@ -41,7 +41,7 @@ let g:vim_markdown_fenced_languages = [
       \'tsx=typescriptreact',
       \]
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
 let g:mkdp_theme = 'dark'
 let g:mkdp_echo_preview_url = 1
 
