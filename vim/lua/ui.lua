@@ -297,6 +297,6 @@ require("lualine").setup({
 })
 
 require("ibl").setup {}
-require('render-markdown').setup({})
+-- require('render-markdown').setup({})
 
 -- require('hl-mdcodeblock').setup({})
