@@ -29,9 +29,7 @@ Plug 'wellle/targets.vim'
 
 " Markdown
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
-Plug 'yaocccc/nvim-hl-mdcodeblock.lua'
 Plug 'lukas-reineke/headlines.nvim'
-" Plug 'tpope/vim-markdown'
 
 " Plug 'preservim/vim-markdown', { 'for': 'markdown'}
 " let g:vim_markdown_math = 1

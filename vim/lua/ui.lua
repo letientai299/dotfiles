@@ -276,7 +276,8 @@ require 'nvim-web-devicons'.setup {
 -- should call these after set colorscheme
 require("todo-comments").setup({
   highlight = {
-    pattern = [[.*<(KEYWORDS).*:?]]
+    pattern = [[.*<(KEYWORDS).*:?]],
+    comments_only = false,
   },
 
   search = {
@@ -296,4 +297,4 @@ require("lualine").setup({
 })
 
 require("ibl").setup {}
-require('hl-mdcodeblock').setup({})
+-- require('hl-mdcodeblock').setup({})
