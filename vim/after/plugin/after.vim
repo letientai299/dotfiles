@@ -40,8 +40,8 @@ let g:neoformat_racket_raco = {
 " let g:formatters_sql=['pg_format']
 
 
-augroup MarkdownColors
-  autocmd!
-  autocmd ColorScheme * hi! link mkdCodeDelimiter markdownCode
-  autocmd ColorScheme * hi! link VirtColumn Label
-augroup END
+" augroup MarkdownColors
+  " autocmd!
+  " autocmd ColorScheme * hi! link mkdCodeDelimiter markdownCode
+  " autocmd ColorScheme * hi! link VirtColumn Label
+" augroup END

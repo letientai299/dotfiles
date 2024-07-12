@@ -49,11 +49,11 @@ Plug 'wellle/targets.vim'
       " \'racket']
 
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
-let g:mkdp_theme = 'dark'
-let g:mkdp_echo_preview_url = 1
+" let g:mkdp_theme = 'dark'
+" let g:mkdp_echo_preview_url = 1
 
 Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
-Plug 'MTDL9/vim-log-highlighting', {'for': 'log'}
+" Plug 'MTDL9/vim-log-highlighting', {'for': 'log'}
 
 Plug 'folke/tokyonight.nvim'
 Plug 'folke/todo-comments.nvim'
@@ -122,7 +122,6 @@ Plug 'simeji/winresizer'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'akinsho/toggleterm.nvim', { 'on': 'ToggleTerm' }
-Plug 'folke/which-key.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
@@ -135,9 +134,7 @@ let g:vista_default_executive='coc'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
-" Plug 'folke/noice.nvim'
 "
-" Plug 'rcarriga/nvim-notify'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'max397574/better-escape.nvim'
@@ -170,9 +167,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " for GBrowse
 Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 
-" No need this as Gitsigns almost cover this git-messenger features
-" Plug 'rhysd/git-messenger.vim'
-" Plug 'junegunn/gv.vim'
 
 Plug 'mattn/emmet-vim'
 

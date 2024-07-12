@@ -20,6 +20,7 @@ require("nvim-treesitter.configs").setup({
     "css",
     "kotlin",
     "markdown",
+    "markdown_inline",
   },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
