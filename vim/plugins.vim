@@ -28,8 +28,7 @@ Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
 " Markdown
-Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
-Plug 'lukas-reineke/headlines.nvim'
+" Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 " Plug 'MeanderingProgrammer/markdown.nvim'
 
 " Plug 'preservim/vim-markdown', { 'for': 'markdown'}
@@ -37,17 +36,17 @@ Plug 'lukas-reineke/headlines.nvim'
 " let g:vim_markdown_strikethrough = 1
 " let g:vim_markdown_folding_disabled = 1
 
-let g:markdown_fenced_languages = [
-      \'html',
-      \'js=javascript',
-      \'ss=typescript',
-      \'jsx=javascriptreact',
-      \'tsx=typescriptreact',
-      \'ruby',
-      \'scheme',
-      \'bash',
-      \'ini=dosini',
-      \'racket']
+" let g:markdown_fenced_languages = [
+      " \'html',
+      " \'js=javascript',
+      " \'ss=typescript',
+      " \'jsx=javascriptreact',
+      " \'tsx=typescriptreact',
+      " \'ruby',
+      " \'scheme',
+      " \'bash',
+      " \'ini=dosini',
+      " \'racket']
 
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
 let g:mkdp_theme = 'dark'
