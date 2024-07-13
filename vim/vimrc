@@ -86,7 +86,7 @@ autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 
-command! BufOnly silent! execute "%bd|e#|bd#"
+command! BufOnly silent! execute "%bd|e#|bd#|normal <c-o>"
 
 function! CreateFile(tfilename)
     " complete filepath from the file where this is called

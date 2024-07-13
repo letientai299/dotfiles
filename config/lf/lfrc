@@ -39,7 +39,7 @@ cmd trash ${{
 cmd open ${{
   case $(file --mime-type "$f" -b) in
     inode/x-empty) $EDITOR $f;;
-    application/{json,yaml}) $EDITOR $f;;
+    application/{json,yaml,x-java-applet}) $EDITOR $f;;
     application/*) open $f;;
     text/*) $EDITOR $f;;
     audio/mpeg) mpv $f;;
