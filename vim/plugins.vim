@@ -14,39 +14,12 @@ Plug 'https://github.com/lewis6991/impatient.nvim'
 " yet I keep experience with new stuff, while compare them with built-in vim
 " feature (if it has one). Following plugins is what I feel essential.
 
-" Sensible vim config, unnecessary for neovim, but still leave it here just in
-" case I've to use Vim instead of Neovim
-if !has('nvim')
-  Plug 'tpope/vim-sensible'
-endif
-
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
-
-" Markdown
-" Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
-" Plug 'MeanderingProgrammer/markdown.nvim'
-
-" Plug 'preservim/vim-markdown', { 'for': 'markdown'}
-" let g:vim_markdown_math = 1
-" let g:vim_markdown_strikethrough = 1
-" let g:vim_markdown_folding_disabled = 1
-
-" let g:markdown_fenced_languages = [
-      " \'html',
-      " \'js=javascript',
-      " \'ss=typescript',
-      " \'jsx=javascriptreact',
-      " \'tsx=typescriptreact',
-      " \'ruby',
-      " \'scheme',
-      " \'bash',
-      " \'ini=dosini',
-      " \'racket']
 
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
 " let g:mkdp_theme = 'dark'
@@ -70,6 +43,8 @@ Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 " Helptags. It helps my brain a lots.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ibhagwan/fzf-lua'
+
+Plug 'junegunn/vim-easy-align'
 
 " Auto close the bracket and quotation pairs
 Plug 'raimondi/delimitmate'
@@ -122,10 +97,10 @@ Plug 'simeji/winresizer'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'akinsho/toggleterm.nvim', { 'on': 'ToggleTerm' }
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim'
+" Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
-Plug 'stevearc/dressing.nvim'
+" Plug 'stevearc/dressing.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
 Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }
@@ -134,11 +109,9 @@ let g:vista_default_executive='coc'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
-"
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'max397574/better-escape.nvim'
-
 Plug 'willothy/flatten.nvim'
 
 Plug 'goolord/alpha-nvim'
@@ -166,7 +139,6 @@ autocmd BufReadPost,FileReadPost * normal zR
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " for GBrowse
 Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
-
 
 Plug 'mattn/emmet-vim'
 
