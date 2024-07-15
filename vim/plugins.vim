@@ -146,7 +146,7 @@ Plug 'mattn/emmet-vim'
 Plug 'gpanders/editorconfig.nvim'
 
 " https://github.com/embear/vim-localvimrc
-let g:localvimrc_persistent=1
+let g:localvimrc_persistent=2
 Plug 'embear/vim-localvimrc'
 
 Plug 'fladson/vim-kitty', {'for': 'kitty'}
