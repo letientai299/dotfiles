@@ -65,7 +65,7 @@ require("better_escape").setup {
 
 require("fzf-lua").setup({
   files = {
-    cmd = 'fd --hidden --no-ignore-vcs'
+    cmd = 'fd --hidden --no-ignore-vcs -E .git -E .idea -E node_modules'
   },
 })
 
