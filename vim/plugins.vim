@@ -111,6 +111,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'max397574/better-escape.nvim'
 Plug 'willothy/flatten.nvim'
 
@@ -146,6 +147,7 @@ Plug 'mattn/emmet-vim'
 Plug 'gpanders/editorconfig.nvim'
 
 " https://github.com/embear/vim-localvimrc
+let g:localvimrc_sandbox=0
 let g:localvimrc_persistent=2
 Plug 'embear/vim-localvimrc'
 

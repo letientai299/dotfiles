@@ -33,13 +33,34 @@ require("nvim-treesitter.configs").setup({
     disable = {},
     additional_vim_regex_highlighting = true,
   },
+  indent = {
+    enable = true
+  },
   rainbow = {
     enable = true,
     -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     extended_mode = true,
   },
-  incremental_selection = { enable = true },
-  textobjects = { enable = true },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<C-m>",
+      node_incremental = "<C-m>",
+      node_decremental = "<M-m>",
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+      },
+    }
+  },
 })
 
 --------------------------------------------------------------------------------
