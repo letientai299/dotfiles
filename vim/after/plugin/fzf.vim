@@ -1,6 +1,6 @@
-nmap <leader>fa :FzfLua<CR>
+nmap <D-f> :FzfLua buffers<CR>
 
-nmap <leader>fb :FzfLua buffers<CR>
+nmap <leader>fa :FzfLua<CR>
 
 nmap <leader>fc :FzfLua git_bcommits<CR>
 nmap <leader>fC :FzfLua git_commits<CR>
