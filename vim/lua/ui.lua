@@ -251,13 +251,22 @@ require("todo-comments").setup({
 })
 
 
--- require("dressing").setup({})
-require("bufferline").setup({})
+require("bufferline").setup({
+  options = {
+    numbers = 'buffer_id',
+    indicator = { style = "underline" },
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    diagnostics_update_in_insert = true,
+    diagnostics = "coc",
+    separator_style = { '󰙏', '' },
+  }
+})
 
 require("lualine").setup({
   options = {
-    component_separators = {},
-    section_separators = {},
+    -- component_separators = {},
+    -- section_separators = {},
   },
 })
 
