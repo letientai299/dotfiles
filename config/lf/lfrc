@@ -23,6 +23,7 @@ set cleaner ~/.config/lf/cleaner
 
 # map i $bat --theme=base16 --paging=always --style=changes
 map i $bat --paging=always "$f" && clear
+
 map <enter> open
 
 map D trash $fx
