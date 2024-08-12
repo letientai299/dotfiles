@@ -125,3 +125,20 @@ vim.api.nvim_create_user_command(
 -- require("rest-nvim").setup({
 -- result_split_in_place = true
 -- })
+
+local oil_file_detail = false
+require("oil").setup({
+  keymaps = {
+    ["gd"] = {
+      desc = "Toggle file detail view",
+      callback = function()
+        oil_file_detail = not oil_file_detail
+        if oil_file_detail then
+          require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+        else
+          require("oil").set_columns({ "icon" })
+        end
+      end,
+    },
+  },
+})

@@ -1,7 +1,7 @@
 let NERDSpaceDelims=1
 
-nnoremap <C-\> :Neotree toggle reveal_force_cwd<CR>
-nnoremap <A-\> :Neotree reveal toggle reveal_force_cwd<CR>
+nnoremap <C-\> :exec 'silent! /' . expand('%:t') \| exe 'Oil %:p:h'<cr>
+nnoremap <A-\> :exe 'Oil ' . trim(system("git rev-parse --show-toplevel"))<cr>
 
 nnoremap <c-g> :silent Vista finder<CR>
 nnoremap <c-f11> :silent Vista!!<CR>
@@ -10,7 +10,7 @@ nnoremap <f35> :silent Vista!!<CR>
 " Resolve project root from a symbol link.
 let g:rooter_resolve_links = 1
 let g:rooter_silent_chdir = 1
-let g:rooter_manual_only = 0 " set to 1 to manual mode
+let g:rooter_manual_only = 1
 let g:rooter_change_directory_for_non_project_files = ''
 
 " old formatter config using  https://github.com/vim-autoformat/vim-autoformat

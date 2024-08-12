@@ -21,9 +21,11 @@ Plug 'tpope/vim-repeat'
 Plug 'romainl/vim-cool' " disables search highlighting when done
 Plug 'wellle/targets.vim'
 
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
-" let g:mkdp_theme = 'dark'
-" let g:mkdp_echo_preview_url = 1
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
+let g:mkdp_echo_preview_url = 1
+let g:mkdp_auto_close = 0
+let g:mkdp_refresh_slow = 1
+let g:mkdp_combine_preview = 1
 
 Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
 " Plug 'MTDL9/vim-log-highlighting', {'for': 'log'}
@@ -35,8 +37,8 @@ Plug 'EdenEast/nightfox.nvim'
 
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
-let vimwiki_ext2syntax = {}
-Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+" let vimwiki_ext2syntax = {}
+" Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
@@ -84,7 +86,6 @@ let g:coc_global_extensions = [
       \'coc-toml'
       \]
 
-
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
 Plug 'airblade/vim-rooter'
@@ -97,7 +98,7 @@ Plug 'simeji/winresizer'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'akinsho/toggleterm.nvim', { 'on': 'ToggleTerm' }
-" Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'xiyaowong/virtcolumn.nvim'
 " Plug 'stevearc/dressing.nvim'
@@ -109,7 +110,7 @@ let g:vista_default_executive='coc'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'stevearc/oil.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'max397574/better-escape.nvim'
@@ -148,6 +149,7 @@ Plug 'gpanders/editorconfig.nvim'
 
 " https://github.com/embear/vim-localvimrc
 let g:localvimrc_sandbox=0
+let g:localvimrc_ask=0
 let g:localvimrc_persistent=2
 Plug 'embear/vim-localvimrc'
 

@@ -96,63 +96,6 @@ require("tokyonight").setup({
 })
 
 --------------------------------------------------------------------------------
--- neotree
---------------------------------------------------------------------------------
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-require("neo-tree").setup({
-  popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
-  filesystem = {
-    follow_current_file = {
-      enabled = true,
-    },
-    use_libuv_file_watcher = true,
-    commands = {
-      expand_node = function(state)
-        local node = state.tree:get_node()
-        if node.type == "directory" then
-          if not node:is_expanded() then
-            require("neo-tree.sources.filesystem").toggle_directory(state, node)
-          elseif node:has_children() then
-            require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
-          end
-        end
-      end,
-      close_node = function(state)
-        local node = state.tree:get_node()
-        if node.type == "directory" and node:is_expanded() then
-          require("neo-tree.sources.filesystem").toggle_directory(state, node)
-        else
-          require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
-        end
-      end,
-      yank_path = function(state)
-        local node = state.tree:get_node()
-        local content = node.path
-        -- relative
-        -- local content = node.path:gsub(state.path, ""):sub(2)
-        vim.fn.setreg('"', content)
-        vim.fn.setreg("1", content)
-        vim.fn.setreg("+", content)
-      end,
-    },
-    window = {
-      position = vim.g.neovide and "left" or "float",
-      mappings = {
-        ["/"] = "none", -- this should use default vim text search
-        ["]g"] = "none",
-        ["[g"] = "none",
-        ["[c"] = "prev_git_modified",
-        ["]c"] = "next_git_modified",
-        ["f"] = "fuzzy_finder",
-        ["h"] = "close_node",
-        ["l"] = "expand_node",
-        ["Y"] = "yank_path",
-      },
-    },
-  },
-})
-
---------------------------------------------------------------------------------
 -- toggleterm
 --------------------------------------------------------------------------------
 require("toggleterm").setup({
@@ -270,4 +213,8 @@ require("lualine").setup({
 })
 
 -- indent blank line
--- require("ibl").setup {}
+require("ibl").setup({
+  scope = {
+    enabled = false,
+  }
+})
