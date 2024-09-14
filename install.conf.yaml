@@ -27,6 +27,7 @@
     ~/.config/mpv: "config/mpv"
     ~/.config/ripgrep: "config/ripgrep"
     ~/.config/neovide: "config/neovide"
+    ~/.config/kitty: "config/kitty"
     ~/.p10k.zsh: "p10k.zsh"
 
     ~/.zshrc:

@@ -6,18 +6,13 @@
 # term xterm-256color-italic
 term xterm-kitty
 
-# Fully featured: == -> -->
-modify_font      cell_width 85%
-modify_font underline_position -3
+# Fully featured: == -> --> [] != () <> <= >=
+# modify_font underline_position 4
 
-font_family      JetBrainsMonoNL Nerd Font Mono Light
-bold_font        JetBrainsMonoNL Nerd Font ExtraBold
-italic_font      JetBrainsMonoNL Nerd Font Italic
-bold_italic_font JetBrainsMonoNL Nerd Font ExtraBold Italic
+font_family     JetbrainsMono Nerd Font
 
 # Font size (in pts)
-# font_size        11.0
-font_size        15.0
+font_size        10.0
 
 # Sync to monitor to avoid CPU cost
 sync_to_monitor yes
@@ -105,7 +100,7 @@ map f2 detach_window new-tab
 map f3 launch --type=overlay bash -i -c 'grep -E "^(map|mouse_map)\s+.*" ~/.config/kitty/kitty.conf | fzf'
 
 # BEGIN_KITTY_THEME
-# Adwaita darker
+# Catppuccin-Mocha
 include current-theme.conf
 # END_KITTY_THEME
 # active_border_color #ff00d7

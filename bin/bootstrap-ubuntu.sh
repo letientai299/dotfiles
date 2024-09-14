@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# WARN: this is very broken on modern ubuntu.
+
 task() {
   echo
   echo

@@ -65,7 +65,7 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
+eval "$(zoxide init zsh)"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
