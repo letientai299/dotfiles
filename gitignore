@@ -1,5 +1,4 @@
-.jira.d/
-.dump/
+.jira.d/ .dump/
 dump/
 *.dump.*
 dump.*
@@ -64,3 +63,6 @@ tmux-client*.log
 nohup.out
 # *.gen.go
 
+# Nodejs
+# ignore v8 log
+*-v8.log
