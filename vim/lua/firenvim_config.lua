@@ -41,18 +41,20 @@ if vim.g.started_by_firenvim == true then
   vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true, silent = true })
   vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true, silent = true })
 
-  vim.o.guifont = "JetbrainsMono Nerd Font:h9"
+  -- vim.o.guifont = "Fira Code Nerd Font:h9"
+  vim.o.guifont = "FiraCode Nerd Font:h8"
 
   -- disable various UI elements to have more text lines.
   vim.o.showtabline = 1
-  vim.o.showmode = 0
+  vim.o.showmode = false
   vim.o.signcolumn = "no"
-  vim.o.showcmd = 0
+  vim.o.showcmd = false
   vim.o.linespace = -2
   vim.cmd("colo carbonfox")
 
   vim.api.nvim_create_autocmd({ "UIEnter" }, {
     callback = function()
+      print("uienter here")
       local client = vim.api.nvim_get_chan_info(vim.v.event.chan).client
       if client ~= nil and client.name == "Firenvim" then
         vim.o.laststatus = 2
