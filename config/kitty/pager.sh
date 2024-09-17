@@ -3,7 +3,6 @@
 
 source ~/.zprofile
 
-
 if [ "$#" -eq 3 ]; then
   INPUT_LINE_NUMBER=${1:-0}
   CURSOR_LINE=${2:-1}
@@ -14,10 +13,9 @@ else
 fi
 
 BUF_NAME="/tmp/kitty_$RANDOM"
-/bin/cat >> "$BUF_NAME"
+/usr/bin/cat >>"$BUF_NAME"
 
-
-/usr/local/bin/nvim \
+nvim \
   -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
   -c "set tw=10000" \
   -c "autocmd TermEnter * stopinsert" \
