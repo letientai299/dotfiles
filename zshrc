@@ -16,6 +16,12 @@ fi
 
 # must run it once before loading zsh-completions via antidote
 # as that plugin requires compdef
+
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 autoload -Uz compinit
 compinit
 
