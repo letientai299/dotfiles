@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Some custom functions, and also the aliases for make them shorten when using.
 # Because the functions is self-defined, their aliases should be kept here, not
@@ -41,10 +41,10 @@ alias gbs='git checkout staging'
 # Switch to the working branch
 alias gbw=gb_work
 
-fancy_echo(){
-    echo "========================================"
-    echo "- $*"
-    echo "========================================"
+fancy_echo() {
+  echo "========================================"
+  echo "- $*"
+  echo "========================================"
 }
 
 # Update software
@@ -81,10 +81,6 @@ update_software() {
   tic "$DOTFILES/xterm-256color-italic.terminfo"
 }
 
-pwdd(){
-  basename "$PWD"
-}
-
 dkpg() {
   if command -v podman >/dev/null 2>&1; then
     cmd=podman
@@ -95,7 +91,6 @@ dkpg() {
   echo "> Starting postgres container using $cmd"
   $cmd run --rm -d --name dkpg -e POSTGRES_PASSWORD=123 -p 5432:5432 postgres
 }
-
 
 dkmy() {
   if command -v podman >/dev/null 2>&1; then
@@ -119,7 +114,6 @@ dkr() {
   $cmd run --rm -d --name dkr -p 6379:6379 redis
 }
 
-
 dkmg() {
   if command -v podman >/dev/null 2>&1; then
     cmd=podman
@@ -131,29 +125,37 @@ dkmg() {
   $cmd run --rm -d --name dkmg -p 27017:27017 mongo
 }
 
-function repeat() {
+repeat() {
   count=$1
   shift
-  for i in $(seq "$count"); do
+  for _ in $(seq "$count"); do
     bash -c "$*"
   done
 }
 
-
-function one_of() {
-  list=( "$@" )
-  one=${list[ $RANDOM % ${#list[@]} ]}
-  echo $one
+one_of() {
+  list=("$@")
+  one=${list[$RANDOM % ${#list[@]}]}
+  echo "$one"
 }
 
-
-function local_todo(){
+local_todo() {
   repo=$(git rev-parse --show-toplevel 2>/dev/null)
   if [[ -z $repo ]]; then
     echo "not a git repo"
     return
   fi
 
-  mkdir -p $repo/.dump
-  vim $repo/.dump/todo.md
+  mkdir -p "$repo"/.dump
+  vim "$repo"/.dump/todo.md
+}
+
+# https://yazi-rs.github.io/docs/quick-start/#shell-wrapper
+yazi_cd() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
