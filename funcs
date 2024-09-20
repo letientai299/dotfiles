@@ -145,18 +145,10 @@ local_todo() {
 
 # https://yazi-rs.github.io/docs/quick-start/#shell-wrapper
 yazi_cd() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
   yazi "$@" --cwd-file="$tmp"
   if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
     builtin cd -- "$cwd" || exit
   fi
-  builtin rm -f -- "$tmp"
-}
-
-repeat() {
-  count=$1
-  shift
-  for i in $(seq "$count"); do
-    bash -c "$*"
-  done
+  /usr/bin/rm -f -- "$tmp"
 }
