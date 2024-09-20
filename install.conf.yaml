@@ -28,6 +28,7 @@
     ~/.config/ripgrep: "config/ripgrep"
     ~/.config/neovide: "config/neovide"
     ~/.config/kitty: "config/kitty"
+    ~/.config/yazi: "config/yazi"
     ~/.p10k.zsh: "p10k.zsh"
 
     ~/.zshrc:

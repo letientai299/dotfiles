@@ -1,0 +1,44 @@
+[[manager.prepend_keymap]]
+on = "T"
+run = "plugin --sync max-preview"
+desc = "Maximize or restore preview"
+
+[[manager.prepend_keymap]]
+on = ["$"]
+run = 'shell zsh --block --confirm'
+desc = "Open PowerShell here"
+
+[[manager.prepend_keymap]]
+on = ["g", "n"]
+run = 'cd ~/Projects/mine/ms-notes'
+desc = "Go to MS Notes"
+
+[[manager.prepend_keymap]]
+on = ["g", "s"]
+run = 'cd ~/Projects/ms/'
+desc = "Go to MS repos"
+
+[[manager.prepend_keymap]]
+on = ["g", "t"]
+run = 'cd ~/temp'
+desc = "Go to Temp"
+
+[[manager.prepend_keymap]]
+on = ["g", "x"]
+run = 'shell "xgd-open" --confirm --orphan'
+desc = "Explorer here"
+
+[[manager.prepend_keymap]]
+on = ["g", "x"]
+run = 'shell "xdg-open" --confirm --orphan'
+desc = "Explorer here"
+
+[[manager.prepend_keymap]]
+on = ["<C-o>"]
+run = 'back'
+desc = "Back in history"
+
+[[manager.prepend_keymap]]
+on = ["<C-i>"]
+run = 'forward'
+desc = "Forward in history"

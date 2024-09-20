@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: syntax=sh tw=200:
 
 # Some custom functions, and also the aliases for make them shorten when using.
 # Because the functions is self-defined, their aliases should be kept here, not
@@ -103,7 +104,7 @@ dkmy() {
   $cmd run --rm -d --name dkmy -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 mysql
 }
 
-dkr() {
+dkrd() {
   if command -v podman >/dev/null 2>&1; then
     cmd=podman
   else
@@ -111,7 +112,7 @@ dkr() {
   fi
 
   echo "> Starting redis container using $cmd"
-  $cmd run --rm -d --name dkr -p 6379:6379 redis
+  $cmd run --rm -d --name dkrd -p 6379:6379 redis
 }
 
 dkmg() {
@@ -123,14 +124,6 @@ dkmg() {
 
   echo "> Starting mongo container using $cmd"
   $cmd run --rm -d --name dkmg -p 27017:27017 mongo
-}
-
-repeat() {
-  count=$1
-  shift
-  for _ in $(seq "$count"); do
-    bash -c "$*"
-  done
 }
 
 one_of() {
@@ -155,7 +148,15 @@ yazi_cd() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
   yazi "$@" --cwd-file="$tmp"
   if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    builtin cd -- "$cwd"
+    builtin cd -- "$cwd" || exit
   fi
-  rm -f -- "$tmp"
+  builtin rm -f -- "$tmp"
+}
+
+repeat() {
+  count=$1
+  shift
+  for i in $(seq "$count"); do
+    bash -c "$*"
+  done
 }

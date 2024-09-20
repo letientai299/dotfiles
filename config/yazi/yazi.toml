@@ -1,0 +1,18 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+show_hidden = true
+linemode = "size"
+
+[opener]
+edit = [
+  { run = 'nvim "%*"', block = true, desc = "nvim" },
+  { run = 'code "%*"', orphan = true, desc = "code", for = "windows" },
+  { run = 'explorer.exe "%*"', orphan = true, desc = "System", for = "windows" },
+]
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+  { mime = "text/csv", run = "miller" },
+]
