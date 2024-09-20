@@ -48,7 +48,7 @@ fancy_echo(){
 }
 
 # Update software
-update-software() {
+update_software() {
 
   #  Ubuntu
   if command -v apt-get >/dev/null 2>&1; then
@@ -76,7 +76,6 @@ update-software() {
   vim -c "PlugUpgrade" -c "qa!"
   vim -c "PlugUpdate" -c "qa!"
   vim -c "UpdateRemotePlugins" -c "qa!"
-  vim -c 'TSInstallSync! all' -c 'q!'
 
   # ensure zsh/kitty known about xterm-256color-italic
   tic "$DOTFILES/xterm-256color-italic.terminfo"
@@ -135,7 +134,7 @@ dkmg() {
 function repeat() {
   count=$1
   shift
-  for i in $(seq $count); do
+  for i in $(seq "$count"); do
     bash -c "$*"
   done
 }
