@@ -153,12 +153,12 @@ yazi_cd() {
   /usr/bin/rm -f -- "$tmp"
 }
 
-alias azcli='$HOMEBREW_PREFIX/bin/az'
+alias raz='$HOMEBREW_PREFIX/bin/az'
 
 az() {
   if [[ $# -eq 0 ]]; then
-    azcli
+    raz
   else
-    azcli "$@" --subscription "$AZURE_SUBSCRIPTION_ID"
+    raz "$@" --subscription "$AZURE_SUBSCRIPTION_ID"
   fi
 }
