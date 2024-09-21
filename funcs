@@ -152,3 +152,7 @@ yazi_cd() {
   fi
   /usr/bin/rm -f -- "$tmp"
 }
+
+az() {
+  "$HOMEBREW_PREFIX/bin/az" "$@" --subscription "$AZURE_SUBSCRIPTION_ID"
+}
