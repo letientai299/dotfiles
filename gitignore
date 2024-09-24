@@ -2,6 +2,7 @@
 dump/
 *.dump.*
 dump.*
+.dump
 
 index.md
 
