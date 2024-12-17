@@ -82,8 +82,7 @@ let g:coc_global_extensions = [
       \'coc-html',
       \'coc-tsserver',
       \'coc-css',
-      \'coc-cssmodules',
-      \'coc-toml'
+      \'coc-cssmodules'
       \]
 
 " Auto cd to git project root when open a file in vim
