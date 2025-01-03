@@ -162,3 +162,20 @@ yazi_cd() {
 # raz "$@" --subscription "$AZURE_SUBSCRIPTION_ID"
 # fi
 # }
+#
+
+#-------------------------------------------------------------------------------
+# Azure CLI tricks
+#-------------------------------------------------------------------------------
+
+# open resource in portal, work with subcription id.
+az-open() {
+  if [ $# -eq 0 ]; then
+    id=$(cat | jq -r .id)
+  else
+    id=$1
+  fi
+
+  tenantId="$(az account show --query 'tenantId' -o tsv)"
+  xdg-open "https://portal.azure.com/#@${tenantId}/resource/${id}"
+}
