@@ -168,7 +168,8 @@ yazi_cd() {
 # Azure CLI tricks
 #-------------------------------------------------------------------------------
 
-# open resource in portal, work with subcription id.
+# open resource in portal, work with subcription id,
+# or via single resource json output of pipelined command.
 az-open() {
   if [ $# -eq 0 ]; then
     id=$(cat | jq -r .id)
@@ -177,5 +178,5 @@ az-open() {
   fi
 
   tenantId="$(az account show --query 'tenantId' -o tsv)"
-  xdg-open "https://portal.azure.com/#@${tenantId}/resource/${id}"
+  xdg-open "https://portal.azure.com/#@${tenantId}/resource${id}"
 }
