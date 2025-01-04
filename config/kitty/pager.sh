@@ -13,15 +13,16 @@ else
 fi
 
 BUF_NAME="/tmp/kitty_$RANDOM"
-/usr/bin/cat >>"$BUF_NAME"
+/bin/cat >>"$BUF_NAME"
+
 
 nvim \
-  -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
-  -c "set tw=10000" \
-  -c "autocmd TermEnter * stopinsert" \
-  -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
-  -c "map <silent> q :qa!<CR>" \
-  -c "terminal /bin/cat $BUF_NAME && sleep 0.001 && printf '\x1b]2;'" \
-  -c "BufferLineGroupToggle ungrouped"
+ -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
+ -c "set tw=10000" \
+ -c "autocmd TermEnter * stopinsert" \
+ -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
+ -c "map <silent> q :qa!<CR>" \
+ -c "terminal /bin/cat $BUF_NAME && sleep 0.001 && printf '\x1b]2;'" \
+ -c "BufferLineGroupToggle ungrouped"
 
 rm $BUF_NAME
