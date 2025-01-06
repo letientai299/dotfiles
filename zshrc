@@ -41,7 +41,7 @@ fi
 source $zsh_plugins
 
 # Load custom shell script
-for file in "$DOTFILES"/{exports,aliases,funcs,bindkeys}; do
+for file in "$DOTFILES"/{exports,aliases,funcs,bindkeys,az-utils}; do
   source "$file"
 done;
 unset file;

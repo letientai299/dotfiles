@@ -26,4 +26,6 @@ az-open() {
 }
 
 az-switch() {
+  subId="$(az account list --query '[].{id:id, name:name}' -o tsv | fzf | cut -f1)"
+  az account set --subscription $subId
 }
