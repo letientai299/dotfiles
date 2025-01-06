@@ -1,0 +1,29 @@
+#!/bin/bash
+# vim: syntax=sh tw=200:
+
+# alias raz='$HOMEBREW_PREFIX/bin/az'
+
+# az() {
+# if [[ $# -eq 0 ]]; then
+# raz
+# else
+# raz "$@" --subscription "$AZURE_SUBSCRIPTION_ID"
+# fi
+# }
+#
+
+# open resource in portal, work with subcription id,
+# or via single resource json output of pipelined command.
+az-open() {
+  if [ $# -eq 0 ]; then
+    id=$(cat | jq -r .id)
+  else
+    id=$1
+  fi
+
+  tenantId="$(az account show --query 'tenantId' -o tsv)"
+  xdg-open "https://portal.azure.com/#@${tenantId}/resource${id}"
+}
+
+az-switch() {
+}
