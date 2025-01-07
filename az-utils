@@ -27,5 +27,15 @@ az-open() {
 
 az-switch() {
   subId="$(az account list --query '[].{id:id, name:name}' -o tsv | fzf | cut -f1)"
-  az account set --subscription $subId
+  az account set --subscription "$subId"
+}
+
+az-pr-open() {
+  branch="$(git symbolic-ref HEAD --short)"
+  data="$(az repos pr list -s "$branch" --query "[][repository.id, repository.url, repository.project.name, pullRequestId]" -o tsv)"
+  repoId="$(echo "$data" | cut -f1)"
+  domain="$(echo "$data" | cut -f2 | awk -F '[/:]' '{print $4}')"
+  repoName="$(echo "$data" | cut -f3)"
+  prId="$(echo "$data" | cut -f4)"
+  open "https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
 }
