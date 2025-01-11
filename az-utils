@@ -37,5 +37,6 @@ az-pr-open() {
   domain="$(echo "$data" | cut -f2 | awk -F '[/:]' '{print $4}')"
   repoName="$(echo "$data" | cut -f3)"
   prId="$(echo "$data" | cut -f4)"
-  open "https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
+  url="https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
+  xdg-open "$url"
 }
