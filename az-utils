@@ -38,5 +38,9 @@ az-pr-open() {
   repoName="$(echo "$data" | cut -f3)"
   prId="$(echo "$data" | cut -f4)"
   url="https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
-  xdg-open "$url"
+  if command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url"
+  else
+    open "$url"
+  fi
 }
