@@ -2,6 +2,7 @@
 # based on https://github.com/kovidgoyal/kitty/issues/719#issuecomment-952039731
 
 export PATH=$PATH:$HOME/.local/share/mise/installs/node/latest/bin
+export PATH=$PATH:/opt/homebrew/bin
 
 if [ "$#" -eq 3 ]; then
   INPUT_LINE_NUMBER=${1:-0}
