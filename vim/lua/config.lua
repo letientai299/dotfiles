@@ -128,12 +128,6 @@ vim.api.nvim_create_user_command(
 
 local oil_file_detail = false
 require("oil").setup({
-  columns = {
-    "icon",
-    -- "permissions",
-    -- "size",
-    -- "mtime",
-  },
   keymaps = {
     ['yp'] = {
       desc = 'Copy filepath to system clipboard',
