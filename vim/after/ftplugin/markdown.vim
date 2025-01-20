@@ -7,7 +7,7 @@ nnoremap <buffer> <c-space> :silent! .s/^\(\s*\)- \[\([x ]\)\]/\=submatch(2)==' 
   \: submatch(1) . '- [ ]'
   \<cr>:silent! noh<cr>
 
-let g:neoformat_enabled_markdown = ['yarn_prettier', 'remark', 'prettierd', 'prettier', 'denofmt', 'mdformat']
+let g:neoformat_enabled_markdown = ['yarn_prettier', 'prettierd', 'prettier', 'denofmt', 'mdformat', 'remark']
 
 let g:neoformat_markdown_yarn_prettier = {
   \ 'exe': 'yarn',
