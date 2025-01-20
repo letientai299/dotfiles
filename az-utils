@@ -22,7 +22,14 @@ az-open() {
   fi
 
   tenantId="$(az account show --query 'tenantId' -o tsv)"
-  xdg-open "https://portal.azure.com/#@${tenantId}/resource${id}"
+
+  if command -v xdg-open >/dev/null 2>&1; then
+    browse=xdg-open
+  else
+    browse=open
+  fi
+
+  $browse "https://portal.azure.com/#@${tenantId}/resource${id}"
 }
 
 az-switch() {
