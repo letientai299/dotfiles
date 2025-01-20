@@ -23,7 +23,7 @@
   "highlight.colors.enable": true,
   "highlight.document.enable": true,
   "highlight.colorNames.enable": true,
-  "prettier.onlyUseLocalVersion": true,
+  // "prettier.onlyUseLocalVersion": true,
   // typescripts
   "eslint.workingDirectories": [
     {
@@ -46,7 +46,7 @@
   // css
   //------------------------------------------------------------
   "css.lint.unknownAtRules": "ignore",
-  "prettier.formatterPriority": 2,
+  // "prettier.formatterPriority": 2,
   //------------------------------------------------------------
   // rust
   //------------------------------------------------------------
