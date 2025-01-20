@@ -179,6 +179,22 @@ require 'nvim-web-devicons'.setup {
 --------------------------------------------------------------------------------
 -- should call these after set colorscheme
 require("todo-comments").setup({
+  -- QUESTION
+  -- Q:
+  -- TODO
+  -- HACK
+  -- PERF
+  -- NOTE
+  -- TEST
+  -- XXX
+  -- FIX
+  -- BUG
+  -- ISSUE
+  -- WARN
+  keywords = {
+    QUESTION = { icon = "؟", color = "question", alt = { "Q:" } },
+  },
+
   highlight = {
     pattern = [[.*<(KEYWORDS).*:?]],
     comments_only = false,
@@ -186,6 +202,7 @@ require("todo-comments").setup({
 
   colors = {
     info = { "#34eb92" },
+    question = { "#c38bf7" },
   },
 
   search = {
