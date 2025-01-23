@@ -150,5 +150,5 @@ yazi_cd() {
   if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
     builtin cd -- "$cwd" || exit
   fi
-  /usr/bin/rm -f -- "$tmp"
+  rm -f -- "$tmp"
 }
