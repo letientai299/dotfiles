@@ -37,7 +37,6 @@ make_alias_open open pdf
 # I cannot remember the LibreOffice binary name
 make_alias_open soffice doc docx xls xlsx ppt pptx
 
-alias rm='trash'
 alias r='yazi_cd'
 
 alias vv="vim +VimwikiIndex"
