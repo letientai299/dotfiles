@@ -1,3 +1,5 @@
+.mise.local.toml
+
 .jira.d/ .dump/
 dump/
 *.dump.*
