@@ -42,7 +42,12 @@ if vim.g.started_by_firenvim == true then
   vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true, silent = true })
 
   -- vim.o.guifont = "Fira Code Nerd Font:h9"
-  vim.o.guifont = "FiraCode Nerd Font:h8"
+  if vim.fn.has('macunix') then
+    vim.o.guifont = "FiraCode Nerd Font:h13"
+  else
+    vim.o.guifont = "FiraCode Nerd Font:h8"
+  end
+
 
   -- disable various UI elements to have more text lines.
   vim.o.showtabline = 1
