@@ -154,25 +154,21 @@ yazi_cd() {
 }
 
 function killport() {
-    local port=$1
+    local port=""
     local force_yes=false
-    local pids
-    local process_info
 
-    # Check if -y flag is present
-    if [[ "$1" == "-y" ]]; then
-        force_yes=true
-        port=$2
-    fi
+    # Parse arguments in any order
+    for arg in "$@"; do
+        if [[ "$arg" == "-y" ]]; then
+            force_yes=true
+        elif [[ "$arg" =~ ^[0-9]+$ ]]; then
+            port="$arg"
+        fi
+    done
 
     # Validate port argument
     if [[ -z "$port" ]]; then
-        echo "Usage: killport [port] or killport -y [port]"
-        return 1
-    fi
-
-    if ! [[ "$port" =~ ^[0-9]+$ ]]; then
-        echo "Error: Port must be a number"
+        echo "Usage: killport [port] [-y] or killport [-y] [port]"
         return 1
     fi
 
@@ -210,3 +206,4 @@ function killport() {
         fi
     fi
 }
+
