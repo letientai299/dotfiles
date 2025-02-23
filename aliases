@@ -66,7 +66,7 @@ alias today="date +%Y-%m-%d"
 alias :q='exit'
 
 # Unix ports checking
-alias lsport="sudo lsof -n -P -i +c 13"
+alias lsport="lsof -n -P -i +c 13"
 
 # Git
 alias gcf!="git commit --amend --no-edit"
