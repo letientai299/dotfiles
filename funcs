@@ -190,7 +190,7 @@ function killport() {
     if [[ "$force_yes" == true ]]; then
         echo "Killing process(es)..."
         while IFS= read -r pid; do
-            kill "$pid" 2>/dev/null
+            kill -9 "$pid"
         done <<< "$pids"
         echo "Process(es) killed"
     else
@@ -198,7 +198,7 @@ function killport() {
         read -r answer
         if [[ $answer =~ ^[Yy]$ ]]; then
             while IFS= read -r pid; do
-                kill "$pid" 2>/dev/null
+                kill -9 "$pid"
             done <<< "$pids"
             echo "Process(es) killed"
         else
