@@ -152,3 +152,61 @@ yazi_cd() {
   fi
   rm -f -- "$tmp"
 }
+
+function killport() {
+    local port=$1
+    local force_yes=false
+    local pids
+    local process_info
+
+    # Check if -y flag is present
+    if [[ "$1" == "-y" ]]; then
+        force_yes=true
+        port=$2
+    fi
+
+    # Validate port argument
+    if [[ -z "$port" ]]; then
+        echo "Usage: killport [port] or killport -y [port]"
+        return 1
+    fi
+
+    if ! [[ "$port" =~ ^[0-9]+$ ]]; then
+        echo "Error: Port must be a number"
+        return 1
+    fi
+
+    # Find processes using the port
+    pids=$(lsof -i ":$port" -t 2>/dev/null)
+
+    if [[ -z "$pids" ]]; then
+        echo "No process found listening on port $port"
+        return 1
+    fi
+
+    # Show all processes using this port
+    echo "Found process(es) on port $port:"
+    while IFS= read -r pid; do
+        process_info=$(ps -p "$pid" -o pid,user,command | tail -n 1)
+        echo "$process_info"
+    done <<< "$pids"
+
+    if [[ "$force_yes" == true ]]; then
+        echo "Killing process(es)..."
+        while IFS= read -r pid; do
+            kill "$pid" 2>/dev/null
+        done <<< "$pids"
+        echo "Process(es) killed"
+    else
+        echo -n "Do you want to kill these process(es)? (y/N) "
+        read -r answer
+        if [[ $answer =~ ^[Yy]$ ]]; then
+            while IFS= read -r pid; do
+                kill "$pid" 2>/dev/null
+            done <<< "$pids"
+            echo "Process(es) killed"
+        else
+            echo "Operation cancelled"
+        fi
+    fi
+}
