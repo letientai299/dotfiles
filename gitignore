@@ -69,3 +69,4 @@ nohup.out
 # Nodejs
 # ignore v8 log
 *-v8.log
+.aider*
