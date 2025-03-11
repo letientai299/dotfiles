@@ -80,6 +80,9 @@ update_software() {
 
   # ensure zsh/kitty known about xterm-256color-italic
   tic "$DOTFILES/xterm-256color-italic.terminfo"
+
+  # update zsh plugins
+  antidote update
 }
 
 dkpg() {

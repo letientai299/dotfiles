@@ -47,6 +47,11 @@ alias vim=nvim
 alias ve="vim ~/.zshenv"
 alias vt="vim ~/.todo/todo.txt"
 
+# toggle console text line wrapping
+alias nowrap="tput rmam"
+alias wrap="tput smam"
+
+
 # Alias for the cmus player
 # alias cr="cmus-remote"
 # alias crst="cmus-remote -Q" # Status

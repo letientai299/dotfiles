@@ -2,8 +2,8 @@
 
 ohmyzsh/ohmyzsh path:lib
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:defer
-ohmyzsh/ohmyzsh path:plugins/git    kind:defer
-ohmyzsh/ohmyzsh path:plugins/docker kind:defer
+ohmyzsh/ohmyzsh path:plugins/git               kind:defer
+ohmyzsh/ohmyzsh path:plugins/docker            kind:defer
 
 # can't defer
 zsh-users/zsh-autosuggestions
@@ -20,4 +20,8 @@ Aloxaf/fzf-tab
 
 # config and run compinit
 belak/zsh-utils path:completion
+
+# manually gradle completionn, since we're using mise instead of sdkman to
+# manage gradle.
+gradle/gradle-completion kind:fpath
 
