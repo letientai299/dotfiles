@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -19,8 +19,16 @@ fi
 
 if type brew &>/dev/null
 then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    BREW_PREFIX="/opt/homebrew"
+  elif [[ "$OSTYPE" == "linux"* ]]; then
+    BREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  fi
+
+  if [[ -n "$BREW_PREFIX" ]]; then
+    FPATH="${BREW_PREFIX}/share/zsh/site-functions:${FPATH}"
+    FPATH=${BREW_PREFIX}/share/zsh-completions:$FPATH
+  fi
 fi
 
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
@@ -68,7 +76,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(zoxide init zsh)"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -87,4 +94,6 @@ for dump in ~/.zcompdump(N.mh+24); do
 done
 compinit -C
 
-zprof
+eval "$(zoxide init zsh)"
+
+# zprof

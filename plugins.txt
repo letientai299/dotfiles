@@ -25,3 +25,8 @@ belak/zsh-utils path:completion
 # manage gradle.
 gradle/gradle-completion kind:fpath
 
+
+# defers execution of a zsh command until zsh has nothing else to do and is
+# waiting for user input. 
+romkatv/zsh-defer
+
