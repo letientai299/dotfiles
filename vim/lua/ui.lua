@@ -9,26 +9,26 @@ alpha.setup(cfg.config)
 --------------------------------------------------------------------------------
 -- nightfox
 --------------------------------------------------------------------------------
-local nightfox = require("nightfox")
-nightfox.setup({
-  options = {
-    dim_inactive = true,
-    styles = {
-      -- Style to be applied to different syntax groups
-      comments = "italic", -- Value is any valid attr-list value `:help attr-list`
-      constants = "bold",
-      keywords = "italic",
-    },
-    modules = { -- List of various plugins and additional options
-      -- ...
-    },
-  },
-  palettes = {},
-  specs = {},
-  groups = {},
-})
+-- local nightfox = require("nightfox")
+-- nightfox.setup({
+  -- options = {
+    -- dim_inactive = true,
+    -- styles = {
+      -- -- Style to be applied to different syntax groups
+      -- comments = "italic", -- Value is any valid attr-list value `:help attr-list`
+      -- constants = "bold",
+      -- keywords = "italic",
+    -- },
+    -- modules = { -- List of various plugins and additional options
+      -- -- ...
+    -- },
+  -- },
+  -- palettes = {},
+  -- specs = {},
+  -- groups = {},
+-- })
 
-nightfox.compile()
+-- nightfox.compile()
 
 --------------------------------------------------------------------------------
 -- catppuccin
@@ -79,21 +79,21 @@ vim.cmd([[sil CatppuccinCompile]])
 --------------------------------------------------------------------------------
 -- tokyonight
 --------------------------------------------------------------------------------
-vim.g.tokyonight_colors = { comment = "#8c9fee" }
-require("tokyonight").setup({
-  styles = {
-    comments = { italic = true },
-    keywords = { italic = true },
-    functions = {},
-    variables = {},
-    sidebars = "transparent",
-    floats = "transparent",
-  },
-  sidebars = { "qf", "vista_kind", "terminal", "neo-tree" },
-  transparent = true, -- Enable this to disable setting the background color
-  hide_inactive_statusline = false,
-  dim_inactive = true,
-})
+-- vim.g.tokyonight_colors = { comment = "#8c9fee" }
+-- require("tokyonight").setup({
+  -- styles = {
+    -- comments = { italic = true },
+    -- keywords = { italic = true },
+    -- functions = {},
+    -- variables = {},
+    -- sidebars = "transparent",
+    -- floats = "transparent",
+  -- },
+  -- sidebars = { "qf", "vista_kind", "terminal", "neo-tree" },
+  -- transparent = true, -- Enable this to disable setting the background color
+  -- hide_inactive_statusline = false,
+  -- dim_inactive = true,
+-- })
 
 --------------------------------------------------------------------------------
 -- toggleterm

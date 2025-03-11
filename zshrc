@@ -1,4 +1,4 @@
-# zmodload zsh/zprof
+zmodload zsh/zprof
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -22,9 +22,6 @@ then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 fi
-
-autoload -Uz compinit
-compinit
 
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 zsh_plugins=${DOTFILES}/plugins.zsh
@@ -75,13 +72,6 @@ eval "$(zoxide init zsh)"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-compinit
-# zprof
-
 # pnpm
 export PNPM_HOME="/Users/tai/.local/share/pnpm"
 case ":$PATH:" in
@@ -89,3 +79,12 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
+zprof
