@@ -38,7 +38,7 @@ Plug 'EdenEast/nightfox.nvim'
 " I'm using vimwiki for taking note. Markdown is not enough and I can't get into
 " emacs and org mode despite all the times I've tried.
 " let vimwiki_ext2syntax = {}
-" Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
