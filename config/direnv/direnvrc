@@ -29,7 +29,7 @@ export_alias() {
   PATH_add "$alias_dir"
   shell="$0"
   echo "#!$SHELL -e" > "$target"
-  echo "$@" >> "$target"
+  echo "$@ \$@" >> "$target"
   chmod +x "$target"
 }
 
