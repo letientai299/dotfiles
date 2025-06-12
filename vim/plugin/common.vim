@@ -18,7 +18,7 @@ set expandtab
 " Use 2-spaces per tab
 set tabstop=2 softtabstop=2 shiftwidth=2
 set ignorecase smartcase incsearch hls
-set textwidth=80
+" set textwidth=80
 if !has('nvim')
   set encoding=utf8
 endif
