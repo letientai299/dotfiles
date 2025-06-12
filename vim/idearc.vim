@@ -3,6 +3,10 @@ let mapleader=" "
 " Include common settings
 source ~/.vim/plugin/common.vim
 
+# Disable auto wrap at textwidth
+set textwidth=0
+
+
 " https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
 
 " Use the new surround plugin
