@@ -83,6 +83,12 @@ update_software() {
 
   # update zsh plugins
   antidote update
+
+  # update mise tools and plugins
+  if command -v mise >/dev/null 2>&1; then
+    mise self-update
+    mise up -l --cd $TMPDIR
+  fi
 }
 
 dkpg() {
