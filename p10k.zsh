@@ -468,7 +468,7 @@
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
 
     local commit_subj
-    if commit_subj=$(git log -n1 --format=%s 2>/dev/null); then
+    if commit_subj=$(git log -n1 --format='%s (%ar)' 2>/dev/null); then
       if [[ -n $commit_subj ]]; then
         res+=" ${meta}${commit_subj//\%/%%}"
       fi
