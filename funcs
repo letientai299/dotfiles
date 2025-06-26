@@ -86,7 +86,7 @@ update_software() {
 
   # update mise tools and plugins
   if command -v mise >/dev/null 2>&1; then
-    mise self-update
+    mise self-update -y
     mise up -l --cd $TMPDIR
   fi
 }
