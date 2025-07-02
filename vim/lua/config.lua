@@ -128,6 +128,11 @@ vim.api.nvim_create_user_command(
 
 local oil_file_detail = false
 require("oil").setup({
+  view_options = {
+    show_hidden = true,
+  },
+  delete_to_trash = false,
+  skip_confirm_for_simple_edits = true,
   keymaps = {
     ['yp'] = {
       desc = 'Copy filepath to system clipboard',
