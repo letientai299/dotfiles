@@ -27,19 +27,13 @@ let g:mkdp_auto_close = 0
 let g:mkdp_refresh_slow = 1
 let g:mkdp_combine_preview = 1
 
-Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown', 'wiki']}
+Plug 'tyru/open-browser.vim', { 'for': [ 'md', 'markdown']}
 " Plug 'MTDL9/vim-log-highlighting', {'for': 'log'}
 
 Plug 'folke/tokyonight.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin'}
 Plug 'EdenEast/nightfox.nvim'
-
-" I'm using vimwiki for taking note. Markdown is not enough and I can't get into
-" emacs and org mode despite all the times I've tried.
-" let vimwiki_ext2syntax = {}
-Plug 'vimwiki/vimwiki', {'branch': 'dev'}
-
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.

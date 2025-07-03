@@ -44,38 +44,6 @@ command! SW w !sudo tee % > /dev/null
 " Reduce time waiting for mapped sequence
 set timeoutlen=300
 
-let vimwiki_html_path = $HOME.'/vimwiki_html/'
-let wiki = {}
-let wiki.path = $NOTE
-let wiki.syntax = 'default'
-let wiki.ext = '.wiki'
-let wiki.path_html = vimwiki_html_path
-let wiki.template_path = vimwiki_html_path.'assets/'
-let wiki.template_default = 'default'
-let wiki.template_ext = ".html"
-let wiki.nested_syntaxes ={
-      \'rust': 'rust',
-      \'python': 'python',
-      \'ruby': 'ruby',
-      \'py':     'python',
-      \'sql':     'pgsql',
-      \'c++':    'cpp',
-      \'c':      'c',
-      \'scala':  'scala',
-      \'java':   'java',
-      \'js':   'javascript',
-      \'gql':   'graphql',
-      \'go':   'go',
-      \'graphql':   'graphql'
-      \}
-
-let g:vimwiki_list = [wiki]
-let g:vimwiki_hl_headers=1
-let g:vimwiki_hl_cb_checked=1
-let g:vimwiki_conceallevel=0
-let g:vimwiki_conceal_onechar_markers=0
-let g:vimwiki_global_ext=0
-
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
 " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
