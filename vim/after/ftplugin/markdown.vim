@@ -13,10 +13,11 @@ let g:neoformat_enabled_markdown = ['prettierd', 'prettier', 'denofmt', 'mdforma
 " then add map <leader>dt to call NoteNow()
 if expand('%:p') =~# $NOTE . '/diary/'
   function! g:NoteNow() 
-    " let l:file = expand('%:p')
     " Append a h2 header with the current time to the end of the current file, 
-    call append(line("$"), '## ' . strftime('%H:%M'))
-    normal Ga
+    call append(line("$"), '## ' . strftime('%H:%M') )
+    call append(line("$"), '')
+    normal G
+    startinsert
   endfunction
 
   nnoremap <buffer> <leader>dt :call g:NoteNow()<cr>
