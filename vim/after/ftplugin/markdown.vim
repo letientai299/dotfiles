@@ -9,3 +9,15 @@ nnoremap <buffer> <c-space> :silent! .s/^\(\s*\)- \[\([x ]\)\]/\=submatch(2)==' 
 
 let g:neoformat_enabled_markdown = ['prettierd', 'prettier', 'denofmt', 'mdformat', 'remark']
 
+" if the markdown file path is under "$NOTE/diary" folder, 
+" then add map <leader>dt to call NoteNow()
+if expand('%:p') =~# $NOTE . '/diary/'
+  function! g:NoteNow() 
+    " let l:file = expand('%:p')
+    " Append a h2 header with the current time to the end of the current file, 
+    call append(line("$"), '## ' . strftime('%H:%M'))
+    normal Ga
+  endfunction
+
+  nnoremap <buffer> <leader>dt :call g:NoteNow()<cr>
+endif

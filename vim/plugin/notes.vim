@@ -13,8 +13,9 @@ function NoteToday() abort
   " follow with a new line
   call writefile(['## ' . strftime('%H:%M'), ''], l:note_path, 'a')
 
-  " Open the file at the last line.
+  " Open the file and the move cursor to the end
   execute 'edit ' . l:note_path
+  normal! G
 endfunction
 
 " register the function to be callable via ex command

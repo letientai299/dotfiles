@@ -39,7 +39,6 @@ make_alias_open soffice doc docx xls xlsx ppt pptx
 
 alias r='yazi_cd'
 
-alias vv="vim +VimwikiIndex"
 alias vd="vim +NoteToday"
 alias sv="sudo vim"
 alias vi=nvim
