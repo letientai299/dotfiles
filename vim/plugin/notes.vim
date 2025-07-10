@@ -20,3 +20,5 @@ endfunction
 
 " register the function to be callable via ex command
 command! NoteToday call NoteToday()
+
+nnoremap <leader>td :NoteToday<cr>
