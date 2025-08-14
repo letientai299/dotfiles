@@ -10,9 +10,9 @@ call plug#begin('$HOME/.vim-plugged')
 
 Plug 'https://github.com/lewis6991/impatient.nvim'
 
-" I'm try hard to reduce at much as possible the list of vim plugins I'm using,
-" yet I keep experience with new stuff, while compare them with built-in vim
-" feature (if it has one). Following plugins is what I feel essential.
+" for music
+Plug 'martineausimon/nvim-lilypond-suite'
+
 
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
