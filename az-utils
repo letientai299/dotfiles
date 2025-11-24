@@ -85,11 +85,6 @@ az-pr-open() {
 
     if [ $? -eq 0 ] && [[ ! $pr_output =~ ^ERROR: ]]; then
       echo "PR created successfully!"
-      if command -v xdg-open >/dev/null 2>&1; then
-        xdg-open "$pr_output"
-      else
-        open "$pr_output"
-      fi
     else
       echo "Failed to create PR:" >&2
       echo "$pr_output" >&2
@@ -104,18 +99,17 @@ az-pr-open() {
     else
       echo "Opening $pr_count existing PRs..."
     fi
+  fi
 
-  branch="$(git symbolic-ref HEAD --short)"
   data="$(az repos pr list -s "$branch" --query "[][repository.id, repository.url, repository.project.name, pullRequestId]" -o tsv)"
   repoId="$(echo "$data" | cut -f1)"
   domain="$(echo "$data" | cut -f2 | awk -F '[/:]' '{print $4}')"
   repoName="$(echo "$data" | cut -f3)"
   prId="$(echo "$data" | cut -f4)"
   url="https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
-      if command -v xdg-open >/dev/null 2>&1; then
-        xdg-open "$url"
-      else
-        open "$url"
-      fi
-    done <<< "$data"
+  if command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url"
+  else
+    open "$url"
+  fi
 }
