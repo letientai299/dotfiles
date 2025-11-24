@@ -38,6 +38,73 @@ az-switch() {
 }
 
 az-pr-open() {
+  local target_branch="${AZ_PR_TARGET_BRANCH:-main}"
+  local skip_confirm=false
+
+  # Parse flags
+  while getopts "t:y" opt; do
+    case $opt in
+      t) target_branch="$OPTARG" ;;
+      y) skip_confirm=true ;;
+      *) echo "Usage: az-pr-open [-t target_branch] [-y]" >&2; return 1 ;;
+    esac
+  done
+  shift $((OPTIND-1))
+
+  local branch="$(git symbolic-ref HEAD --short)"
+
+  # Check for existing PRs targeting the specified branch
+  local data="$(az repos pr list -s "$branch" --target-branch "$target_branch" --query "[][repository.id, repository.webUrl, repository.project.name, pullRequestId]" -o tsv 2>/dev/null)"
+
+  if [ -z "$data" ]; then
+    # No PR exists, create one
+    echo "No PR found for branch '$branch' targeting '$target_branch'."
+
+    # Check if branch exists on remote
+    if ! git ls-remote --heads origin "$branch" | grep -q "$branch"; then
+      echo "Branch '$branch' not found on remote. Pushing..."
+      if ! git push -u origin "$branch"; then
+        echo "Failed to push branch to remote." >&2
+        return 1
+      fi
+      echo "Branch pushed successfully."
+    fi
+
+    if [ "$skip_confirm" = false ]; then
+      read "REPLY?Create a new PR? [Y/n] "
+      REPLY=${REPLY:-Y}
+      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "PR creation cancelled."
+        return 0
+      fi
+    fi
+
+    echo "Creating PR..."
+    local pr_output
+    pr_output="$(az repos pr create -s "$branch" -t "$target_branch" --query 'url' -o tsv 2>&1)"
+
+    if [ $? -eq 0 ] && [[ ! $pr_output =~ ^ERROR: ]]; then
+      echo "PR created successfully!"
+      if command -v xdg-open >/dev/null 2>&1; then
+        xdg-open "$pr_output"
+      else
+        open "$pr_output"
+      fi
+    else
+      echo "Failed to create PR:" >&2
+      echo "$pr_output" >&2
+      return 1
+    fi
+  else
+    # One or more PRs exist, open them all
+    local pr_count=$(echo "$data" | wc -l | tr -d ' ')
+
+    if [ "$pr_count" -eq 1 ]; then
+      echo "Opening existing PR..."
+    else
+      echo "Opening $pr_count existing PRs..."
+    fi
+
   branch="$(git symbolic-ref HEAD --short)"
   data="$(az repos pr list -s "$branch" --query "[][repository.id, repository.url, repository.project.name, pullRequestId]" -o tsv)"
   repoId="$(echo "$data" | cut -f1)"
@@ -45,9 +112,10 @@ az-pr-open() {
   repoName="$(echo "$data" | cut -f3)"
   prId="$(echo "$data" | cut -f4)"
   url="https://${domain}/${repoName}/_git/${repoId}/pullrequest/${prId}"
-  if command -v xdg-open >/dev/null 2>&1; then
-    xdg-open "$url"
-  else
-    open "$url"
-  fi
+      if command -v xdg-open >/dev/null 2>&1; then
+        xdg-open "$url"
+      else
+        open "$url"
+      fi
+    done <<< "$data"
 }
