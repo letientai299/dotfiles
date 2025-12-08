@@ -6,8 +6,6 @@ dump/
 dump.*
 .dump
 
-index.md
-
 # Vim
 # temp file
 *.vim~
