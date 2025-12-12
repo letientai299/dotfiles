@@ -43,7 +43,7 @@ if vim.g.started_by_firenvim == true then
 
   -- vim.o.guifont = "Fira Code Nerd Font:h9"
   if vim.fn.has('macunix') then
-    vim.o.guifont = "FiraCode Nerd Font:h13"
+    vim.o.guifont = "FiraCode Nerd Font:h10"
   else
     vim.o.guifont = "FiraCode Nerd Font:h8"
   end
@@ -51,7 +51,7 @@ if vim.g.started_by_firenvim == true then
 
   -- disable various UI elements to have more text lines.
   vim.o.showtabline = 1
-  vim.o.showmode = false
+  vim.o.showmode = true
   vim.o.signcolumn = "no"
   vim.o.showcmd = false
   vim.o.linespace = -2
@@ -65,7 +65,7 @@ if vim.g.started_by_firenvim == true then
         vim.o.spell = true
       end
 
-      vim.fn.timer_start(100, function()
+      vim.fn.timer_start(300, function()
         if vim.o.lines < 20 then
           vim.o.lines = 30
         end
