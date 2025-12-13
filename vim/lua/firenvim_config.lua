@@ -77,7 +77,7 @@ if vim.g.started_by_firenvim == true then
   })
 
   vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = { "*" },
+    pattern = { "*.txt" },
     callback = function()
       vim.o.filetype = "markdown"
     end,
