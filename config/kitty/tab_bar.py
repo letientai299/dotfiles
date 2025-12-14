@@ -439,7 +439,8 @@ def draw_tab(
     
     ta = TabAccessor(tab.tab_id)
     cwd = ta.active_wd
-    process = ta.active_exe or tab.title  # Get actual process name
+    # Use oldest foreground process (the command you typed, not subprocesses like ssh)
+    process = ta.active_oldest_exe or ta.active_exe or tab.title
     
     # Build custom title with folder and process
     title_text = ""
