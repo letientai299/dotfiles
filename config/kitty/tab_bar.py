@@ -310,16 +310,13 @@ def _draw_right_status(screen: Screen):
     stats_parts.append(("󰻠 ", get_color(cpu_total), f"{cpu_user:.1f}%/{cpu_sys:.1f}%"))
     
     # Memory
-    stats_parts.append((" 󰍛 ", get_color(mem_percent), f"{mem_percent:.1f}%"))
+    stats_parts.append(("  󰍛 ", get_color(mem_percent), f"{mem_percent:.1f}%"))
     
-
     # Network
     vpn_name = _get_vpn_name()
+    stats_parts.append(("  󰈀 ", as_rgb(0xbd93f9), f"↓{format_network(rx_mb)} ↑{format_network(tx_mb)}"))
     if vpn_name:
-        net_text = f"󰈀 ↓{format_network(rx_mb)} ↑{format_network(tx_mb)} 󰖂 {vpn_name} "
-    else:
-        net_text = f"󰈀 ↓{format_network(rx_mb)} ↑{format_network(tx_mb)} "
-    stats_parts.append((net_text, None, None))
+        stats_parts.append(("  󰖂 ", as_rgb(0xff5555), vpn_name))
     
     # Calculate total length
     total_length = 0
@@ -357,12 +354,40 @@ def draw_tab(
 ) -> int:
     """Draw tab using kitty's built-in slanted powerline style"""
     
+    # Store original title
+    original_title = tab.title
+    
+    # Get working directory and format title
+    import os
+    try:
+        if hasattr(tab, 'active_wd') and tab.active_wd:
+            cwd = tab.active_wd
+            # Shorten home directory
+            home = os.path.expanduser('~')
+            if cwd.startswith(home):
+                cwd = '~' + cwd[len(home):]
+            
+            # Shorten long paths - show last 2 components
+            parts = [p for p in cwd.split('/') if p]
+            if len(parts) > 2:
+                cwd = '.../' + '/'.join(parts[-2:])
+            elif parts:
+                cwd = '/'.join(parts)
+            
+            # Format as [folder] process
+            tab.title = f"[{cwd}] {original_title}"
+    except:
+        pass
+    
     # Use kitty's built-in slanted powerline drawing
     draw_tab_with_powerline(
         draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
     )
     
-    # Add datetime on the right for the last tab
+    # Restore original title
+    tab.title = original_title
+    
+    # Add system stats on the right for the last tab
     if is_last:
         _draw_right_status(screen)
     
