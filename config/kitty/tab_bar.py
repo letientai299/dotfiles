@@ -1,5 +1,8 @@
 """Custom tab bar for Kitty with slanted powerline tabs and system stats"""
 import subprocess
+import json
+import os
+import tempfile
 from datetime import datetime
 from kitty.fast_data_types import Screen, get_options
 from kitty.tab_bar import (
@@ -13,6 +16,37 @@ from kitty.utils import color_as_int
 
 opts = get_options()
 
+# Shared cache file for all kitty processes
+CACHE_FILE = os.path.join(tempfile.gettempdir(), 'kitty_tab_stats.json')
+
+# Refresh intervals (in seconds)
+STATS_REFRESH_INTERVAL = 5  # CPU, Memory, Network stats refresh interval
+VPN_REFRESH_INTERVAL = 30    # VPN status refresh interval (changes less frequently)
+
+def _load_cache():
+    """Load cached stats from shared file"""
+    try:
+        if os.path.exists(CACHE_FILE):
+            with open(CACHE_FILE, 'r') as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {
+        'cpu': (0.0, 0.0),
+        'memory': (0.0, 0.0),
+        'network': (0.0, 0.0),
+        'vpn': None,
+        'timestamp': 0
+    }
+
+def _save_cache(data):
+    """Save stats to shared cache file"""
+    try:
+        with open(CACHE_FILE, 'w') as f:
+            json.dump(data, f)
+    except Exception:
+        pass
+
 
 def _get_cpu_usage():
     """Get CPU usage as (user%, sys%) - cross platform"""
@@ -20,16 +54,17 @@ def _get_cpu_usage():
         import os
         import time
         
-        # Cache previous values to calculate delta
+        # Load from shared cache on first call
         if not hasattr(_get_cpu_usage, 'prev_idle'):
+            cache = _load_cache()
             _get_cpu_usage.prev_idle = 0
             _get_cpu_usage.prev_total = 0
-            _get_cpu_usage.last_check = 0
-            _get_cpu_usage.cached_value = (0.0, 0.0)
+            _get_cpu_usage.last_check = cache.get('timestamp', 0)
+            _get_cpu_usage.cached_value = tuple(cache.get('cpu', (0.0, 0.0)))
         
-        # Only update every 15 seconds
+        # Only update every STATS_REFRESH_INTERVAL seconds
         now = time.time()
-        if now - _get_cpu_usage.last_check < 15.0:
+        if now - _get_cpu_usage.last_check < STATS_REFRESH_INTERVAL:
             return _get_cpu_usage.cached_value
         
         if os.path.exists('/proc/stat'):
@@ -65,29 +100,32 @@ def _get_cpu_usage():
             _get_cpu_usage.last_check = now
             return (user_percent, sys_percent)
         else:
-            # macOS - use top to get CPU usage (need 2 samples)
+            # macOS - use iostat (much faster than top: ~0.015s vs ~0.7s)
             result = subprocess.run(
-                ["top", "-l", "2", "-n", "0", "-s", "1"],
+                ["iostat", "-c", "1", "-w", "1"],
                 capture_output=True,
                 text=True,
-                timeout=2.5
+                timeout=0.5
             )
-            # Parse output to get CPU usage from the second sample
-            lines = result.stdout.split('\n')
-            cpu_line = None
-            for line in reversed(lines):
-                if 'CPU usage' in line:
-                    cpu_line = line
-                    break
-            
-            if cpu_line:
-                # Parse "CPU usage: 8.78% user, 7.55% sys, 83.65% idle"
-                parts = cpu_line.split(',')
-                user = float(parts[0].split(':')[1].strip().replace('%', '').split()[0])
-                sys = float(parts[1].strip().replace('%', '').split()[0])
-                _get_cpu_usage.cached_value = (user, sys)
-                _get_cpu_usage.last_check = now
-                return (user, sys)
+            # Parse iostat output - last line has CPU stats at the end
+            # Format: disk_stats... us sy id load_avg...
+            # Example: 44.33 1 0.03 ... 11 7 82 4.78 7.74 8.46
+            lines = result.stdout.strip().split('\n')
+            if len(lines) >= 2:
+                try:
+                    stats = lines[-1].split()
+                    if len(stats) >= 6:
+                        # CPU stats are at: [-6]=us, [-5]=sy, [-4]=id
+                        # (followed by 3 load averages at -3, -2, -1)
+                        us = float(stats[-6])
+                        sy = float(stats[-5])
+                        # Validate they're reasonable percentages
+                        if 0 <= us <= 100 and 0 <= sy <= 100:
+                            _get_cpu_usage.cached_value = (us, sy)
+                            _get_cpu_usage.last_check = now
+                            return (us, sy)
+                except (ValueError, IndexError):
+                    pass
             return _get_cpu_usage.cached_value
     except Exception:
         return getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0))
@@ -98,41 +136,49 @@ def _get_memory_usage():
     try:
         import time
         
-        # Cache previous values
+        # Load from shared cache on first call
         if not hasattr(_get_memory_usage, 'cached_value'):
-            _get_memory_usage.cached_value = (0.0, 0.0)
-            _get_memory_usage.last_check = 0
+            cache = _load_cache()
+            _get_memory_usage.cached_value = tuple(cache.get('memory', (0.0, 0.0)))
+            _get_memory_usage.last_check = cache.get('timestamp', 0)
         
-        # Only update every 15 seconds
+        # Only update every STATS_REFRESH_INTERVAL seconds
         now = time.time()
-        if now - _get_memory_usage.last_check < 15.0:
+        if now - _get_memory_usage.last_check < STATS_REFRESH_INTERVAL:
             return _get_memory_usage.cached_value
         
+        # Use sysctl for total memory (faster) and vm_stat for detailed usage
+        # Get total memory first (very fast: 0.003s)
+        total_result = subprocess.run(
+            ["sysctl", "-n", "hw.memsize"],
+            capture_output=True,
+            text=True,
+            timeout=0.2
+        )
+        total = int(total_result.stdout.strip()) / (1024 ** 3)  # Convert to GB
+        
+        # Get memory usage from vm_stat (fast: 0.004s)
         result = subprocess.run(
             ["vm_stat"],
             capture_output=True,
             text=True,
-            timeout=0.5
+            timeout=0.3
         )
         lines = result.stdout.split('\n')
         
         page_size = 4096
-        free = active = inactive = wired = 0
+        active = wired = 0
         
         for line in lines:
             if 'page size of' in line:
                 page_size = int(line.split()[-2])
-            elif 'Pages free' in line:
-                free = int(line.split()[-1].rstrip('.'))
             elif 'Pages active' in line:
                 active = int(line.split()[-1].rstrip('.'))
-            elif 'Pages inactive' in line:
-                inactive = int(line.split()[-1].rstrip('.'))
             elif 'Pages wired down' in line:
                 wired = int(line.split()[-1].rstrip('.'))
         
+        # Only count active and wired as "used" (more accurate)
         used = (active + wired) * page_size / (1024 ** 3)
-        total = (free + active + inactive + wired) * page_size / (1024 ** 3)
         
         _get_memory_usage.cached_value = (used, total)
         _get_memory_usage.last_check = now
@@ -147,13 +193,15 @@ def _get_network_stats():
         import os
         import time
         
-        # Cache previous values to calculate rate
+        # Load from shared cache on first call
         if not hasattr(_get_network_stats, 'prev_rx'):
+            cache = _load_cache()
             _get_network_stats.prev_rx = 0
             _get_network_stats.prev_tx = 0
-            _get_network_stats.prev_time = time.time()
-            _get_network_stats.rx_rate = 0.0
-            _get_network_stats.tx_rate = 0.0
+            _get_network_stats.prev_time = cache.get('timestamp', time.time())
+            cached_net = cache.get('network', (0.0, 0.0))
+            _get_network_stats.rx_rate = cached_net[0] * 1024  # Convert back to bytes
+            _get_network_stats.tx_rate = cached_net[1] * 1024
         
         rx_bytes = 0
         tx_bytes = 0
@@ -184,28 +232,34 @@ def _get_network_stats():
                 except:
                     continue
         else:
-            # macOS - use netstat
+            # macOS - use netstat (very fast: 0.005s)
             result = subprocess.run(
                 ["netstat", "-ibn"],
                 capture_output=True,
                 text=True,
-                timeout=0.5
+                timeout=0.3  # Reduced timeout since it's fast
             )
+            # Optimized parsing - skip header and lo0
             for line in result.stdout.split('\n'):
+                if '<Link#' not in line or 'lo0' in line:
+                    continue
                 parts = line.split()
-                if len(parts) >= 10 and parts[0] not in ['lo0', 'Name', 'Ibytes', 'Obytes']:
-                    if '<Link#' in line:
-                        try:
-                            rx_bytes += int(parts[6]) if parts[6].isdigit() else 0
-                            tx_bytes += int(parts[9]) if parts[9].isdigit() else 0
-                        except (ValueError, IndexError):
-                            continue
+                if len(parts) >= 10:
+                    try:
+                        # Columns: Name Mtu Network Address Ipkts Ierrs Ibytes Opkts Oerrs Obytes
+                        rx = parts[6]
+                        tx = parts[9]
+                        if rx.isdigit() and tx.isdigit():
+                            rx_bytes += int(rx)
+                            tx_bytes += int(tx)
+                    except (ValueError, IndexError):
+                        continue
         
         # Calculate rate (bytes per second)
         current_time = time.time()
         time_delta = current_time - _get_network_stats.prev_time
         
-        if time_delta >= 15.0:  # Update every 15 seconds
+        if time_delta >= STATS_REFRESH_INTERVAL:  # Update every STATS_REFRESH_INTERVAL seconds
             rx_delta = rx_bytes - _get_network_stats.prev_rx
             tx_delta = tx_bytes - _get_network_stats.prev_tx
             
@@ -226,19 +280,20 @@ def _get_network_stats():
 
 
 def _get_vpn_name():
-    """Get active VPN connection name - cross platform"""
+    """Get active VPN connection name - cross platform, optimized"""
     try:
         import os
         import time
         
-        # Cache VPN status
+        # Load from shared cache on first call
         if not hasattr(_get_vpn_name, 'cached_value'):
-            _get_vpn_name.cached_value = None
-            _get_vpn_name.last_check = 0
+            cache = _load_cache()
+            _get_vpn_name.cached_value = cache.get('vpn')
+            _get_vpn_name.last_check = cache.get('timestamp', 0)
         
-        # Only update every 15 seconds
+        # Only update every VPN_REFRESH_INTERVAL seconds (VPN state changes rarely)
         now = time.time()
-        if now - _get_vpn_name.last_check < 15.0:
+        if now - _get_vpn_name.last_check < VPN_REFRESH_INTERVAL:
             return _get_vpn_name.cached_value
         
         vpn_name = None
@@ -252,15 +307,16 @@ def _get_vpn_name():
                         vpn_name = iface
                         break
         else:
-            # macOS - check for active VPN via scutil
+            # macOS - check for active VPN via scutil with status command (faster)
             result = subprocess.run(
                 ["scutil", "--nc", "list"],
                 capture_output=True,
                 text=True,
-                timeout=0.5
+                timeout=0.3  # Reduced timeout
             )
+            # Early exit on first match
             for line in result.stdout.split('\n'):
-                if '(Connected)' in line:
+                if '(Connected)' in line and '"' in line:
                     # Parse line like: "* (Connected)       ABCD1234-...  IPSec        "VPN Name""
                     parts = line.split('"')
                     if len(parts) >= 2:
@@ -268,10 +324,21 @@ def _get_vpn_name():
                         # Ignore Tailscale VPN
                         if 'tailscale' not in name.lower():
                             vpn_name = name
-                        break
+                            break
         
         _get_vpn_name.cached_value = vpn_name
         _get_vpn_name.last_check = now
+        
+        # Save to shared cache
+        _save_cache({
+            'cpu': getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0)),
+            'memory': getattr(_get_memory_usage, 'cached_value', (0.0, 0.0)),
+            'network': (getattr(_get_network_stats, 'rx_rate', 0.0) / 1024, 
+                       getattr(_get_network_stats, 'tx_rate', 0.0) / 1024),
+            'vpn': vpn_name,
+            'timestamp': now
+        })
+        
         return vpn_name
     except Exception:
         return getattr(_get_vpn_name, 'cached_value', None)
@@ -315,15 +382,16 @@ def _draw_right_status(screen: Screen):
     # Memory
     stats_parts.append(("  󰍛 ", get_color(mem_percent), f"{mem_percent:.1f}%"))
     
-    # Network
+    # Network - icon red if VPN is connected (excluding Tailscale), dimmer white text
     vpn_name = _get_vpn_name()
-    stats_parts.append(("  󰈀 ", as_rgb(0xbd93f9), f"↓{format_network(rx_mb)} ↑{format_network(tx_mb)}"))
-    if vpn_name:
-        stats_parts.append(("  󰖂 ", as_rgb(0xff5555), vpn_name))
+    network_icon_color = as_rgb(0xff5555) if vpn_name else as_rgb(0xcccccc)  # Red if VPN, dimmer white otherwise
+    stats_parts.append(("  󰈀 ", network_icon_color, as_rgb(0xaaaaaa), f"↓{format_network(rx_mb)} ↑{format_network(tx_mb)}"))
     
     # Calculate total length
     total_length = 0
-    for icon, _, text in stats_parts:
+    for item in stats_parts:
+        icon = item[0]
+        text = item[-1]
         total_length += len(icon) + (len(text) if text else 0)
     
     # Calculate padding
@@ -335,14 +403,22 @@ def _draw_right_status(screen: Screen):
         
         # Draw each part with appropriate colors
         default_fg = screen.cursor.fg
-        for icon, color, text in stats_parts:
-            if color:
-                screen.cursor.fg = color
-            screen.draw(icon)
-            if text:
-                screen.draw(text)
-            if color:
-                screen.cursor.fg = default_fg
+        for item in stats_parts:
+            if len(item) == 4:  # icon, icon_color, text_color, text
+                icon, icon_color, text_color, text = item
+                screen.cursor.fg = icon_color
+                screen.draw(icon)
+                if text:
+                    screen.cursor.fg = text_color
+                    screen.draw(text)
+            else:  # icon, color, text (old format for CPU/Memory)
+                icon, color, text = item
+                if color:
+                    screen.cursor.fg = color
+                screen.draw(icon)
+                if text:
+                    screen.draw(text)
+        screen.cursor.fg = default_fg
 
 
 def draw_tab(
@@ -396,31 +472,14 @@ def draw_tab(
         bg = 0x3a3a3a  # Medium dark gray for active
         fg = 0xffffff  # White
     else:
-        bg = 0x2a2a2a  # Dark gray for inactive
-        fg = 0x999999  # Light gray for inactive
+        bg = 0x1a1a1a  # Very dark gray for inactive (more dimmed)
+        fg = 0x666666  # Darker gray text for inactive
     
-    # Powerline separator characters - angled chevron style
-    left_sep = '\ue0b0'   # Powerline right-pointing chevron
-    right_sep = '\ue0b2'  # Powerline left-pointing chevron
+    # Powerline separator character - right-pointing chevron only
+    right_sep = '\ue0b0'   # Powerline right-pointing chevron
     
-    # Get the background color of what comes before this tab
-    tab_bar_bg = 0x000000  # Pure black tab bar background
-    if index == 0:
-        prev_bg = as_rgb(tab_bar_bg)
-    else:
-        # Previous tab's background (alternates based on active state)
-        prev_bg = as_rgb(tab_bar_bg)
-    
-    # Get the background color of what comes after this tab
-    if is_last:
-        next_bg = as_rgb(tab_bar_bg)
-    else:
-        next_bg = as_rgb(tab_bar_bg)
-    
-    # Draw left separator with slant
-    screen.cursor.bg = prev_bg
-    screen.cursor.fg = as_rgb(bg)
-    screen.draw(left_sep)
+    # Tab bar background color - matches inactive tab background
+    tab_bar_bg = 0x1a1a1a  # Very dark gray (same as inactive)
     
     # Draw tab background and content
     screen.cursor.bg = as_rgb(bg)
@@ -430,10 +489,16 @@ def draw_tab(
     screen.draw(' ')
     
     if cwd:
-        # Very light colors for maximum contrast
-        icon_color_rgb = (255, 255, 255)      # Pure white for icons
-        folder_color_rgb = (255, 230, 180)    # Very light cream
-        process_color_rgb = (210, 255, 210)   # Very light green
+        # Adjust colors based on active/inactive state
+        if tab.is_active:
+            icon_color_rgb = (255, 255, 255)      # Pure white for icons
+            folder_color_rgb = (255, 230, 180)    # Very light cream
+            process_color_rgb = (210, 255, 210)   # Very light green
+        else:
+            # Dimmed colors for inactive tabs
+            icon_color_rgb = (150, 150, 150)      # Dimmed gray for icons
+            folder_color_rgb = (180, 160, 130)    # Dimmed cream
+            process_color_rgb = (140, 180, 140)   # Dimmed green
         
         folder_icon = '\uf07c '  # Folder icon from nerd fonts
         
@@ -457,12 +522,19 @@ def draw_tab(
     screen.draw(' ')
     
     # Draw right separator
-    screen.cursor.bg = next_bg
-    screen.cursor.fg = as_rgb(bg)
-    screen.draw(right_sep)
-    
-    # Add system stats on the right for the last tab
     if is_last:
+        # Last tab: transition to pure black tab bar background
+        screen.cursor.bg = as_rgb(0x000000)  # Pure black
+        screen.cursor.fg = as_rgb(bg)
+        screen.draw(right_sep)
+        
+        # Then draw stats on pure black background
+        screen.cursor.bg = as_rgb(0x000000)
         _draw_right_status(screen)
+    else:
+        # Not last tab: transition to tab bar background (inactive color)
+        screen.cursor.bg = as_rgb(tab_bar_bg)
+        screen.cursor.fg = as_rgb(bg)
+        screen.draw(right_sep)
     
     return screen.cursor.x
