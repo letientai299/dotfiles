@@ -352,40 +352,54 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    """Draw tab using kitty's built-in slanted powerline style"""
+    """Draw tab with folder path and process name with fancy colors"""
     
-    # Store original title
-    original_title = tab.title
-    
-    # Get working directory and format title
+    # Get working directory and process name using TabAccessor
+    from kitty.tab_bar import TabAccessor
     import os
-    try:
-        if hasattr(tab, 'active_wd') and tab.active_wd:
-            cwd = tab.active_wd
-            # Shorten home directory
-            home = os.path.expanduser('~')
-            if cwd.startswith(home):
-                cwd = '~' + cwd[len(home):]
-            
-            # Shorten long paths - show last 2 components
-            parts = [p for p in cwd.split('/') if p]
-            if len(parts) > 2:
-                cwd = '.../' + '/'.join(parts[-2:])
-            elif parts:
-                cwd = '/'.join(parts)
-            
-            # Format as [folder] process
-            tab.title = f"[{cwd}] {original_title}"
-    except:
-        pass
+    
+    ta = TabAccessor(tab.tab_id)
+    cwd = ta.active_wd
+    process = ta.active_exe or tab.title  # Get actual process name
+    
+    # Build custom title with folder and process
+    if cwd:
+        # Shorten home directory
+        home = os.path.expanduser('~')
+        if cwd.startswith(home):
+            cwd = '~' + cwd[len(home):]
+        
+        # Keep only last directory component if too long
+        parts = [p for p in cwd.split('/') if p]
+        if len(parts) > 1:
+            cwd = parts[-1]
+        elif parts:
+            cwd = '/'.join(parts)
+        
+        # Use color codes for folder and process - same colors for both active and inactive
+        folder_color = '\x1b[38;2;215;95;0m'  # Dark orange
+        process_color = '\x1b[38;2;50;50;50m'  # Very dark gray
+        reset = '\x1b[39m'
+        tab = tab._replace(title=f"{folder_color}{cwd}{reset} {process_color}{process}{reset}")
+    
+    # Custom colors for tabs
+    if tab.is_active:
+        # Active tab: bright light background
+        draw_data = draw_data._replace(
+            active_bg=as_rgb(0xe0e0e0),
+            active_fg=as_rgb(0x303030)
+        )
+    else:
+        # Inactive tab: dimmer background, same foreground colors
+        draw_data = draw_data._replace(
+            inactive_bg=as_rgb(0xa0a0a0),
+            inactive_fg=as_rgb(0x303030)
+        )
     
     # Use kitty's built-in slanted powerline drawing
     draw_tab_with_powerline(
         draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
     )
-    
-    # Restore original title
-    tab.title = original_title
     
     # Add system stats on the right for the last tab
     if is_last:
