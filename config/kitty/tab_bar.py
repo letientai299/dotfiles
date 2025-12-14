@@ -264,7 +264,10 @@ def _get_vpn_name():
                     # Parse line like: "* (Connected)       ABCD1234-...  IPSec        "VPN Name""
                     parts = line.split('"')
                     if len(parts) >= 2:
-                        vpn_name = parts[1]
+                        name = parts[1]
+                        # Ignore Tailscale VPN
+                        if 'tailscale' not in name.lower():
+                            vpn_name = name
                         break
         
         _get_vpn_name.cached_value = vpn_name
@@ -376,24 +379,27 @@ def draw_tab(
         elif parts:
             cwd = '/'.join(parts)
         
-        # Use color codes for folder and process - same colors for both active and inactive
-        folder_color = '\x1b[38;2;215;95;0m'  # Dark orange
-        process_color = '\x1b[38;2;50;50;50m'  # Very dark gray
+        # Very light colors on really dark background for maximum contrast
+        folder_icon = '  '  # Folder icon
+        process_icon = '  '  # Terminal/CLI icon
+        icon_color = '\x1b[38;2;240;240;240m'  # Very light gray (almost white)
+        folder_color = '\x1b[38;2;255;230;180m'  # Very light cream/orange
+        process_color = '\x1b[38;2;210;255;210m'  # Very light green
         reset = '\x1b[39m'
-        tab = tab._replace(title=f"{folder_color}{cwd}{reset} {process_color}{process}{reset}")
+        tab = tab._replace(title=f"{icon_color}{folder_icon}{reset}{folder_color}{cwd}{reset} {icon_color}{process_icon}{reset}{process_color}{process}{reset}")
     
-    # Custom colors for tabs
+    # Pure black backgrounds
     if tab.is_active:
-        # Active tab: bright light background
+        # Active tab: pure black
         draw_data = draw_data._replace(
-            active_bg=as_rgb(0xe0e0e0),
-            active_fg=as_rgb(0x303030)
+            active_bg=as_rgb(0x000000),
+            active_fg=as_rgb(0xffffff)
         )
     else:
-        # Inactive tab: dimmer background, same foreground colors
+        # Inactive tab: pure black
         draw_data = draw_data._replace(
-            inactive_bg=as_rgb(0xa0a0a0),
-            inactive_fg=as_rgb(0x303030)
+            inactive_bg=as_rgb(0x000000),
+            inactive_fg=as_rgb(0xffffff)
         )
     
     # Use kitty's built-in slanted powerline drawing
