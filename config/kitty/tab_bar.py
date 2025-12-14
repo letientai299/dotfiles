@@ -355,7 +355,7 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    """Draw tab with folder path and process name with fancy colors"""
+    """Draw tab with folder path and process name with custom powerline drawing"""
     
     # Get working directory and process name using TabAccessor
     from kitty.tab_bar import TabAccessor
@@ -366,6 +366,7 @@ def draw_tab(
     process = ta.active_exe or tab.title  # Get actual process name
     
     # Build custom title with folder and process
+    title_text = ""
     if cwd:
         # Shorten home directory
         home = os.path.expanduser('~')
@@ -379,33 +380,86 @@ def draw_tab(
         elif parts:
             cwd = '/'.join(parts)
         
-        # Very light colors on really dark background for maximum contrast
+        # Build title without ANSI codes first
         folder_icon = '  '  # Folder icon
         process_icon = '  '  # Terminal/CLI icon
-        icon_color = '\x1b[38;2;240;240;240m'  # Very light gray (almost white)
-        folder_color = '\x1b[38;2;255;230;180m'  # Very light cream/orange
-        process_color = '\x1b[38;2;210;255;210m'  # Very light green
-        reset = '\x1b[39m'
-        tab = tab._replace(title=f"{icon_color}{folder_icon}{reset}{folder_color}{cwd}{reset} {icon_color}{process_icon}{reset}{process_color}{process}{reset}")
-    
-    # Pure black backgrounds
-    if tab.is_active:
-        # Active tab: pure black
-        draw_data = draw_data._replace(
-            active_bg=as_rgb(0x000000),
-            active_fg=as_rgb(0xffffff)
-        )
+        title_text = f"{folder_icon}{cwd} {process_icon}{process}"
     else:
-        # Inactive tab: pure black
-        draw_data = draw_data._replace(
-            inactive_bg=as_rgb(0x000000),
-            inactive_fg=as_rgb(0xffffff)
-        )
+        title_text = tab.title
     
-    # Use kitty's built-in slanted powerline drawing
-    draw_tab_with_powerline(
-        draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
-    )
+    # Truncate title if needed
+    if len(title_text) > max_title_length:
+        title_text = title_text[:max_title_length - 1] + '…'
+    
+    # Define colors - lighter background with very light foreground
+    if tab.is_active:
+        bg = 0x3a3a3a  # Medium dark gray for active
+        fg = 0xffffff  # White
+    else:
+        bg = 0x2a2a2a  # Dark gray for inactive
+        fg = 0x999999  # Light gray for inactive
+    
+    # Powerline separator characters - angled chevron style
+    left_sep = '\ue0b0'   # Powerline right-pointing chevron
+    right_sep = '\ue0b2'  # Powerline left-pointing chevron
+    
+    # Get the background color of what comes before this tab
+    tab_bar_bg = 0x000000  # Pure black tab bar background
+    if index == 0:
+        prev_bg = as_rgb(tab_bar_bg)
+    else:
+        # Previous tab's background (alternates based on active state)
+        prev_bg = as_rgb(tab_bar_bg)
+    
+    # Get the background color of what comes after this tab
+    if is_last:
+        next_bg = as_rgb(tab_bar_bg)
+    else:
+        next_bg = as_rgb(tab_bar_bg)
+    
+    # Draw left separator with slant
+    screen.cursor.bg = prev_bg
+    screen.cursor.fg = as_rgb(bg)
+    screen.draw(left_sep)
+    
+    # Draw tab background and content
+    screen.cursor.bg = as_rgb(bg)
+    screen.cursor.fg = as_rgb(fg)
+    
+    # Add padding and draw title with inline colors
+    screen.draw(' ')
+    
+    if cwd:
+        # Very light colors for maximum contrast
+        icon_color_rgb = (255, 255, 255)      # Pure white for icons
+        folder_color_rgb = (255, 230, 180)    # Very light cream
+        process_color_rgb = (210, 255, 210)   # Very light green
+        
+        folder_icon = '\uf07c '  # Folder icon from nerd fonts
+        
+        # Draw in format: <process> <icon> <dir>
+        # Draw process name first
+        screen.cursor.fg = as_rgb(process_color_rgb[0] << 16 | process_color_rgb[1] << 8 | process_color_rgb[2])
+        screen.draw(process)
+        
+        screen.draw(' ')
+        
+        # Draw folder icon
+        screen.cursor.fg = as_rgb(icon_color_rgb[0] << 16 | icon_color_rgb[1] << 8 | icon_color_rgb[2])
+        screen.draw(folder_icon)
+        
+        # Draw directory name
+        screen.cursor.fg = as_rgb(folder_color_rgb[0] << 16 | folder_color_rgb[1] << 8 | folder_color_rgb[2])
+        screen.draw(cwd)
+    else:
+        screen.draw(title_text)
+    
+    screen.draw(' ')
+    
+    # Draw right separator
+    screen.cursor.bg = next_bg
+    screen.cursor.fg = as_rgb(bg)
+    screen.draw(right_sep)
     
     # Add system stats on the right for the last tab
     if is_last:
