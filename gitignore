@@ -5,6 +5,8 @@ dump/
 *.dump.*
 dump.*
 .dump
+*.temp.*
+temp.*
 
 # Vim
 # temp file
