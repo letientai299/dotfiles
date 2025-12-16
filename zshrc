@@ -8,27 +8,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Put the dotfile location into path
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export DOTFILES="$(dirname $(realpath ~/.zshrc))"
-else
-  export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
+# Cache DOTFILES to avoid repeated realpath/readlink calls
+if [[ -z "$DOTFILES" ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    export DOTFILES="$(dirname $(realpath ~/.zshrc))"
+  else
+    export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
+  fi
 fi
 
-# must run it once before loading zsh-completions via antidote
-# as that plugin requires compdef
+# Hardcode BREW_PREFIX to avoid slow `type brew` check
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  BREW_PREFIX="/opt/homebrew"
+elif [[ "$OSTYPE" == "linux"* ]]; then
+  BREW_PREFIX="/home/linuxbrew/.linuxbrew"
+fi
 
-if type brew &>/dev/null
-then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    BREW_PREFIX="/opt/homebrew"
-  elif [[ "$OSTYPE" == "linux"* ]]; then
-    BREW_PREFIX="/home/linuxbrew/.linuxbrew"
-  fi
-
-  if [[ -n "$BREW_PREFIX" ]]; then
-    FPATH="${BREW_PREFIX}/share/zsh/site-functions:${FPATH}"
-    FPATH=${BREW_PREFIX}/share/zsh-completions:$FPATH
-  fi
+if [[ -n "$BREW_PREFIX" && -d "$BREW_PREFIX" ]]; then
+  FPATH="${BREW_PREFIX}/share/zsh/site-functions:${FPATH}"
+  FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
 fi
 
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
@@ -75,7 +73,17 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf setup - use evalcache if available, otherwise use direct source
+if [[ -f ~/.fzf.zsh ]]; then
+  if [[ ! "$PATH" == */Users/tai/.fzf/bin* ]]; then
+    PATH="${PATH:+${PATH}:}/Users/tai/.fzf/bin"
+  fi
+  if (( $+functions[_evalcache] )); then
+    _evalcache fzf --zsh
+  else
+    source <(fzf --zsh)
+  fi
+fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -87,14 +95,16 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# compinit is already called by belak/zsh-utils completion plugin
+# DO NOT call it again here - multiple compinit calls are very slow!
+# The belak plugin handles cache checking with 20h timeout.
 
-autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
-
-eval "$(zoxide init zsh)"
+# zoxide init - use evalcache for faster startup
+if (( $+functions[_evalcache] )); then
+  _evalcache zoxide init zsh
+else
+  eval "$(zoxide init zsh)"
+fi
 
 # zprof
 

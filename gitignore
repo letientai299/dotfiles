@@ -71,3 +71,5 @@ nohup.out
 # ignore v8 log
 *-v8.log
 .aider*
+
+*.tsbuildinfo
