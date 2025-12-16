@@ -45,15 +45,15 @@ style = "bold purple"
 format = '([$all_status$ahead_behind]($style) )'
 style = "none"
 conflicted = "[󰞇](bold red)"
-ahead = "[󰜷${count}](green)"
-behind = "[󰜮${count}](yellow)"
+ahead = "[${count}](green)"
+behind = "[${count}](yellow)"
 diverged = "[󰃻${ahead_count}](green)[󰃽${behind_count}](yellow)"
 untracked = "[󰜄](bright-cyan)"
-stashed = "[󰆓](bright-magenta)"
+stashed = "[󰆓](bright-orange)"
 modified = "[󰏫](yellow)"
-staged = "[󰐗](green)"
-renamed = "[󰑕](blue)"
-deleted = "[󰆴](red)"
+staged = "[+](green)"
+renamed = "[](blue)"
+deleted = "[-](red)"
 
 # Custom: Last git commit message
 [custom.git_commit]
