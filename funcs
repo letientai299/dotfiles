@@ -39,6 +39,67 @@ antidote-regen() {
   echo "Done. Restart shell or run: source $zsh_plugins"
 }
 
+# Start git fsmonitor daemon for current repo (speeds up git status/diff)
+# Usage: git-fsm [start|stop|status]
+git-fsm() {
+  local action="${1:-start}"
+  case "$action" in
+    start)
+      git fsmonitor--daemon start 2>/dev/null && echo "fsmonitor daemon started" || echo "already running or not a git repo"
+      ;;
+    stop)
+      git fsmonitor--daemon stop 2>/dev/null && echo "fsmonitor daemon stopped" || echo "not running"
+      ;;
+    status)
+      git fsmonitor--daemon status 2>&1
+      ;;
+    *)
+      echo "Usage: git-fsm [start|stop|status]"
+      ;;
+  esac
+}
+
+# Remove entries from zsh history interactively using fzf
+# Usage: hist-del        # Select entries with fzf to delete
+#        hist-del -1     # Delete last entry
+#        hist-del "pattern"  # Delete entries matching pattern
+hist-del() {
+  local histfile="${HISTFILE:-$HOME/.zsh_history}"
+  
+  if [[ "$1" == "-1" ]]; then
+    # Delete last entry
+    fc -W
+    sed -i '' '$d' "$histfile"
+    fc -R
+    echo "Deleted last history entry"
+  elif [[ -n "$1" ]]; then
+    # Delete by pattern
+    fc -W
+    local count=$(grep -c "$1" "$histfile")
+    sed -i '' "/$1/d" "$histfile"
+    fc -R
+    echo "Deleted $count entries matching: $1"
+  else
+    # Interactive fzf selection (multi-select with Tab)
+    fc -W
+    local selections=$(fc -l 1 | fzf --multi --tac --no-sort \
+      --header="Tab to select multiple, Enter to delete" \
+      --preview="echo {}" --preview-window=up:1)
+    
+    [[ -z "$selections" ]] && echo "Nothing selected" && return 0
+    
+    # Extract line numbers and delete from newest to oldest
+    local nums=$(echo "$selections" | awk '{print $1}' | sort -rn)
+    local count=0
+    for n in ${(f)nums}; do
+      sed -i '' "${n}d" "$histfile"
+      ((count++))
+    done
+    fc -R
+    echo "Deleted $count history entries"
+  fi
+}
+
 # Open the ebook from command line using zathura, this also make za an alias to
 # zathura.
 # Usage:

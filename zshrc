@@ -77,16 +77,6 @@ fi
 # Source the static plugins file (fast path - no antidote overhead)
 source $zsh_plugins
 
-# Compile zcompdump in background for faster subsequent loads
-# This runs after zsh-defer sources the completion plugin
-zsh-defer -c '
-  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-  # Compile if dump exists and is newer than compiled version
-  if [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]]; then
-    zcompile "$zcompdump" &!
-  fi
-'
-
 # Load custom shell script
 for file in "$DOTFILES"/{exports,aliases,funcs,bindkeys,az-utils}; do
   source "$file"
@@ -123,6 +113,16 @@ else
   eval "$(starship init zsh)"
 fi
 
+# fzf and zoxide - use evalcache (cached = fast, no subprocess)
+# These are loaded synchronously since evalcache makes them instant
+if (( $+functions[_evalcache] )); then
+  _evalcache fzf --zsh
+  _evalcache zoxide init zsh
+else
+  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+  eval "$(zoxide init zsh)"
+fi
+
 # PATH additions (fast, no subprocess)
 export PATH="$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
 
@@ -134,22 +134,16 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Defer fzf and zoxide initialization - not needed until first use
-# This saves ~10ms on startup
+# Background maintenance tasks (no visible process churn)
+# Uses &! to fully disown so they don't appear in kitty tab bar
 zsh-defer -c '
-  # fzf keybindings and completion
-  if (( $+functions[_evalcache] )); then
-    _evalcache fzf --zsh
-  elif [[ -f ~/.fzf.zsh ]]; then
-    source ~/.fzf.zsh
-  fi
+  # Start git fsmonitor daemon if in a git repo
+  [[ -d .git ]] && git fsmonitor--daemon start &>/dev/null &!
   
-  # zoxide (smart cd)
-  if (( $+functions[_evalcache] )); then
-    _evalcache zoxide init zsh
-  else
-    eval "$(zoxide init zsh)"
-  fi
+  # Compile zcompdump if needed
+  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]] && \
+    zcompile "$zcompdump" &!
 '
 
 # zprof
