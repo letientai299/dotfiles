@@ -47,7 +47,8 @@ Plug 'EdenEast/nightfox.nvim'
 " Helptags. It helps my brain a lots.
 " PERF: fzf lazy-loaded with fzf-lua (saves ~0.5ms)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': [] }
-Plug 'ibhagwan/fzf-lua', { 'on': 'FzfLua' }
+" fzf-lua loads on FzfLua command or via keymaps in after/plugin/fzf.vim
+Plug 'ibhagwan/fzf-lua', { 'on': ['FzfLua', '<Plug>(fzf-lua)'] }
 
 Plug 'junegunn/vim-easy-align'
 
@@ -149,7 +150,7 @@ set foldexpr=nvim_treesitter#foldexpr()
 autocmd BufReadPost,FileReadPost * normal zR
 
 " Git related - lazy loaded on git commands
-Plug 'tpope/vim-fugitive', { 'on': ['Git', 'Gstatus', 'Gdiff', 'Gblame', 'GBrowse', 'Gread', 'Gwrite'] }
+Plug 'tpope/vim-fugitive', { 'on': ['G', 'Git', 'Gstatus', 'Gdiff', 'Gblame', 'GBrowse', 'Gread', 'Gwrite'] }
 Plug 'tpope/vim-rhubarb', { 'on': 'GBrowse' }
 Plug 'https://github.com/shumphrey/fugitive-gitlab.vim', { 'on': 'GBrowse' }
 

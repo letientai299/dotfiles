@@ -3,13 +3,16 @@
 
 " Helper function to lazy-load fzf and fzf-lua then call a method
 function! s:fzf_call(method) abort
-  " Ensure fzf is loaded first (lazy-loaded dependency)
+  " Ensure fzf and fzf-lua are loaded first (both are lazy-loaded via vim-plug)
   if !exists('g:loaded_fzf')
     call plug#load('fzf')
   endif
+  if !exists('g:loaded_fzf_lua')
+    call plug#load('fzf-lua')
+  endif
   lua << EOF
     local fzf = require('fzf-lua')
-    -- Ensure setup is called (idempotent check in config.lua)
+    -- Ensure setup is called (idempotent check)
     if not _G._fzf_configured then
       _G._fzf_configured = true
       fzf.setup({
