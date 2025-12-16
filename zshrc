@@ -29,18 +29,17 @@ if [[ -n "$BREW_PREFIX" && -d "$BREW_PREFIX" ]]; then
   FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
 fi
 
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+# Antidote plugin manager - only load antidote.zsh when regeneration needed
 zsh_plugins=${DOTFILES}/plugins.zsh
-[[ -f ${zsh_plugins:r}.txt ]] || touch ${zsh_plugins:r}.txt
 
-# Lazy-load antidote.
-fpath+=(${ZDOTDIR:-~}/.antidote)
-autoload -Uz $fpath[-1]/antidote
-
-# Generate static file in a subshell when .zsh_plugins.txt is updated.
+# Only regenerate and source antidote when plugins.txt is newer than plugins.zsh
 if [[ ! $zsh_plugins -nt ${zsh_plugins:r}.txt ]]; then
-  (antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins)
+  # Need to regenerate - load antidote
+  source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+  antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins
 fi
+
+# Source the static plugins file (fast path - no antidote overhead)
 source $zsh_plugins
 
 # Load custom shell script
@@ -73,19 +72,8 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# fzf setup - use evalcache if available, otherwise use direct source
-if [[ -f ~/.fzf.zsh ]]; then
-  if [[ ! "$PATH" == */Users/tai/.fzf/bin* ]]; then
-    PATH="${PATH:+${PATH}:}/Users/tai/.fzf/bin"
-  fi
-  if (( $+functions[_evalcache] )); then
-    _evalcache fzf --zsh
-  else
-    source <(fzf --zsh)
-  fi
-fi
-
-export PATH="$HOME/.cargo/bin:$PATH"
+# PATH additions (fast, no subprocess)
+export PATH="$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/tai/.local/share/pnpm"
@@ -95,16 +83,23 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# compinit is already called by belak/zsh-utils completion plugin
-# DO NOT call it again here - multiple compinit calls are very slow!
-# The belak plugin handles cache checking with 20h timeout.
-
-# zoxide init - use evalcache for faster startup
-if (( $+functions[_evalcache] )); then
-  _evalcache zoxide init zsh
-else
-  eval "$(zoxide init zsh)"
-fi
+# Defer fzf and zoxide initialization - not needed until first use
+# This saves ~10ms on startup
+zsh-defer -c '
+  # fzf keybindings and completion
+  if (( $+functions[_evalcache] )); then
+    _evalcache fzf --zsh
+  elif [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+  fi
+  
+  # zoxide (smart cd)
+  if (( $+functions[_evalcache] )); then
+    _evalcache zoxide init zsh
+  else
+    eval "$(zoxide init zsh)"
+  fi
+'
 
 # zprof
 

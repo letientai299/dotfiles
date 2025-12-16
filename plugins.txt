@@ -1,39 +1,38 @@
 # vim:set et sw=2 ts=2 tw=80 ft=conf:
 
-# Only load essential ohmyzsh lib files instead of the entire lib folder
-# This avoids loading 21 files when we only need a few
-ohmyzsh/ohmyzsh path:lib/clipboard.zsh
-ohmyzsh/ohmyzsh path:lib/completion.zsh
-ohmyzsh/ohmyzsh path:lib/directories.zsh
-ohmyzsh/ohmyzsh path:lib/history.zsh
-ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
+# zsh-defer MUST be first - allows deferring other plugins
+romkatv/zsh-defer
 
+# Critical for instant prompt - cannot defer, must be early
+romkatv/powerlevel10k
+
+# evalcache - needed early for caching zoxide/fzf (but now deferred too)
+mroth/evalcache
+
+# Defer ohmyzsh libs - not needed until after prompt
+ohmyzsh/ohmyzsh path:lib/clipboard.zsh   kind:defer
+ohmyzsh/ohmyzsh path:lib/completion.zsh  kind:defer
+ohmyzsh/ohmyzsh path:lib/directories.zsh kind:defer
+ohmyzsh/ohmyzsh path:lib/history.zsh     kind:defer
+ohmyzsh/ohmyzsh path:lib/key-bindings.zsh kind:defer
+
+# Deferred plugins - loaded after prompt is shown
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:defer
 ohmyzsh/ohmyzsh path:plugins/git               kind:defer
 ohmyzsh/ohmyzsh path:plugins/docker            kind:defer
 
-# can't defer
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-completions
-romkatv/powerlevel10k
+# Defer autosuggestions - not needed until typing
+zsh-users/zsh-autosuggestions kind:defer
 
-mroth/evalcache
+# completions - fpath only, no code execution
+zsh-users/zsh-completions kind:fpath
 
-# for benchmarking
-# romkatv/zsh-bench     kind:path
+# tab completion with fzf - defer since not needed until first tab
+Aloxaf/fzf-tab kind:defer
 
-# tab completion with fzf
-Aloxaf/fzf-tab
+# config and run compinit - defer to after prompt
+belak/zsh-utils path:completion kind:defer
 
-# config and run compinit
-belak/zsh-utils path:completion
-
-# manually gradle completionn, since we're using mise instead of sdkman to
-# manage gradle.
+# manually gradle completion, since we're using mise instead of sdkman
 gradle/gradle-completion kind:fpath
-
-
-# defers execution of a zsh command until zsh has nothing else to do and is
-# waiting for user input. 
-romkatv/zsh-defer
 

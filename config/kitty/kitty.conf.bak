@@ -6,18 +6,12 @@
 # term xterm-256color-italic
 term xterm-kitty
 
-# Fully featured: == -> --> [] != () <> <= >=
-# modify_font underline_position 4
-modify_font cell_width 80%
 
-# font_family     JetbrainsMonoNL Nerd Font
-# font_family     Fira Code
-# font_family     FiraCode Nerd Font
 disable_ligatures never
 
 
 # Font size (in pts)
-font_size        15.0
+font_size        14.0
 
 include ${KITTY_OS}.conf
 
@@ -25,31 +19,30 @@ include ${KITTY_OS}.conf
 sync_to_monitor yes
 
 # dim inactive pane text
-inactive_text_alpha 0.8
+inactive_text_alpha 0.7
 
 # remember last window size and location
 remember_window_size  yes
-hide_window_decorations yes
+hide_window_decorations no
 macos_option_as_alt yes
 macos_quit_when_last_window_closed yes
 macos_window_resizable yes
 
 # Mouse & cursor
-cursor_blink_interval     0.4
-cursor_stop_blinking_after 4.0
+# cursor_blink_interval     0.4
+# cursor_stop_blinking_after 4.0
 # one of (block, beam, underline)
-cursor_shape     beam
+cursor_shape    beam
 mouse_hide_wait 3.0
 focus_follows_mouse yes
 
 scrollback_lines 10000
 # scrollback_pager_history_size is MB
-scrollback_pager_history_size 256
+scrollback_pager_history_size 2560
 scrollback_pager ~/.config/kitty/pager.sh 'INPUT_LINE_NUMBER' 'CURSOR_LINE' 'CURSOR_COLUMN'
 
 include tabs.conf
-window_border_width 2pt
-
+window_border_width 1pt
 
 open_url_with default
 kitty_mod ctrl+shift
@@ -102,14 +95,20 @@ map alt+f2 detach_window new-tab
 map alt+f3 launch --type=overlay bash -i -c 'grep -E "^(map|mouse_map)\s+.*" ~/.config/kitty/kitty.conf | fzf'
 
 # BEGIN_KITTY_THEME
-# Material
+# GitHub Light
 include current-theme.conf
 # END_KITTY_THEME
-# active_border_color #ff00d7
+active_border_color #ff0000
 
 
+# font_family     JetbrainsMonoNL Nerd Font
+# font_family     Fira Code
+# font_family     FiraCode Nerd Font
+# Fully featured: == -> --> [] != () <> <= >=
+# modify_font underline_position 4
+# modify_font cell_width 80%
 # BEGIN_KITTY_FONTS
-font_family      family="Fira Code"
+font_family      family="Cascadia Code"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
