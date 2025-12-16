@@ -22,12 +22,12 @@ case "$rest" in
     ;;
 esac
 
-max_total=35
+max_total=60
 
 if [ "$is_wip" -eq 1 ]; then
   prefix="WIP"
   if [ -n "$rest" ]; then
-    # Keep total length <= 35 including "WIP "
+    # Keep total length <= $max_total including "WIP "
     allowed=$((max_total - ${#prefix} - 1))
     if [ $allowed -gt 0 ] && [ ${#rest} -gt $allowed ]; then
       if [ $allowed -gt 3 ]; then
@@ -43,7 +43,7 @@ if [ "$is_wip" -eq 1 ]; then
     printf '\033[1;38;5;208m%s\033[0m' "$prefix"
   fi
 else
-  # Non-WIP: truncate to 35 chars
+  # Non-WIP: truncate to $max_total chars
   if [ ${#msg} -gt $max_total ]; then
     msg="$(printf '%.32s' "$msg")..."
   fi

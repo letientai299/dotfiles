@@ -1,8 +1,6 @@
 # Starship config to match p10k appearance
 
-format = """
-
-$directory\
+format = """$directory\
 $git_branch\
 $git_status\
 ${custom.git_commit}\
@@ -15,8 +13,8 @@ $line_break\
 $status\
 $character"""
 
-# Don't add blank line between prompts
-add_newline = false
+# Add a blank line between prompts (visual separation)
+add_newline = true
 
 # Directory
 [directory]
