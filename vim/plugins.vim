@@ -1,4 +1,10 @@
 " vim:set et sw=2 ts=2 tw=80:
+" PERF: Disable netrw (use oil.nvim instead) - saves ~0.8ms
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+" PERF: Disable matchit (rarely used) - saves ~0.8ms
+let g:loaded_matchit = 1
+
 " Auto install on the first time if there no plug.vim found {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -13,12 +19,14 @@ call plug#begin('$HOME/.vim-plugged')
 " This saves ~5ms startup time by avoiding plugin overhead.
 
 
-Plug 'tpope/vim-abolish'
+" PERF: vim-abolish lazy loaded on command use
+Plug 'tpope/vim-abolish', { 'on': ['Abolish', 'Subvert', 'S'] }
 Plug 'tpope/vim-surround'
 " PERF: vim-unimpaired lazy loaded on first bracket mapping use
 Plug 'tpope/vim-unimpaired', { 'on': [] }
 Plug 'tpope/vim-repeat'
-Plug 'romainl/vim-cool' " disables search highlighting when done
+" PERF: vim-cool lazy loaded on CmdlineEnter for / or ? (saves ~0.1ms)
+Plug 'romainl/vim-cool', { 'on': [] }
 Plug 'wellle/targets.vim'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
@@ -37,8 +45,9 @@ Plug 'EdenEast/nightfox.nvim'
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'ibhagwan/fzf-lua'
+" PERF: fzf lazy-loaded with fzf-lua (saves ~0.5ms)
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': [] }
+Plug 'ibhagwan/fzf-lua', { 'on': 'FzfLua' }
 
 Plug 'junegunn/vim-easy-align'
 
@@ -79,11 +88,13 @@ let g:coc_global_extensions = [
 
 " Auto cd to git project root when open a file in vim
 " This seems doesn't work well with tmux continuum
-Plug 'airblade/vim-rooter'
+" PERF: vim-rooter lazy-loaded on BufReadPost (saves ~0.1ms)
+Plug 'airblade/vim-rooter', { 'on': [] }
 
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
-Plug 'simeji/winresizer'
+" PERF: winresizer lazy-loaded on command (saves ~0.15ms)
+Plug 'simeji/winresizer', { 'on': ['WinResizerStartResize', 'WinResizerStartMove', 'WinResizerStartFocus'] }
 
 " More GUI stuffs, mostly lua for nvim
 \" PERF: lualine lazy-loaded on VimEnter (see ui.lua)
@@ -91,9 +102,12 @@ Plug 'nvim-lualine/lualine.nvim', { 'on': [] }
 \" PERF: bufferline lazy-loaded on VimEnter (see ui.lua)
 Plug 'akinsho/bufferline.nvim', { 'on': [] }
 Plug 'akinsho/toggleterm.nvim', { 'on': 'ToggleTerm' }
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'HiPhish/rainbow-delimiters.nvim'
-Plug 'xiyaowong/virtcolumn.nvim'
+" PERF: ibl lazy-loaded on FileType (saves ~1.5ms)
+Plug 'lukas-reineke/indent-blankline.nvim', { 'on': [] }
+" PERF: rainbow-delimiters lazy-loaded on FileType (saves ~1ms)
+Plug 'HiPhish/rainbow-delimiters.nvim', { 'on': [] }
+" PERF: virtcolumn lazy-loaded on FileType (saves ~0.18ms)
+Plug 'xiyaowong/virtcolumn.nvim', { 'on': [] }
 \" Plug 'stevearc/dressing.nvim'
 \" PERF: gitsigns lazy-loaded after VimEnter (see ui.lua)
 Plug 'lewis6991/gitsigns.nvim', { 'on': [] }
@@ -133,21 +147,23 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 autocmd BufReadPost,FileReadPost * normal zR
 
-" Git related
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb' " for GBrowse
-Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
+" Git related - lazy loaded on git commands
+Plug 'tpope/vim-fugitive', { 'on': ['Git', 'Gstatus', 'Gdiff', 'Gblame', 'GBrowse', 'Gread', 'Gwrite'] }
+Plug 'tpope/vim-rhubarb', { 'on': 'GBrowse' }
+Plug 'https://github.com/shumphrey/fugitive-gitlab.vim', { 'on': 'GBrowse' }
 
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte'] }
 
 " To respect editorconfig file
-Plug 'gpanders/editorconfig.nvim'
+" PERF: editorconfig lazy-loaded on BufReadPost (saves ~0.15ms)
+Plug 'gpanders/editorconfig.nvim', { 'on': [] }
 
 " https://github.com/embear/vim-localvimrc
+" PERF: localvimrc lazy loaded on file read
 let g:localvimrc_sandbox=0
 let g:localvimrc_ask=0
 let g:localvimrc_persistent=2
-Plug 'embear/vim-localvimrc'
+Plug 'embear/vim-localvimrc', { 'on': [] }
 
 Plug 'fladson/vim-kitty', {'for': 'kitty'}
 
@@ -181,6 +197,12 @@ augroup lazy_load_delimitmate
   autocmd InsertEnter * ++once call plug#load('delimitmate')
 augroup END
 
+" Load vim-cool when starting a search (saves ~0.1ms)
+augroup lazy_load_cool
+  autocmd!
+  autocmd CmdlineEnter /,\? ++once call plug#load('vim-cool')
+augroup END
+
 " Load vim-unimpaired on first [ or ] keypress (saves ~2.5ms)
 augroup lazy_load_unimpaired
   autocmd!
@@ -203,7 +225,13 @@ augroup END
 " PERF: Load treesitter plugins on first file with a filetype (saves ~5ms)
 augroup lazy_load_treesitter
   autocmd!
-  autocmd FileType * ++once call plug#load('nvim-treesitter', 'nvim-treesitter-textobjects')
+  autocmd FileType * ++once call plug#load('nvim-treesitter', 'nvim-treesitter-textobjects', 'indent-blankline.nvim', 'rainbow-delimiters.nvim', 'virtcolumn.nvim')
+augroup END
+
+" PERF: Load localvimrc and editorconfig on file read
+augroup lazy_load_localvimrc
+  autocmd!
+  autocmd BufReadPost * ++once call plug#load('vim-localvimrc', 'vim-rooter', 'editorconfig.nvim')
 augroup END
 
 lua require("config")

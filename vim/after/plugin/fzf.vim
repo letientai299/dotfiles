@@ -1,8 +1,12 @@
 " PERF: fzf-lua keymaps - these trigger lazy loading via lua wrapper functions
 " The actual fzf-lua setup happens on first use (saves ~7ms at startup)
 
-" Helper function to lazy-load fzf-lua and call a method
+" Helper function to lazy-load fzf and fzf-lua then call a method
 function! s:fzf_call(method) abort
+  " Ensure fzf is loaded first (lazy-loaded dependency)
+  if !exists('g:loaded_fzf')
+    call plug#load('fzf')
+  endif
   lua << EOF
     local fzf = require('fzf-lua')
     -- Ensure setup is called (idempotent check in config.lua)
