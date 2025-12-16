@@ -157,7 +157,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   once = true,
   callback = setup_oil,
 })
-vim.api.nvim_create_user_command("Oil", function(opts)
-  setup_oil()
-  require("oil").open(opts.args ~= "" and opts.args or nil)
-end, { nargs = "?" })
+
+-- Make setup_oil globally accessible for keymaps
+_G.setup_oil = setup_oil

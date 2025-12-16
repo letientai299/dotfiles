@@ -1,7 +1,7 @@
 let NERDSpaceDelims=1
 
-nnoremap <C-\> :exec 'silent! /' . expand('%:t') \| exe 'Oil %:p:h'<cr>
-nnoremap <A-\> :exe 'Oil ' . trim(system("git rev-parse --show-toplevel"))<cr>
+nnoremap <C-\> :lua _G.setup_oil()<CR>:exec 'silent! /' . expand('%:t') \| exe 'Oil %:p:h'<cr>
+nnoremap <A-\> :lua _G.setup_oil()<CR>:exe 'Oil ' . trim(system("git rev-parse --show-toplevel"))<cr>
 
 nnoremap <c-g> :silent Vista finder<CR>
 nnoremap <c-f11> :silent Vista!!<CR>
