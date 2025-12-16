@@ -1,13 +1,53 @@
-# zmodload zsh/zprof
+if [[ -n "${ZSH_STARTUP_PROFILE:-}" ]]; then
+  zmodload zsh/zprof
+  zmodload zsh/datetime
+  typeset -gF _ZSH_STARTUP_T0
+  _ZSH_STARTUP_T0=$EPOCHREALTIME
+  typeset -gi _ZSH_STARTUP_REPORTED_PROMPT=0
+  typeset -gi _ZSH_STARTUP_REPORTED_ZLE=0
+
+  _zsh_startup_report_prompt() {
+    (( _ZSH_STARTUP_REPORTED_PROMPT )) && return 0
+    _ZSH_STARTUP_REPORTED_PROMPT=1
+    local -F ms
+    ms=$(( (EPOCHREALTIME - _ZSH_STARTUP_T0) * 1000.0 ))
+    printf '[zsh] first prompt: %.0fms\n' $ms >&2
+  }
+
+  _zsh_startup_report_zle() {
+    (( _ZSH_STARTUP_REPORTED_ZLE )) && return 0
+    _ZSH_STARTUP_REPORTED_ZLE=1
+    local -F ms
+    ms=$(( (EPOCHREALTIME - _ZSH_STARTUP_T0) * 1000.0 ))
+    printf '[zsh] accepting input (zle): %.0fms\n' $ms >&2
+  }
+
+  precmd_functions=(_zsh_startup_report_prompt $precmd_functions)
+
+  autoload -Uz add-zle-hook-widget
+  add-zle-hook-widget -Uz line-init _zsh_startup_report_zle
+
+  _zsh_startup_dump_profile() {
+    (( _ZSH_STARTUP_REPORTED_PROMPT && _ZSH_STARTUP_REPORTED_ZLE )) || return 0
+    zprof >&2
+
+    precmd_functions=(${precmd_functions:#_zsh_startup_report_prompt})
+    precmd_functions=(${precmd_functions:#_zsh_startup_report_zle})
+    precmd_functions=(${precmd_functions:#_zsh_startup_dump_profile})
+
+    add-zle-hook-widget -d line-init _zsh_startup_report_zle 2>/dev/null || true
+    unset ZSH_STARTUP_PROFILE
+    unfunction _zsh_startup_dump_profile _zsh_startup_report_prompt _zsh_startup_report_zle
+  }
+  precmd_functions=(_zsh_startup_dump_profile $precmd_functions)
+fi
 
 # Put the dotfile location into path
-# Cache DOTFILES to avoid repeated realpath/readlink calls
+# Cache DOTFILES without spawning external processes.
 if [[ -z "$DOTFILES" ]]; then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    export DOTFILES="$(dirname $(realpath ~/.zshrc))"
-  else
-    export DOTFILES="$(dirname $(readlink -f ~/.zshrc))"
-  fi
+  # In .zshrc, %x expands to the path of the file currently being sourced.
+  # :A makes it absolute and resolves symlinks.
+  export DOTFILES="${${(%):-%x}:A:h}"
 fi
 
 # Hardcode BREW_PREFIX to avoid slow `type brew` check
@@ -25,9 +65,9 @@ fi
 # Antidote plugin manager - only load antidote.zsh when regeneration needed
 zsh_plugins=${DOTFILES}/plugins.zsh
 
-# Only regenerate and source antidote when plugins.txt is newer than plugins.zsh
-if [[ ! $zsh_plugins -nt ${zsh_plugins:r}.txt ]]; then
-  # Need to regenerate - load antidote
+# Only regenerate when plugins.txt is strictly newer than plugins.zsh, or plugins.zsh is missing.
+# Using "! plugins.zsh -nt plugins.txt" can cause unnecessary regen when mtimes are identical.
+if [[ ! -f $zsh_plugins || ${zsh_plugins:r}.txt -nt $zsh_plugins ]]; then
   source ${ZDOTDIR:-~}/.antidote/antidote.zsh
   antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins
 fi
