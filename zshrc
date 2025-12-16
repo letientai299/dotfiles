@@ -59,7 +59,9 @@ fi
 
 if [[ -n "$BREW_PREFIX" && -d "$BREW_PREFIX" ]]; then
   FPATH="${BREW_PREFIX}/share/zsh/site-functions:${FPATH}"
-  FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
+  # Only add if exists (zsh-completions from brew may not be installed)
+  [[ -d "${BREW_PREFIX}/share/zsh-completions" ]] && \
+    FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
 fi
 
 # Antidote plugin manager - only load antidote.zsh when regeneration needed
@@ -74,6 +76,16 @@ fi
 
 # Source the static plugins file (fast path - no antidote overhead)
 source $zsh_plugins
+
+# Compile zcompdump in background for faster subsequent loads
+# This runs after zsh-defer sources the completion plugin
+zsh-defer -c '
+  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  # Compile if dump exists and is newer than compiled version
+  if [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]]; then
+    zcompile "$zcompdump" &!
+  fi
+'
 
 # Load custom shell script
 for file in "$DOTFILES"/{exports,aliases,funcs,bindkeys,az-utils}; do
