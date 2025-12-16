@@ -229,11 +229,14 @@ local function setup_deferred_plugins()
   --------------------------------------------------------------------------------
   -- indent blank line (deferred)
   --------------------------------------------------------------------------------
-  require("ibl").setup({
-    scope = {
-      enabled = false,
-    }
-  })
+  local ok, ibl = pcall(require, "ibl")
+  if ok then
+    ibl.setup({
+      scope = {
+        enabled = false,
+      }
+    })
+  end
 end
 
 -- PERF: Defer non-essential UI plugins by 50ms after VimEnter.

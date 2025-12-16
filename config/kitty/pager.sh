@@ -23,7 +23,6 @@ nvim \
  -c "autocmd TermEnter * stopinsert" \
  -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
  -c "map <silent> q :qa!<CR>" \
- -c "terminal /bin/cat $BUF_NAME && sleep 0.001 && printf '\x1b]2;'" \
- -c "BufferLineGroupToggle ungrouped"
+ -c "terminal /bin/cat $BUF_NAME && sleep 0.001 && printf '\x1b]2;'"
 
 rm $BUF_NAME
