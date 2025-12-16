@@ -7,6 +7,7 @@ romkatv/zsh-defer
 mroth/evalcache
 
 # Essential ohmyzsh libs - loaded synchronously for immediate input
+ohmyzsh/ohmyzsh path:lib/completion.zsh
 ohmyzsh/ohmyzsh path:lib/directories.zsh
 ohmyzsh/ohmyzsh path:lib/history.zsh
 ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
@@ -27,4 +28,7 @@ gradle/gradle-completion kind:fpath
 # Completion system - defer compinit (heavy) until after prompt
 Aloxaf/fzf-tab kind:defer
 belak/zsh-utils path:completion kind:defer
+
+# Syntax highlighting - must be last (or near last) for proper highlighting
+zsh-users/zsh-syntax-highlighting kind:defer
 

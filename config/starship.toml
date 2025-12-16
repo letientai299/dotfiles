@@ -8,6 +8,7 @@ $git_branch\
 $git_status\
 ${custom.git_commit}\
 $fill\
+$cmd_duration\
 $python\
 ${custom.my_todo}\
 $time\
@@ -99,3 +100,10 @@ style_user = "bold white"
 ssh_only = true
 format = "[󰒋 $hostname]($style) "
 style = "bold white"
+
+# Command duration - shows execution time for slow commands
+[cmd_duration]
+min_time = 2000  # Show if command takes longer than 2 seconds
+format = "[󰔛 $duration]($style) "
+style = "bold yellow"
+show_milliseconds = false
