@@ -88,7 +88,7 @@ map alt+f2 detach_window new-tab
 map alt+f3 launch --type=overlay bash -i -c 'grep -E "^(map|mouse_map)\s+.*" ~/.config/kitty/kitty.conf | fzf'
 
 # BEGIN_KITTY_THEME
-# Atom
+# Pencil Dark
 include current-theme.conf
 # END_KITTY_THEME
 # active_border_color #ff0000
