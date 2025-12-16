@@ -53,14 +53,13 @@ staged = "+"
 renamed = "»"
 deleted = "✘"
 
-# Custom: Last git commit message with relative time
-# Optimized POSIX shell script - adds only ~10-15ms
+# Custom: Last git commit message
 [custom.git_commit]
 command = "$HOME/.config/starship-git-commit.sh"
 when = "git rev-parse --git-dir 2>/dev/null"
-symbol = "󰜘 "
 format = "[$symbol$output]($style) "
-style = "white"
+style = "none"
+unsafe_no_escape = true
 
 # Custom: my_todo segment
 # Optimized POSIX shell script - adds only ~10-15ms
@@ -68,12 +67,11 @@ style = "white"
 command = "$HOME/.config/starship-my-todo.sh"
 when = "[ -f \"$(git rev-parse --show-toplevel 2>/dev/null)/.dump/todo.md\" ]"
 format = "[$symbol$output]($style) "
-style = "bold blue"
+style = "blue"
 
 # Time - shows when the prompt was rendered (when last command finished)
 [time]
 disabled = false
-symbol = "󰥔 "
 format = "[$symbol$time]($style) "
 style = "yellow"
 time_format = "%H:%M:%S"
@@ -86,13 +84,13 @@ symbol = " "
 [status]
 disabled = false
 format = "[$symbol$status]($style) "
-symbol = "󰅚 "
+symbol = "x"
 style = "bold red"
 
 # Username (for context)
 [username]
 show_always = false
-format = "[ $user]($style)"
+format = "[$user]($style)"
 style_user = "bold white"
 
 # Hostname

@@ -19,18 +19,4 @@ if [ ${#task} -gt 30 ]; then
   task="$(printf '%.27s' "$task")..."
 fi
 
-# Color based on task type (case-insensitive patterns)
-case "$task" in
-  [Ff][Ii][Xx]*|[Bb][Uu][Gg]*)
-    printf '\033[38;5;208m%s\033[0m' "$task"  # orange
-    ;;
-  [Ff][Ee][Aa][Tt]*)
-    printf '\033[38;5;46m%s\033[0m' "$task"   # green
-    ;;
-  [Dd][Oo][Cc]*)
-    printf '\033[38;5;51m%s\033[0m' "$task"   # cyan
-    ;;
-  *)
-    printf '\033[38;5;33m%s\033[0m' "$task"   # blue
-    ;;
-esac
+echo $task
