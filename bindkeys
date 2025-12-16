@@ -1,15 +1,34 @@
 #!/bin/bash
 # vim: syntax=sh
 # Custom key binding
-# pressing ctlr-k to pipe output to less
-bindkey -s "^k" "| less^m"
-bindkey -s "^]" "^e | clipcopy^m"
-bindkey "^ " "autosuggest-accept"
+
+# Immediate bindings (fast, no autoload needed)
 bindkey -e
 
-# enable edit-command-line
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
+# Defer ZLE widget loading until after first prompt
+# This saves ~5-10ms on startup since autoload/zle -N are slow
+if (( $+functions[zsh-defer] )); then
+  zsh-defer -c '
+    # pressing ctlr-k to pipe output to less
+    bindkey -s "^k" "| less^m"
+    bindkey -s "^]" "^e | clipcopy^m"
+    bindkey "^ " "autosuggest-accept"
+
+    # enable edit-command-line
+    autoload -Uz edit-command-line
+    zle -N edit-command-line
+    bindkey "^xe" edit-command-line
+    bindkey "^x^e" edit-command-line
+  '
+else
+  # Fallback if zsh-defer not available
+  bindkey -s "^k" "| less^m"
+  bindkey -s "^]" "^e | clipcopy^m"
+  bindkey "^ " "autosuggest-accept"
+
+  autoload -Uz edit-command-line
+  zle -N edit-command-line
+  bindkey '^xe' edit-command-line
+  bindkey '^x^e' edit-command-line
+fi
 

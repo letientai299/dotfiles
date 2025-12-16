@@ -103,7 +103,13 @@ fi
 
 
 # Starship prompt - initialized after plugins
-eval "$(starship init zsh)"
+# Using evalcache saves ~5ms by caching the init script
+# Run `_evalcache_clear starship` after updating starship
+if (( $+functions[_evalcache] )); then
+  _evalcache starship init zsh
+else
+  eval "$(starship init zsh)"
+fi
 
 # PATH additions (fast, no subprocess)
 export PATH="$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"

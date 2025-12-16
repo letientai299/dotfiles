@@ -5,6 +5,40 @@
 # Because the functions is self-defined, their aliases should be kept here, not
 # in the ~/.aliases file.
 
+# Load antidote and run antidote commands (update/install/etc)
+# Usage: antidote-load [command] [args...]
+#   antidote-load update     # Update all plugins
+#   antidote-load install    # Install plugins from plugins.txt
+#   antidote-load list       # List installed plugins
+antidote-load() {
+  local antidote_dir="${ZDOTDIR:-$HOME}/.antidote"
+  
+  # Clone antidote if missing
+  if [[ ! -d "$antidote_dir" ]]; then
+    echo "Installing antidote..."
+    git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_dir"
+  fi
+  
+  # Source antidote
+  source "$antidote_dir/antidote.zsh"
+  
+  # Run command if provided
+  if [[ $# -gt 0 ]]; then
+    antidote "$@"
+  else
+    echo "antidote loaded. Available commands: update, install, list, bundle, etc."
+  fi
+}
+
+# Regenerate plugins.zsh from plugins.txt (forces rebuild)
+antidote-regen() {
+  antidote-load
+  local zsh_plugins="${DOTFILES}/plugins.zsh"
+  echo "Regenerating $zsh_plugins..."
+  antidote bundle <"${zsh_plugins:r}.txt" >| "$zsh_plugins"
+  echo "Done. Restart shell or run: source $zsh_plugins"
+}
+
 # Open the ebook from command line using zathura, this also make za an alias to
 # zathura.
 # Usage:

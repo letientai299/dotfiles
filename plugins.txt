@@ -9,7 +9,7 @@ mroth/evalcache
 # Defer ohmyzsh libs - not needed until after prompt
 ohmyzsh/ohmyzsh path:lib/clipboard.zsh    kind:defer
 ohmyzsh/ohmyzsh path:lib/completion.zsh   kind:defer
-ohmyzsh/ohmyzsh path:lib/directories.zsh  kind:defer
+ohmyzsh/ohmyzsh path:lib/directories.zsh
 ohmyzsh/ohmyzsh path:lib/history.zsh      kind:defer
 ohmyzsh/ohmyzsh path:lib/key-bindings.zsh kind:defer
 
