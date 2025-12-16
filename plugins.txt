@@ -3,10 +3,7 @@
 # zsh-defer MUST be first - allows deferring other plugins
 romkatv/zsh-defer
 
-# Critical for instant prompt - cannot defer, must be early
-romkatv/powerlevel10k
-
-# evalcache - needed early for caching zoxide/fzf (but now deferred too)
+# evalcache - needed early for caching zoxide/fzf
 mroth/evalcache
 
 # Defer ohmyzsh libs - not needed until after prompt
