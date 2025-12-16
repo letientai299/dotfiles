@@ -18,10 +18,12 @@ fi
 # Check for WIP (case insensitive via pattern)
 case "$msg" in
   [Ww][Ii][Pp]*)
-    # WIP in orange (208), rest dim
-    printf '\033[38;5;208mWIP\033[0m%s \033[2m(%s)\033[0m' "${msg#???}" "$time"
+    # Keep output ANSI-free; Starship escapes ANSI by default.
+    # (Readable separator without hard-coded colors.)
+    printf 'WIP%s · %s' "${msg#???}" "$time"
     ;;
   *)
-    printf '%s \033[2m(%s)\033[0m' "$msg" "$time"
+    # Message with time separated by · for better readability
+    printf '%s · %s' "$msg" "$time"
     ;;
 esac

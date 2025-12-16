@@ -1,25 +1,30 @@
 # Starship config to match p10k appearance
-# Performance: ~40-55ms per prompt (optimized custom segments)
-# Similar to: dir + vcs + custom segments | newline | prompt_char
-# Right: status, direnv, virtualenv, aws, azure, gcloud, context
 
-# Use nerdfont symbols
 format = """
+
 $directory\
 $git_branch\
 $git_status\
 ${custom.git_commit}\
 $fill\
-$status\
 $python\
 ${custom.my_todo}\
 $time\
 $username$hostname\
 $line_break\
+$status\
 $character"""
 
 # Don't add blank line between prompts
 add_newline = false
+
+# Directory
+[directory]
+format = "[󰉋 $path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncate_to_repo = false
+style = "bold cyan"
+read_only = " 󰌾"
 
 # Prompt character (similar to p10k)
 [character]
@@ -30,7 +35,7 @@ vimcmd_symbol = "[❮](bold green)"
 # Git branch
 [git_branch]
 format = "[$symbol$branch]($style) "
-symbol = " "
+symbol = "󰘬 "
 style = "bold purple"
 
 # Git status
@@ -51,24 +56,26 @@ deleted = "✘"
 # Custom: Last git commit message with relative time
 # Optimized POSIX shell script - adds only ~10-15ms
 [custom.git_commit]
-command = "/Users/tai/Developer/mine/dotfiles/bin/starship-git-commit.sh"
+command = "$HOME/.config/starship-git-commit.sh"
 when = "git rev-parse --git-dir 2>/dev/null"
-format = "[$output]($style) "
+symbol = "󰜘 "
+format = "[$symbol$output]($style) "
 style = "white"
 
 # Custom: my_todo segment
 # Optimized POSIX shell script - adds only ~10-15ms
 [custom.my_todo]
-command = "/Users/tai/Developer/mine/dotfiles/bin/starship-my-todo.sh"
+command = "$HOME/.config/starship-my-todo.sh"
 when = "[ -f \"$(git rev-parse --show-toplevel 2>/dev/null)/.dump/todo.md\" ]"
-format = "[$output]($style) "
+format = "[$symbol$output]($style) "
 style = "bold blue"
 
 # Time - shows when the prompt was rendered (when last command finished)
 [time]
 disabled = false
-format = "[$time]($style) "
-style = "bold yellow"
+symbol = "󰥔 "
+format = "[$symbol$time]($style) "
+style = "yellow"
 time_format = "%H:%M:%S"
 
 # Fill to push right prompt elements to the right
@@ -79,208 +86,17 @@ symbol = " "
 [status]
 disabled = false
 format = "[$symbol$status]($style) "
-symbol = "✘ "
+symbol = "󰅚 "
 style = "bold red"
-
-# Direnv
-[direnv]
-disabled = false
-format = "[$symbol$loaded]($style) "
-symbol = "direnv "
-style = "bold yellow"
-allowed_msg = ""
-denied_msg = "denied"
-loaded_msg = ""
-unloaded_msg = ""
-
-# Python virtualenv
-[python]
-format = '[${symbol}${virtualenv}]($style) '
-symbol = " "
-style = "bold yellow"
-detect_files = []
-detect_folders = []
-
-# AWS - disabled
-[aws]
-disabled = true
-
-# Azure - disabled
-[azure]
-disabled = true
-
-# Google Cloud - disabled
-[gcloud]
-disabled = true
 
 # Username (for context)
 [username]
 show_always = false
-format = "[$user]($style)"
+format = "[ $user]($style)"
 style_user = "bold white"
 
 # Hostname
 [hostname]
 ssh_only = true
-format = "[@$hostname]($style) "
+format = "[󰒋 $hostname]($style) "
 style = "bold white"
-
-# Disable unused modules for speed
-[package]
-disabled = true
-
-[nodejs]
-disabled = true
-
-[rust]
-disabled = true
-
-[golang]
-disabled = true
-
-[java]
-disabled = true
-
-[ruby]
-disabled = true
-
-[php]
-disabled = true
-
-[docker_context]
-disabled = true
-
-[kubernetes]
-disabled = true
-
-[terraform]
-disabled = true
-
-[helm]
-disabled = true
-
-[cmake]
-disabled = true
-
-[conda]
-disabled = true
-
-[crystal]
-disabled = true
-
-[dart]
-disabled = true
-
-[deno]
-disabled = true
-
-[dotnet]
-disabled = true
-
-[elixir]
-disabled = true
-
-[elm]
-disabled = true
-
-[erlang]
-disabled = true
-
-[haskell]
-disabled = true
-
-[julia]
-disabled = true
-
-[kotlin]
-disabled = true
-
-[lua]
-disabled = true
-
-[nim]
-disabled = true
-
-[nix_shell]
-disabled = true
-
-[ocaml]
-disabled = true
-
-[perl]
-disabled = true
-
-[purescript]
-disabled = true
-
-[rlang]
-disabled = true
-
-[scala]
-disabled = true
-
-[swift]
-disabled = true
-
-[vagrant]
-disabled = true
-
-[zig]
-disabled = true
-
-[buf]
-disabled = true
-
-[c]
-disabled = true
-
-[cobol]
-disabled = true
-
-[daml]
-disabled = true
-
-[env_var]
-disabled = true
-
-[fennel]
-disabled = true
-
-[fossil_branch]
-disabled = true
-
-[gradle]
-disabled = true
-
-[haxe]
-disabled = true
-
-[meson]
-disabled = true
-
-[openstack]
-disabled = true
-
-[pijul_channel]
-disabled = true
-
-[pulumi]
-disabled = true
-
-[raku]
-disabled = true
-
-[red]
-disabled = true
-
-[singularity]
-disabled = true
-
-[solidity]
-disabled = true
-
-[spack]
-disabled = true
-
-[vlang]
-disabled = true
