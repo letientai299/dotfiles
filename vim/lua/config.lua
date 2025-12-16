@@ -3,81 +3,34 @@ require("ui")
 vim.opt.shada = "!,'200,<500,s10,h"
 
 --------------------------------------------------------------------------------
--- PERF: Treesitter - Defer setup to first buffer with a filetype
--- This saves ~6ms at startup by not loading treesitter immediately
+-- Treesitter setup
+-- Note: nvim-treesitter main branch uses new API
+-- Run :PlugUpdate to update nvim-treesitter-textobjects to main branch
 --------------------------------------------------------------------------------
-local treesitter_configured = false
-local function setup_treesitter()
-  if treesitter_configured then return end
-  treesitter_configured = true
+-- Basic treesitter config (new API)
+require("nvim-treesitter").setup({
+  -- install_dir can be customized if needed
+})
 
-  require("nvim-treesitter.configs").setup({
-    -- A list of parser names, or "all"
-    ensure_installed = {
-      "c",
-      "lua",
-      "rust",
-      "go",
-      "tsx",
-      "dart",
-      "json",
-      "html",
-      "toml",
-      "css",
-      "kotlin",
-      "markdown",
-      "markdown_inline",
-    },
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-    -- Automatically install missing parsers when entering buffer
-    auto_install = true,
-    -- List of parsers to ignore installing (for "all")
-    ignore_install = { "javascript" },
-    highlight = {
+-- Configure folding with treesitter (set in vimrc, just ensure foldexpr is right)
+-- Highlighting is enabled automatically per-buffer when a parser is available
+
+-- Textobjects setup - requires main branch of textobjects
+-- After running :PlugUpdate, configure textobjects here if needed
+local ok, ts_textobjects = pcall(require, "nvim-treesitter-textobjects")
+if ok and ts_textobjects.setup then
+  ts_textobjects.setup({
+    select = {
       enable = true,
-      disable = { "vim" },
-      -- PERF: Set to false for better performance.
-      -- When true, BOTH treesitter AND vim regex highlighting run simultaneously,
-      -- which is slower. Treesitter alone provides accurate highlighting.
-      additional_vim_regex_highlighting = false,
-    },
-    indent = {
-      enable = true
-    },
-    rainbow = {
-      enable = true,
-      extended_mode = true,
-    },
-    incremental_selection = {
-      enable = true,
+      lookahead = true,
       keymaps = {
-        init_selection = "<C-s>",
-        node_incremental = "<C-s>",
-        node_decremental = "<M-s>",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
       },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-        },
-      }
     },
   })
 end
-
--- Trigger treesitter setup on first file open
-vim.api.nvim_create_autocmd("FileType", {
-  once = true,
-  callback = function()
-    vim.schedule(setup_treesitter)
-  end,
-})
 
 --------------------------------------------------------------------------------
 -- Other

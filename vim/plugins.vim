@@ -119,9 +119,10 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'stevearc/oil.nvim'
-" PERF: treesitter plugins lazy-loaded on first file open
-Plug 'nvim-treesitter/nvim-treesitter', { 'on': [] }
-Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'on': [] }
+" treesitter - new API on main branch
+Plug 'nvim-treesitter/nvim-treesitter'
+" textobjects must use main branch to match treesitter main branch
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'max397574/better-escape.nvim'
 Plug 'willothy/flatten.nvim'
 
@@ -222,10 +223,10 @@ augroup lazy_load_snippets
   autocmd User CocNvimInit ++once call plug#load('vim-snippets')
 augroup END
 
-" PERF: Load treesitter plugins on first file with a filetype (saves ~5ms)
-augroup lazy_load_treesitter
+" PERF: Load visual enhancement plugins on first file with a filetype
+augroup lazy_load_visual
   autocmd!
-  autocmd FileType * ++once call plug#load('nvim-treesitter', 'nvim-treesitter-textobjects', 'indent-blankline.nvim', 'rainbow-delimiters.nvim', 'virtcolumn.nvim')
+  autocmd FileType * ++once call plug#load('indent-blankline.nvim', 'rainbow-delimiters.nvim', 'virtcolumn.nvim')
 augroup END
 
 " PERF: Load localvimrc and editorconfig on file read
