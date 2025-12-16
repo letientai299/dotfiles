@@ -10,19 +10,19 @@ is_wip=0
 rest="$msg"
 
 case "$rest" in
-  [Ww][Ii][Pp]*)
-    is_wip=1
-    rest="${rest#???}"
-    # Trim common separators after WIP
-    rest="${rest# }"
-    rest="${rest#:}"
-    rest="${rest# }"
-    rest="${rest#-}"
-    rest="${rest# }"
-    ;;
+[Ww][Ii][Pp]*)
+  is_wip=1
+  rest="${rest#???}"
+  # Trim common separators after WIP
+  rest="${rest# }"
+  rest="${rest#:}"
+  rest="${rest# }"
+  rest="${rest#-}"
+  rest="${rest# }"
+  ;;
 esac
 
-max_total=60
+max_total=70
 
 if [ "$is_wip" -eq 1 ]; then
   prefix="WIP"
