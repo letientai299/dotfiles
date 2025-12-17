@@ -7,7 +7,6 @@ import os
 def main():
     try:
         # Get kitty window data
-        # We use kitty @ ls to get the state of all windows
         cmd = ['kitty', '@', 'ls']
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         data = json.loads(result.stdout)
@@ -21,47 +20,50 @@ def main():
         return
 
     candidates = []
-    
     for os_window in data:
         for tab in os_window.get('tabs', []):
-            tab_title = tab.get('title', '')
-            tab_id = tab.get('id')
+            tab_title = tab.get('title') or 'Tab'
             for window in tab.get('windows', []):
                 win_id = window.get('id')
-                win_title = window.get('title', '')
-                cwd = window.get('cwd', '')
-                cmdline = " ".join(window.get('cmdline', []))
+                win_title = window.get('title') or 'Window'
+                cmdline = " ".join(window.get('cmdline') or [])
                 
-                # Create a display string for fzf
-                # We include the ID at the start for easy extraction
-                # Format: ID | Tab Title | Window Title | CWD | Command
+                # Filter out the switcher script itself
+                if "switch.py" in cmdline:
+                    continue
                 
-                # Shorten CWD to last 2 components if possible
-                if cwd:
-                    parts = cwd.strip('/').split('/')
-                    if len(parts) > 2:
-                        short_cwd = os.path.join(parts[-2], parts[-1])
-                    else:
-                        short_cwd = cwd
-                else:
-                    short_cwd = ""
-
-                display = f"{win_id} | {tab_title} | {win_title} | {short_cwd} | {cmdline}"
-                candidates.append(display)
+                # Format: ID | Display String
+                # We will tell fzf to use " | " as delimiter and show from 2nd field onwards
+                
+                # Fancy tree-like display
+                # [Tab Title] └─ [Window Title] (Command)
+                
+                # Colors:
+                # Tab: Magenta (35)
+                # Separator: Yellow (33)
+                # Window: Green (32)
+                # Command: Grey (90)
+                
+                display_text = f"\033[1;35m{tab_title}\033[0m \033[33m└─\033[0m \033[1;32m{win_title}\033[0m \033[90m({cmdline})\033[0m"
+                candidates.append(f"{win_id} | {display_text}")
 
     if not candidates:
-        print("No windows found")
         return
 
-    # Prepare input for fzf
     fzf_input = "\n".join(candidates)
     
+    fzf_cmd = [
+        'fzf', 
+        '--ansi', 
+        '--delimiter', ' \| ', 
+        '--with-nth', '2..', 
+        '--header', 'Select Window',
+        '--layout=reverse',
+        '--border',
+        '--prompt', 'Go to > '
+    ]
+    
     try:
-        # Run fzf
-        # --with-nth 2.. hides the first field (ID) from display but keeps it for selection
-        # --delimiter " \| " splits fields by " | "
-        fzf_cmd = ['fzf', '--delimiter', ' \| ', '--with-nth', '2..', '--header', 'Select a window to switch to']
-        
         fzf = subprocess.Popen(fzf_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
         stdout, _ = fzf.communicate(input=fzf_input)
         
