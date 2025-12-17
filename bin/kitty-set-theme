@@ -1,26 +1,71 @@
 #!/bin/bash
 
-THEME_NAME="$1"
 THEMES_DIR="$HOME/.config/kitty/kitty-themes/themes"
+THEME_NAME="$1"
 
 if [ -z "$THEME_NAME" ]; then
-  echo "Usage: kitty-set-theme <theme_name>"
-  echo "Available themes:"
-  if [ -d "$THEMES_DIR" ]; then
-    ls "$THEMES_DIR" | sed 's/\.conf$//'
+  if command -v fzf >/dev/null 2>&1; then
+    # Try to use the helper script to list themes with Light/Dark classification
+    LIST_SCRIPT="$(dirname "$0")/list-kitty-themes.py"
+    if [ -f "$LIST_SCRIPT" ]; then
+        # Show type first, then name. Use awk to extract the name (2nd column)
+        THEME_NAME=$(python3 "$LIST_SCRIPT" | fzf | awk '{print $2}')
+    else
+        THEME_NAME=$(ls "$THEMES_DIR" | sed 's/\.conf$//' | fzf)
+    fi
+
+    if [ -z "$THEME_NAME" ]; then
+      echo "No theme selected."
+      exit 0
+    fi
   else
-    echo "Themes directory not found at $THEMES_DIR"
+    echo "Usage: kitty-set-theme <theme_name>"
+    echo "Available themes:"
+    if [ -d "$THEMES_DIR" ]; then
+      ls "$THEMES_DIR" | sed 's/\.conf$//'
+    else
+      echo "Themes directory not found at $THEMES_DIR"
+    fi
+    exit 1
   fi
-  exit 1
 fi
 
 THEME_FILE="$THEMES_DIR/$THEME_NAME.conf"
+CACHE_ZIP="$HOME/Library/Caches/kitty/kitty-themes.zip"
+TEMP_THEME_FILE=""
 
 if [ ! -f "$THEME_FILE" ]; then
-  echo "Theme '$THEME_NAME' not found."
-  exit 1
+  # Check if it exists in the cache zip
+  if [ -f "$CACHE_ZIP" ]; then
+    # Check if file exists in zip
+    if unzip -l "$CACHE_ZIP" "kitty-themes-master/themes/$THEME_NAME.conf" >/dev/null 2>&1; then
+       TEMP_THEME_FILE=$(mktemp)
+       unzip -p "$CACHE_ZIP" "kitty-themes-master/themes/$THEME_NAME.conf" > "$TEMP_THEME_FILE"
+       THEME_FILE="$TEMP_THEME_FILE"
+    else
+       echo "Theme '$THEME_NAME' not found in local directory or cache."
+       exit 1
+    fi
+  else
+    echo "Theme '$THEME_NAME' not found."
+    exit 1
+  fi
 fi
 
-# Apply the theme to all windows in the current OS window (or tab?)
-# -a applies to all windows.
-kitty @ set-colors -a -c "$THEME_FILE"
+# Get the ID of the currently focused tab
+# We look for the focused OS window, then the focused tab within it.
+TAB_ID=$(kitty @ ls | python3 -c "import sys, json; print(next((t['id'] for w in json.load(sys.stdin) if w['is_focused'] for t in w['tabs'] if t['is_focused']), ''))")
+
+if [ -n "$TAB_ID" ]; then
+  # Apply theme to all windows in the current tab
+  # Use --match-tab to target the specific tab
+  kitty @ set-colors --match-tab "id:$TAB_ID" "$THEME_FILE"
+else
+  echo "Could not determine current tab ID. Applying to active window only."
+  kitty @ set-colors "$THEME_FILE"
+fi
+
+# Cleanup temp file if used
+if [ -n "$TEMP_THEME_FILE" ]; then
+  rm "$TEMP_THEME_FILE"
+fi
