@@ -1,5 +1,21 @@
 set sts=2 ts=2 sw=2
 
+let g:markdown_fenced_languages = [
+  \ 'bash=sh',
+  \ 'css',
+  \ 'html',
+  \ 'javascript',
+  \ 'json',
+  \ 'lua',
+  \ 'python',
+  \ 'rust',
+  \ 'java',
+  \ 'go',
+  \ 'sql',
+  \ 'typescript',
+  \ 'vim',
+  \ ]
+
 nnoremap <buffer> Q a```<cr>```<ESC>O
 
 " Function to toggle or convert markdown list item to checklist

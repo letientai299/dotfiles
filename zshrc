@@ -124,7 +124,7 @@ else
 fi
 
 # PATH additions (fast, no subprocess)
-export PATH="$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
+export PATH="$DOTFILES/tools:/$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/tai/.local/share/pnpm"
@@ -139,7 +139,7 @@ esac
 zsh-defer -c '
   # Start git fsmonitor daemon if in a git repo
   [[ -d .git ]] && git fsmonitor--daemon start &>/dev/null &!
-  
+
   # Compile zcompdump if needed
   local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
   [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]] && \

@@ -2,12 +2,6 @@ require("ui")
 
 vim.opt.shada = "!,'200,<500,s10,h"
 
---------------------------------------------------------------------------------
--- Treesitter setup
--- Note: nvim-treesitter main branch uses new API
--- Run :PlugUpdate to update nvim-treesitter-textobjects to main branch
---------------------------------------------------------------------------------
--- Basic treesitter config (new API)
 require("nvim-treesitter").setup({
   -- install_dir can be customized if needed
 })
@@ -151,12 +145,16 @@ local function setup_oil()
   })
 end
 
+-- Make available to vimscript mappings defined in after/plugin
+_G.setup_oil = setup_oil
+
 -- Setup oil on first directory open or Oil command
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "oil://*",
   once = true,
   callback = setup_oil,
 })
-
--- Make setup_oil globally accessible for keymaps
-_G.setup_oil = setup_oil
+vim.api.nvim_create_user_command("Oil", function(opts)
+  setup_oil()
+  require("oil").open(opts.args ~= "" and opts.args or nil)
+end, { nargs = "?" })

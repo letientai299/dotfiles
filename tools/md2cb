@@ -1,0 +1,4 @@
+#!/bin/bash
+pandoc --from gfm --to html |
+    textutil -convert rtf -stdin -stdout -format html |
+    pbcopy -Prefer 
