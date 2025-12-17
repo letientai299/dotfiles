@@ -62,7 +62,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.defer_fn(function()
       local colors = require("catppuccin.palettes").get_palette()
       require("catppuccin").setup({
-        transparent_background = true,
+        transparent_background = false,
         custom_highlights = {
           Comment = { fg = colors.lavender },
         },

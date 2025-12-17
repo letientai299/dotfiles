@@ -4,7 +4,7 @@ import json
 import os
 import tempfile
 from datetime import datetime
-from kitty.fast_data_types import Screen, get_options
+from kitty.fast_data_types import Screen, get_options, get_boss
 from kitty.tab_bar import (
     DrawData,
     ExtraData,
@@ -442,6 +442,12 @@ def draw_tab(
     # Use oldest foreground process (the command you typed, not subprocesses like ssh)
     process = ta.active_oldest_exe or ta.active_exe or tab.title
     
+    # Check if we have a custom title
+    boss = get_boss()
+    tab_obj = boss.tab_for_id(tab.tab_id)
+    if tab_obj and tab_obj.name:
+        cwd = None
+
     # Build custom title with folder and process
     title_text = ""
     if cwd:

@@ -311,3 +311,16 @@ function killport() {
     fi
 }
 
+# zoxide restricted to subdirectories of current directory
+zsub() {
+  local result
+  # List matches, filter by current PWD, and use fzf to select
+  # We use awk to filter for paths starting with PWD to avoid regex issues
+  result=$(zoxide query --list "$@" | awk -v prefix="$PWD" 'index($0, prefix) == 1' | fzf --height 40% --layout=reverse --border)
+  
+  if [[ -n "$result" ]]; then
+    cd "$result"
+  fi
+}
+
+
