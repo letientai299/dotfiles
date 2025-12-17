@@ -311,15 +311,27 @@ function killport() {
     fi
 }
 
-# zoxide restricted to subdirectories of current directory
-zsub() {
+# zoxide restricted to git repo (or current directory)
+j() {
   local result
-  # List matches, filter by current PWD, and use fzf to select
-  # We use awk to filter for paths starting with PWD to avoid regex issues
-  result=$(zoxide query --list "$@" | awk -v prefix="$PWD" 'index($0, prefix) == 1' | fzf --height 40% --layout=reverse --border)
+  local root
+  
+  # Try to get git root, fallback to PWD
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    root=$(git rev-parse --show-toplevel)
+  else
+    root="$PWD"
+  fi
+
+  # List matches, filter by root, take the first one (best match)
+  # We use awk to filter for paths starting with root to avoid regex issues
+  result=$(zoxide query --list "$@" | awk -v prefix="$root" 'index($0, prefix) == 1' | head -n 1)
   
   if [[ -n "$result" ]]; then
     cd "$result"
+  else
+    echo "No match found in ${root}"
+    return 1
   fi
 }
 

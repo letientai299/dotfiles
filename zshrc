@@ -148,3 +148,5 @@ zsh-defer -c '
 
 # zprof
 
+
+source /Users/tai/.config/broot/launcher/bash/br
