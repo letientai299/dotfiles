@@ -1,7 +1,7 @@
 # Starship config to match p10k appearance
 
 # Increase timeout for slow git operations (default 500ms)
-command_timeout = 1000
+command_timeout = 5000
 
 format = """$directory\
 $git_branch\
