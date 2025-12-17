@@ -43,7 +43,8 @@ if vim.g.started_by_firenvim == true then
 
   -- vim.o.guifont = "Fira Code Nerd Font:h9"
   if vim.fn.has('macunix') then
-    vim.o.guifont = "FiraCode Nerd Font:h10"
+    -- vim.o.guifont = "FiraCode Nerd Font:h10"
+    vim.o.guifont = "IosevkaTerm Nerd Font:h10"
   else
     vim.o.guifont = "FiraCode Nerd Font:h8"
   end
@@ -66,11 +67,11 @@ if vim.g.started_by_firenvim == true then
       end
 
       vim.fn.timer_start(300, function()
-        if vim.o.lines < 20 then
-          vim.o.lines = 30
+        if vim.o.lines < 40 then
+          vim.o.lines = 40
         end
-        if vim.o.columns < 100 then
-          vim.o.columns = 100
+        if vim.o.columns < 120 then
+          vim.o.columns = 120
         end
       end)
     end,

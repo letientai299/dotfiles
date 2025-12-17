@@ -1,0 +1,26 @@
+#!/bin/bash
+
+THEME_NAME="$1"
+THEMES_DIR="$HOME/.config/kitty/kitty-themes/themes"
+
+if [ -z "$THEME_NAME" ]; then
+  echo "Usage: kitty-set-theme <theme_name>"
+  echo "Available themes:"
+  if [ -d "$THEMES_DIR" ]; then
+    ls "$THEMES_DIR" | sed 's/\.conf$//'
+  else
+    echo "Themes directory not found at $THEMES_DIR"
+  fi
+  exit 1
+fi
+
+THEME_FILE="$THEMES_DIR/$THEME_NAME.conf"
+
+if [ ! -f "$THEME_FILE" ]; then
+  echo "Theme '$THEME_NAME' not found."
+  exit 1
+fi
+
+# Apply the theme to all windows in the current OS window (or tab?)
+# -a applies to all windows.
+kitty @ set-colors -a -c "$THEME_FILE"
