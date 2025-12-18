@@ -8,14 +8,14 @@ $git_branch\
 $git_status\
 ${custom.git_commit}\
 $fill\
-$cmd_duration\
 $python\
-${custom.my_todo}\
 $time\
 $username$hostname\
 $line_break\
 $status\
 $character"""
+
+right_format = """$cmd_duration${custom.my_todo}"""
 
 # Add a blank line between prompts (visual separation)
 add_newline = true
