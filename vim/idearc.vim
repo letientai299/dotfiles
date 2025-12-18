@@ -28,13 +28,20 @@ nmap ]e :action MoveLineDown<cr>
 nmap <A-p> :action PinActiveTabToggle<cr>
 nmap <leader>va :source ~/.ideavimrc<cr>
 
-" Use the new surround plugin
+" https://github.com/JetBrains/ideavim/wiki/IdeaVim-Plugins
 set surround
 set commentary
 set ideajoin
 set ideamarks
-" set argtextobj
 set anyobject
+set functiontextobj
+
+set dial
+nnoremap <C-a> :DialIncrement<cr>
+nnoremap <C-x> :DialDecrement<cr>
+
+set matchit
+
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
 set NERDTree
