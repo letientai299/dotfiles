@@ -59,7 +59,7 @@ Plug 'raimondi/delimitmate', { 'on': [] }
 Plug 'honza/vim-snippets', { 'on': [] }
 
 " PERF: nerdcommenter lazy loaded on first comment command
-Plug 'scrooloose/nerdcommenter', { 'on': ['<Plug>NERDCommenterToggle', '<Plug>NERDCommenterComment', 'NERDCommenterToggle'] }
+Plug 'scrooloose/nerdcommenter'
 
 " PERF: neoformat lazy loaded on first format command
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat' }

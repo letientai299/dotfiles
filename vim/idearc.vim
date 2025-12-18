@@ -8,16 +8,6 @@ set textwidth=0
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
 
-" Use the new surround plugin
-set surround
-set commentary
-set ideajoin
-set ideamarks
-set argtextobj
-
-" https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
-set NERDTree
-
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
 nnoremap [<space> O<esc>j
 nnoremap ]<space> o<esc>k
@@ -37,4 +27,15 @@ nmap ]e :action MoveLineDown<cr>
 
 nmap <A-p> :action PinActiveTabToggle<cr>
 nmap <leader>va :source ~/.ideavimrc<cr>
+
+" Use the new surround plugin
+set surround
+set commentary
+set ideajoin
+set ideamarks
+" set argtextobj
+set anyobject
+
+" https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
+set NERDTree
 
