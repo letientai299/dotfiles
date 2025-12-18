@@ -23,10 +23,14 @@ add_newline = true
 # Directory
 [directory]
 format = "[󰉋 $path]($style)[$read_only]($read_only_style) "
-truncation_length = 3
+truncation_length = 4
 truncate_to_repo = false
 style = "bold cyan"
 read_only = " 󰌾"
+# Highlight the git repo root directory with a different color
+repo_root_style = "bold yellow"
+# Optional: add a prefix to the repo root
+# repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
 # Prompt character (similar to p10k)
 [character]
