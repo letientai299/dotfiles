@@ -82,7 +82,7 @@ alias cm="git add . && git commit -v"
 alias gdo='git diff origin/HEAD..HEAD'
 
 # docker
-alias d='docker'
+alias dk='docker'
 alias dc='docker-compose'
 alias dp='docker pull'
 alias dcp='docker pull'
