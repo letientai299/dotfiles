@@ -1,9 +1,9 @@
 #!/bin/sh
-# Fast custom segment: last git commit message with relative time
-# Optimized: uses sh instead of zsh, single git call, minimal processing
+# Fast custom segment: last git commit message
+# Uses STARSHIP_GIT_COMMIT_MSG env var (cached by zsh precmd) to avoid git calls
 
-# Single git call for subject
-msg=$(git log -1 --pretty=format:'%s' 2>/dev/null) || exit 0
+# Use cached commit msg from env var, fallback to git command
+msg="${STARSHIP_GIT_COMMIT_MSG:-$(git log -1 --pretty=format:'%s' 2>/dev/null)}"
 [ -z "$msg" ] && exit 0
 
 is_wip=0
@@ -37,7 +37,7 @@ if [ "$is_wip" -eq 1 ]; then
         rest=""
       fi
     fi
-    # Bold orange (256-color 208) WIP label; reset so the rest uses normal prompt color
+    # Bold orange (256-color 208) WIP label
     printf '\033[1;38;5;208m%s\033[0m %s' "$prefix" "$rest"
   else
     printf '\033[1;38;5;208m%s\033[0m' "$prefix"

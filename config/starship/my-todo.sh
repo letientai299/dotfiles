@@ -1,9 +1,10 @@
 #!/bin/sh
 # Fast custom segment: my_todo - shows current task from .dump/todo.md
-# Colors: fix/bug=orange(208), feat=green(46), doc=cyan(51), default=blue(33)
+# Uses STARSHIP_GIT_ROOT env var (cached by zsh precmd) to avoid git calls
 
-# Find git root or use current dir
-root=$(git rev-parse --show-toplevel 2>/dev/null) || root="."
+# Use cached git root from env var, fallback to git command
+root="${STARSHIP_GIT_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+[ -z "$root" ] && root="."
 todo_file="$root/.dump/todo.md"
 
 [ ! -f "$todo_file" ] && exit 0
@@ -19,4 +20,4 @@ if [ ${#task} -gt 30 ]; then
   task="$(printf '%.27s' "$task")..."
 fi
 
-echo $task
+printf '%s' "$task"

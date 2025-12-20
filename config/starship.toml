@@ -64,7 +64,8 @@ deleted = "[-](red)"
 # Custom: Last git commit message
 [custom.git_commit]
 command = "sh $HOME/.config/starship/git-commit.sh"
-when = "git rev-parse --git-dir 2>/dev/null"
+require_repo = true
+detect_folders = [".git"]
 format = "[$symbol$output]($style) "
 style = "none"
 unsafe_no_escape = true
@@ -73,14 +74,16 @@ unsafe_no_escape = true
 # Optimized POSIX shell script - adds only ~10-15ms
 [custom.my_todo]
 command = "sh $HOME/.config/starship/my-todo.sh"
-when = "[ -f \"$(git rev-parse --show-toplevel 2>/dev/null)/.dump/todo.md\" ]"
+require_repo = true
+when = true
 format = "[$symbol$output]($style) "
 style = "blue"
 
 # Custom: Git root when the directory segment is truncated (keep truncation_length in sync)
 [custom.git_root]
 command = "sh $HOME/.config/starship/git-root.sh"
-when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1"
+require_repo = true
+when = true
 format = '[$output]($style) '
 style = "bold yellow"
 shell = ["sh"]

@@ -103,6 +103,8 @@ if [ -f ~/.zshrc_local ]; then
 fi
 
 
+# Starship git cache plugin (local) - must load before starship
+source $DOTFILES/plugins/starship-cache/starship-cache.plugin.zsh
 
 # Starship prompt - initialized after plugins
 # Using evalcache saves ~5ms by caching the init script
@@ -149,4 +151,3 @@ zsh-defer -c '
 # zprof
 
 
-source /Users/tai/.config/broot/launcher/bash/br
