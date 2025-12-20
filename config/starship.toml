@@ -3,7 +3,8 @@
 # Increase timeout for slow git operations (default 500ms)
 command_timeout = 5000
 
-format = """$directory\
+format = """${custom.git_root}\
+$directory\
 $git_branch\
 $git_status\
 ${custom.git_commit}\
@@ -23,7 +24,7 @@ add_newline = true
 # Directory
 [directory]
 format = "󰉋 [$path]($style)[$read_only]($read_only_style) "
-# symbol = "󰉋" 
+# symbol = "󰉋"
 truncation_symbol = ".../"
 truncation_length = 3
 truncate_to_repo = false
@@ -63,7 +64,7 @@ deleted = "[-](red)"
 
 # Custom: Last git commit message
 [custom.git_commit]
-command = "$HOME/.config/starship-git-commit.sh"
+command = "sh $HOME/.config/starship/git-commit.sh"
 when = "git rev-parse --git-dir 2>/dev/null"
 format = "[$symbol$output]($style) "
 style = "none"
@@ -72,10 +73,18 @@ unsafe_no_escape = true
 # Custom: my_todo segment
 # Optimized POSIX shell script - adds only ~10-15ms
 [custom.my_todo]
-command = "$HOME/.config/starship-my-todo.sh"
+command = "sh $HOME/.config/starship/my-todo.sh"
 when = "[ -f \"$(git rev-parse --show-toplevel 2>/dev/null)/.dump/todo.md\" ]"
 format = "[$symbol$output]($style) "
 style = "blue"
+
+# Custom: Git root when the directory segment is truncated (keep truncation_length in sync)
+[custom.git_root]
+command = "sh $HOME/.config/starship/git-root.sh"
+when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1"
+format = '[$output]($style) '
+style = "bold yellow"
+shell = ["sh"]
 
 # Time - shows when the prompt was rendered (when last command finished)
 [time]

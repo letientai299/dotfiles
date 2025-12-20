@@ -312,6 +312,7 @@ function killport() {
 }
 
 # zoxide restricted to git repo (or current directory)
+# Falls back to fd + fzf if zoxide finds no match
 j() {
   local result
   local root
@@ -330,8 +331,32 @@ j() {
   if [[ -n "$result" ]]; then
     cd "$result"
   else
-    echo "No match found in ${root}"
-    return 1
+    # Fallback: use fd to find directories and fzf to select
+    local query="${*}"
+    local matches
+    if [[ -n "$query" ]]; then
+      matches=$(cd "$root" && fd --type d --hidden --exclude .git --glob "*${query}*")
+    else
+      matches=$(cd "$root" && fd --type d --hidden --exclude .git)
+    fi
+    
+    local count=$(echo "$matches" | grep -c '^')
+    
+    if [[ $count -eq 0 ]]; then
+      echo "No matching directories found"
+      return 1
+    elif [[ $count -eq 1 ]]; then
+      result="$matches"
+      cd "$root/$result"
+    else
+      result=$(echo "$matches" | fzf --height 40% --reverse --header="Select directory")
+      if [[ -n "$result" ]]; then
+        cd "$root/$result"
+      else
+        echo "No directory selected"
+        return 1
+      fi
+    fi
   fi
 }
 
