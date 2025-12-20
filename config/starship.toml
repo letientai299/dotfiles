@@ -23,8 +23,7 @@ add_newline = true
 
 # Directory
 [directory]
-format = "󰉋 [$path]($style)[$read_only]($read_only_style) "
-# symbol = "󰉋"
+format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_symbol = ".../"
 truncation_length = 3
 truncate_to_repo = false
