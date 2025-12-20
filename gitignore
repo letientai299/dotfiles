@@ -73,3 +73,5 @@ nohup.out
 .aider*
 
 *.tsbuildinfo
+
+.junie/
