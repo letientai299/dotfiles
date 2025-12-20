@@ -49,7 +49,7 @@ def _save_cache(data):
 
 
 def _get_cpu_usage():
-    """Get CPU usage as (user%, sys%) - cross platform"""
+    """Get CPU usage as (user%, sys%) - cross platform, non-blocking"""
     try:
         import os
         import time
@@ -68,7 +68,7 @@ def _get_cpu_usage():
             return _get_cpu_usage.cached_value
         
         if os.path.exists('/proc/stat'):
-            # Linux - read CPU times
+            # Linux - read CPU times (instant, no subprocess)
             with open('/proc/stat', 'r') as f:
                 line = f.readline()
                 fields = line.split()
@@ -100,16 +100,16 @@ def _get_cpu_usage():
             _get_cpu_usage.last_check = now
             return (user_percent, sys_percent)
         else:
-            # macOS - use iostat (much faster than top: ~0.015s vs ~0.7s)
+            # macOS - use iostat without wait flag (instant: ~10ms)
+            # Note: Do NOT use -w flag as it adds a wait period
             result = subprocess.run(
-                ["iostat", "-c", "1", "-w", "1"],
+                ["iostat"],
                 capture_output=True,
                 text=True,
                 timeout=0.5
             )
-            # Parse iostat output - last line has CPU stats at the end
-            # Format: disk_stats... us sy id load_avg...
-            # Example: 44.33 1 0.03 ... 11 7 82 4.78 7.74 8.46
+            # Parse iostat output - last line has CPU stats
+            # Format: KB/t  tps  MB/s  us sy id   1m   5m   15m
             lines = result.stdout.strip().split('\n')
             if len(lines) >= 2:
                 try:
@@ -439,8 +439,27 @@ def draw_tab(
     
     ta = TabAccessor(tab.tab_id)
     cwd = ta.active_wd
-    # Use oldest foreground process (the command you typed, not subprocesses like ssh)
-    process = ta.active_oldest_exe or ta.active_exe or tab.title
+    
+    # Get the best process name - prefer the most specific/interesting one
+    # active_exe is the current foreground process
+    # active_oldest_exe is the oldest in the foreground group (often a shell wrapper)
+    process = ta.active_exe or ta.active_oldest_exe or tab.title
+    
+    # Skip boring wrapper processes and use tab title instead
+    # These are typically shell wrappers that launch the actual command
+    boring_processes = {'sh', 'bash', 'zsh', 'fish', 'dash', 'ksh', 'tcsh', 'csh'}
+    if process and os.path.basename(process).lstrip('-') in boring_processes:
+        # Try to get a better name from active_oldest_exe or tab title
+        oldest = ta.active_oldest_exe
+        if oldest and os.path.basename(oldest).lstrip('-') not in boring_processes:
+            process = oldest
+        elif tab.title and not any(tab.title.startswith(b) for b in boring_processes):
+            # Use tab title if it's more informative
+            process = tab.title.split()[0] if ' ' in tab.title else tab.title
+    
+    # Extract just the executable name
+    if process:
+        process = os.path.basename(process).lstrip('-')
     
     # Check if we have a custom title
     boss = get_boss()

@@ -1,0 +1,416 @@
+#!/bin/bash
+set -euo pipefail
+
+# =============================================================================
+# gw - Git Worktree Wrapper
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Helper Functions
+# -----------------------------------------------------------------------------
+
+get_repo_root() {
+    git rev-parse --show-toplevel 2>/dev/null
+}
+
+get_bare_repo_root() {
+    # Get the root of the main worktree (original clone)
+    git worktree list --porcelain | head -1 | sed 's/^worktree //'
+}
+
+get_repo_name() {
+    basename "$(get_bare_repo_root)"
+}
+
+branch_to_snake_case() {
+    local branch="$1"
+    echo "$branch" | sed 's/[^a-zA-Z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//;s/-$//'
+}
+
+get_worktree_path_for_branch() {
+    local branch="$1"
+    local repo_name
+    repo_name="$(get_repo_name)"
+    local parent_dir
+    parent_dir="$(dirname "$(get_bare_repo_root)")"
+    local snake_branch
+    snake_branch="$(branch_to_snake_case "$branch")"
+    echo "${parent_dir}/${repo_name}.${snake_branch}"
+}
+
+list_worktrees() {
+    # Output: path|branch (excluding main worktree)
+    git worktree list --porcelain | awk '
+        /^worktree / { path = substr($0, 10) }
+        /^branch / { branch = substr($0, 8); sub(/^refs\/heads\//, "", branch); print path "|" branch }
+    '
+}
+
+list_worktree_branches() {
+    list_worktrees | cut -d'|' -f2
+}
+
+list_worktree_paths() {
+    list_worktrees | cut -d'|' -f1
+}
+
+get_main_worktree() {
+    git worktree list --porcelain | head -1 | sed 's/^worktree //'
+}
+
+get_worktree_path_by_branch() {
+    local branch="$1"
+    list_worktrees | grep "|${branch}$" | cut -d'|' -f1
+}
+
+get_current_worktree() {
+    get_repo_root
+}
+
+branch_exists() {
+    local branch="$1"
+    git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null
+}
+
+worktree_exists_for_branch() {
+    local branch="$1"
+    list_worktree_branches | grep -qx "$branch"
+}
+
+list_all_branches() {
+    git for-each-ref --format='%(refname:short)' refs/heads/
+}
+
+# -----------------------------------------------------------------------------
+# Shell Integration (--init)
+# -----------------------------------------------------------------------------
+
+print_shell_init() {
+    local shell_type="${1:-bash}"
+    cat << 'SHELL_FUNC'
+# gw - Git Worktree Wrapper
+gw() {
+    local output
+    output="$(command gw "$@")"
+    local exit_code=$?
+    if [[ $exit_code -ne 0 ]]; then
+        echo "$output" >&2
+        return $exit_code
+    fi
+    if [[ "$output" == cd\ * ]]; then
+        eval "$output"
+    elif [[ -n "$output" ]]; then
+        echo "$output"
+    fi
+}
+SHELL_FUNC
+
+    if [[ "$shell_type" == "bash" ]]; then
+        cat << 'BASH_COMPLETION'
+
+# Bash completion for gw
+_gw_completions() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+    
+    if [[ "$prev" == "--remove" || "$prev" == "-r" ]]; then
+        COMPREPLY=($(compgen -W "$(command gw --complete-worktrees 2>/dev/null)" -- "$cur"))
+    elif [[ "$prev" == "--from" || "$prev" == "-f" ]]; then
+        COMPREPLY=($(compgen -W "$(command gw --complete-branches 2>/dev/null)" -- "$cur"))
+    elif [[ "$cur" == -* ]]; then
+        COMPREPLY=($(compgen -W "--remove --from -f --init --help" -- "$cur"))
+    else
+        COMPREPLY=($(compgen -W "$(command gw --complete-branches 2>/dev/null)" -- "$cur"))
+    fi
+}
+complete -F _gw_completions gw
+BASH_COMPLETION
+    elif [[ "$shell_type" == "zsh" ]]; then
+        cat << 'ZSH_COMPLETION'
+
+# Zsh completion for gw
+_gw() {
+    local state
+    _arguments \
+        '--remove[Remove a worktree]:worktree:->worktrees' \
+        '--from[Base branch for new worktree]:branch:->branches' \
+        '-f[Base branch for new worktree]:branch:->branches' \
+        '--init[Print shell integration code]' \
+        '--help[Show help]' \
+        '1:branch:->branches_or_worktrees'
+    
+    case $state in
+        worktrees)
+            local worktrees=(${(f)"$(command gw --complete-worktrees 2>/dev/null)"})
+            _describe 'worktree' worktrees
+            ;;
+        branches|branches_or_worktrees)
+            local branches=(${(f)"$(command gw --complete-branches 2>/dev/null)"})
+            _describe 'branch' branches
+            ;;
+    esac
+}
+compdef _gw gw
+ZSH_COMPLETION
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# Completion Helpers
+# -----------------------------------------------------------------------------
+
+print_complete_branches() {
+    # Worktrees + all branches (deduplicated)
+    { list_worktree_branches; list_all_branches; } | sort -u
+}
+
+print_complete_worktrees() {
+    # Only worktree branches
+    list_worktree_branches
+}
+
+# -----------------------------------------------------------------------------
+# Main Commands
+# -----------------------------------------------------------------------------
+
+cmd_select_worktree() {
+    local worktrees
+    worktrees="$(list_worktrees)"
+    
+    if [[ -z "$worktrees" ]]; then
+        echo "No worktrees found" >&2
+        return 1
+    fi
+    
+    local selected
+    selected="$(echo "$worktrees" | awk -F'|' '{print $2 " -> " $1}' | fzf --prompt="Select worktree: " --height=40%)"
+    
+    if [[ -z "$selected" ]]; then
+        return 0
+    fi
+    
+    local path
+    path="$(echo "$selected" | sed 's/.* -> //')"
+    echo "cd '$path'"
+}
+
+cmd_create_worktree() {
+    local branch="$1"
+    local base_branch="${2:-}"
+    
+    # Check if worktree already exists for this branch
+    if worktree_exists_for_branch "$branch"; then
+        local existing_path
+        existing_path="$(get_worktree_path_by_branch "$branch")"
+        echo "cd '$existing_path'"
+        return 0
+    fi
+    
+    local worktree_path
+    worktree_path="$(get_worktree_path_for_branch "$branch")"
+    
+    # Check if directory already exists
+    if [[ -d "$worktree_path" ]]; then
+        echo "Error: Directory already exists: $worktree_path" >&2
+        return 1
+    fi
+    
+    if branch_exists "$branch"; then
+        # Branch exists, create worktree for it
+        git worktree add "$worktree_path" "$branch" >&2
+    else
+        # Branch doesn't exist, create it
+        if [[ -z "$base_branch" ]]; then
+            base_branch="$(git rev-parse --abbrev-ref HEAD)"
+        fi
+        git worktree add -b "$branch" "$worktree_path" "$base_branch" >&2
+    fi
+    
+    echo "cd '$worktree_path'"
+}
+
+cmd_remove_worktree() {
+    local target="${1:-}"
+    local target_path=""
+    
+    # If no target, use fzf to select
+    if [[ -z "$target" ]]; then
+        local worktrees
+        worktrees="$(list_worktrees)"
+        
+        # Exclude main worktree from removal options
+        local main_worktree
+        main_worktree="$(get_main_worktree)"
+        worktrees="$(echo "$worktrees" | grep -v "^${main_worktree}|" || true)"
+        
+        if [[ -z "$worktrees" ]]; then
+            echo "No removable worktrees found" >&2
+            return 1
+        fi
+        
+        local selected
+        selected="$(echo "$worktrees" | awk -F'|' '{print $2 " -> " $1}' | fzf --prompt="Remove worktree: " --height=40%)"
+        
+        if [[ -z "$selected" ]]; then
+            return 0
+        fi
+        
+        target_path="$(echo "$selected" | sed 's/.* -> //')"
+        target="$(echo "$selected" | sed 's/ -> .*//')"
+    else
+        # Target provided, find the path
+        target_path="$(get_worktree_path_by_branch "$target")"
+        if [[ -z "$target_path" ]]; then
+            echo "Error: No worktree found for branch: $target" >&2
+            return 1
+        fi
+    fi
+    
+    local current_worktree
+    current_worktree="$(get_current_worktree)"
+    
+    local need_switch=false
+    if [[ "$current_worktree" == "$target_path" ]]; then
+        need_switch=true
+    fi
+    
+    # Gather worktree info BEFORE removal (in case we're inside the worktree being removed)
+    local remaining
+    remaining="$(list_worktrees)"
+    local main_worktree
+    main_worktree="$(get_main_worktree)"
+    
+    # Remove the worktree
+    git worktree remove "$target_path" >&2
+    
+    if [[ "$need_switch" == true ]]; then
+        # Filter out the removed worktree from remaining
+        remaining="$(echo "$remaining" | grep -v "^${target_path}|" || true)"
+        
+        # Filter out main worktree for fzf selection
+        local other_worktrees
+        other_worktrees="$(echo "$remaining" | grep -v "^${main_worktree}|" || true)"
+        
+        if [[ -z "$other_worktrees" ]]; then
+            # Only main worktree left
+            echo "cd '$main_worktree'"
+        else
+            # Let user pick
+            local selected
+            selected="$(echo "$other_worktrees" | awk -F'|' '{print $2 " -> " $1}' | fzf --prompt="Switch to: " --height=40%)"
+            
+            if [[ -z "$selected" ]]; then
+                # Default to main
+                echo "cd '$main_worktree'"
+            else
+                local path
+                path="$(echo "$selected" | sed 's/.* -> //')"
+                echo "cd '$path'"
+            fi
+        fi
+    fi
+}
+
+print_help() {
+    cat << 'HELP'
+gw - Git Worktree Wrapper
+
+Usage:
+  gw                          Select worktree with fzf and cd to it
+  gw <branch>                 Create worktree for branch and cd to it
+  gw <branch> -f <base>       Create worktree with branch based on <base>
+  gw <branch> --from <base>   Same as above
+  gw --remove [target]        Remove worktree (fzf if no target)
+  gw --init [bash|zsh]        Print shell integration code
+  gw --help                   Show this help
+
+Setup:
+  Add to your ~/.bashrc or ~/.zshrc:
+    eval "$(gw --init bash)"   # for bash
+    eval "$(gw --init zsh)"    # for zsh
+HELP
+}
+
+# -----------------------------------------------------------------------------
+# Argument Parsing & Main
+# -----------------------------------------------------------------------------
+
+main() {
+    # Check if inside a git repository
+    if ! git rev-parse --git-dir &>/dev/null; then
+        echo "Error: Not inside a git repository" >&2
+        return 1
+    fi
+    
+    # No arguments - select with fzf
+    if [[ $# -eq 0 ]]; then
+        cmd_select_worktree
+        return $?
+    fi
+    
+    local branch=""
+    local base_branch=""
+    local remove_target=""
+    local action=""
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --init)
+                print_shell_init "${2:-bash}"
+                return 0
+                ;;
+            --help|-h)
+                print_help
+                return 0
+                ;;
+            --complete-branches)
+                print_complete_branches
+                return 0
+                ;;
+            --complete-worktrees)
+                print_complete_worktrees
+                return 0
+                ;;
+            --remove|-r)
+                action="remove"
+                if [[ -n "${2:-}" && "${2:0:1}" != "-" ]]; then
+                    remove_target="$2"
+                    shift
+                fi
+                shift
+                ;;
+            --from|-f)
+                if [[ -z "${2:-}" ]]; then
+                    echo "Error: --from requires an argument" >&2
+                    return 1
+                fi
+                base_branch="$2"
+                shift 2
+                ;;
+            -*)
+                echo "Error: Unknown option: $1" >&2
+                print_help >&2
+                return 1
+                ;;
+            *)
+                if [[ -z "$branch" ]]; then
+                    branch="$1"
+                else
+                    echo "Error: Unexpected argument: $1" >&2
+                    return 1
+                fi
+                shift
+                ;;
+        esac
+    done
+    
+    if [[ "$action" == "remove" ]]; then
+        cmd_remove_worktree "$remove_target"
+    elif [[ -n "$branch" ]]; then
+        cmd_create_worktree "$branch" "$base_branch"
+    else
+        cmd_select_worktree
+    fi
+}
+
+main "$@"

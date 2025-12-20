@@ -131,7 +131,14 @@ zsh-defer -c '
 '
 
 # PATH additions (fast, no subprocess)
-export PATH="$DOTFILES/tools:/$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
+export PATH="$DOTFILES/tools:$DOTFILES/plugins:/$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
+
+# gw - Git Worktree Wrapper
+if (( $+functions[_evalcache] )); then
+  _evalcache gw --init zsh
+else
+  eval "$(gw --init zsh)"
+fi
 
 # pnpm
 export PNPM_HOME="/Users/tai/.local/share/pnpm"
