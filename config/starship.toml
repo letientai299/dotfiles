@@ -3,11 +3,11 @@
 # Increase timeout for slow git operations (default 500ms)
 command_timeout = 5000
 
-format = """${custom.git_root}\
+format = """${env_var.STARSHIP_GIT_ROOT_DISPLAY}\
 $directory\
 $git_branch\
 $git_status\
-${custom.git_commit}\
+${env_var.STARSHIP_GIT_COMMIT_MSG}\
 $fill\
 $python\
 $time\
@@ -16,7 +16,7 @@ $line_break\
 $status\
 $character"""
 
-right_format = """$cmd_duration${custom.my_todo}"""
+right_format = """$cmd_duration${env_var.STARSHIP_TODO}"""
 
 # Add a blank line between prompts (visual separation)
 add_newline = true
@@ -60,33 +60,18 @@ modified = "[󰏫](yellow)"
 staged = "[+](green)"
 renamed = "[](blue)"
 deleted = "[-](red)"
-
-# Custom: Last git commit message
-[custom.git_commit]
-command = "sh $HOME/.config/starship/git-commit.sh"
-require_repo = true
-detect_folders = [".git"]
-format = "[$symbol$output]($style) "
-style = "none"
-unsafe_no_escape = true
-
-# Custom: my_todo segment
-# Optimized POSIX shell script - adds only ~10-15ms
-[custom.my_todo]
-command = "sh $HOME/.config/starship/my-todo.sh"
-require_repo = true
-when = true
-format = "[$symbol$output]($style) "
-style = "blue"
-
-# Custom: Git root when the directory segment is truncated (keep truncation_length in sync)
-[custom.git_root]
-command = "sh $HOME/.config/starship/git-root.sh"
-require_repo = true
-when = true
-format = '[$output]($style) '
+# Environment variable modules (computed by zsh precmd, no subprocess needed)
+[env_var.STARSHIP_GIT_ROOT_DISPLAY]
+format = "[$env_value]($style) "
 style = "bold yellow"
-shell = ["sh"]
+
+[env_var.STARSHIP_GIT_COMMIT_MSG]
+format = "[$env_value]($style) "
+style = "none"
+
+[env_var.STARSHIP_TODO]
+format = "[$env_value]($style) "
+style = "blue"
 
 # Time - shows when the prompt was rendered (when last command finished)
 [time]

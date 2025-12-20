@@ -12,16 +12,16 @@
 #   antidote-load list       # List installed plugins
 antidote-load() {
   local antidote_dir="${ZDOTDIR:-$HOME}/.antidote"
-  
+
   # Clone antidote if missing
   if [[ ! -d "$antidote_dir" ]]; then
     echo "Installing antidote..."
     git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_dir"
   fi
-  
+
   # Source antidote
   source "$antidote_dir/antidote.zsh"
-  
+
   # Run command if provided
   if [[ $# -gt 0 ]]; then
     antidote "$@"
@@ -65,7 +65,7 @@ git-fsm() {
 #        hist-del "pattern"  # Delete entries matching pattern
 hist-del() {
   local histfile="${HISTFILE:-$HOME/.zsh_history}"
-  
+
   if [[ "$1" == "-1" ]]; then
     # Delete last entry
     fc -W
@@ -85,9 +85,9 @@ hist-del() {
     local selections=$(fc -l 1 | fzf --multi --tac --no-sort \
       --header="Tab to select multiple, Enter to delete" \
       --preview="echo {}" --preview-window=up:1)
-    
+
     [[ -z "$selections" ]] && echo "Nothing selected" && return 0
-    
+
     # Extract line numbers and delete from newest to oldest
     local nums=$(echo "$selections" | awk '{print $1}' | sort -rn)
     local count=0
@@ -126,16 +126,6 @@ lazygit() {
 }
 
 alias lg="lazygit" # And even more lazy
-
-# Some common alias for switching git branch, memo as gb (git branch)
-alias gbm='git checkout master'
-alias gbt='git checkout test'
-alias gbu='git checkout uat'
-# unalias gbs # I don't use git bisect yet
-alias gbs='git checkout staging'
-
-# Switch to the working branch
-alias gbw=gb_work
 
 fancy_echo() {
   echo "========================================"
@@ -316,7 +306,7 @@ function killport() {
 j() {
   local result
   local root
-  
+
   # Try to get git root, fallback to PWD
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     root=$(git rev-parse --show-toplevel)
@@ -341,21 +331,21 @@ j() {
   else
     matches=$(cd "$root" && fd --type d --hidden --exclude .git)
   fi
-  
+
   local count=$(echo "$matches" | grep -c '^')
-  
+
   # No matches found
   if [[ $count -eq 0 ]]; then
     echo "No matching directories found"
     return 1
   fi
-  
+
   # Single match - jump directly
   if [[ $count -eq 1 ]]; then
     cd "$root/$matches"
     return 0
   fi
-  
+
   # Multiple matches - use fzf
   result=$(echo "$matches" | fzf --height 40% --reverse \
     --preview "ls -A --color=always '$root/{}'" \
@@ -364,7 +354,7 @@ j() {
     echo "No directory selected"
     return 1
   fi
-  
+
   cd "$root/$result"
 }
 

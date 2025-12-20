@@ -70,7 +70,7 @@ Plug 'ntpeters/vim-better-whitespace', { 'on': [ 'StripWhitespace', 'DisableWhit
 
 " PERF: coc.nvim lazy-loaded on InsertEnter for faster startup
 " LSP features available after first insert mode entry
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': []}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_disable_transparent_cursor = 0
 let g:coc_global_extensions = [
       \'coc-snippets',

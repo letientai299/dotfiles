@@ -106,24 +106,29 @@ fi
 # Starship git cache plugin (local) - must load before starship
 source $DOTFILES/plugins/starship-cache/starship-cache.plugin.zsh
 
-# Starship prompt - initialized after plugins
-# Using evalcache saves ~5ms by caching the init script
-# Run `_evalcache_clear starship` after updating starship
+# Starship prompt - must load synchronously to set PS1 before first prompt
 if (( $+functions[_evalcache] )); then
   _evalcache starship init zsh
 else
   eval "$(starship init zsh)"
 fi
 
-# fzf and zoxide - use evalcache (cached = fast, no subprocess)
-# These are loaded synchronously since evalcache makes them instant
-if (( $+functions[_evalcache] )); then
-  _evalcache fzf --zsh
-  _evalcache zoxide init zsh
-else
-  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-  eval "$(zoxide init zsh)"
-fi
+# Defer fzf and zoxide - not needed until user types a command
+zsh-defer -c '
+  # fzf keybindings and completion
+  if (( $+functions[_evalcache] )); then
+    _evalcache fzf --zsh
+  else
+    [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+  fi
+
+  # zoxide (z command)
+  if (( $+functions[_evalcache] )); then
+    _evalcache zoxide init zsh
+  else
+    eval "$(zoxide init zsh)"
+  fi
+'
 
 # PATH additions (fast, no subprocess)
 export PATH="$DOTFILES/tools:/$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
