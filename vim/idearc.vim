@@ -36,13 +36,8 @@ set ideamarks
 set anyobject
 set functiontextobj
 
-set dial
-nnoremap <C-a> :DialIncrement<cr>
-nnoremap <C-x> :DialDecrement<cr>
-
 set matchit
 
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
 set NERDTree
-
