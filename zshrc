@@ -152,7 +152,3 @@ zsh-defer -c '
   [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]] && \
     zcompile "$zcompdump" &!
 '
-
-# zprof
-
-
