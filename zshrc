@@ -105,6 +105,7 @@ fi
 
 # Starship git cache plugin (local) - must load before starship
 source $DOTFILES/plugins/starship-cache/starship-cache.plugin.zsh
+source $DOTFILES/plugins/local_todo.sh
 
 # Starship prompt - must load synchronously to set PS1 before first prompt
 if (( $+functions[_evalcache] )); then

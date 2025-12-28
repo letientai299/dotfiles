@@ -226,17 +226,6 @@ one_of() {
   echo "$one"
 }
 
-local_todo() {
-  repo=$(git rev-parse --show-toplevel 2>/dev/null)
-  if [[ -z $repo ]]; then
-    echo "not a git repo"
-    return
-  fi
-
-  mkdir -p "$repo"/.dump
-  vim "$repo"/.dump/todo.md
-}
-
 # https://yazi-rs.github.io/docs/quick-start/#shell-wrapper
 yazi_cd() {
   tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
