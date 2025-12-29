@@ -29,8 +29,6 @@ set NERDTree
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
 nnoremap [<space> O<esc>j
 nnoremap ]<space> o<esc>k
-nnoremap [q :action PreviousOccurence<cr>
-nnoremap ]q :action NextOccurence<cr>
 nnoremap [m :action MethodUp<cr>
 nnoremap ]m :action MethodDown<cr>
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
@@ -39,6 +37,7 @@ nnoremap [b :action PreviousTab<cr>
 nnoremap ]b :action NextTab<cr>
 nnoremap [e :action MoveLineUp<cr>
 nnoremap ]e :action MoveLineDown<cr>
+
 
 
 " TODO (tai): there's https://plugins.jetbrains.com/plugin/7282-liveplugin to
@@ -51,5 +50,5 @@ nnoremap gr :action RenameElement<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gu :action FindUsages<CR>
 nnoremap gt :action GotoRelated<CR>
-
-
+nnoremap <A-j> :action NextOccurence<CR>
+nnoremap <A-k> :action PreviousOccurence<cr>
