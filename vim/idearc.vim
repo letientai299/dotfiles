@@ -35,20 +35,21 @@ nnoremap [m :action MethodUp<cr>
 nnoremap ]m :action MethodDown<cr>
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
-" Tabs
 nnoremap [b :action PreviousTab<cr>
 nnoremap ]b :action NextTab<cr>
+nnoremap [e :action MoveLineUp<cr>
+nnoremap ]e :action MoveLineDown<cr>
 
-" Moving lines
-nmap [e :action MoveLineUp<cr>
-nmap ]e :action MoveLineDown<cr>
 
+" TODO (tai): there's https://plugins.jetbrains.com/plugin/7282-liveplugin to
+" write adhoc plugin for intelllij,
+" https://github.com/JetBrains/ideavim/discussions/303#discussioncomment-9974302
 
 nnoremap <leader>va :source ~/.ideavimrc<CR>
-nnoremap gr :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>gr :action RenameElement<CR>
+nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
+nnoremap gr :action RenameElement<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gu :action FindUsages<CR>
 nnoremap gt :action GotoRelated<CR>
 
-map <leader>a <Action>(Annotate)
+
