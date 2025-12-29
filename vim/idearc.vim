@@ -17,6 +17,7 @@ set commentary
 set ideajoin
 set ideamarks
 set anyobject
+set exchange
 " set functiontextobj
 
 set matchit
@@ -42,3 +43,12 @@ nnoremap ]b :action NextTab<cr>
 nmap [e :action MoveLineUp<cr>
 nmap ]e :action MoveLineDown<cr>
 
+
+nnoremap <leader>va :source ~/.ideavimrc<CR>
+nnoremap gr :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>gr :action RenameElement<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gu :action FindUsages<CR>
+nnoremap gt :action GotoRelated<CR>
+
+map <leader>a <Action>(Annotate)
