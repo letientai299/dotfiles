@@ -29,14 +29,16 @@ set NERDTree
 " unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
 nnoremap [<space> O<esc>j
 nnoremap ]<space> o<esc>k
-nnoremap [m :action MethodUp<cr>
-nnoremap ]m :action MethodDown<cr>
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
 nnoremap [b :action PreviousTab<cr>
 nnoremap ]b :action NextTab<cr>
 nnoremap [e :action MoveLineUp<cr>
 nnoremap ]e :action MoveLineDown<cr>
+
+# Jumpings
+nnoremap zk :action MethodUp<cr>
+nnoremap zj :action MethodDown<cr>
 
 
 
@@ -48,7 +50,8 @@ nnoremap <leader>va :source ~/.ideavimrc<CR>
 nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 nnoremap gr :action RenameElement<CR>
 nnoremap gi :action GotoImplementation<CR>
-nnoremap gu :action FindUsages<CR>
+nnoremap gu :action ShowUsages<CR>
+nnoremap gU :action FindUsages<CR>
 nnoremap gl :action GotoRelated<CR>
 nnoremap <A-j> :action NextOccurence<CR>
 nnoremap <A-k> :action PreviousOccurence<cr>
