@@ -49,6 +49,6 @@ nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 nnoremap gr :action RenameElement<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gu :action FindUsages<CR>
-nnoremap gt :action GotoRelated<CR>
+nnoremap gl :action GotoRelated<CR>
 nnoremap <A-j> :action NextOccurence<CR>
 nnoremap <A-k> :action PreviousOccurence<cr>
