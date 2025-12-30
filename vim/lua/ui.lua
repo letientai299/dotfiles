@@ -213,6 +213,7 @@ local function setup_deferred_plugins()
 
     highlight = {
       pattern = [[.*<(KEYWORDS).*:?]],
+      keyword = "fg",
       comments_only = false,
     },
 
