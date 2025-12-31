@@ -13,6 +13,7 @@ $python\
 $time\
 $username$hostname\
 $line_break\
+$jobs\
 $status\
 $character"""
 
