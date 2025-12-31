@@ -19,7 +19,7 @@
   "codeLens.enable": false,
   "coc.preferences.enableMarkdown": true,
   "coc.preferences.formatOnSave": false,
-  "colors.enable": false,
+  "colors.enable": true,
   "highlight.colors.enable": true,
   "highlight.document.enable": true,
   "highlight.colorNames.enable": true,
@@ -71,9 +71,7 @@
   "rust-analyzer.cargo.buildScripts.useRustcWrapper": true,
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.prompt": false,
-  "rust-analyzer.rustfmt.extraArgs": [
-    "+nightly"
-  ],
+  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
   "rust-analyzer.cargo.autoreload": true,
   //------------------------------------------------------------
   // Go
@@ -86,12 +84,7 @@
   "svelte.enable-ts-plugin": true,
   "snippets.ultisnips.pythonPrompt": false,
   "snippets.extends": {
-    "vue": [
-      "javascript",
-      "typescript",
-      "html",
-      "css"
-    ]
+    "vue": ["javascript", "typescript", "html", "css"]
   },
   "yaml.schemas": {
     "kubernetes": "k8s/*.yaml"
@@ -99,20 +92,12 @@
   "languageserver": {
     "racket": {
       "command": "racket",
-      "args": [
-        "--lib",
-        "racket-langserver"
-      ],
-      "filetypes": [
-        "racket"
-      ]
+      "args": ["--lib", "racket-langserver"],
+      "filetypes": ["racket"]
     },
     "cs": {
       "command": "csharp-ls",
-      "filetypes": [
-        "cs"
-      ]
+      "filetypes": ["cs"]
     }
-  },
-  "toml.toml.": ""
+  }
 }
