@@ -6,8 +6,8 @@
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
   callback = function()
-    -- Only show alpha if no files opened and buffer is empty
-    if vim.fn.argc() == 0 and vim.bo.buftype == "" and vim.fn.line("$") == 1 and vim.fn.getline(1) == "" then
+    -- Only show alpha if no files opened and buffer is empty, and not in Firenvim
+    if vim.fn.argc() == 0 and vim.bo.buftype == "" and vim.fn.line("$") == 1 and vim.fn.getline(1) == "" and not vim.g.started_by_firenvim then
       -- Load the plugin first (lazy-loaded by vim-plug)
       vim.cmd("call plug#load('alpha-nvim')")
       local alpha = require('alpha')

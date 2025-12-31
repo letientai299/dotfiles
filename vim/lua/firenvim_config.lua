@@ -24,6 +24,9 @@ vim.g.firenvim_config = {
     [".*"] = {
       takeover = "never",
       cmdline = "neovim",
+      content = "text",
+      selector = "textarea, input[type=text], input[type=search], input[type=password], input[type=email], input[type=url]",
+      filename = "{hostname%32}_{pathname%32}_{selector%32}.md",
     },
   },
 }
@@ -77,10 +80,18 @@ if vim.g.started_by_firenvim == true then
     end,
   })
 
-  vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = { "*.txt" },
+  -- Maintain window size after buffer writes to prevent Firenvim auto-resizing
+  -- Use a longer delay to override Firenvim's auto-resize behavior
+  vim.api.nvim_create_autocmd({ "BufWritePost", "TextChanged", "TextChangedI" }, {
     callback = function()
-      vim.o.filetype = "markdown"
+      vim.fn.timer_start(200, function()
+        if vim.o.lines < 40 then
+          vim.o.lines = 40
+        end
+        if vim.o.columns < 120 then
+          vim.o.columns = 120
+        end
+      end)
     end,
   })
 
