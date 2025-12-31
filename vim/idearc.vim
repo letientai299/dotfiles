@@ -37,8 +37,8 @@ nnoremap [e :action MoveLineUp<cr>
 nnoremap ]e :action MoveLineDown<cr>
 
 # Jumpings
-nnoremap zk :action MethodUp<cr>
-nnoremap zj :action MethodDown<cr>
+nnoremap <c-k> :action MethodUp<cr>
+nnoremap <c-j> :action MethodDown<cr>
 
 
 
