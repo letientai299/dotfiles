@@ -1,6 +1,7 @@
 set sts=2 ts=2 sw=2
 
 let g:markdown_fenced_languages = [
+  \ 'cs',
   \ 'bash=sh',
   \ 'css',
   \ 'html',
