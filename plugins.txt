@@ -9,6 +9,7 @@ mroth/evalcache
 # Essential ohmyzsh libs - needed for immediate input
 ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 ohmyzsh/ohmyzsh path:lib/directories.zsh
+ohmyzsh/ohmyzsh path:lib/git.zsh
 
 # Autosuggestions - needed immediately for typing feedback
 zsh-users/zsh-autosuggestions
