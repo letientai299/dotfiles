@@ -55,8 +55,7 @@ Plug 'junegunn/vim-easy-align'
 " PERF: delimitmate only needed in insert mode - lazy load on InsertEnter
 Plug 'raimondi/delimitmate', { 'on': [] }
 
-" PERF: vim-snippets loaded by coc-snippets on demand
-Plug 'honza/vim-snippets', { 'on': [] }
+Plug 'honza/vim-snippets'
 
 " PERF: nerdcommenter lazy loaded on first comment command
 Plug 'scrooloose/nerdcommenter'
