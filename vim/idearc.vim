@@ -13,6 +13,7 @@ nmap <leader>va :source ~/.ideavimrc<cr>
 
 " https://github.com/JetBrains/ideavim/wiki/IdeaVim-Plugins
 set surround
+set matchit
 set commentary
 set ideajoin
 set ideamarks
@@ -20,7 +21,9 @@ set anyobject
 set exchange
 " set functiontextobj
 
-set matchit
+set dial
+nnoremap <C-a> :DialIncrement<cr>
+nnoremap <C-x> :DialDecrement<cr>
 
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
@@ -46,6 +49,7 @@ nnoremap <c-j> :action MethodDown<cr>
 " write adhoc plugin for intelllij,
 " https://github.com/JetBrains/ideavim/discussions/303#discussioncomment-9974302
 
+nnoremap <leader>ve :edit ~/.ideavimrc<CR>
 nnoremap <leader>va :source ~/.ideavimrc<CR>
 nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 nnoremap gr :action RenameElement<CR>
