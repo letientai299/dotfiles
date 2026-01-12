@@ -57,4 +57,4 @@ nnoremap <A-j> :action NextOccurence<CR>
 nnoremap <A-k> :action PreviousOccurence<cr>
 
 " google search word under cursor
-nnoremap <leader>gs <esc>:!open https://google.com/ai\?q=define\ csharp\ asp.net\ <c-r><c-w><cr>
+nnoremap <leader>gs <esc>:!open https://google.com/ai\?q=csharp\ asp.net\ <c-r><c-w><cr>
