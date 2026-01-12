@@ -10,11 +10,11 @@ $git_status\
 ${env_var.STARSHIP_GIT_COMMIT_MSG}\
 $fill\
 $python\
-$time\
 $username$hostname\
 $line_break\
 $jobs\
 $status\
+$time\
 $character"""
 
 right_format = """$cmd_duration${env_var.STARSHIP_TODO}"""
