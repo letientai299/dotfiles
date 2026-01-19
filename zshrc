@@ -154,5 +154,3 @@ zsh-defer -c '
     zcompile "$zcompdump" &!
 '
 
-# Added by Antigravity
-export PATH="/Users/tai/.antigravity/antigravity/bin:$PATH"
