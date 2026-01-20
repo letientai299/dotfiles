@@ -99,7 +99,7 @@ typeset -U PATH
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
-  source ~/.zshrc_local
+  # source ~/.zshrc_local
 fi
 
 
@@ -154,3 +154,4 @@ zsh-defer -c '
     zcompile "$zcompdump" &!
 '
 
+echo $PATH | tr ':' '\n' | grep ado
