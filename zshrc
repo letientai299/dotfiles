@@ -74,6 +74,7 @@ if [[ ! -f $zsh_plugins || ${zsh_plugins:r}.txt -nt $zsh_plugins ]]; then
   antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins
 fi
 
+
 # Source the static plugins file (fast path - no antidote overhead)
 source $zsh_plugins
 
@@ -99,7 +100,7 @@ typeset -U PATH
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
-  # source ~/.zshrc_local
+  source ~/.zshrc_local
 fi
 
 
@@ -154,4 +155,3 @@ zsh-defer -c '
     zcompile "$zcompdump" &!
 '
 
-echo $PATH | tr ':' '\n' | grep ado
