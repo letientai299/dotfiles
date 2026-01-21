@@ -154,3 +154,5 @@ zsh-defer -c '
   [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]] && \
     zcompile "$zcompdump" &!
 '
+
+export PATH="${PATH}:/Users/tai/.azureauth/0.9.2"
