@@ -39,26 +39,6 @@ antidote-regen() {
   echo "Done. Restart shell or run: source $zsh_plugins"
 }
 
-# Start git fsmonitor daemon for current repo (speeds up git status/diff)
-# Usage: git-fsm [start|stop|status]
-git-fsm() {
-  local action="${1:-start}"
-  case "$action" in
-    start)
-      git fsmonitor--daemon start 2>/dev/null && echo "fsmonitor daemon started" || echo "already running or not a git repo"
-      ;;
-    stop)
-      git fsmonitor--daemon stop 2>/dev/null && echo "fsmonitor daemon stopped" || echo "not running"
-      ;;
-    status)
-      git fsmonitor--daemon status 2>&1
-      ;;
-    *)
-      echo "Usage: git-fsm [start|stop|status]"
-      ;;
-  esac
-}
-
 # Remove entries from zsh history interactively using fzf
 # Usage: hist-del        # Select entries with fzf to delete
 #        hist-del -1     # Delete last entry

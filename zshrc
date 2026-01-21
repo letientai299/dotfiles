@@ -143,16 +143,4 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Background maintenance tasks (no visible process churn)
-# Uses &! to fully disown so they don't appear in kitty tab bar
-zsh-defer -c '
-  # Start git fsmonitor daemon if in a git repo
-  [[ -d .git ]] && git fsmonitor--daemon start &>/dev/null &!
-
-  # Compile zcompdump if needed
-  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-  [[ -f "$zcompdump" && ( ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ) ]] && \
-    zcompile "$zcompdump" &!
-'
-
 export PATH="${PATH}:/Users/tai/.azureauth/0.9.2"
