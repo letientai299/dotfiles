@@ -1,0 +1,255 @@
+#!/bin/bash
+#
+# Create a new branch based on latest origin/main and cherry-pick the top commit(s)
+# of current branch. Use -n <num> to specify number of commits (default: 1).
+
+# ============================================================================
+# Color Definitions
+# ============================================================================
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly BLUE='\033[0;34m'
+readonly MAGENTA='\033[0;35m'
+readonly CYAN='\033[0;36m'
+readonly BOLD='\033[1m'
+readonly DIM='\033[2m'
+readonly RESET='\033[0m'
+
+# ============================================================================
+# Logging Functions
+# ============================================================================
+log_info() {
+  echo -e "${BLUE}ℹ${RESET} $1"
+}
+
+log_success() {
+  echo -e "${GREEN}✔${RESET} $1"
+}
+
+log_warning() {
+  echo -e "${YELLOW}⚠${RESET} $1"
+}
+
+log_error() {
+  echo -e "${RED}✖${RESET} $1"
+}
+
+log_step() {
+  echo -e "${CYAN}▶${RESET} ${BOLD}$1${RESET}"
+}
+
+log_dim() {
+  echo -e "${DIM}$1${RESET}"
+}
+
+# ============================================================================
+# Utility Functions
+# ============================================================================
+slugify() {
+  echo "$*" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'
+}
+
+retry_command() {
+  local max_retries=$1
+  local description=$2
+  shift 2
+  local cmd=("$@")
+  
+  local attempt=1
+  while [ $attempt -le $max_retries ]; do
+    log_info "$description ${DIM}(Attempt $attempt/$max_retries)${RESET}"
+    if "${cmd[@]}"; then
+      return 0
+    else
+      log_warning "Command failed."
+      if [ $attempt -lt $max_retries ]; then
+        log_dim "Retrying..."
+      fi
+    fi
+    ((attempt++))
+  done
+  return 1
+}
+
+# ============================================================================
+# Help Function
+# ============================================================================
+show_help() {
+  echo -e "${MAGENTA}${BOLD}gpp${RESET} - Git Push Prep"
+  echo ""
+  echo -e "${BOLD}DESCRIPTION${RESET}"
+  echo "  Create a new branch based on latest origin/main and cherry-pick"
+  echo "  the top commit(s) from the current branch."
+  echo ""
+  echo -e "${BOLD}USAGE${RESET}"
+  echo -e "  gpp ${CYAN}[-n <num_commits>] <branch description>${RESET}"
+  echo -e "  gpp                     ${DIM}# Interactive mode${RESET}"
+  echo -e "  gpp ${CYAN}-h|--help${RESET}"
+  echo ""
+  echo -e "${BOLD}OPTIONS${RESET}"
+  echo -e "  ${CYAN}-n <num>${RESET}     Number of commits to cherry-pick (default: 1)"
+  echo -e "  ${CYAN}-h, --help${RESET}   Show this help message"
+  echo ""
+  echo -e "${BOLD}EXAMPLES${RESET}"
+  echo -e "  gpp fix login bug       ${DIM}# Cherry-pick 1 commit to tai/fix-login-bug${RESET}"
+  echo -e "  gpp -n 3 new feature    ${DIM}# Cherry-pick 3 commits to tai/new-feature${RESET}"
+  echo ""
+}
+
+# ============================================================================
+# Main Function
+# ============================================================================
+gpp() {
+  local num_commits=1
+  local branch_desc=""
+
+  # Handle -h/--help flag
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    show_help
+    return 0
+  fi
+
+  # Parse optional -n flag
+  if [ "$1" = "-n" ]; then
+    if [ -z "$2" ] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
+      log_error "Option -n requires a positive integer argument"
+      return 1
+    fi
+    num_commits=$2
+    shift 2
+  fi
+
+  # Interactive mode if no arguments
+  if [ $# -eq 0 ]; then
+    echo ""
+    log_step "Interactive mode"
+    echo ""
+
+    # Show recent commits for context
+    log_info "Recent commits:"
+    local current_branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+    # Build cherry-picked list in parallel using xargs
+    local cherry_picked_list
+    cherry_picked_list=$(
+      git for-each-ref --format='%(refname:short)' 'refs/heads/tai/*' 'refs/remotes/origin/tai/*' 2>/dev/null |
+      grep -v "^${current_branch}$" |
+      grep -v "^origin/${current_branch}$" |
+      head -30 |
+      xargs -P 8 -I {} sh -c 'git cherry "$1" HEAD 2>/dev/null | grep "^-" | awk -v b="$1" "{print \$2 \":\" b}"' _ {}
+    )
+
+    # Collect commit info first
+    local commit_lines=""
+    while read -r hash msg; do
+      local full_hash cherry_branch
+      full_hash=$(git rev-parse "$hash" 2>/dev/null)
+      cherry_branch=$(echo "$cherry_picked_list" | grep "^${full_hash}:" | head -1 | cut -d: -f2)
+      commit_lines="${commit_lines}${hash}|${msg}|${cherry_branch}"$'\n'
+    done <<EOF
+$(git log --format="%h %s" -n 10)
+EOF
+
+    # Find max length for alignment
+    local max_len=0
+    while IFS='|' read -r hash msg branch; do
+      [ -z "$hash" ] && continue
+      local len=$((${#hash} + ${#msg} + 4))  # "N. hash msg"
+      [ $len -gt $max_len ] && max_len=$len
+    done <<EOF
+$commit_lines
+EOF
+
+    # Display with alignment
+    local idx=1
+    while IFS='|' read -r hash msg branch; do
+      [ -z "$hash" ] && continue
+      local line="${idx}. ${hash} ${msg}"
+      if [ -n "$branch" ]; then
+        printf "  ${DIM}%-${max_len}s${RESET} ${YELLOW}← in %s${RESET}\n" "$line" "$branch"
+      else
+        echo -e "  ${DIM}${line}${RESET}"
+      fi
+      idx=$((idx + 1))
+    done <<EOF
+$commit_lines
+EOF
+    echo ""
+
+    # Ask for number of commits
+    echo -ne "${CYAN}?${RESET} Number of commits to cherry-pick ${DIM}(default: 1)${RESET}: "
+    read -r input_num
+    if [ -z "$input_num" ]; then
+      num_commits=1
+    elif [[ "$input_num" =~ ^[0-9]+$ ]] && [ "$input_num" -gt 0 ]; then
+      num_commits=$input_num
+    else
+      log_error "Invalid number. Please enter a positive integer."
+      return 1
+    fi
+
+    # Ask for branch description
+    echo -ne "${CYAN}?${RESET} Branch description: "
+    read -r branch_desc
+    if [ -z "$branch_desc" ]; then
+      log_error "Branch description is required."
+      return 1
+    fi
+    echo ""
+  else
+    branch_desc="$*"
+  fi
+
+  local new_branch="tai/$(slugify "$branch_desc")"
+
+  # Get commit hashes to cherry-pick (oldest to newest)
+  local commit_hashes
+  commit_hashes=$(git rev-list --reverse HEAD~"$num_commits"..HEAD 2>/dev/null)
+  if [ -z "$commit_hashes" ]; then
+    log_error "Not enough commits in history to cherry-pick $num_commits commit(s)"
+    return 1
+  fi
+
+  echo ""
+  log_step "Preparing to move $num_commits commit(s) to new branch"
+  for hash in $commit_hashes; do
+    log_dim "  Commit: ${hash:0:8}"
+  done
+  log_dim "  Branch: $new_branch"
+  echo ""
+
+  # Fetch with retry
+  if ! retry_command 2 "Fetching origin/main" git fetch origin main; then
+    log_error "Could not fetch from origin. Check your connection or auth status."
+    return 1
+  fi
+  log_success "Fetched latest origin/main"
+  echo ""
+
+  # Create branch
+  log_step "Creating branch '${CYAN}$new_branch${RESET}' from '${CYAN}origin/main${RESET}'"
+  if git checkout -b "$new_branch" origin/main; then
+    log_success "Branch created"
+  else
+    log_error "Failed to create branch."
+    return 1
+  fi
+  echo ""
+
+  # Cherry-pick
+  log_step "Cherry-picking $num_commits commit(s)"
+  for hash in $commit_hashes; do
+    log_dim "  Picking ${hash:0:8}..."
+    if ! git cherry-pick "$hash"; then
+      echo ""
+      log_error "Cherry-pick failed at ${hash:0:8}. Resolve conflicts manually."
+      return 1
+    fi
+  done
+  echo ""
+  log_success "${GREEN}${BOLD}Done!${RESET} $num_commits commit(s) moved to ${CYAN}$new_branch${RESET}"
+}
+
+gpp "$@"
