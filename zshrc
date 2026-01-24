@@ -144,6 +144,3 @@ export PATH="${PATH}:/Users/tai/.azureauth/0.9.2"
 if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
-
-
-
