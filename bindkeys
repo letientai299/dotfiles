@@ -6,7 +6,7 @@
 bindkey -e
 
 # Basic bindings - these are fast, no need to defer
-bindkey -s "^k" "| less^m"
+bindkey -s "^k" "| vim -RM -^m"
 bindkey -s "^]" "^e | clipcopy^m"
 
 # Autosuggestion accept (available after zsh-autosuggestions loads via zsh-defer)
