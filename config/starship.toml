@@ -49,6 +49,8 @@ style = "bold purple"
 
 # Git status - using Nerd Font icons with individual colors
 [git_status]
+# Use git CLI instead of gitoxide - fixes false positives with worktrees
+use_git_executable = true
 format = '([$all_status$ahead_behind]($style) )'
 style = "none"
 conflicted = "[󰞇](bold red)"
