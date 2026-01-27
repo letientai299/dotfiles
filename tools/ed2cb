@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+tmpfile=$(mktemp /tmp/ed2cb.XXXXXX.md)
+trap 'rm -f "$tmpfile"' EXIT
+
+cat > "$tmpfile"
+nvim "$tmpfile" </dev/tty >/dev/tty
+md2cb < "$tmpfile"
