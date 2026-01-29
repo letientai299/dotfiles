@@ -5,8 +5,12 @@
 # 1. Branch was pushed before (has upstream tracking)
 # 2. Remote branch is now gone (PR merged/deleted)
 # 3. Local branch has no unique commits compared to main (fully merged)
+#    - Detects squash-merged PRs (code diff is empty)
+#    - Detects rebased branches (patch-ids match commits in main)
 #
-# Local experimental branches (never pushed) are always kept.
+# Local-only branches (never pushed) are also removed if all their commits
+# are merged/rebased onto the default branch. Local branches with unique
+# commits are kept.
 #
 # Usage: gwt-prune [--dry-run] [--force]
 #   --dry-run  Show what would be removed without actually removing
@@ -92,14 +96,21 @@ for entry in "${worktrees_to_check[@]}"; do
     unmerged_subjects=""
     has_unmerged=false
     is_squash_merged=false
+    is_rebased=false
 
     if [[ "$unmerged_commits" -gt 0 ]]; then
         has_unmerged=true
         # Get commit subjects
         unmerged_subjects=$(git log --format="%s" "origin/$MAIN_BRANCH..$branch" 2>/dev/null)
-        # Check for squash-merged PRs
+        # Check for squash-merged PRs (code diff is empty)
         code_diff_lines=$(git diff "origin/$MAIN_BRANCH...$branch" 2>/dev/null | wc -l | tr -d ' ')
         [[ "$code_diff_lines" -eq 0 ]] && is_squash_merged=true
+        # Check for rebased branches using git cherry (compares patch-ids)
+        # If all commits show '-' prefix, they have equivalent patches in main
+        if [[ "$is_squash_merged" == false ]]; then
+            unique_commits=$(git cherry "origin/$MAIN_BRANCH" "$branch" 2>/dev/null | grep -c '^+') || unique_commits=0
+            [[ "$unique_commits" -eq 0 ]] && is_rebased=true
+        fi
     fi
 
     # Check for uncommitted changes in worktree
@@ -114,7 +125,24 @@ for entry in "${worktrees_to_check[@]}"; do
     reason=""
 
     if [[ -z "$has_tracking" ]]; then
-        reason="local-only"
+        # Local-only branch: remove if all commits are in main
+        if [[ "$has_uncommitted" == true ]] && [[ "$FORCE" != true ]]; then
+            reason="local-only (uncommitted changes)"
+        elif [[ "$has_unmerged" == false ]]; then
+            should_remove=true
+            reason="local-only (merged)"
+        elif [[ "$is_squash_merged" == true ]]; then
+            should_remove=true
+            reason="local-only (squash-merged)"
+        elif [[ "$is_rebased" == true ]]; then
+            should_remove=true
+            reason="local-only (rebased)"
+        elif [[ "$FORCE" == true ]]; then
+            should_remove=true
+            reason="local-only (forced)"
+        else
+            reason="local-only ($unmerged_commits unique commits)"
+        fi
     elif [[ "$remote_exists" == true ]]; then
         reason="remote exists"
     elif [[ "$has_uncommitted" == true ]] && [[ "$FORCE" != true ]]; then
@@ -125,6 +153,9 @@ for entry in "${worktrees_to_check[@]}"; do
     elif [[ "$is_squash_merged" == true ]]; then
         should_remove=true
         reason="squash-merged"
+    elif [[ "$is_rebased" == true ]]; then
+        should_remove=true
+        reason="rebased"
     elif [[ "$FORCE" == true ]]; then
         should_remove=true
         reason="forced"

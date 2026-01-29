@@ -74,8 +74,8 @@ nohup.out
 
 *.tsbuildinfo
 
-# Jetbrain Junie files
+# AI dirs and files
 .junie/
 .output.txt
-
-
+.claude
+.ai.dump
