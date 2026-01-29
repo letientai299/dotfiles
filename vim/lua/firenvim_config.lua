@@ -71,7 +71,7 @@ if vim.g.started_by_firenvim == true then
 
       vim.fn.timer_start(300, function()
         if vim.o.lines < 40 then
-          vim.o.lines = 40
+          vim.o.lines = 20
         end
         if vim.o.columns < 120 then
           vim.o.columns = 120
