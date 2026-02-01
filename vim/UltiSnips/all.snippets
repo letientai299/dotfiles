@@ -4,15 +4,15 @@ from os import environ
 endglobal
 
 snippet td "TODO"
-`!p snip.rv=get_comment_format()[0]` TODO (tai): $0 `!p snip.rv=get_comment_format()[2]`
+`!p cf = get_comment_format(); snip.rv = cf[0]` TODO (tai): $0`!p cf = get_comment_format(); snip.rv = ' ' + cf[2] if cf[0] != cf[2] else ''`
 endsnippet
 
 snippet nt "NOTE"
-`!p snip.rv=get_comment_format()[0]` NOTE (tai): $0 `!p snip.rv=get_comment_format()[2]`
+`!p cf = get_comment_format(); snip.rv = cf[0]` NOTE (tai): $0`!p cf = get_comment_format(); snip.rv = ' ' + cf[2] if cf[0] != cf[2] else ''`
 endsnippet
 
 snippet fm "FIXME"
-`!p snip.rv=get_comment_format()[0]` FIXME (tai): $0 `!p snip.rv=get_comment_format()[2]`
+`!p cf = get_comment_format(); snip.rv = cf[0]` FIXME (tai): $0`!p cf = get_comment_format(); snip.rv = ' ' + cf[2] if cf[0] != cf[2] else ''`
 endsnippet
 
 snippet docs "comment documents"
