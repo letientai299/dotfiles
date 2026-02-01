@@ -94,7 +94,7 @@ Plug 'airblade/vim-rooter', { 'on': [] }
 " Quickly resize vim split windows. Rarely use, but very annoying when doing
 " that without this plugin
 " PERF: winresizer lazy-loaded on command (saves ~0.15ms)
-Plug 'simeji/winresizer', { 'on': ['WinResizerStartResize', 'WinResizerStartMove', 'WinResizerStartFocus'] }
+Plug 'simeji/winresizer'
 
 " More GUI stuffs, mostly lua for nvim
 \" PERF: lualine lazy-loaded on VimEnter (see ui.lua)
