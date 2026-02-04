@@ -1,8 +1,11 @@
 #!/bin/zsh
 
-tmpfile=$(mktemp /tmp/ed2cb.XXXXXX.md)
+tmpfile=$(mktemp /tmp/ed2cb.$RANDOM.md)
 trap 'rm -f "$tmpfile"' EXIT
 
-cat > "$tmpfile"
+if [ ! -t 0 ]; then
+  cat > "$tmpfile"
+fi
+
 nvim "$tmpfile" </dev/tty >/dev/tty
 md2cb < "$tmpfile"
