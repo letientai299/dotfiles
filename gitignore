@@ -79,3 +79,5 @@ nohup.out
 .output.txt
 .claude
 .ai.dump
+
+.playwright*
