@@ -158,3 +158,51 @@ vim.api.nvim_create_user_command("Oil", function(opts)
   setup_oil()
   require("oil").open(opts.args ~= "" and opts.args or nil)
 end, { nargs = "?" })
+
+
+-- Autocommands
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
+-- AutoCopy: Toggleable copy on focus loss and buffer switch
+local autocopy_enabled = false
+local tracked_buf = nil
+local autocopy_group = augroup("AutoCopy", { clear = true })
+
+local function do_copy(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  if not vim.api.nvim_buf_is_valid(buf) then return end
+  local content = table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), "\n")
+  vim.fn.setreg("+", content)
+end
+
+vim.api.nvim_create_user_command("AutoCopy", function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buf_name = vim.api.nvim_buf_get_name(current_buf)
+  if buf_name == "" then buf_name = "unnamed buffer" else buf_name = vim.fn.fnamemodify(buf_name, ":t") end
+
+  if autocopy_enabled and tracked_buf == current_buf then
+    autocopy_enabled = false
+    tracked_buf = nil
+    vim.notify("AutoCopy OFF", vim.log.levels.INFO)
+  else
+    autocopy_enabled = true
+    tracked_buf = current_buf
+    vim.notify("AutoCopy ON: tracking [" .. buf_name .. "]", vim.log.levels.INFO)
+    do_copy(current_buf)
+  end
+end, { desc = "Toggle AutoCopy" })
+
+autocmd({ "FocusLost", "BufLeave", "WinLeave" }, {
+  group = autocopy_group,
+  callback = function()
+    if autocopy_enabled and tracked_buf and vim.api.nvim_buf_is_valid(tracked_buf) then
+      -- Only copy if we are leaving the tracked buffer
+      local current_buf = vim.api.nvim_get_current_buf()
+      if current_buf == tracked_buf then
+        do_copy(tracked_buf)
+      end
+    end
+  end,
+  desc = "AutoCopy on focus loss or buffer/window switch",
+})
