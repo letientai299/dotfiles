@@ -25,7 +25,7 @@ EOF
   execute 'lua require("fzf-lua").' . a:method . '()'
 endfunction
 
-nmap <D-f> :call <SID>fzf_call('buffers')<CR>
+nmap <A-f> :call <SID>fzf_call('buffers')<CR>
 nmap <leader>fa :call <SID>fzf_call('builtin')<CR>
 nmap <leader>fc :call <SID>fzf_call('git_bcommits')<CR>
 nmap <leader>fC :call <SID>fzf_call('git_commits')<CR>

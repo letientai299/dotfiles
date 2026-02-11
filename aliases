@@ -44,7 +44,6 @@ alias sv="sudo vim"
 alias vi=nvim
 alias vim=nvim
 alias ve="vim ~/.zshenv"
-alias vt="vim ~/.todo/todo.txt"
 
 # toggle console text line wrapping
 alias nowrap="tput rmam"

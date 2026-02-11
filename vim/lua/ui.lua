@@ -56,38 +56,38 @@ vim.cmd.colorscheme("catppuccin")
 
 -- PERF: Defer custom catppuccin setup with palette colors
 -- This runs after the UI is visible, so user sees the theme immediately
-vim.api.nvim_create_autocmd("VimEnter", {
-  once = true,
-  callback = function()
-    vim.defer_fn(function()
-      local colors = require("catppuccin.palettes").get_palette()
-      require("catppuccin").setup({
-        transparent_background = false,
-        custom_highlights = {
-          Comment = { fg = colors.lavender },
-        },
-        styles = {
-          comments = { "italic" },
-          keywords = { "italic" },
-        },
-        dim_inactive = {
-          enabled = true,
-          shade = "dark",
-          percentage = 0.3,
-        },
-        integration = {
-          dap = { enabled = true, enable_ui = true },
-          indent_blankline = { enabled = true, colored_indent_levels = true },
-          which_key = true,
-          neotree = { enabled = true, show_root = true, transparent_panel = true },
-          coc_nvim = true,
-        },
-      })
-      -- Reapply colorscheme to pick up custom highlights
-      vim.cmd.colorscheme("catppuccin")
-    end, 100)  -- 100ms after UI visible
-  end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+  -- once = true,
+  -- callback = function()
+    -- vim.defer_fn(function()
+      -- local colors = require("catppuccin.palettes").get_palette()
+      -- require("catppuccin").setup({
+        -- transparent_background = false,
+        -- custom_highlights = {
+          -- Comment = { fg = colors.lavender },
+        -- },
+        -- styles = {
+          -- comments = { "italic" },
+          -- keywords = { "italic" },
+        -- },
+        -- dim_inactive = {
+          -- enabled = true,
+          -- shade = "dark",
+          -- percentage = 0.3,
+        -- },
+        -- integration = {
+          -- dap = { enabled = true, enable_ui = true },
+          -- indent_blankline = { enabled = true, colored_indent_levels = true },
+          -- which_key = true,
+          -- neotree = { enabled = true, show_root = true, transparent_panel = true },
+          -- coc_nvim = true,
+        -- },
+      -- })
+      -- -- Reapply colorscheme to pick up custom highlights
+      -- vim.cmd.colorscheme("catppuccin")
+    -- end, 100)  -- 100ms after UI visible
+  -- end,
+-- })
 
 --------------------------------------------------------------------------------
 -- tokyonight
