@@ -1,0 +1,240 @@
+#!/bin/sh
+#
+# Serve a directory over HTTP using Caddy in Docker.
+# Includes live reload by default: injects a script into HTML files that
+# polls for changes and reloads the browser automatically.
+
+set -e
+
+# Defaults
+PORT=8080
+DIR=""
+LIVE=true
+
+# ============================================================================
+# Usage
+# ============================================================================
+usage() {
+  echo "Usage: serve [OPTIONS] [DIRECTORY]"
+  echo ""
+  echo "Serve static files over HTTP using Caddy in Docker."
+  echo "Includes live reload by default."
+  echo ""
+  echo "OPTIONS"
+  echo "  -p, --port PORT   Port to serve on (default: 8080)"
+  echo "  --no-live         Disable live reload"
+  echo "  -h, --help        Show this help message"
+  echo ""
+  echo "ARGUMENTS"
+  echo "  DIRECTORY          Directory to serve (default: current directory)"
+  echo ""
+  echo "EXAMPLES"
+  echo "  serve                    # Serve current directory on :8080"
+  echo "  serve ./dist             # Serve ./dist on :8080"
+  echo "  serve -p 3000 ./public   # Serve ./public on :3000"
+  echo "  serve --no-live          # Serve without live reload"
+}
+
+# ============================================================================
+# Parse arguments
+# ============================================================================
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -p|--port)
+      if [ -z "$2" ] || ! echo "$2" | grep -qE '^[0-9]+$'; then
+        echo "Error: --port requires a numeric argument" >&2
+        exit 1
+      fi
+      PORT="$2"
+      shift 2
+      ;;
+    --no-live)
+      LIVE=false
+      shift
+      ;;
+    -*)
+      echo "Error: unknown option '$1'" >&2
+      echo "Run 'serve --help' for usage." >&2
+      exit 1
+      ;;
+    *)
+      DIR="$1"
+      shift
+      ;;
+  esac
+done
+
+# ============================================================================
+# Resolve directory
+# ============================================================================
+DIR="${DIR:-.}"
+
+if [ ! -d "$DIR" ]; then
+  echo "Error: '$DIR' is not a directory" >&2
+  exit 1
+fi
+
+# Resolve to absolute path (portable, no readlink -f needed)
+DIR="$(cd "$DIR" && pwd)"
+
+# ============================================================================
+# Check docker
+# ============================================================================
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Error: docker is not installed or not in PATH" >&2
+  exit 1
+fi
+
+# ============================================================================
+# Open browser (background, best-effort)
+# ============================================================================
+open_browser() {
+  url="$1"
+  sleep 1
+  if command -v open >/dev/null 2>&1; then
+    open "$url"
+  elif command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url"
+  elif command -v wslview >/dev/null 2>&1; then
+    wslview "$url"
+  fi
+}
+
+# ============================================================================
+# Simple mode (no live reload)
+# ============================================================================
+if [ "$LIVE" = false ]; then
+  URL="http://localhost:${PORT}"
+  echo "Serving ${DIR} at ${URL}"
+  echo "Press Ctrl+C to stop."
+  echo ""
+  open_browser "$URL" &
+  exec docker run --rm -p "${PORT}:80" -v "${DIR}:/usr/share/caddy:ro" caddy:latest
+fi
+
+# ============================================================================
+# Live reload mode
+# ============================================================================
+WORK_DIR=$(mktemp -d)
+SITE_DIR="$WORK_DIR/site"
+LR_DIR="$WORK_DIR/_livereload"
+CONTAINER_NAME="serve-$$"
+
+mkdir -p "$SITE_DIR" "$LR_DIR/_livereload"
+
+cleanup() {
+  docker stop "$CONTAINER_NAME" >/dev/null 2>&1 || true
+  rm -rf "$WORK_DIR"
+}
+trap cleanup EXIT INT TERM
+
+# ---- Caddyfile ----
+cat > "$WORK_DIR/Caddyfile" << 'CADDYFILE'
+:80 {
+  handle /_livereload* {
+    root * /livereload
+    file_server
+    header Cache-Control "no-cache, no-store"
+  }
+  handle {
+    root * /usr/share/caddy
+    file_server
+  }
+}
+CADDYFILE
+
+# ---- livereload.js ----
+cat > "$LR_DIR/_livereload.js" << 'JSEOF'
+(function() {
+  var token = '';
+  setInterval(function() {
+    fetch('/_livereload/token', {cache: 'no-store'})
+      .then(function(r) { return r.text(); })
+      .then(function(t) {
+        t = t.trim();
+        if (token && t !== token) location.reload();
+        token = t;
+      })
+      .catch(function() {});
+  }, 500);
+})();
+JSEOF
+
+# ---- sync files ----
+sync_files() {
+  # Clean site dir contents without removing the dir itself
+  rm -rf "$SITE_DIR"/* "$SITE_DIR"/.[!.]* 2>/dev/null || true
+
+  # Copy source files
+  cp -R "$DIR"/. "$SITE_DIR"/
+
+  # Inject livereload script into HTML files
+  find "$SITE_DIR" -type f \( -name '*.html' -o -name '*.htm' \) | while read -r f; do
+    if grep -q '</body>' "$f" 2>/dev/null; then
+      sed 's|</body>|<script src="/_livereload.js"></script></body>|' "$f" > "$f.tmp"
+      mv "$f.tmp" "$f"
+    elif grep -q '</head>' "$f" 2>/dev/null; then
+      sed 's|</head>|<script src="/_livereload.js"></script></head>|' "$f" > "$f.tmp"
+      mv "$f.tmp" "$f"
+    else
+      echo '<script src="/_livereload.js"></script>' >> "$f"
+    fi
+  done
+
+  # Update reload token
+  date +%s > "$LR_DIR/_livereload/token" 2>/dev/null
+}
+
+# ---- initial sync ----
+sync_files
+
+# ---- start caddy ----
+URL="http://localhost:${PORT}"
+echo "Serving ${DIR} at ${URL} (live reload enabled)"
+echo "Press Ctrl+C to stop."
+echo ""
+
+docker run --rm -d --name "$CONTAINER_NAME" \
+  -p "${PORT}:80" \
+  -v "$SITE_DIR:/usr/share/caddy:ro" \
+  -v "$LR_DIR:/livereload:ro" \
+  -v "$WORK_DIR/Caddyfile:/etc/caddy/Caddyfile:ro" \
+  caddy:latest >/dev/null
+
+open_browser "$URL" &
+
+# ---- watch for changes ----
+on_change() {
+  changed="$1"
+  relative="${changed#"$DIR"/}"
+  sync_files
+  echo "Reloaded ${URL} <- ${relative}"
+}
+
+if command -v fswatch >/dev/null 2>&1; then
+  # macOS / fswatch: uses kqueue/FSEvents, near-zero CPU
+  fswatch -r -L 0.5 --event Created --event Updated --event Removed --event Renamed "$DIR" | while read -r changed; do
+    on_change "$changed"
+  done
+elif command -v inotifywait >/dev/null 2>&1; then
+  # Linux: uses inotify, near-zero CPU
+  inotifywait -r -m -q -e modify,create,delete,move "$DIR" --format '%w%f' 2>/dev/null | while read -r changed; do
+    on_change "$changed"
+  done
+else
+  # Fallback: polling with find -newer
+  MARKER="$WORK_DIR/.sync_marker"
+  touch "$MARKER"
+  while true; do
+    sleep 1
+    changed=$(find "$DIR" -newer "$MARKER" -type f 2>/dev/null | head -1)
+    if [ -n "$changed" ]; then
+      touch "$MARKER"
+      on_change "$changed"
+    fi
+  done
+fi
