@@ -118,7 +118,7 @@ let g:vista_default_executive='coc'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
-Plug 'stevearc/oil.nvim', {'on': 'Oil'}
+Plug 'stevearc/oil.nvim'
 " treesitter - new API on main branch
 Plug 'nvim-treesitter/nvim-treesitter'
 " textobjects must use main branch to match treesitter main branch
