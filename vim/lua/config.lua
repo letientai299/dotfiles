@@ -154,6 +154,19 @@ vim.api.nvim_create_autocmd("BufEnter", {
   once = true,
   callback = setup_oil,
 })
+-- Hijack directory buffers with oil (replaces netrw for `nvim .`)
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname ~= "" and vim.fn.isdirectory(bufname) == 1 then
+      setup_oil()
+      vim.schedule(function()
+        require("oil").open(bufname)
+      end)
+    end
+  end,
+})
 vim.api.nvim_create_user_command("Oil", function(opts)
   setup_oil()
   require("oil").open(opts.args ~= "" and opts.args or nil)
