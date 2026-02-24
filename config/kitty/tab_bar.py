@@ -1,8 +1,10 @@
 """Custom tab bar for Kitty with slanted powerline tabs and system stats"""
 import subprocess
 import json
+import hashlib
 import os
 import tempfile
+import time as _time
 from datetime import datetime
 from kitty.fast_data_types import Screen, get_options, get_boss
 from kitty.tab_bar import (
@@ -344,6 +346,102 @@ def _get_vpn_name():
         return getattr(_get_vpn_name, 'cached_value', None)
 
 
+# --- Git project task info for tab rendering ---
+
+# Cache: {cwd: (timestamp, project_name, task_desc)}
+_task_cache = {}
+_TASK_CACHE_TTL = 2  # seconds
+
+# Bright colors with good contrast on dark backgrounds (0x1a1a1a / 0x3a3a3a)
+_PROJECT_COLORS = [
+    0x50fa7b,  # Green
+    0xff79c6,  # Pink
+    0x8be9fd,  # Cyan
+    0xffb86c,  # Orange
+    0xbd93f9,  # Purple
+    0xf1fa8c,  # Yellow
+    0xff6e6e,  # Coral
+    0x69ff94,  # Mint
+    0xa4ffff,  # Light cyan
+    0xff92df,  # Light pink
+    0xffd580,  # Light orange
+    0xcaa9fa,  # Light purple
+]
+
+
+def _get_project_color(name):
+    """Get a deterministic color for a project name using stable hash"""
+    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
+    return _PROJECT_COLORS[h % len(_PROJECT_COLORS)]
+
+
+def _dim_color(color_int, factor=0.45):
+    """Dim a color by a factor for inactive tabs"""
+    r = int(((color_int >> 16) & 0xFF) * factor)
+    g = int(((color_int >> 8) & 0xFF) * factor)
+    b = int((color_int & 0xFF) * factor)
+    return (r << 16) | (g << 8) | b
+
+
+def _find_git_root_and_dir(cwd):
+    """Walk up from cwd to find git root and git dir.
+    Returns (root, git_dir) or (None, None).
+    """
+    path = cwd
+    while path and path != os.path.dirname(path):
+        git_path = os.path.join(path, '.git')
+        if os.path.isdir(git_path):
+            return path, git_path
+        elif os.path.isfile(git_path):
+            # Worktree: .git is a file containing "gitdir: <path>"
+            try:
+                with open(git_path) as f:
+                    line = f.read().strip()
+                if line.startswith('gitdir: '):
+                    git_dir = line[8:]
+                    if not os.path.isabs(git_dir):
+                        git_dir = os.path.normpath(os.path.join(path, git_dir))
+                    return path, git_dir
+            except Exception:
+                pass
+            return None, None
+        path = os.path.dirname(path)
+    return None, None
+
+
+def _get_task_info(cwd):
+    """Get (project_name, task_desc) for a cwd, with caching.
+    Returns (None, None) if not in a git repo.
+    """
+    now = _time.time()
+
+    if cwd in _task_cache:
+        ts, proj, task = _task_cache[cwd]
+        if now - ts < _TASK_CACHE_TTL:
+            return proj, task
+
+    root, git_dir = _find_git_root_and_dir(cwd)
+    if not root or not git_dir:
+        _task_cache[cwd] = (now, None, None)
+        return None, None
+
+    project_name = os.path.basename(root)
+    task_desc = None
+
+    task_file = os.path.join(git_dir, 'kitty-task')
+    try:
+        if os.path.exists(task_file):
+            with open(task_file) as f:
+                content = f.read().strip()
+            if content:
+                task_desc = content.split('\n')[0].strip()
+    except Exception:
+        pass
+
+    _task_cache[cwd] = (now, project_name, task_desc)
+    return project_name, task_desc
+
+
 def _draw_right_status(screen: Screen):
     """Draw system stats on the right side with color coding"""
     cpu_user, cpu_sys = _get_cpu_usage()
@@ -432,135 +530,137 @@ def draw_tab(
     extra_data: ExtraData,
 ) -> int:
     """Draw tab with folder path and process name with custom powerline drawing"""
-    
-    # Get working directory and process name using TabAccessor
+
     from kitty.tab_bar import TabAccessor
     import os
-    
+
     ta = TabAccessor(tab.tab_id)
     cwd = ta.active_wd
-    
-    # Get the best process name - prefer the most specific/interesting one
-    # active_exe is the current foreground process
-    # active_oldest_exe is the oldest in the foreground group (often a shell wrapper)
+
+    # Get the best process name
     process = ta.active_exe or ta.active_oldest_exe or tab.title
-    
-    # Skip boring wrapper processes and use tab title instead
-    # These are typically shell wrappers that launch the actual command
     boring_processes = {'sh', 'bash', 'zsh', 'fish', 'dash', 'ksh', 'tcsh', 'csh'}
     if process and os.path.basename(process).lstrip('-') in boring_processes:
-        # Try to get a better name from active_oldest_exe or tab title
         oldest = ta.active_oldest_exe
         if oldest and os.path.basename(oldest).lstrip('-') not in boring_processes:
             process = oldest
         elif tab.title and not any(tab.title.startswith(b) for b in boring_processes):
-            # Use tab title if it's more informative
             process = tab.title.split()[0] if ' ' in tab.title else tab.title
-    
-    # Extract just the executable name
     if process:
         process = os.path.basename(process).lstrip('-')
-    
-    # Check if we have a custom title
+
+    # Check for manual tab title
     boss = get_boss()
     tab_obj = boss.tab_for_id(tab.tab_id)
-    if tab_obj and tab_obj.name:
-        cwd = None
+    has_manual_title = tab_obj and tab_obj.name
 
-    # Build custom title with folder and process
-    title_text = ""
-    if cwd:
-        # Shorten home directory
+    # Detect git project task info (only when no manual title)
+    project_name, task_desc = (None, None)
+    if not has_manual_title and cwd:
+        project_name, task_desc = _get_task_info(cwd)
+
+    # Tab colors
+    if tab.is_active:
+        bg = 0x3a3a3a
+        fg = 0xffffff
+    else:
+        bg = 0x1a1a1a
+        fg = 0x666666
+
+    right_sep = '\ue0b0'
+    tab_bar_bg = 0x1a1a1a
+
+    screen.cursor.bg = as_rgb(bg)
+    screen.cursor.fg = as_rgb(fg)
+    screen.draw(' ')
+
+    if has_manual_title:
+        # Manual tab title (existing behavior)
+        title_text = tab.title
+        if len(title_text) > max_title_length:
+            title_text = title_text[:max_title_length - 1] + '…'
+        screen.draw(title_text)
+
+    elif project_name:
+        # Git project mode: [project_name] task_desc
+        proj_color = _get_project_color(project_name)
+
+        if tab.is_active:
+            bracket_fg = 0x888888
+            proj_fg = proj_color
+            task_fg = 0xffffff
+        else:
+            bracket_fg = 0x444444
+            proj_fg = _dim_color(proj_color, 0.45)
+            task_fg = 0x666666
+
+        # Truncate task_desc if needed
+        prefix_len = len(project_name) + 2  # [name]
+        if task_desc:
+            full_len = prefix_len + 1 + len(task_desc)
+            if full_len > max_title_length:
+                avail = max_title_length - prefix_len - 1
+                if avail > 1:
+                    task_desc = task_desc[:avail - 1] + '…'
+                else:
+                    task_desc = None
+
+        screen.cursor.fg = as_rgb(bracket_fg)
+        screen.draw('[')
+        screen.cursor.fg = as_rgb(proj_fg)
+        screen.draw(project_name)
+        screen.cursor.fg = as_rgb(bracket_fg)
+        screen.draw(']')
+
+        if task_desc:
+            screen.cursor.fg = as_rgb(task_fg)
+            screen.draw(' ' + task_desc)
+
+    elif cwd:
+        # CWD + process mode (fallback for non-git dirs)
         home = os.path.expanduser('~')
         if cwd.startswith(home):
             cwd = '~' + cwd[len(home):]
-        
-        # Keep only last directory component if too long
         parts = [p for p in cwd.split('/') if p]
         if len(parts) > 1:
             cwd = parts[-1]
         elif parts:
             cwd = '/'.join(parts)
-        
-        # Build title without ANSI codes first
-        folder_icon = '  '  # Folder icon
-        process_icon = '  '  # Terminal/CLI icon
-        title_text = f"{folder_icon}{cwd} {process_icon}{process}"
-    else:
-        title_text = tab.title
-    
-    # Truncate title if needed
-    if len(title_text) > max_title_length:
-        title_text = title_text[:max_title_length - 1] + '…'
-    
-    # Define colors - lighter background with very light foreground
-    if tab.is_active:
-        bg = 0x3a3a3a  # Medium dark gray for active
-        fg = 0xffffff  # White
-    else:
-        bg = 0x1a1a1a  # Very dark gray for inactive (more dimmed)
-        fg = 0x666666  # Darker gray text for inactive
-    
-    # Powerline separator character - right-pointing chevron only
-    right_sep = '\ue0b0'   # Powerline right-pointing chevron
-    
-    # Tab bar background color - matches inactive tab background
-    tab_bar_bg = 0x1a1a1a  # Very dark gray (same as inactive)
-    
-    # Draw tab background and content
-    screen.cursor.bg = as_rgb(bg)
-    screen.cursor.fg = as_rgb(fg)
-    
-    # Add padding and draw title with inline colors
-    screen.draw(' ')
-    
-    if cwd:
-        # Adjust colors based on active/inactive state
+
         if tab.is_active:
-            icon_color_rgb = (255, 255, 255)      # Pure white for icons
-            folder_color_rgb = (255, 230, 180)    # Very light cream
-            process_color_rgb = (210, 255, 210)   # Very light green
+            icon_color_rgb = (255, 255, 255)
+            folder_color_rgb = (255, 230, 180)
+            process_color_rgb = (210, 255, 210)
         else:
-            # Dimmed colors for inactive tabs
-            icon_color_rgb = (150, 150, 150)      # Dimmed gray for icons
-            folder_color_rgb = (180, 160, 130)    # Dimmed cream
-            process_color_rgb = (140, 180, 140)   # Dimmed green
-        
-        folder_icon = '\uf07c '  # Folder icon from nerd fonts
-        
-        # Draw in format: <process> <icon> <dir>
-        # Draw process name first
+            icon_color_rgb = (150, 150, 150)
+            folder_color_rgb = (180, 160, 130)
+            process_color_rgb = (140, 180, 140)
+
+        folder_icon = '\uf07c '
+
         screen.cursor.fg = as_rgb(process_color_rgb[0] << 16 | process_color_rgb[1] << 8 | process_color_rgb[2])
         screen.draw(process)
-        
         screen.draw(' ')
-        
-        # Draw folder icon
         screen.cursor.fg = as_rgb(icon_color_rgb[0] << 16 | icon_color_rgb[1] << 8 | icon_color_rgb[2])
         screen.draw(folder_icon)
-        
-        # Draw directory name
         screen.cursor.fg = as_rgb(folder_color_rgb[0] << 16 | folder_color_rgb[1] << 8 | folder_color_rgb[2])
         screen.draw(cwd)
+
     else:
-        screen.draw(title_text)
-    
+        screen.draw(tab.title)
+
     screen.draw(' ')
-    
+
     # Draw right separator
     if is_last:
-        # Last tab: transition to pure black tab bar background
-        screen.cursor.bg = as_rgb(0x000000)  # Pure black
+        screen.cursor.bg = as_rgb(0x000000)
         screen.cursor.fg = as_rgb(bg)
         screen.draw(right_sep)
-        
-        # Then draw stats on pure black background
         screen.cursor.bg = as_rgb(0x000000)
         _draw_right_status(screen)
     else:
-        # Not last tab: transition to tab bar background (inactive color)
         screen.cursor.bg = as_rgb(tab_bar_bg)
         screen.cursor.fg = as_rgb(bg)
         screen.draw(right_sep)
-    
+
     return screen.cursor.x
