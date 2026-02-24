@@ -428,7 +428,9 @@ def _get_task_info(cwd):
     project_name = os.path.basename(root)
     task_desc = None
 
-    task_file = os.path.join(git_dir, 'kitty-task')
+    # Deterministic tempfile path based on git dir (matches set-tab-task.sh)
+    git_dir_hash = hashlib.md5(git_dir.encode()).hexdigest()
+    task_file = os.path.join(tempfile.gettempdir(), f'kitty-task-{git_dir_hash}')
     try:
         if os.path.exists(task_file):
             with open(task_file) as f:
