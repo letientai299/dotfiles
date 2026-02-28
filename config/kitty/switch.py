@@ -2,6 +2,113 @@
 import json
 import subprocess
 import os
+import hashlib
+import tempfile
+
+PROJECT_COLORS = [
+    0x50fa7b,
+    0xff79c6,
+    0x8be9fd,
+    0xffb86c,
+    0xbd93f9,
+    0xf1fa8c,
+    0xff6e6e,
+    0x69ff94,
+    0xa4ffff,
+    0xff92df,
+    0xffd580,
+    0xcaa9fa,
+]
+GIT_ICON = ""
+
+
+def _get_project_color(name):
+    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
+    return PROJECT_COLORS[h % len(PROJECT_COLORS)]
+
+
+def _ansi_color(hex_color, bold=False):
+    r = (hex_color >> 16) & 0xFF
+    g = (hex_color >> 8) & 0xFF
+    b = hex_color & 0xFF
+    prefix = "1;" if bold else ""
+    return f"\033[{prefix}38;2;{r};{g};{b}m"
+
+
+def _project_from_title(title):
+    if not title.startswith("["):
+        return None
+    end = title.find("]")
+    if end <= 1:
+        return None
+    return title[1:end].strip()
+
+
+def _find_git_root_and_dir(cwd):
+    path = cwd
+    while path and path != os.path.dirname(path):
+        git_path = os.path.join(path, '.git')
+        if os.path.isdir(git_path):
+            return path, git_path
+        if os.path.isfile(git_path):
+            try:
+                with open(git_path) as f:
+                    line = f.read().strip()
+                if line.startswith('gitdir: '):
+                    git_dir = line[8:]
+                    if not os.path.isabs(git_dir):
+                        git_dir = os.path.normpath(os.path.join(path, git_dir))
+                    return path, git_dir
+            except OSError:
+                return None, None
+        path = os.path.dirname(path)
+    return None, None
+
+
+def _get_tab_name_aliases(cwd):
+    if not cwd:
+        return []
+
+    root, git_dir = _find_git_root_and_dir(cwd)
+    if not root or not git_dir:
+        return []
+
+    project_name = os.path.basename(root)
+    aliases = [project_name, f'[{project_name}]']
+
+    git_dir_hash = hashlib.md5(git_dir.encode()).hexdigest()
+    task_file = os.path.join(tempfile.gettempdir(), f'kitty-task-{git_dir_hash}')
+
+    try:
+        if os.path.exists(task_file):
+            with open(task_file) as f:
+                task_desc = f.read().strip().split('\n')[0].strip()
+            if task_desc:
+                aliases.extend([task_desc, f'[{project_name}] {task_desc}'])
+    except OSError:
+        pass
+
+    return aliases
+
+
+def _pretty_cwd(cwd):
+    if not cwd:
+        return "-"
+    home = os.path.expanduser('~')
+    if cwd.startswith(home):
+        return '~' + cwd[len(home):]
+    return cwd
+
+
+def _extract_process_and_cmd(window):
+    cmdline_list = window.get('cmdline') or []
+    fg_processes = window.get('foreground_processes', [])
+    if fg_processes:
+        proc = fg_processes[-1]
+        cmdline_list = proc.get('cmdline') or cmdline_list
+    cmdline = " ".join(cmdline_list)
+    process = os.path.basename(cmdline_list[0]).lstrip('-') if cmdline_list else (window.get('title') or "process")
+    return process or "process", cmdline
 
 def main():
     try:
@@ -18,80 +125,75 @@ def main():
         input("Press Enter to continue...")
         return
 
-    entries = []
+    rows = []
     for os_window in data:
         for tab in os_window.get('tabs', []):
             tab_title = tab.get('title') or 'Tab'
+            panes = []
+            display_title = tab_title
+
             for window in tab.get('windows', []):
                 win_id = window.get('id')
                 win_title = window.get('title') or 'Window'
-                cwd = window.get('cwd') or ''
-
-                # Get the command
-                cmdline_list = window.get('cmdline') or []
-
-                # Check foreground processes to get the actual running command (e.g. vim instead of zsh)
-                fg_processes = window.get('foreground_processes', [])
-                if fg_processes:
-                    # Use the last process in the list as it's likely the active one
-                    proc = fg_processes[-1]
-                    cmdline_list = proc.get('cmdline') or cmdline_list
-
-                cmdline = " ".join(cmdline_list)
+                raw_cwd = window.get('cwd') or ''
+                process, cmdline = _extract_process_and_cmd(window)
 
                 # Filter out the switcher script itself
                 if "switch.py" in cmdline:
                     continue
 
-                # Pretty print CWD
-                if cwd:
-                    home = os.path.expanduser('~')
-                    if cwd.startswith(home):
-                        cwd = '~' + cwd[len(home):]
-
                 # Handle misleading tab title (e.g. if it shows 'python3' because of the switcher)
                 # If the tab title is 'python3', fall back to the window title
-                display_title = tab_title
                 if display_title == "python3" and win_title != "python3":
                     display_title = win_title
+                tab_aliases = _get_tab_name_aliases(raw_cwd)
+                formatted_alias = next((a for a in reversed(tab_aliases) if a.startswith('[')), None)
+                if formatted_alias:
+                    display_title = formatted_alias
 
-                entries.append({
+                root, _ = _find_git_root_and_dir(raw_cwd)
+                repo = os.path.basename(root) if root else "-"
+                panes.append({
                     'id': win_id,
-                    'tab': display_title,
-                    'cwd': cwd,
-                    'cmd': cmdline
+                    'repo': repo,
+                    'cwd': _pretty_cwd(raw_cwd),
+                    'process': process,
                 })
 
-    if not entries:
+            if not panes:
+                continue
+
+            project = _project_from_title(display_title)
+            tab_color = _get_project_color(project) if project else 0x6ea8fe
+            tab_row = f"{_ansi_color(tab_color, bold=True)}{display_title}\033[0m"
+            rows.append(f"{panes[0]['id']}\ttab\t{tab_row}")
+
+            for pane_idx, pane in enumerate(panes, start=1):
+                pane_row = (
+                    f"  "
+                    f"{_ansi_color(0xf1fa8c, bold=True)}{pane_idx:>2}\033[0m "
+                    f"{_ansi_color(0x8be9fd, bold=True)}{pane['repo']}\033[0m "
+                    f"{_ansi_color(0x999999)}[{GIT_ICON}]\033[0m "
+                    f"{_ansi_color(0x50fa7b)}{pane['cwd']}\033[0m "
+                    f"{_ansi_color(0xbd93f9)}{pane['process']}\033[0m"
+                )
+                rows.append(f"{pane['id']}\tpane\t{pane_row}")
+
+    if not rows:
         return
-
-    # Calculate widths for alignment
-    max_tab_len = max((len(e['tab']) for e in entries), default=0)
-    max_cwd_len = max((len(e['cwd']) for e in entries), default=0)
-
-    candidates = []
-    for e in entries:
-        # Format: Tab (Blue) -> Cwd (Green) running Command (Cyan)
-        tab_str = e['tab'].ljust(max_tab_len)
-        cwd_str = e['cwd'].ljust(max_cwd_len)
-
-        display_text = f"\033[1;34m{tab_str}\033[0m \033[90m->\033[0m \033[1;32m{cwd_str}\033[0m \033[90mrunning\033[0m \033[36m{e['cmd']}\033[0m"
-        candidates.append(f"{e['id']} | {display_text}")
-
-    if not candidates:
-        return
-
-    fzf_input = "\n".join(candidates)
+    fzf_input = "\n".join(rows)
 
     fzf_cmd = [
         'fzf',
         '--ansi',
-        '--delimiter', r' \| ',
-        '--with-nth', '2..',
-        '--header', 'Select Kitty window',
+        '--delimiter', '\t',
+        '--with-nth', '3',
+        '--header', 'Select Kitty pane',
         '--layout=reverse',
         '--border',
-        '--prompt', 'Go to > '
+        '--prompt', 'Go to > ',
+        '--preview', 'kitty @ get-text --match id:{1} --ansi --extent screen',
+        '--preview-window', 'right,65%,border-left'
     ]
 
     try:
@@ -100,8 +202,7 @@ def main():
 
         if fzf.returncode == 0 and stdout.strip():
             selected_line = stdout.strip()
-            # Extract ID (first field)
-            selected_id = selected_line.split(' | ')[0]
+            selected_id = selected_line.split('\t', 1)[0]
 
             # Switch to the selected window
             subprocess.run(['kitty', '@', 'focus-window', '--match', f'id:{selected_id}'], check=True)
