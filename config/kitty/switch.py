@@ -5,26 +5,9 @@ import os
 import hashlib
 import tempfile
 
-PROJECT_COLORS = [
-    0x50fa7b,
-    0xff79c6,
-    0x8be9fd,
-    0xffb86c,
-    0xbd93f9,
-    0xf1fa8c,
-    0xff6e6e,
-    0x69ff94,
-    0xa4ffff,
-    0xff92df,
-    0xffd580,
-    0xcaa9fa,
-]
-GIT_ICON = ""
+from kitty_shared import PROJECT_COLORS, get_project_color, find_git_root_and_dir
 
-
-def _get_project_color(name):
-    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
-    return PROJECT_COLORS[h % len(PROJECT_COLORS)]
+GIT_ICON = ""
 
 
 def _ansi_color(hex_color, bold=False):
@@ -44,32 +27,11 @@ def _project_from_title(title):
     return title[1:end].strip()
 
 
-def _find_git_root_and_dir(cwd):
-    path = cwd
-    while path and path != os.path.dirname(path):
-        git_path = os.path.join(path, '.git')
-        if os.path.isdir(git_path):
-            return path, git_path
-        if os.path.isfile(git_path):
-            try:
-                with open(git_path) as f:
-                    line = f.read().strip()
-                if line.startswith('gitdir: '):
-                    git_dir = line[8:]
-                    if not os.path.isabs(git_dir):
-                        git_dir = os.path.normpath(os.path.join(path, git_dir))
-                    return path, git_dir
-            except OSError:
-                return None, None
-        path = os.path.dirname(path)
-    return None, None
-
-
 def _get_tab_name_aliases(cwd):
     if not cwd:
         return []
 
-    root, git_dir = _find_git_root_and_dir(cwd)
+    root, git_dir = find_git_root_and_dir(cwd)
     if not root or not git_dir:
         return []
 
@@ -110,9 +72,9 @@ def _extract_process_and_cmd(window):
     process = os.path.basename(cmdline_list[0]).lstrip('-') if cmdline_list else (window.get('title') or "process")
     return process or "process", cmdline
 
+
 def main():
     try:
-        # Get kitty window data
         cmd = ['kitty', '@', 'ls']
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         data = json.loads(result.stdout)
@@ -138,21 +100,20 @@ def main():
                 raw_cwd = window.get('cwd') or ''
                 process, cmdline = _extract_process_and_cmd(window)
 
-                # Filter out the switcher script itself
                 if "switch.py" in cmdline:
                     continue
 
-                # Handle misleading tab title (e.g. if it shows 'python3' because of the switcher)
-                # If the tab title is 'python3', fall back to the window title
-                if display_title == "python3" and win_title != "python3":
-                    display_title = win_title
-                tab_aliases = _get_tab_name_aliases(raw_cwd)
-                formatted_alias = next((a for a in reversed(tab_aliases) if a.startswith('[')), None)
-                if formatted_alias:
-                    display_title = formatted_alias
+                # Set display_title from the first pane only (#15)
+                if not panes:
+                    if display_title == "python3" and win_title != "python3":
+                        display_title = win_title
+                    tab_aliases = _get_tab_name_aliases(raw_cwd)
+                    formatted_alias = next((a for a in reversed(tab_aliases) if a.startswith('[')), None)
+                    if formatted_alias:
+                        display_title = formatted_alias
 
-                root, _ = _find_git_root_and_dir(raw_cwd)
-                repo = os.path.basename(root) if root else "-"
+                root, _ = find_git_root_and_dir(raw_cwd)
+                repo = os.path.basename(root) if root else None
                 panes.append({
                     'id': win_id,
                     'repo': repo,
@@ -164,16 +125,22 @@ def main():
                 continue
 
             project = _project_from_title(display_title)
-            tab_color = _get_project_color(project) if project else 0x6ea8fe
+            tab_color = get_project_color(project) if project else 0x6ea8fe
             tab_row = f"{_ansi_color(tab_color, bold=True)}{display_title}\033[0m"
             rows.append(f"{panes[0]['id']}\ttab\t{tab_row}")
 
             for pane_idx, pane in enumerate(panes, start=1):
+                # Show git icon only for git repos (#16)
+                repo_col = (
+                    f"{_ansi_color(0x8be9fd, bold=True)}{pane['repo']}\033[0m "
+                    f"{_ansi_color(0x999999)}[{GIT_ICON}]\033[0m "
+                    if pane['repo']
+                    else f"{_ansi_color(0x666666)}-\033[0m "
+                )
                 pane_row = (
                     f"  "
                     f"{_ansi_color(0xf1fa8c, bold=True)}{pane_idx:>2}\033[0m "
-                    f"{_ansi_color(0x8be9fd, bold=True)}{pane['repo']}\033[0m "
-                    f"{_ansi_color(0x999999)}[{GIT_ICON}]\033[0m "
+                    f"{repo_col}"
                     f"{_ansi_color(0x50fa7b)}{pane['cwd']}\033[0m "
                     f"{_ansi_color(0xbd93f9)}{pane['process']}\033[0m"
                 )
@@ -203,8 +170,6 @@ def main():
         if fzf.returncode == 0 and stdout.strip():
             selected_line = stdout.strip()
             selected_id = selected_line.split('\t', 1)[0]
-
-            # Switch to the selected window
             subprocess.run(['kitty', '@', 'focus-window', '--match', f'id:{selected_id}'], check=True)
 
     except FileNotFoundError:
@@ -214,6 +179,7 @@ def main():
     except subprocess.CalledProcessError as e:
         print(f"Error switching window: {e}")
         input("Press Enter to continue...")
+
 
 if __name__ == "__main__":
     main()

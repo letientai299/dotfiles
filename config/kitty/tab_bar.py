@@ -1,33 +1,133 @@
 """Custom tab bar for Kitty with slanted powerline tabs and system stats"""
-import subprocess
-import json
+import ctypes
+import ctypes.util
 import hashlib
+import json
 import os
 import re
+import struct
+import subprocess
 import tempfile
-import time as _time
-from datetime import datetime
+import time
+
 from kitty.fast_data_types import Screen, get_options, get_boss
 from kitty.tab_bar import (
     DrawData,
     ExtraData,
     TabBarData,
+    TabAccessor,
     as_rgb,
-    draw_tab_with_powerline,
 )
-from kitty.utils import color_as_int
+from kitty_shared import PROJECT_COLORS, get_project_color, find_git_root_and_dir
 
 opts = get_options()
 
-# Shared cache file for all kitty processes
-CACHE_FILE = os.path.join(tempfile.gettempdir(), 'kitty_tab_stats.json')
+# --- Shared constants ---
 
-# Refresh intervals (in seconds)
-STATS_REFRESH_INTERVAL = 1  # CPU, Memory, Network stats refresh interval
-VPN_REFRESH_INTERVAL = 15    # VPN status refresh interval (changes less frequently)
+CACHE_FILE = os.path.join(tempfile.gettempdir(), 'kitty_tab_stats.json')
+STATS_REFRESH_INTERVAL = 1   # CPU, Memory, Network refresh (seconds)
+VPN_REFRESH_INTERVAL = 15    # VPN / net-type refresh (seconds)
+_TASK_CACHE_TTL = 2           # Git task info TTL (seconds)
+_TASK_CACHE_MAX = 64          # Max CWDs to cache
+
+_BORING_PROCESSES = frozenset({
+    'sh', 'bash', 'zsh', 'fish', 'dash', 'ksh', 'tcsh', 'csh',
+})
+
+# --- ctypes setup for macOS Mach/sysctl APIs ---
+
+_libc = ctypes.CDLL(ctypes.util.find_library('c'))
+_mach_host = _libc.mach_host_self()
+
+# CPU: host_statistics with HOST_CPU_LOAD_INFO
+_HOST_CPU_LOAD_INFO = 3
+_CPU_STATE_MAX = 4
+_CPU_STATE_USER = 0
+_CPU_STATE_SYSTEM = 1
+_CPU_STATE_IDLE = 2
+_CPU_STATE_NICE = 3
+
+
+class _HostCpuLoadInfo(ctypes.Structure):
+    _fields_ = [('cpu_ticks', ctypes.c_uint32 * _CPU_STATE_MAX)]
+
+
+# Memory: host_statistics64 with HOST_VM_INFO64
+_HOST_VM_INFO64 = 4
+
+
+class _VmStatistics64(ctypes.Structure):
+    """Matches Darwin <mach/vm_statistics.h> — natural_t fields are uint32."""
+    _fields_ = [
+        ('free_count', ctypes.c_uint32),
+        ('active_count', ctypes.c_uint32),
+        ('inactive_count', ctypes.c_uint32),
+        ('wire_count', ctypes.c_uint32),
+        ('zero_fill_count', ctypes.c_uint64),
+        ('reactivations', ctypes.c_uint64),
+        ('pageins', ctypes.c_uint64),
+        ('pageouts', ctypes.c_uint64),
+        ('faults', ctypes.c_uint64),
+        ('cow_faults', ctypes.c_uint64),
+        ('lookups', ctypes.c_uint64),
+        ('hits', ctypes.c_uint64),
+        ('purges', ctypes.c_uint64),
+        ('purgeable_count', ctypes.c_uint32),
+        ('speculative_count', ctypes.c_uint32),
+        ('decompressions', ctypes.c_uint64),
+        ('compressions', ctypes.c_uint64),
+        ('swapins', ctypes.c_uint64),
+        ('swapouts', ctypes.c_uint64),
+        ('compressor_page_count', ctypes.c_uint32),
+        ('throttled_count', ctypes.c_uint32),
+        ('external_page_count', ctypes.c_uint32),
+        ('internal_page_count', ctypes.c_uint32),
+        ('total_uncompressed_pages_in_compressor', ctypes.c_uint64),
+    ]
+
+
+# Page size (constant, read once)
+_page_size_val = ctypes.c_uint64()
+_libc.host_page_size(_mach_host, ctypes.byref(_page_size_val))
+_PAGE_SIZE = _page_size_val.value
+
+# Total physical memory (constant, read once)
+_hw_memsize_buf = ctypes.create_string_buffer(8)
+_hw_memsize_sz = ctypes.c_size_t(8)
+_libc.sysctlbyname(b'hw.memsize', _hw_memsize_buf,
+                    ctypes.byref(_hw_memsize_sz), None, 0)
+_TOTAL_MEM_BYTES = struct.unpack('Q', _hw_memsize_buf.raw[:8])[0]
+_TOTAL_MEM_GB = _TOTAL_MEM_BYTES / (1024 ** 3)
+
+
+def _sysctlbyname_int(name, fmt='i'):
+    """Read a sysctl value as an integer. fmt: 'i' for int32, 'Q' for uint64."""
+    size = struct.calcsize(fmt)
+    buf = ctypes.create_string_buffer(size)
+    sz = ctypes.c_size_t(size)
+    ret = _libc.sysctlbyname(name, buf, ctypes.byref(sz), None, 0)
+    if ret != 0:
+        return None
+    return struct.unpack(fmt, buf.raw[:size])[0]
+
+
+# xsw_usage struct for vm.swapusage: total, avail, used, encrypted (all uint64)
+def _get_swap_used_bytes():
+    """Read swap used via sysctl vm.swapusage."""
+    buf = ctypes.create_string_buffer(256)
+    sz = ctypes.c_size_t(256)
+    ret = _libc.sysctlbyname(b'vm.swapusage', buf, ctypes.byref(sz), None, 0)
+    if ret != 0 or sz.value < 24:
+        return 0
+    # struct xsw_usage { uint64 total, avail, used; }
+    _total, _avail, used = struct.unpack('QQQ', buf.raw[:24])
+    return used
+
+
+# --- Shared cache for cross-process stats ---
 
 def _load_cache():
-    """Load cached stats from shared file"""
+    """Load cached stats from shared file."""
     try:
         if os.path.exists(CACHE_FILE):
             with open(CACHE_FILE, 'r') as f:
@@ -36,222 +136,177 @@ def _load_cache():
         pass
     return {
         'cpu': (0.0, 0.0),
-        'memory': (0.0, 0.0),
+        'memory': (0.0, 0.0, 1, 0.0),
         'network': (0.0, 0.0),
         'vpn': None,
-        'timestamp': 0
+        'timestamp': 0,
     }
 
+
 def _save_cache(data):
-    """Save stats to shared cache file"""
+    """Save stats to shared cache file atomically."""
     try:
-        with open(CACHE_FILE, 'w') as f:
+        tmp_fd, tmp_path = tempfile.mkstemp(
+            dir=os.path.dirname(CACHE_FILE), suffix='.tmp'
+        )
+        with os.fdopen(tmp_fd, 'w') as f:
             json.dump(data, f)
+        os.replace(tmp_path, CACHE_FILE)
     except Exception:
-        pass
+        try:
+            os.unlink(tmp_path)
+        except Exception:
+            pass
+
+
+# Load cache once at init; individual functions reference this dict.
+_initial_cache = _load_cache()
+
+# --- Stats collection functions ---
 
 
 def _get_cpu_usage():
-    """Get CPU usage as (user%, sys%) - cross platform, non-blocking"""
+    """Get CPU usage as (user%, sys%) via Mach host_statistics (instant)."""
     try:
-        import os
-        import time
-        
-        # Load from shared cache on first call
-        if not hasattr(_get_cpu_usage, 'prev_idle'):
-            cache = _load_cache()
-            _get_cpu_usage.prev_idle = 0
-            _get_cpu_usage.prev_total = 0
-            _get_cpu_usage.last_check = cache.get('timestamp', 0)
-            _get_cpu_usage.cached_value = tuple(cache.get('cpu', (0.0, 0.0)))
-        
-        # Only update every STATS_REFRESH_INTERVAL seconds
+        if not hasattr(_get_cpu_usage, 'prev_ticks'):
+            cached = tuple(_initial_cache.get('cpu', (0.0, 0.0)))
+            _get_cpu_usage.cached_value = cached
+            _get_cpu_usage.last_check = _initial_cache.get('timestamp', 0)
+            _get_cpu_usage.prev_ticks = None
+
         now = time.time()
         if now - _get_cpu_usage.last_check < STATS_REFRESH_INTERVAL:
             return _get_cpu_usage.cached_value
-        
+
         if os.path.exists('/proc/stat'):
-            # Linux - read CPU times (instant, no subprocess)
+            # Linux path (unchanged)
             with open('/proc/stat', 'r') as f:
                 line = f.readline()
                 fields = line.split()
-                user = int(fields[1])
-                nice = int(fields[2])
+                user = int(fields[1]) + int(fields[2])  # user + nice
                 system = int(fields[3])
-                idle = int(fields[4])
                 total = sum(int(x) for x in fields[1:])
-                
-            # Calculate CPU usage from delta
-            if _get_cpu_usage.prev_total > 0:
-                user_delta = user + nice - getattr(_get_cpu_usage, 'prev_user', 0)
-                sys_delta = system - getattr(_get_cpu_usage, 'prev_sys', 0)
-                total_delta = total - _get_cpu_usage.prev_total
-                
-                if total_delta > 0:
-                    user_percent = 100.0 * user_delta / total_delta
-                    sys_percent = 100.0 * sys_delta / total_delta
+
+            prev = _get_cpu_usage.prev_ticks
+            if prev:
+                td = total - prev[2]
+                if td > 0:
+                    user_pct = 100.0 * (user - prev[0]) / td
+                    sys_pct = 100.0 * (system - prev[1]) / td
                 else:
-                    user_percent, sys_percent = _get_cpu_usage.cached_value
+                    user_pct, sys_pct = _get_cpu_usage.cached_value
             else:
-                user_percent, sys_percent = 0.0, 0.0
-            
-            _get_cpu_usage.prev_user = user + nice
-            _get_cpu_usage.prev_sys = system
-            _get_cpu_usage.prev_idle = idle
-            _get_cpu_usage.prev_total = total
-            _get_cpu_usage.cached_value = (user_percent, sys_percent)
-            _get_cpu_usage.last_check = now
-            return (user_percent, sys_percent)
+                user_pct, sys_pct = 0.0, 0.0
+            _get_cpu_usage.prev_ticks = (user, system, total)
         else:
-            # macOS - use top CPU summary, aligns better with Activity Monitor
-            result = subprocess.run(
-                ["top", "-l", "1", "-n", "0"],
-                capture_output=True,
-                text=True,
-                timeout=0.8
+            # macOS — ctypes host_statistics (instant, no subprocess)
+            info = _HostCpuLoadInfo()
+            count = ctypes.c_uint32(_CPU_STATE_MAX)
+            ret = _libc.host_statistics(
+                _mach_host, _HOST_CPU_LOAD_INFO,
+                ctypes.byref(info), ctypes.byref(count)
             )
-            for line in result.stdout.split('\n'):
-                if not line.startswith('CPU usage:'):
-                    continue
-                try:
-                    parts = line.split(':', 1)[1].split(',')
-                    us = sy = None
-                    for part in parts:
-                        token = part.strip().split()
-                        if len(token) < 2:
-                            continue
-                        value = float(token[0].rstrip('%'))
-                        label = token[1].lower()
-                        if label == 'user':
-                            us = value
-                        elif label == 'sys':
-                            sy = value
-                    if us is not None and sy is not None:
-                        _get_cpu_usage.cached_value = (us, sy)
-                        _get_cpu_usage.last_check = now
-                        return (us, sy)
-                except (ValueError, IndexError):
-                    continue
-            return _get_cpu_usage.cached_value
+            if ret != 0:
+                return _get_cpu_usage.cached_value
+
+            t = info.cpu_ticks
+            user = t[_CPU_STATE_USER] + t[_CPU_STATE_NICE]
+            system = t[_CPU_STATE_SYSTEM]
+            total = sum(t[i] for i in range(_CPU_STATE_MAX))
+
+            prev = _get_cpu_usage.prev_ticks
+            if prev:
+                td = total - prev[2]
+                if td > 0:
+                    user_pct = 100.0 * (user - prev[0]) / td
+                    sys_pct = 100.0 * (system - prev[1]) / td
+                else:
+                    user_pct, sys_pct = _get_cpu_usage.cached_value
+            else:
+                user_pct, sys_pct = 0.0, 0.0
+            _get_cpu_usage.prev_ticks = (user, system, total)
+
+        _get_cpu_usage.cached_value = (user_pct, sys_pct)
+        _get_cpu_usage.last_check = now
+        return (user_pct, sys_pct)
     except Exception:
         return getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0))
 
 
 def _get_memory_usage():
-    """Get memory usage in GB"""
+    """Get memory stats via ctypes (no subprocesses).
+
+    Returns (used_gb, total_gb, pressure_level, pressure_pct).
+    """
     try:
-        import time
-        
-        # Load from shared cache on first call
         if not hasattr(_get_memory_usage, 'cached_value'):
-            cache = _load_cache()
-            mem_cache = cache.get('memory', (0.0, 0.0, 1, 0.0))
+            mem_cache = _initial_cache.get('memory', (0.0, 0.0, 1, 0.0))
             while len(mem_cache) < 4:
                 mem_cache = (*mem_cache, (1 if len(mem_cache) == 2 else 0.0))
             _get_memory_usage.cached_value = tuple(mem_cache)
-            _get_memory_usage.last_check = cache.get('timestamp', 0)
+            _get_memory_usage.last_check = _initial_cache.get('timestamp', 0)
 
-        # Only update every STATS_REFRESH_INTERVAL seconds
         now = time.time()
         if now - _get_memory_usage.last_check < STATS_REFRESH_INTERVAL:
             return _get_memory_usage.cached_value
-        
-        # Use sysctl for total memory (faster) and vm_stat for detailed usage
-        # Get total memory first (very fast: 0.003s)
-        total_result = subprocess.run(
-            ["sysctl", "-n", "hw.memsize"],
-            capture_output=True,
-            text=True,
-            timeout=0.2
+
+        # Pressure level (1=normal, 2=warn, 4=critical)
+        pressure_level = _sysctlbyname_int(
+            b'kern.memorystatus_vm_pressure_level'
+        ) or 1
+
+        # Swap used
+        swap_used_bytes = _get_swap_used_bytes()
+
+        # VM stats via host_statistics64
+        info = _VmStatistics64()
+        count = ctypes.c_uint32(ctypes.sizeof(info) // 4)
+        ret = _libc.host_statistics64(
+            _mach_host, _HOST_VM_INFO64,
+            ctypes.byref(info), ctypes.byref(count)
         )
-        total = int(total_result.stdout.strip()) / (1024 ** 3)  # Convert to GB
-        
-        # Get memory pressure level (1=normal, 2=warn, 4=critical)
-        pressure_level = 1
-        try:
-            p_result = subprocess.run(
-                ["sysctl", "-n", "kern.memorystatus_vm_pressure_level"],
-                capture_output=True,
-                text=True,
-                timeout=0.2
-            )
-            pressure_level = int(p_result.stdout.strip())
-        except Exception:
-            pass
+        if ret != 0:
+            return _get_memory_usage.cached_value
 
-        # Get swap usage (output: "total = 2048.00M  used = 374.38M  free = ...")
-        swap_used_bytes = 0
-        try:
-            sw_result = subprocess.run(
-                ["sysctl", "-n", "vm.swapusage"],
-                capture_output=True,
-                text=True,
-                timeout=0.2
-            )
-            m = re.search(r'used\s*=\s*([\d.]+)M', sw_result.stdout)
-            if m:
-                swap_used_bytes = float(m.group(1)) * 1024 * 1024
-        except Exception:
-            pass
+        active_bytes = info.active_count * _PAGE_SIZE
+        wired_bytes = info.wire_count * _PAGE_SIZE
+        compressed_bytes = info.compressor_page_count * _PAGE_SIZE
 
-        # Get memory usage from vm_stat (fast: 0.004s)
-        result = subprocess.run(
-            ["vm_stat"],
-            capture_output=True,
-            text=True,
-            timeout=0.3
+        used_gb = (active_bytes + wired_bytes + compressed_bytes) / (1024 ** 3)
+        pressure_pct = (
+            (compressed_bytes + swap_used_bytes) / _TOTAL_MEM_BYTES * 100
+            if _TOTAL_MEM_BYTES > 0 else 0
         )
-        lines = result.stdout.split('\n')
 
-        page_size = 4096
-        active = wired = compressed = 0
-
-        for line in lines:
-            if 'page size of' in line:
-                page_size = int(line.split()[-2])
-            elif 'Pages active' in line:
-                active = int(line.split()[-1].rstrip('.'))
-            elif 'Pages wired down' in line:
-                wired = int(line.split()[-1].rstrip('.'))
-            elif 'Pages occupied by compressor' in line or 'Pages stored in compressor' in line:
-                compressed = int(line.split()[-1].rstrip('.'))
-
-        # Activity Monitor "Memory Used" ~ app + wired + compressed
-        used = (active + wired + compressed) * page_size / (1024 ** 3)
-
-        # Pressure % ≈ (compressed + swap) / total — how much VM work the system does
-        total_bytes = total * (1024 ** 3)
-        compressed_bytes = compressed * page_size
-        pressure_pct = (compressed_bytes + swap_used_bytes) / total_bytes * 100 if total_bytes > 0 else 0
-
-        _get_memory_usage.cached_value = (used, total, pressure_level, pressure_pct)
+        _get_memory_usage.cached_value = (
+            used_gb, _TOTAL_MEM_GB, pressure_level, pressure_pct
+        )
         _get_memory_usage.last_check = now
-        return used, total, pressure_level, pressure_pct
+        return _get_memory_usage.cached_value
     except Exception:
         return getattr(_get_memory_usage, 'cached_value', (0.0, 0.0, 1, 0.0))
 
 
 def _get_network_stats():
-    """Get network bandwidth usage (bytes/sec) - cross platform"""
+    """Get network bandwidth usage (KB/s) - cross platform."""
     try:
-        import os
-        import time
-        
-        # Load from shared cache on first call
         if not hasattr(_get_network_stats, 'prev_rx'):
-            cache = _load_cache()
+            cached_net = _initial_cache.get('network', (0.0, 0.0))
             _get_network_stats.prev_rx = 0
             _get_network_stats.prev_tx = 0
-            _get_network_stats.prev_time = cache.get('timestamp', time.time())
-            cached_net = cache.get('network', (0.0, 0.0))
-            _get_network_stats.rx_rate = cached_net[0] * 1024  # Convert back to bytes
+            _get_network_stats.prev_time = _initial_cache.get('timestamp', time.time())
+            _get_network_stats.rx_rate = cached_net[0] * 1024
             _get_network_stats.tx_rate = cached_net[1] * 1024
-        
+
+        # Early return if cache is fresh (#3)
+        now = time.time()
+        if now - _get_network_stats.prev_time < STATS_REFRESH_INTERVAL:
+            return _get_network_stats.rx_rate / 1024, _get_network_stats.tx_rate / 1024
+
         rx_bytes = 0
         tx_bytes = 0
-        
+
         if os.path.exists('/proc/net/dev'):
-            # Linux
             with open('/proc/net/dev', 'r') as f:
                 for line in f:
                     if ':' not in line or line.strip().startswith('lo:'):
@@ -264,7 +319,6 @@ def _get_network_stats():
                         rx_bytes += int(stats[0])
                         tx_bytes += int(stats[8])
         elif os.path.exists('/sys/class/net'):
-            # Linux alternative
             for iface in os.listdir('/sys/class/net'):
                 if iface == 'lo':
                     continue
@@ -273,24 +327,20 @@ def _get_network_stats():
                         rx_bytes += int(f.read().strip())
                     with open(f'/sys/class/net/{iface}/statistics/tx_bytes', 'r') as f:
                         tx_bytes += int(f.read().strip())
-                except:
+                except Exception:
                     continue
         else:
-            # macOS - use netstat (very fast: 0.005s)
+            # macOS
             result = subprocess.run(
                 ["netstat", "-ibn"],
-                capture_output=True,
-                text=True,
-                timeout=0.3  # Reduced timeout since it's fast
+                capture_output=True, text=True, timeout=0.3
             )
-            # Optimized parsing - skip header and lo0
             for line in result.stdout.split('\n'):
                 if '<Link#' not in line or 'lo0' in line:
                     continue
                 parts = line.split()
                 if len(parts) >= 10:
                     try:
-                        # Columns: Name Mtu Network Address Ipkts Ierrs Ibytes Opkts Oerrs Obytes
                         rx = parts[6]
                         tx = parts[9]
                         if rx.isdigit() and tx.isdigit():
@@ -298,101 +348,66 @@ def _get_network_stats():
                             tx_bytes += int(tx)
                     except (ValueError, IndexError):
                         continue
-        
-        # Calculate rate (bytes per second)
-        current_time = time.time()
-        time_delta = current_time - _get_network_stats.prev_time
-        
-        if time_delta >= STATS_REFRESH_INTERVAL:  # Update every STATS_REFRESH_INTERVAL seconds
+
+        time_delta = now - _get_network_stats.prev_time
+        if time_delta > 0:
             rx_delta = rx_bytes - _get_network_stats.prev_rx
             tx_delta = tx_bytes - _get_network_stats.prev_tx
-            
-            _get_network_stats.rx_rate = rx_delta / time_delta if time_delta > 0 else 0
-            _get_network_stats.tx_rate = tx_delta / time_delta if time_delta > 0 else 0
-            
-            _get_network_stats.prev_rx = rx_bytes
-            _get_network_stats.prev_tx = tx_bytes
-            _get_network_stats.prev_time = current_time
-        
-        # Convert to KB/s
-        rx_kbs = _get_network_stats.rx_rate / 1024
-        tx_kbs = _get_network_stats.tx_rate / 1024
-        
-        return rx_kbs, tx_kbs
+            _get_network_stats.rx_rate = rx_delta / time_delta
+            _get_network_stats.tx_rate = tx_delta / time_delta
+
+        _get_network_stats.prev_rx = rx_bytes
+        _get_network_stats.prev_tx = tx_bytes
+        _get_network_stats.prev_time = now
+
+        return _get_network_stats.rx_rate / 1024, _get_network_stats.tx_rate / 1024
     except Exception:
         return 0.0, 0.0
 
 
 def _get_vpn_name():
-    """Get active VPN connection name - cross platform, optimized"""
+    """Get active VPN connection name - cross platform, optimized."""
     try:
-        import os
-        import time
-        
-        # Load from shared cache on first call
         if not hasattr(_get_vpn_name, 'cached_value'):
-            cache = _load_cache()
-            _get_vpn_name.cached_value = cache.get('vpn')
-            _get_vpn_name.last_check = cache.get('timestamp', 0)
-        
-        # Only update every VPN_REFRESH_INTERVAL seconds (VPN state changes rarely)
+            _get_vpn_name.cached_value = _initial_cache.get('vpn')
+            _get_vpn_name.last_check = _initial_cache.get('timestamp', 0)
+
         now = time.time()
         if now - _get_vpn_name.last_check < VPN_REFRESH_INTERVAL:
             return _get_vpn_name.cached_value
-        
+
         vpn_name = None
-        
+
         if os.path.exists('/proc/net/dev'):
-            # Linux - check for tun/tap interfaces
             with open('/proc/net/dev', 'r') as f:
                 for line in f:
                     if 'tun' in line or 'tap' in line:
-                        iface = line.split(':')[0].strip()
-                        vpn_name = iface
+                        vpn_name = line.split(':')[0].strip()
                         break
         else:
-            # macOS - check for active VPN via scutil with status command (faster)
             result = subprocess.run(
                 ["scutil", "--nc", "list"],
-                capture_output=True,
-                text=True,
-                timeout=0.3  # Reduced timeout
+                capture_output=True, text=True, timeout=0.3
             )
-            # Early exit on first match
             for line in result.stdout.split('\n'):
                 if '(Connected)' in line and '"' in line:
-                    # Parse line like: "* (Connected)       ABCD1234-...  IPSec        "VPN Name""
                     parts = line.split('"')
                     if len(parts) >= 2:
                         name = parts[1]
-                        # Ignore Tailscale VPN
                         if 'tailscale' not in name.lower():
                             vpn_name = name
                             break
-        
+
         _get_vpn_name.cached_value = vpn_name
         _get_vpn_name.last_check = now
-        
-        # Save to shared cache
-        _save_cache({
-            'cpu': getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0)),
-            'memory': getattr(_get_memory_usage, 'cached_value', (0.0, 0.0)),
-            'network': (getattr(_get_network_stats, 'rx_rate', 0.0) / 1024, 
-                       getattr(_get_network_stats, 'tx_rate', 0.0) / 1024),
-            'vpn': vpn_name,
-            'timestamp': now
-        })
-        
         return vpn_name
     except Exception:
         return getattr(_get_vpn_name, 'cached_value', None)
 
 
 def _get_net_type():
-    """Detect active network type: 'wifi' or 'ethernet'"""
+    """Detect active network type: 'wifi' or 'ethernet'."""
     try:
-        import time
-
         if not hasattr(_get_net_type, 'cached_value'):
             _get_net_type.cached_value = 'wifi'
             _get_net_type.wifi_iface = None
@@ -417,9 +432,8 @@ def _get_net_type():
                             break
                     break
             if not _get_net_type.wifi_iface:
-                _get_net_type.wifi_iface = 'en0'  # fallback
+                _get_net_type.wifi_iface = 'en0'
 
-        # Check default route interface
         result = subprocess.run(
             ["route", "-n", "get", "default"],
             capture_output=True, text=True, timeout=0.3
@@ -427,7 +441,9 @@ def _get_net_type():
         for line in result.stdout.split('\n'):
             if 'interface:' in line:
                 iface = line.split(':')[1].strip()
-                _get_net_type.cached_value = 'wifi' if iface == _get_net_type.wifi_iface else 'ethernet'
+                _get_net_type.cached_value = (
+                    'wifi' if iface == _get_net_type.wifi_iface else 'ethernet'
+                )
                 break
 
         _get_net_type.last_check = now
@@ -436,81 +452,50 @@ def _get_net_type():
         return getattr(_get_net_type, 'cached_value', 'wifi')
 
 
+# --- Shared cache save (called after all stats collected) ---
+
+def _save_all_stats():
+    """Write all current stats to the shared cache file."""
+    _save_cache({
+        'cpu': getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0)),
+        'memory': getattr(_get_memory_usage, 'cached_value', (0.0, 0.0, 1, 0.0)),
+        'network': (
+            getattr(_get_network_stats, 'rx_rate', 0.0) / 1024,
+            getattr(_get_network_stats, 'tx_rate', 0.0) / 1024,
+        ),
+        'vpn': getattr(_get_vpn_name, 'cached_value', None),
+        'timestamp': time.time(),
+    })
+
+
 # --- Git project task info for tab rendering ---
 
-# Cache: {cwd: (timestamp, project_name, task_desc)}
 _task_cache = {}
-_TASK_CACHE_TTL = 2  # seconds
-
-# Bright colors with good contrast on dark backgrounds (0x1a1a1a / 0x3a3a3a)
-_PROJECT_COLORS = [
-    0x50fa7b,  # Green
-    0xff79c6,  # Pink
-    0x8be9fd,  # Cyan
-    0xffb86c,  # Orange
-    0xbd93f9,  # Purple
-    0xf1fa8c,  # Yellow
-    0xff6e6e,  # Coral
-    0x69ff94,  # Mint
-    0xa4ffff,  # Light cyan
-    0xff92df,  # Light pink
-    0xffd580,  # Light orange
-    0xcaa9fa,  # Light purple
-]
-
-
-def _get_project_color(name):
-    """Get a deterministic color for a project name using stable hash"""
-    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
-    return _PROJECT_COLORS[h % len(_PROJECT_COLORS)]
 
 
 def _dim_color(color_int, factor=0.45):
-    """Dim a color by a factor for inactive tabs"""
+    """Dim a color by a factor for inactive tabs."""
     r = int(((color_int >> 16) & 0xFF) * factor)
     g = int(((color_int >> 8) & 0xFF) * factor)
     b = int((color_int & 0xFF) * factor)
     return (r << 16) | (g << 8) | b
 
 
-def _find_git_root_and_dir(cwd):
-    """Walk up from cwd to find git root and git dir.
-    Returns (root, git_dir) or (None, None).
-    """
-    path = cwd
-    while path and path != os.path.dirname(path):
-        git_path = os.path.join(path, '.git')
-        if os.path.isdir(git_path):
-            return path, git_path
-        elif os.path.isfile(git_path):
-            # Worktree: .git is a file containing "gitdir: <path>"
-            try:
-                with open(git_path) as f:
-                    line = f.read().strip()
-                if line.startswith('gitdir: '):
-                    git_dir = line[8:]
-                    if not os.path.isabs(git_dir):
-                        git_dir = os.path.normpath(os.path.join(path, git_dir))
-                    return path, git_dir
-            except Exception:
-                pass
-            return None, None
-        path = os.path.dirname(path)
-    return None, None
-
-
 def _get_task_info(cwd):
-    """Get (project_name, task_desc) for a cwd, with caching.
-    Returns (None, None) if not in a git repo.
-    """
-    now = _time.time()
+    """Get (project_name, task_desc) for a cwd, with caching."""
+    now = time.time()
 
     if cwd in _task_cache:
         ts, proj, task = _task_cache[cwd]
         if now - ts < _TASK_CACHE_TTL:
             return proj, task
 
-    root, git_dir = _find_git_root_and_dir(cwd)
+    # Evict oldest entries when cache is full
+    if len(_task_cache) >= _TASK_CACHE_MAX:
+        oldest_key = min(_task_cache, key=lambda k: _task_cache[k][0])
+        del _task_cache[oldest_key]
+
+    root, git_dir = find_git_root_and_dir(cwd)
     if not root or not git_dir:
         _task_cache[cwd] = (now, None, None)
         return None, None
@@ -518,7 +503,6 @@ def _get_task_info(cwd):
     project_name = os.path.basename(root)
     task_desc = None
 
-    # Deterministic tempfile path based on git dir (matches set-tab-task.sh)
     git_dir_hash = hashlib.md5(git_dir.encode()).hexdigest()
     task_file = os.path.join(tempfile.gettempdir(), f'kitty-task-{git_dir_hash}')
     try:
@@ -534,80 +518,97 @@ def _get_task_info(cwd):
     return project_name, task_desc
 
 
+# --- Status bar drawing helpers (module-level to avoid re-creation) ---
+
+def _get_color(percent):
+    """Color by percentage: green < 50, yellow < 70, orange < 90, red >= 90."""
+    if percent < 50:
+        return as_rgb(0x50fa7b)
+    elif percent < 70:
+        return as_rgb(0xf1fa8c)
+    elif percent < 90:
+        return as_rgb(0xffb86c)
+    else:
+        return as_rgb(0xff5555)
+
+
+def _format_network(kbs_value):
+    """Format KB/s as 'XXXXM' or 'XXXXK', right-justified to 6 chars."""
+    if kbs_value >= 1024:
+        return f"{kbs_value/1024:.1f}M"
+    else:
+        return f"{kbs_value:.0f}K"
+
+
+# --- Tab bar drawing ---
+
+# Cached stats width for right-alignment (updated after each draw)
+_stats_width = 0
+# Track last cache save time
+_last_cache_save = 0
+
+
 def _draw_right_status(screen: Screen):
-    """Draw system stats on the right side with color coding"""
+    """Draw system stats on the right side with color coding."""
+    global _stats_width, _last_cache_save
+
     cpu_user, cpu_sys = _get_cpu_usage()
     mem_used, mem_total, mem_pressure, mem_pressure_pct = _get_memory_usage()
-    rx_mb, tx_mb = _get_network_stats()
-    
-    # Get color based on percentage
-    # Low: green, Mid: yellow, High: orange, Too high: red
-    def get_color(percent):
-        if percent < 50:
-            return as_rgb(0x50fa7b)  # Green
-        elif percent < 70:
-            return as_rgb(0xf1fa8c)  # Yellow
-        elif percent < 90:
-            return as_rgb(0xffb86c)  # Orange
-        else:
-            return as_rgb(0xff5555)  # Red
-    
-    # Network - format KB/s or MB/s, right-justified to fixed width
-    def format_network(kbs_value):
-        if kbs_value >= 1024:
-            return f"{kbs_value/1024:.1f}M"
-        else:
-            return f"{kbs_value:.0f}K"
+    rx_kb, tx_kb = _get_network_stats()
 
-    # Build stats with fixed-width text slots to prevent layout shifts
+    # Save cache every STATS_REFRESH_INTERVAL (not just on VPN check)
+    now = time.time()
+    if now - _last_cache_save >= STATS_REFRESH_INTERVAL:
+        _save_all_stats()
+        _last_cache_save = now
+
+    # Build stats parts
     stats_parts = []
 
-    # CPU: "XXX%" → 4 chars max
+    # CPU
     cpu_total = cpu_user + cpu_sys
     cpu_text = f"{cpu_total:.0f}%".rjust(4)
-    stats_parts.append(("\uf085 ", get_color(cpu_total), cpu_text))
+    stats_parts.append(("\uf085 ", _get_color(cpu_total), cpu_text))
 
-    # Memory: "XXX%" → 4 chars max
+    # Memory pressure
     if mem_pressure >= 4:
-        pressure_color = as_rgb(0xff5555)  # Red
+        pressure_color = as_rgb(0xff5555)
     elif mem_pressure >= 2:
-        pressure_color = as_rgb(0xf1fa8c)  # Yellow
+        pressure_color = as_rgb(0xf1fa8c)
     else:
-        pressure_color = as_rgb(0x50fa7b)  # Green
+        pressure_color = as_rgb(0x50fa7b)
     mem_text = f"{mem_pressure_pct:.0f}%".rjust(4)
     stats_parts.append(("  \uf1c0 ", pressure_color, mem_text))
 
-    # Network: icon reflects wifi vs ethernet, red if VPN active
+    # Network
     vpn_name = _get_vpn_name()
     net_type = _get_net_type()
-    net_icon = "\uf1eb" if net_type == 'wifi' else "\uf0e8"  # fa-wifi / fa-sitemap
+    net_icon = "\uf1eb" if net_type == 'wifi' else "\uf0e8"
     network_icon_color = as_rgb(0xff5555) if vpn_name else as_rgb(0xcccccc)
-    rx_text = f"{format_network(rx_mb).rjust(6)}\uf175"
-    tx_text = f"{format_network(tx_mb).rjust(6)}\uf176"
-    stats_parts.append((f"  {net_icon}  ", network_icon_color, as_rgb(0xaaaaaa), f"{rx_text} {tx_text}"))
-    
-    # Draw stats, then measure actual width to use as cached padding next time.
-    # This avoids guessing icon display widths (symbol_map double-width is unreliable).
-    if not hasattr(_draw_right_status, 'stats_width'):
-        _draw_right_status.stats_width = 0
+    rx_text = f"{_format_network(rx_kb).rjust(6)}\uf175"
+    tx_text = f"{_format_network(tx_kb).rjust(6)}\uf176"
+    stats_parts.append((
+        f"  {net_icon}  ", network_icon_color,
+        as_rgb(0xaaaaaa), f"{rx_text} {tx_text}"
+    ))
 
-    # Build flat draw list: [(color_or_none, text), ...]
+    # Build flat draw list: [(color, text), ...]
     draw_ops = []
     for item in stats_parts:
-        if len(item) == 4:  # icon, icon_color, text_color, text
+        if len(item) == 4:
             icon, icon_color, text_color, text = item
             draw_ops.append((icon_color, icon))
             if text:
                 draw_ops.append((text_color, text))
-        else:  # icon, color, text
+        else:
             icon, color, text = item
             draw_ops.append((color, icon))
             if text:
                 draw_ops.append((color, text))
 
-    # Use cached stats_width for right-aligned padding; skip on first render.
-    if _draw_right_status.stats_width > 0:
-        padding = screen.columns - screen.cursor.x - _draw_right_status.stats_width
+    # Right-align using cached width from previous render; skip on first render.
+    if _stats_width > 0:
+        padding = screen.columns - screen.cursor.x - _stats_width
         if padding > 0:
             screen.draw(" " * padding)
 
@@ -618,8 +619,7 @@ def _draw_right_status(screen: Screen):
             screen.cursor.fg = color
         screen.draw(text)
 
-    # Update cached width from actual draw for next render
-    _draw_right_status.stats_width = screen.cursor.x - before_x
+    _stats_width = screen.cursor.x - before_x
 
     # Fill any remaining gap (first render or width change)
     remaining = screen.columns - screen.cursor.x
@@ -640,22 +640,17 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    """Draw tab with folder path and process name with custom powerline drawing"""
-
-    from kitty.tab_bar import TabAccessor
-    import os
-
+    """Draw tab with folder path and process name with custom powerline drawing."""
     ta = TabAccessor(tab.tab_id)
     cwd = ta.active_wd
 
     # Get the best process name
     process = ta.active_exe or ta.active_oldest_exe or tab.title
-    boring_processes = {'sh', 'bash', 'zsh', 'fish', 'dash', 'ksh', 'tcsh', 'csh'}
-    if process and os.path.basename(process).lstrip('-') in boring_processes:
+    if process and os.path.basename(process).lstrip('-') in _BORING_PROCESSES:
         oldest = ta.active_oldest_exe
-        if oldest and os.path.basename(oldest).lstrip('-') not in boring_processes:
+        if oldest and os.path.basename(oldest).lstrip('-') not in _BORING_PROCESSES:
             process = oldest
-        elif tab.title and not any(tab.title.startswith(b) for b in boring_processes):
+        elif tab.title and not any(tab.title.startswith(b) for b in _BORING_PROCESSES):
             process = tab.title.split()[0] if ' ' in tab.title else tab.title
     if process:
         process = os.path.basename(process).lstrip('-')
@@ -686,15 +681,13 @@ def draw_tab(
     screen.draw(' ')
 
     if has_manual_title:
-        # Manual tab title (existing behavior)
         title_text = tab.title
         if len(title_text) > max_title_length:
             title_text = title_text[:max_title_length - 1] + '…'
         screen.draw(title_text)
 
     elif project_name:
-        # Git project mode: [project_name] task_desc
-        proj_color = _get_project_color(project_name)
+        proj_color = get_project_color(project_name)
 
         if tab.is_active:
             bracket_fg = 0x888888
@@ -705,8 +698,7 @@ def draw_tab(
             proj_fg = _dim_color(proj_color, 0.45)
             task_fg = 0x666666
 
-        # Truncate task_desc if needed
-        prefix_len = len(project_name) + 2  # [name]
+        prefix_len = len(project_name) + 2
         if task_desc:
             full_len = prefix_len + 1 + len(task_desc)
             if full_len > max_title_length:
@@ -728,7 +720,6 @@ def draw_tab(
             screen.draw(' ' + task_desc)
 
     elif cwd:
-        # CWD + process mode (fallback for non-git dirs)
         home = os.path.expanduser('~')
         if cwd.startswith(home):
             cwd = '~' + cwd[len(home):]
@@ -762,7 +753,6 @@ def draw_tab(
 
     screen.draw(' ')
 
-    # Draw right separator
     if is_last:
         screen.cursor.bg = as_rgb(0x000000)
         screen.cursor.fg = as_rgb(bg)
