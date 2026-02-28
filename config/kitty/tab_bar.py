@@ -3,6 +3,7 @@ import subprocess
 import json
 import hashlib
 import os
+import re
 import tempfile
 import time as _time
 from datetime import datetime
@@ -144,9 +145,12 @@ def _get_memory_usage():
         # Load from shared cache on first call
         if not hasattr(_get_memory_usage, 'cached_value'):
             cache = _load_cache()
-            _get_memory_usage.cached_value = tuple(cache.get('memory', (0.0, 0.0)))
+            mem_cache = cache.get('memory', (0.0, 0.0, 1, 0.0))
+            while len(mem_cache) < 4:
+                mem_cache = (*mem_cache, (1 if len(mem_cache) == 2 else 0.0))
+            _get_memory_usage.cached_value = tuple(mem_cache)
             _get_memory_usage.last_check = cache.get('timestamp', 0)
-        
+
         # Only update every STATS_REFRESH_INTERVAL seconds
         now = time.time()
         if now - _get_memory_usage.last_check < STATS_REFRESH_INTERVAL:
@@ -162,6 +166,34 @@ def _get_memory_usage():
         )
         total = int(total_result.stdout.strip()) / (1024 ** 3)  # Convert to GB
         
+        # Get memory pressure level (1=normal, 2=warn, 4=critical)
+        pressure_level = 1
+        try:
+            p_result = subprocess.run(
+                ["sysctl", "-n", "kern.memorystatus_vm_pressure_level"],
+                capture_output=True,
+                text=True,
+                timeout=0.2
+            )
+            pressure_level = int(p_result.stdout.strip())
+        except Exception:
+            pass
+
+        # Get swap usage (output: "total = 2048.00M  used = 374.38M  free = ...")
+        swap_used_bytes = 0
+        try:
+            sw_result = subprocess.run(
+                ["sysctl", "-n", "vm.swapusage"],
+                capture_output=True,
+                text=True,
+                timeout=0.2
+            )
+            m = re.search(r'used\s*=\s*([\d.]+)M', sw_result.stdout)
+            if m:
+                swap_used_bytes = float(m.group(1)) * 1024 * 1024
+        except Exception:
+            pass
+
         # Get memory usage from vm_stat (fast: 0.004s)
         result = subprocess.run(
             ["vm_stat"],
@@ -170,10 +202,10 @@ def _get_memory_usage():
             timeout=0.3
         )
         lines = result.stdout.split('\n')
-        
+
         page_size = 4096
         active = wired = compressed = 0
-        
+
         for line in lines:
             if 'page size of' in line:
                 page_size = int(line.split()[-2])
@@ -183,15 +215,20 @@ def _get_memory_usage():
                 wired = int(line.split()[-1].rstrip('.'))
             elif 'Pages occupied by compressor' in line or 'Pages stored in compressor' in line:
                 compressed = int(line.split()[-1].rstrip('.'))
-        
+
         # Activity Monitor "Memory Used" ~ app + wired + compressed
         used = (active + wired + compressed) * page_size / (1024 ** 3)
-        
-        _get_memory_usage.cached_value = (used, total)
+
+        # Pressure % ≈ (compressed + swap) / total — how much VM work the system does
+        total_bytes = total * (1024 ** 3)
+        compressed_bytes = compressed * page_size
+        pressure_pct = (compressed_bytes + swap_used_bytes) / total_bytes * 100 if total_bytes > 0 else 0
+
+        _get_memory_usage.cached_value = (used, total, pressure_level, pressure_pct)
         _get_memory_usage.last_check = now
-        return used, total
+        return used, total, pressure_level, pressure_pct
     except Exception:
-        return getattr(_get_memory_usage, 'cached_value', (0.0, 0.0))
+        return getattr(_get_memory_usage, 'cached_value', (0.0, 0.0, 1, 0.0))
 
 
 def _get_network_stats():
@@ -452,11 +489,8 @@ def _get_task_info(cwd):
 def _draw_right_status(screen: Screen):
     """Draw system stats on the right side with color coding"""
     cpu_user, cpu_sys = _get_cpu_usage()
-    mem_used, mem_total = _get_memory_usage()
+    mem_used, mem_total, mem_pressure, mem_pressure_pct = _get_memory_usage()
     rx_mb, tx_mb = _get_network_stats()
-    
-    # Calculate memory percentage
-    mem_percent = (mem_used / mem_total * 100) if mem_total > 0 else 0
     
     # Get color based on percentage
     # Low: green, Mid: yellow, High: orange, Too high: red
@@ -470,27 +504,37 @@ def _draw_right_status(screen: Screen):
         else:
             return as_rgb(0xff5555)  # Red
     
-    # Network - format KB/s or MB/s
+    # Network - format KB/s or MB/s, right-justified to fixed width
     def format_network(kbs_value):
         if kbs_value >= 1024:
-            return f"{kbs_value/1024:.1f}MB/s"
+            return f"{kbs_value/1024:.1f}M"
         else:
-            return f"{kbs_value:.0f}KB/s"
-    
-    # Build stats text
+            return f"{kbs_value:.0f}K"
+
+    # Build stats with fixed-width text slots to prevent layout shifts
     stats_parts = []
-    
-    # CPU - show user and sys separately
+
+    # CPU: "XX.X%/XX.X%" → 11 chars max
     cpu_total = cpu_user + cpu_sys
-    stats_parts.append(("󰻠 ", get_color(cpu_total), f"{cpu_user:.1f}%/{cpu_sys:.1f}%"))
-    
-    # Memory
-    stats_parts.append(("  󰍛 ", get_color(mem_percent), f"{mem_percent:.1f}%"))
-    
-    # Network - icon red if VPN is connected (excluding Tailscale), dimmer white text
+    cpu_text = f"{cpu_user:.1f}%/{cpu_sys:.1f}%".rjust(11)
+    stats_parts.append(("\uf085 ", get_color(cpu_total), cpu_text))
+
+    # Memory: "XXX%" → 4 chars max
+    if mem_pressure >= 4:
+        pressure_color = as_rgb(0xff5555)  # Red
+    elif mem_pressure >= 2:
+        pressure_color = as_rgb(0xf1fa8c)  # Yellow
+    else:
+        pressure_color = as_rgb(0x50fa7b)  # Green
+    mem_text = f"{mem_pressure_pct:.0f}%".rjust(4)
+    stats_parts.append(("  \uf1c0 ", pressure_color, mem_text))
+
+    # Network: "XXXXX↓ XXXXX↑" → each value 6 chars + arrow icon
     vpn_name = _get_vpn_name()
-    network_icon_color = as_rgb(0xff5555) if vpn_name else as_rgb(0xcccccc)  # Red if VPN, dimmer white otherwise
-    stats_parts.append(("  󰈀 ", network_icon_color, as_rgb(0xaaaaaa), f"↓{format_network(rx_mb)} ↑{format_network(tx_mb)}"))
+    network_icon_color = as_rgb(0xff5555) if vpn_name else as_rgb(0xcccccc)
+    rx_text = f"{format_network(rx_mb).rjust(6)}\uf175"
+    tx_text = f"{format_network(tx_mb).rjust(6)}\uf176"
+    stats_parts.append(("  \uf1eb ", network_icon_color, as_rgb(0xaaaaaa), f"{rx_text} {tx_text}"))
     
     # Calculate total length
     total_length = 0
