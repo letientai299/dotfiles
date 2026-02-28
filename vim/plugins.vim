@@ -45,10 +45,8 @@ Plug 'EdenEast/nightfox.nvim'
 
 " Fuzzy finder for ... everything in vim, from Files, Buffers to Colors theme and
 " Helptags. It helps my brain a lots.
-" PERF: fzf lazy-loaded with fzf-lua (saves ~0.5ms)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': [] }
-" fzf-lua loads on FzfLua command or via keymaps in after/plugin/fzf.vim
-Plug 'ibhagwan/fzf-lua', { 'on': ['FzfLua', '<Plug>(fzf-lua)'] }
+Plug 'ibhagwan/fzf-lua'
 
 Plug 'junegunn/vim-easy-align'
 

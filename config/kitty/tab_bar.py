@@ -388,6 +388,54 @@ def _get_vpn_name():
         return getattr(_get_vpn_name, 'cached_value', None)
 
 
+def _get_net_type():
+    """Detect active network type: 'wifi' or 'ethernet'"""
+    try:
+        import time
+
+        if not hasattr(_get_net_type, 'cached_value'):
+            _get_net_type.cached_value = 'wifi'
+            _get_net_type.wifi_iface = None
+            _get_net_type.last_check = 0
+
+        now = time.time()
+        if now - _get_net_type.last_check < VPN_REFRESH_INTERVAL:
+            return _get_net_type.cached_value
+
+        # Discover Wi-Fi interface name once
+        if _get_net_type.wifi_iface is None:
+            result = subprocess.run(
+                ["networksetup", "-listallhardwareports"],
+                capture_output=True, text=True, timeout=0.3
+            )
+            lines = result.stdout.split('\n')
+            for i, line in enumerate(lines):
+                if 'Wi-Fi' in line:
+                    for next_line in lines[i + 1:i + 3]:
+                        if next_line.startswith('Device:'):
+                            _get_net_type.wifi_iface = next_line.split(':')[1].strip()
+                            break
+                    break
+            if not _get_net_type.wifi_iface:
+                _get_net_type.wifi_iface = 'en0'  # fallback
+
+        # Check default route interface
+        result = subprocess.run(
+            ["route", "-n", "get", "default"],
+            capture_output=True, text=True, timeout=0.3
+        )
+        for line in result.stdout.split('\n'):
+            if 'interface:' in line:
+                iface = line.split(':')[1].strip()
+                _get_net_type.cached_value = 'wifi' if iface == _get_net_type.wifi_iface else 'ethernet'
+                break
+
+        _get_net_type.last_check = now
+        return _get_net_type.cached_value
+    except Exception:
+        return getattr(_get_net_type, 'cached_value', 'wifi')
+
+
 # --- Git project task info for tab rendering ---
 
 # Cache: {cwd: (timestamp, project_name, task_desc)}
@@ -514,9 +562,9 @@ def _draw_right_status(screen: Screen):
     # Build stats with fixed-width text slots to prevent layout shifts
     stats_parts = []
 
-    # CPU: "XX.X%/XX.X%" → 11 chars max
+    # CPU: "XXX%" → 4 chars max
     cpu_total = cpu_user + cpu_sys
-    cpu_text = f"{cpu_user:.1f}%/{cpu_sys:.1f}%".rjust(11)
+    cpu_text = f"{cpu_total:.0f}%".rjust(4)
     stats_parts.append(("\uf085 ", get_color(cpu_total), cpu_text))
 
     # Memory: "XXX%" → 4 chars max
@@ -529,45 +577,57 @@ def _draw_right_status(screen: Screen):
     mem_text = f"{mem_pressure_pct:.0f}%".rjust(4)
     stats_parts.append(("  \uf1c0 ", pressure_color, mem_text))
 
-    # Network: "XXXXX↓ XXXXX↑" → each value 6 chars + arrow icon
+    # Network: icon reflects wifi vs ethernet, red if VPN active
     vpn_name = _get_vpn_name()
+    net_type = _get_net_type()
+    net_icon = "\uf1eb" if net_type == 'wifi' else "\uf0e8"  # fa-wifi / fa-sitemap
     network_icon_color = as_rgb(0xff5555) if vpn_name else as_rgb(0xcccccc)
     rx_text = f"{format_network(rx_mb).rjust(6)}\uf175"
     tx_text = f"{format_network(tx_mb).rjust(6)}\uf176"
-    stats_parts.append(("  \uf1eb ", network_icon_color, as_rgb(0xaaaaaa), f"{rx_text} {tx_text}"))
+    stats_parts.append((f"  {net_icon}  ", network_icon_color, as_rgb(0xaaaaaa), f"{rx_text} {tx_text}"))
     
-    # Calculate total length
-    total_length = 0
+    # Draw stats, then measure actual width to use as cached padding next time.
+    # This avoids guessing icon display widths (symbol_map double-width is unreliable).
+    if not hasattr(_draw_right_status, 'stats_width'):
+        _draw_right_status.stats_width = 0
+
+    # Build flat draw list: [(color_or_none, text), ...]
+    draw_ops = []
     for item in stats_parts:
-        icon = item[0]
-        text = item[-1]
-        total_length += len(icon) + (len(text) if text else 0)
-    
-    # Calculate padding
-    padding = screen.columns - screen.cursor.x - total_length
-    
-    if padding > 0:
-        # Fill with spaces
-        screen.draw(" " * padding)
-        
-        # Draw each part with appropriate colors
-        default_fg = screen.cursor.fg
-        for item in stats_parts:
-            if len(item) == 4:  # icon, icon_color, text_color, text
-                icon, icon_color, text_color, text = item
-                screen.cursor.fg = icon_color
-                screen.draw(icon)
-                if text:
-                    screen.cursor.fg = text_color
-                    screen.draw(text)
-            else:  # icon, color, text (old format for CPU/Memory)
-                icon, color, text = item
-                if color:
-                    screen.cursor.fg = color
-                screen.draw(icon)
-                if text:
-                    screen.draw(text)
+        if len(item) == 4:  # icon, icon_color, text_color, text
+            icon, icon_color, text_color, text = item
+            draw_ops.append((icon_color, icon))
+            if text:
+                draw_ops.append((text_color, text))
+        else:  # icon, color, text
+            icon, color, text = item
+            draw_ops.append((color, icon))
+            if text:
+                draw_ops.append((color, text))
+
+    # Use cached stats_width for right-aligned padding; skip on first render.
+    if _draw_right_status.stats_width > 0:
+        padding = screen.columns - screen.cursor.x - _draw_right_status.stats_width
+        if padding > 0:
+            screen.draw(" " * padding)
+
+    default_fg = screen.cursor.fg
+    before_x = screen.cursor.x
+    for color, text in draw_ops:
+        if color is not None:
+            screen.cursor.fg = color
+        screen.draw(text)
+
+    # Update cached width from actual draw for next render
+    _draw_right_status.stats_width = screen.cursor.x - before_x
+
+    # Fill any remaining gap (first render or width change)
+    remaining = screen.columns - screen.cursor.x
+    if remaining > 0:
         screen.cursor.fg = default_fg
+        screen.draw(" " * remaining)
+
+    screen.cursor.fg = default_fg
 
 
 def draw_tab(
