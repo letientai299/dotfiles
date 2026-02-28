@@ -22,8 +22,8 @@ opts = get_options()
 CACHE_FILE = os.path.join(tempfile.gettempdir(), 'kitty_tab_stats.json')
 
 # Refresh intervals (in seconds)
-STATS_REFRESH_INTERVAL = 5  # CPU, Memory, Network stats refresh interval
-VPN_REFRESH_INTERVAL = 30    # VPN status refresh interval (changes less frequently)
+STATS_REFRESH_INTERVAL = 1  # CPU, Memory, Network stats refresh interval
+VPN_REFRESH_INTERVAL = 15    # VPN status refresh interval (changes less frequently)
 
 def _load_cache():
     """Load cached stats from shared file"""
@@ -102,32 +102,35 @@ def _get_cpu_usage():
             _get_cpu_usage.last_check = now
             return (user_percent, sys_percent)
         else:
-            # macOS - use iostat without wait flag (instant: ~10ms)
-            # Note: Do NOT use -w flag as it adds a wait period
+            # macOS - use top CPU summary, aligns better with Activity Monitor
             result = subprocess.run(
-                ["iostat"],
+                ["top", "-l", "1", "-n", "0"],
                 capture_output=True,
                 text=True,
-                timeout=0.5
+                timeout=0.8
             )
-            # Parse iostat output - last line has CPU stats
-            # Format: KB/t  tps  MB/s  us sy id   1m   5m   15m
-            lines = result.stdout.strip().split('\n')
-            if len(lines) >= 2:
+            for line in result.stdout.split('\n'):
+                if not line.startswith('CPU usage:'):
+                    continue
                 try:
-                    stats = lines[-1].split()
-                    if len(stats) >= 6:
-                        # CPU stats are at: [-6]=us, [-5]=sy, [-4]=id
-                        # (followed by 3 load averages at -3, -2, -1)
-                        us = float(stats[-6])
-                        sy = float(stats[-5])
-                        # Validate they're reasonable percentages
-                        if 0 <= us <= 100 and 0 <= sy <= 100:
-                            _get_cpu_usage.cached_value = (us, sy)
-                            _get_cpu_usage.last_check = now
-                            return (us, sy)
+                    parts = line.split(':', 1)[1].split(',')
+                    us = sy = None
+                    for part in parts:
+                        token = part.strip().split()
+                        if len(token) < 2:
+                            continue
+                        value = float(token[0].rstrip('%'))
+                        label = token[1].lower()
+                        if label == 'user':
+                            us = value
+                        elif label == 'sys':
+                            sy = value
+                    if us is not None and sy is not None:
+                        _get_cpu_usage.cached_value = (us, sy)
+                        _get_cpu_usage.last_check = now
+                        return (us, sy)
                 except (ValueError, IndexError):
-                    pass
+                    continue
             return _get_cpu_usage.cached_value
     except Exception:
         return getattr(_get_cpu_usage, 'cached_value', (0.0, 0.0))
@@ -169,7 +172,7 @@ def _get_memory_usage():
         lines = result.stdout.split('\n')
         
         page_size = 4096
-        active = wired = 0
+        active = wired = compressed = 0
         
         for line in lines:
             if 'page size of' in line:
@@ -178,9 +181,11 @@ def _get_memory_usage():
                 active = int(line.split()[-1].rstrip('.'))
             elif 'Pages wired down' in line:
                 wired = int(line.split()[-1].rstrip('.'))
+            elif 'Pages occupied by compressor' in line or 'Pages stored in compressor' in line:
+                compressed = int(line.split()[-1].rstrip('.'))
         
-        # Only count active and wired as "used" (more accurate)
-        used = (active + wired) * page_size / (1024 ** 3)
+        # Activity Monitor "Memory Used" ~ app + wired + compressed
+        used = (active + wired + compressed) * page_size / (1024 ** 3)
         
         _get_memory_usage.cached_value = (used, total)
         _get_memory_usage.last_check = now
