@@ -74,10 +74,19 @@ def _is_overlay_self(window):
     return False
 
 
+# Processes whose window title is more useful than the bare name.
+_TITLE_PROCESSES = {'nvim', 'claude'}
+
+
 def _extract_process(window):
-    """Get the running process name, ignoring this script's own process chain."""
+    """Get the running process description.
+
+    For nvim/claude, returns the window title (buffer path or session topic).
+    For everything else, returns the process basename.
+    """
     base_cmdline = window.get('cmdline') or []
     fg_processes = window.get('foreground_processes', [])
+    title = window.get('title') or ''
 
     # Use the deepest foreground process that isn't switch.py/fzf
     for proc in reversed(fg_processes):
@@ -85,12 +94,14 @@ def _extract_process(window):
         if cmd and not _is_self(cmd):
             name = os.path.basename(cmd[0]).lstrip('-')
             if name != 'fzf':
+                if name in _TITLE_PROCESSES and title:
+                    return title
                 return name
 
     # Fall back to base process
     if base_cmdline:
         return os.path.basename(base_cmdline[0]).lstrip('-')
-    return window.get('title') or 'process'
+    return title or 'process'
 
 
 def main():
@@ -109,12 +120,13 @@ def main():
 
     rows = []
     for os_window in data:
+        # Collect tabs for this OS window to derive its title
+        os_tabs = []
         for tab in os_window.get('tabs', []):
             panes = []
             active_cwd = None
 
             for window in tab.get('windows', []):
-                # Skip the overlay pane running this script
                 if _is_overlay_self(window):
                     continue
 
@@ -138,8 +150,6 @@ def main():
             if not panes:
                 continue
 
-            # Derive tab title: try each window's CWD for a project title.
-            # Prefer active window, fall back to any window in a git repo.
             display_title = None
             all_cwds = [w.get('cwd', '') for w in tab.get('windows', [])]
             if active_cwd:
@@ -153,12 +163,35 @@ def main():
             if not display_title:
                 display_title = tab.get('title') or 'Tab'
 
-            project = _project_from_title(display_title)
-            tab_color = get_project_color(project) if project else 0x6ea8fe
-            tab_row = f"{_ansi_color(tab_color, bold=True)}{display_title}\033[0m"
-            rows.append(f"{panes[0]['id']}\ttab\t{tab_row}")
+            os_tabs.append({
+                'title': display_title,
+                'panes': panes,
+            })
 
-            for pane_idx, pane in enumerate(panes, start=1):
+        if not os_tabs:
+            continue
+
+        # OS window header — use a summary of its projects
+        projects = []
+        for t in os_tabs:
+            p = _project_from_title(t['title'])
+            if p and p not in projects:
+                projects.append(p)
+        os_label = ', '.join(projects) if projects else 'Window'
+        first_id = os_tabs[0]['panes'][0]['id']
+        os_row = f"{_ansi_color(0xff79c6, bold=True)}{os_label}\033[0m"
+        rows.append(f"{first_id}\tos\t{os_row}")
+
+        for tab_info in os_tabs:
+            project = _project_from_title(tab_info['title'])
+            tab_color = get_project_color(project) if project else 0x6ea8fe
+            tab_row = (
+                f"  {_ansi_color(tab_color, bold=True)}"
+                f"{tab_info['title']}\033[0m"
+            )
+            rows.append(f"{tab_info['panes'][0]['id']}\ttab\t{tab_row}")
+
+            for pane_idx, pane in enumerate(tab_info['panes'], start=1):
                 if pane['repo']:
                     repo_col = f"{_ansi_color(0x8be9fd, bold=True)}{pane['repo']}\033[0m"
                     dir_col = (
@@ -169,7 +202,7 @@ def main():
                     repo_col = f"{_ansi_color(0x666666)}-\033[0m"
                     dir_col = ""
                 pane_row = (
-                    f"  "
+                    f"    "
                     f"{_ansi_color(0xf1fa8c, bold=True)}{pane_idx:>2}\033[0m "
                     f"{repo_col}{dir_col} "
                     f"{_ansi_color(0xbd93f9)}{pane['process']}\033[0m"
@@ -190,7 +223,7 @@ def main():
         '--border',
         '--prompt', 'Go to > ',
         '--preview', 'kitty @ get-text --match id:{1} --ansi --extent screen',
-        '--preview-window', 'right,65%,border-left'
+        '--preview-window', 'down,65%,border-top'
     ]
 
     try:
