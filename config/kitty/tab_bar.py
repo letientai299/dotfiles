@@ -711,7 +711,19 @@ def draw_tab(
     # Detect git project task info (only when no manual title)
     project_name, task_desc = (None, None)
     if not has_manual_title and cwd:
-        project_name, task_desc = _get_task_info(cwd)
+        # If the active window is an overlay, use the parent's CWD instead
+        # to avoid transient overlays (e.g. switch.py) changing the tab title.
+        effective_cwd = cwd
+        if tab_obj:
+            active_window = tab_obj.active_window
+            if active_window:
+                overlay_parent = getattr(active_window, 'overlay_parent', None)
+                if overlay_parent is not None:
+                    parent_cwd = getattr(overlay_parent, 'cwd_of_child', None)
+                    if parent_cwd:
+                        effective_cwd = parent_cwd
+
+        project_name, task_desc = _get_task_info(effective_cwd)
         if project_name:
             # Remember last known project for this tab
             _tab_project_cache[tab.tab_id] = (project_name, task_desc)

@@ -66,6 +66,14 @@ def _is_self(cmdline_list):
     return "switch.py" in text
 
 
+def _is_overlay_self(window):
+    """Check if this window is the overlay running switch.py."""
+    for proc in window.get('foreground_processes', []):
+        if _is_self(proc.get('cmdline') or []):
+            return True
+    return False
+
+
 def _extract_process(window):
     """Get the running process name, ignoring this script's own process chain."""
     base_cmdline = window.get('cmdline') or []
@@ -106,6 +114,10 @@ def main():
             active_cwd = None
 
             for window in tab.get('windows', []):
+                # Skip the overlay pane running this script
+                if _is_overlay_self(window):
+                    continue
+
                 win_id = window.get('id')
                 raw_cwd = window.get('cwd') or ''
                 process = _extract_process(window)
