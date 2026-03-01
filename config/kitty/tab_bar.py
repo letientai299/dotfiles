@@ -18,6 +18,9 @@ from kitty.tab_bar import (
     TabAccessor,
     as_rgb,
 )
+
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from kitty_shared import PROJECT_COLORS, get_project_color, find_git_root_and_dir
 
 opts = get_options()
