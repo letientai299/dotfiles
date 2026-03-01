@@ -19,10 +19,6 @@ from kitty.tab_bar import (
     as_rgb,
 )
 
-import sys as _sys
-_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from kitty_shared import PROJECT_COLORS, get_project_color, find_git_root_and_dir
-
 opts = get_options()
 
 # --- Shared constants ---
@@ -473,7 +469,55 @@ def _save_all_stats():
 
 # --- Git project task info for tab rendering ---
 
+PROJECT_COLORS = [
+    0x50fa7b,  # Green
+    0xff79c6,  # Pink
+    0x8be9fd,  # Cyan
+    0xffb86c,  # Orange
+    0xbd93f9,  # Purple
+    0xf1fa8c,  # Yellow
+    0xff6e6e,  # Coral
+    0x69ff94,  # Mint
+    0xa4ffff,  # Light cyan
+    0xff92df,  # Light pink
+    0xffd580,  # Light orange
+    0xcaa9fa,  # Light purple
+]
+
 _task_cache = {}
+_tab_project_cache = {}  # {tab_id: (project_name, task_desc)} — last known project per tab
+
+
+def get_project_color(name):
+    """Get a deterministic color for a project name using stable hash."""
+    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
+    return PROJECT_COLORS[h % len(PROJECT_COLORS)]
+
+
+def find_git_root_and_dir(cwd):
+    """Walk up from cwd to find git root and git dir.
+
+    Returns (root, git_dir) or (None, None).
+    """
+    path = cwd
+    while path and path != os.path.dirname(path):
+        git_path = os.path.join(path, '.git')
+        if os.path.isdir(git_path):
+            return path, git_path
+        elif os.path.isfile(git_path):
+            try:
+                with open(git_path) as f:
+                    line = f.read().strip()
+                if line.startswith('gitdir: '):
+                    git_dir = line[8:]
+                    if not os.path.isabs(git_dir):
+                        git_dir = os.path.normpath(os.path.join(path, git_dir))
+                    return path, git_dir
+            except Exception:
+                pass
+            return None, None
+        path = os.path.dirname(path)
+    return None, None
 
 
 def _dim_color(color_int, factor=0.45):
@@ -500,7 +544,8 @@ def _get_task_info(cwd):
 
     root, git_dir = find_git_root_and_dir(cwd)
     if not root or not git_dir:
-        _task_cache[cwd] = (now, None, None)
+        # Don't cache non-git CWDs — transient paths like "/" appear briefly
+        # during shell prompt hooks (e.g. git status) and would poison the cache.
         return None, None
 
     project_name = os.path.basename(root)
@@ -667,6 +712,13 @@ def draw_tab(
     project_name, task_desc = (None, None)
     if not has_manual_title and cwd:
         project_name, task_desc = _get_task_info(cwd)
+        if project_name:
+            # Remember last known project for this tab
+            _tab_project_cache[tab.tab_id] = (project_name, task_desc)
+        elif tab.tab_id in _tab_project_cache:
+            # CWD is transiently non-git (e.g. "/" during prompt hooks) —
+            # reuse the last known project for this tab.
+            project_name, task_desc = _tab_project_cache[tab.tab_id]
 
     # Tab colors
     if tab.is_active:
