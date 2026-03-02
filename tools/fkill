@@ -1,7 +1,8 @@
 #!/bin/sh
 #
 # Interactive process killer using fzf.
-# Shows PID, user, CPU%, memory%, port(s), and full command line.
+# Shows processes as an indented tree with PID, CPU%, memory%, port(s), and
+# full command line. Killing a process kills the entire subtree.
 # Works on macOS and Linux (Ubuntu).
 
 set -e
@@ -13,6 +14,7 @@ usage() {
   echo "Usage: fkill [OPTIONS] [QUERY]"
   echo ""
   echo "Interactively select and kill processes using fzf."
+  echo "Selecting a process kills it and all its descendants."
   echo ""
   echo "OPTIONS"
   echo "  -a, --all         Show all users' processes (default: own only)"
@@ -27,7 +29,7 @@ usage() {
   echo "  tab                Toggle selection"
   echo "  ctrl-a             Select all"
   echo "  ctrl-r             Reload process list"
-  echo "  enter              Kill selected processes"
+  echo "  enter              Kill selected process trees"
 }
 
 # ============================================================================
@@ -47,8 +49,6 @@ while [ $# -gt 0 ]; do
       exit 0
       ;;
     --list)
-      # Internal: used by fzf ctrl-r reload binding.
-      # Deferred until list_processes is defined.
       LIST_ONLY=true
       shift
       ;;
@@ -89,17 +89,13 @@ if ! command -v fzf >/dev/null 2>&1; then
 fi
 
 # ============================================================================
-# Build process list with port info
+# Build process tree with port info
 # ============================================================================
-# Outputs: PID USER %CPU %MEM PORTS COMMAND
-# Merges ps output with lsof port data.
 list_processes() {
-  # Write port info to a temp file to avoid shell quoting issues with newlines.
   port_file=$(mktemp)
   trap "rm -f '$port_file'" EXIT
 
   # Collect listening ports: PID -> comma-separated ports.
-  # lsof may need sudo for other users' processes; best-effort without.
   lsof -i -P -n 2>/dev/null \
     | awk 'NR>1 && /\(LISTEN\)/ {
         name = $(NF-1)
@@ -113,36 +109,159 @@ list_processes() {
       }
       END { for (k in seen) print k, seen[k] }' > "$port_file"
 
-  # ps output — BSD (macOS) and procps (Linux) both support this format.
   cur_user=$(id -un)
-  ps ax -o pid=,user=,pcpu=,pmem=,command= | awk -v pf="$port_file" -v show_all="$SHOW_ALL" -v me="$cur_user" '
+
+  # Collect all processes, build tree, output with indentation.
+  # Two passes: first collect all into arrays, then DFS from roots.
+  ps ax -o pid=,ppid=,pgid=,user=,pcpu=,pmem=,command= | awk -v pf="$port_file" -v show_all="$SHOW_ALL" -v me="$cur_user" '
     BEGIN {
       while ((getline line < pf) > 0) {
         split(line, kv, " ")
         pmap[kv[1]] = kv[2]
       }
       close(pf)
-      printf "%-7s %-20s %5s %5s %-14s %s\n", "PID", "USER", "%CPU", "%MEM", "PORTS", "COMMAND"
     }
     {
-      pid = $1 + 0
-      if (pid == 0) next
-
-      user = $2
-      if (show_all != "true" && user != me) next
-
-      cpu  = $3
-      mem  = $4
+      pid  = $1 + 0
+      ppid = $2 + 0
+      pgid = $3 + 0
+      user = $4
+      cpu  = $5
+      mem  = $6
 
       cmd = ""
-      for (i = 5; i <= NF; i++) cmd = cmd (i > 5 ? " " : "") $i
+      for (i = 7; i <= NF; i++) cmd = cmd (i > 7 ? " " : "") $i
 
-      p = (pid in pmap) ? pmap[pid] : "-"
-      printf "%-7d %-20s %5s %5s %-14s %s\n", pid, user, cpu, mem, p, cmd
+      pids[pid]  = 1
+      ppids[pid] = ppid
+      pgids[pid] = pgid
+      users[pid] = user
+      cpus[pid]  = cpu
+      mems[pid]  = mem
+      cmds[pid]  = cmd
+
+      # Build children list: parent -> "child1 child2 ..."
+      if (ppid in children) children[ppid] = children[ppid] " " pid
+      else children[ppid] = pid
+    }
+    END {
+      printf "%-7s %5s %5s %-14s %s\n", "PID", "%CPU", "%MEM", "PORTS", "COMMAND"
+
+      # DFS traversal with explicit stack (awk has no recursion).
+      # Stack entries: "pid depth"
+      # Start from roots: processes whose parent is not in our list, or ppid=0/1.
+
+      # Find roots
+      root_count = 0
+      for (pid in pids) {
+        pp = ppids[pid]
+        if (pid == 0) continue
+        if (!(pp in pids) || pp == 0) {
+          root_count++
+          roots[root_count] = pid
+        }
+      }
+
+      # Sort roots by PID for stable output
+      for (i = 1; i <= root_count; i++) {
+        for (j = i + 1; j <= root_count; j++) {
+          if (roots[i] + 0 > roots[j] + 0) {
+            tmp = roots[i]; roots[i] = roots[j]; roots[j] = tmp
+          }
+        }
+      }
+
+      # DFS using array as stack
+      sp = 0
+      for (i = root_count; i >= 1; i--) {
+        sp++
+        stack_pid[sp]   = roots[i]
+        stack_depth[sp] = 0
+      }
+
+      while (sp > 0) {
+        cur   = stack_pid[sp]
+        depth = stack_depth[sp]
+        sp--
+
+        visible = (show_all == "true" || users[cur] == me)
+        if (visible) {
+          indent = ""
+          for (d = 0; d < depth; d++) indent = indent "  "
+
+          p = (cur in pmap) ? pmap[cur] : "-"
+          printf "%-7d %5s %5s %-14s %s%s\n", cur, cpus[cur], mems[cur], p, indent, cmds[cur]
+        }
+
+        # Push children. If current was not displayed, children inherit
+        # the same depth (they visually replace the hidden parent).
+        child_depth = visible ? depth + 1 : depth
+
+        if (cur in children) {
+          nc = split(children[cur], ch, " ")
+          for (ci = 1; ci <= nc; ci++) {
+            for (cj = ci + 1; cj <= nc; cj++) {
+              if (ch[ci] + 0 < ch[cj] + 0) {
+                tmp = ch[ci]; ch[ci] = ch[cj]; ch[cj] = tmp
+              }
+            }
+          }
+          for (ci = 1; ci <= nc; ci++) {
+            sp++
+            stack_pid[sp]   = ch[ci]
+            stack_depth[sp] = child_depth
+          }
+        }
+      }
     }
   '
 
   rm -f "$port_file"
+}
+
+# ============================================================================
+# Kill a process tree: hybrid PGID + recursive ppid walk
+# ============================================================================
+kill_tree() {
+  target_pid="$1"
+  sig="$2"
+
+  # Check if target is the process group leader — if so, kill the whole group.
+  pgid=$(ps -o pgid= -p "$target_pid" 2>/dev/null | tr -d ' ')
+  if [ -n "$pgid" ] && [ "$pgid" = "$target_pid" ]; then
+    kill -s "$sig" -"$pgid" 2>/dev/null && return 0
+  fi
+
+  # Fallback: walk the process tree bottom-up.
+  # Collect all descendants via iterative BFS.
+  all_pids="$target_pid"
+  queue="$target_pid"
+
+  while [ -n "$queue" ]; do
+    next_queue=""
+    for parent in $queue; do
+      child_pids=$(ps -o pid= -o ppid= 2>/dev/null | awk -v p="$parent" '$2+0 == p+0 { print $1+0 }')
+      for cpid in $child_pids; do
+        all_pids="$all_pids $cpid"
+        next_queue="$next_queue $cpid"
+      done
+    done
+    queue="$next_queue"
+  done
+
+  # Kill bottom-up (reverse order = leaves first since BFS is top-down).
+  reversed=""
+  for p in $all_pids; do
+    reversed="$p $reversed"
+  done
+
+  killed=false
+  for p in $reversed; do
+    if kill -s "$sig" "$p" 2>/dev/null; then
+      killed=true
+    fi
+  done
+  $killed
 }
 
 # Handle --list (internal, for fzf reload)
@@ -154,7 +273,6 @@ fi
 # ============================================================================
 # Run fzf
 # ============================================================================
-# Use a reload binding so the user can refresh the process list.
 SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
 RELOAD_CMD="$SELF --list"
 if [ "$SHOW_ALL" = true ]; then
@@ -168,19 +286,19 @@ selected=$(list_processes | fzf \
   --prompt="kill ($SIGNAL)> " \
   --bind="ctrl-r:reload($RELOAD_CMD)" \
   --bind="ctrl-a:select-all" \
-  --preview='pid={1}; echo "=== Process $pid ==="; ps -p $pid -o pid,ppid,user,stat,%cpu,%mem,start,time,command= 2>/dev/null || echo "Process not found"; echo; echo "=== Open files (first 20) ==="; lsof -p $pid 2>/dev/null | head -20 || echo "No info"' \
+  --preview='pid={1}; echo "=== Process $pid ==="; ps -p $pid -o pid,ppid,pgid,user,stat,%cpu,%mem,start,time,command= 2>/dev/null || echo "Process not found"; echo; echo "=== Child processes ==="; ps -eo pid,ppid,command= 2>/dev/null | awk -v p=$pid "(\$2+0)==(p+0){print}" | head -20; echo; echo "=== Open files (first 20) ==="; lsof -p $pid 2>/dev/null | head -20 || echo "No info"' \
   --preview-window=down:40%:wrap \
 ) || exit 0
 
 # ============================================================================
-# Kill selected processes
+# Kill selected process trees
 # ============================================================================
 echo "$selected" | while IFS= read -r line; do
   pid=$(echo "$line" | awk '{print $1}')
-  cmd=$(echo "$line" | awk '{for(i=6;i<=NF;i++) printf "%s ", $i; print ""}')
+  cmd=$(echo "$line" | awk '{for(i=5;i<=NF;i++) printf "%s ", $i; print ""}')
 
-  if kill -s "$SIGNAL" "$pid" 2>/dev/null; then
-    echo "Killed $pid (SIG$SIGNAL): $cmd"
+  if kill_tree "$pid" "$SIGNAL"; then
+    echo "Killed $pid tree (SIG$SIGNAL): $cmd"
   else
     echo "Failed to kill $pid — try with sudo or -9" >&2
   fi
