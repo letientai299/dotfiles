@@ -29,7 +29,7 @@ Plug 'tpope/vim-repeat'
 Plug 'romainl/vim-cool', { 'on': [] }
 Plug 'wellle/targets.vim'
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'], 'on': 'MarkdownPreview' }
 let g:mkdp_echo_preview_url = 1
 let g:mkdp_auto_close = 0
 let g:mkdp_refresh_slow = 1
