@@ -1,11 +1,13 @@
 let NERDSpaceDelims=1
 
+" Oil file finder: when opening Oil, set @/ to the originating filename so
+" pressing `n` jumps to that entry. Restores the previous search on BufLeave.
 let s:oil_prev_search = ''
 let s:oil_fname = ''
 
 augroup OilSearch
   autocmd!
-  autocmd BufEnter oil://* exec 'silent! /' . s:oil_fname
+  autocmd BufEnter oil://* let @/ = s:oil_fname
   autocmd BufLeave oil://* let @/ = s:oil_prev_search
 augroup END
 
