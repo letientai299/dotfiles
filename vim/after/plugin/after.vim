@@ -1,7 +1,27 @@
 let NERDSpaceDelims=1
 
-nnoremap <C-\> :lua _G.setup_oil()<CR>:exec 'silent! /' . expand('%:t') \| exe 'Oil %:p:h'<cr>
-nnoremap <A-\> :lua _G.setup_oil()<CR>:exe 'Oil ' . trim(system("git rev-parse --show-toplevel"))<cr>
+let s:oil_prev_search = ''
+let s:oil_fname = ''
+
+augroup OilSearch
+  autocmd!
+  autocmd BufEnter oil://* exec 'silent! /' . s:oil_fname
+  autocmd BufLeave oil://* let @/ = s:oil_prev_search
+augroup END
+
+function! s:open_oil(dir) abort
+  let s:oil_prev_search = @/
+  let s:oil_fname = expand('%:t')
+  lua _G.setup_oil()
+  if a:dir ==# '%:p:h'
+    exe 'Oil %:p:h'
+  else
+    exe 'Oil ' . a:dir
+  endif
+endfunction
+
+nnoremap <C-\> :call <SID>open_oil('%:p:h')<CR>
+nnoremap <A-\> :call <SID>open_oil(trim(system("git rev-parse --show-toplevel")))<CR>
 
 nnoremap <c-g> :silent Vista finder<CR>
 nnoremap <c-f11> :silent Vista!!<CR>
