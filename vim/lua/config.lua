@@ -148,13 +148,22 @@ end
 -- Make available to vimscript mappings defined in after/plugin
 _G.setup_oil = setup_oil
 
--- Setup oil on first directory open or Oil command
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "oil://*",
-  once = true,
-  callback = setup_oil,
+-- Hijack directory buffers with oil (replaces netrw)
+-- Covers: `nvim .`, `:e dir`, and oil:// buffers
+vim.api.nvim_create_autocmd("BufNew", {
+  callback = function(args)
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+    if bufname ~= "" and vim.fn.isdirectory(bufname) == 1 then
+      setup_oil()
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(args.buf) then
+          require("oil").open(bufname)
+        end
+      end)
+    end
+  end,
 })
--- Hijack directory buffers with oil (replaces netrw for `nvim .`)
+-- Handle `nvim .` where the buffer exists before this autocmd
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
   callback = function()
