@@ -734,14 +734,11 @@ def draw_tab(
 
     # Tab colors
     if tab.is_active:
-        bg = 0x3a3a3a
+        bg = 0x2a4a4a
         fg = 0xffffff
     else:
-        bg = 0x1a1a1a
-        fg = 0x666666
-
-    right_sep = '\ue0b0'
-    tab_bar_bg = 0x1a1a1a
+        bg = 0x2a2a2a
+        fg = 0xbbbbbb
 
     screen.cursor.bg = as_rgb(bg)
     screen.cursor.fg = as_rgb(fg)
@@ -761,9 +758,9 @@ def draw_tab(
             proj_fg = proj_color
             task_fg = 0xffffff
         else:
-            bracket_fg = 0x444444
-            proj_fg = _dim_color(proj_color, 0.45)
-            task_fg = 0x666666
+            bracket_fg = 0x777777
+            proj_fg = proj_color
+            task_fg = 0xbbbbbb
 
         prefix_len = len(project_name) + 2
         if task_desc:
@@ -801,9 +798,9 @@ def draw_tab(
             folder_color_rgb = (255, 230, 180)
             process_color_rgb = (210, 255, 210)
         else:
-            icon_color_rgb = (150, 150, 150)
-            folder_color_rgb = (180, 160, 130)
-            process_color_rgb = (140, 180, 140)
+            icon_color_rgb = (200, 200, 200)
+            folder_color_rgb = (220, 200, 160)
+            process_color_rgb = (180, 220, 180)
 
         folder_icon = '\uf07c '
 
@@ -822,13 +819,7 @@ def draw_tab(
 
     if is_last:
         screen.cursor.bg = as_rgb(0x000000)
-        screen.cursor.fg = as_rgb(bg)
-        screen.draw(right_sep)
-        screen.cursor.bg = as_rgb(0x000000)
+        screen.cursor.fg = as_rgb(fg)
         _draw_right_status(screen)
-    else:
-        screen.cursor.bg = as_rgb(tab_bar_bg)
-        screen.cursor.fg = as_rgb(bg)
-        screen.draw(right_sep)
 
     return screen.cursor.x
