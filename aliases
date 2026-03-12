@@ -20,7 +20,7 @@ make_alias_open() {
 }
 
 # Text file
-make_alias_open nv vim md c cpp cs css xml rc tex java scala xtext xtend wiki go jsx js py rb
+make_alias_open nvim vim md c cpp cs css xml rc tex java scala xtext xtend wiki go jsx js py rb
 
 # Video
 make_alias_open vlc mp4 flv avi mkv
@@ -39,16 +39,15 @@ make_alias_open soffice doc docx xls xlsx ppt pptx
 
 alias r='yazi_cd'
 
-alias vd="nv +NoteToday"
-alias sv="sudo nv"
-alias vi=nv
-alias vim=nv
-alias ve="nv ~/.zshenv"
+alias vd="nvim +NoteToday"
+alias sv="sudo nvim"
+alias vi=nvim
+alias vim=nvim
+alias ve="nvim ~/.zshenv"
 
 # toggle console text line wrapping
 alias nowrap="tput rmam"
 alias wrap="tput smam"
-
 
 # Alias for the cmus player
 # alias cr="cmus-remote"
@@ -85,4 +84,3 @@ alias dk='docker'
 alias dc='docker-compose'
 alias dp='docker pull'
 alias dcp='docker pull'
-
