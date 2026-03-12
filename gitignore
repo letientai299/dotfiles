@@ -82,3 +82,5 @@ nohup.out
 
 .playwright*
 .ai.dump/
+
+.nvim.lua
