@@ -20,7 +20,7 @@ make_alias_open() {
 }
 
 # Text file
-make_alias_open vim vim md c cpp cs css xml rc tex java scala xtext xtend wiki go jsx js py rb
+make_alias_open nv vim md c cpp cs css xml rc tex java scala xtext xtend wiki go jsx js py rb
 
 # Video
 make_alias_open vlc mp4 flv avi mkv
@@ -39,11 +39,11 @@ make_alias_open soffice doc docx xls xlsx ppt pptx
 
 alias r='yazi_cd'
 
-alias vd="vim +NoteToday"
-alias sv="sudo vim"
-alias vi=nvim
-alias vim=nvim
-alias ve="vim ~/.zshenv"
+alias vd="nv +NoteToday"
+alias sv="sudo nv"
+alias vi=nv
+alias vim=nv
+alias ve="nv ~/.zshenv"
 
 # toggle console text line wrapping
 alias nowrap="tput rmam"
