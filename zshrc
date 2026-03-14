@@ -144,3 +144,7 @@ export PATH="${PATH}:/Users/tai/.azureauth/0.9.2"
 if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
+
+# mise
+export PATH="/Users/tai/.local/bin:/Users/tai/.local/share/mise/shims:$PATH"
+eval "$(mise activate zsh)"
