@@ -17,7 +17,7 @@ BUF_NAME="/tmp/kitty_$RANDOM"
 /bin/cat >>"$BUF_NAME"
 
 
-nvim \
+NVIM_PAGER=1 nvim \
  -c "set nonumber laststatus=0 colorcolumn=0 tw=10000" \
  -c "set tw=10000" \
  -c "autocmd TermEnter * stopinsert" \
