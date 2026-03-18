@@ -36,7 +36,6 @@
       force: true
 
     ~/.gitignore: "gitignore"
-    ~/.tmux.conf: "tmux.conf"
     ~/.highlight: "highlight"
 
 - shell:
