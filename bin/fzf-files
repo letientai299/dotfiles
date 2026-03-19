@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # fd-based file finder that respects .gitignore but includes specific ignored
-# paths. Mirrors the logic in nvim fzf-lua <leader>ff (fzf-lua.lua).
-#
-# Used as FZF_DEFAULT_COMMAND / FZF_CTRL_T_COMMAND.
+# paths. Used by both shell fzf (ctrl-t) and nvim fzf-lua (<leader>ff).
+# Keep in sync: dotfiles/bin/fzf-files <-> nvim.conf/scripts/fzf-files
 #
 # Strategy: avoid whole-tree --no-ignore scans. A naive approach (one fd call
 # with --no-ignore + regex filter + re-applied .gitignore excludes) traverses
