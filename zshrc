@@ -91,6 +91,9 @@ setopt ignore_eof
 # Disable beeps
 setopt no_beep
 
+# Allow # comments in interactive shell
+setopt interactive_comments
+
 # Ignore dups
 setopt hist_ignore_dups
 
