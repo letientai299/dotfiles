@@ -3,6 +3,21 @@
 # paths. Mirrors the logic in nvim fzf-lua <leader>ff (fzf-lua.lua).
 #
 # Used as FZF_DEFAULT_COMMAND / FZF_CTRL_T_COMMAND.
+#
+# Strategy: avoid whole-tree --no-ignore scans. A naive approach (one fd call
+# with --no-ignore + regex filter + re-applied .gitignore excludes) traverses
+# every file the gitignore would skip — including nested node_modules/ trees
+# with tens of thousands of entries, since it only reads the root .gitignore
+# and misses nested ones. Instead we:
+#
+#   1. One gitignore-aware fd for normal files (fast, fd handles all ignores).
+#   2. Targeted --no-ignore fd into concrete include_dirs only (small trees).
+#   3. Two-step glob dirs: fd --type d finds matching dirs, then fd searches
+#      only those dirs (no whole-tree file scan).
+#   4. Bash glob at repo root for include_files (instant, no traversal).
+#
+# All run as 2 background jobs. Results stream through awk for dedup so fzf
+# shows matches immediately (sort -u would buffer everything first).
 set -euo pipefail
 
 # --- Configuration (keep in sync with fzf-lua.lua) --------------------------
