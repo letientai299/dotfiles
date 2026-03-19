@@ -12,48 +12,57 @@
 #
 #   1. One gitignore-aware fd for normal files (fast, fd handles all ignores).
 #   2. Targeted --no-ignore fd into concrete include_dirs only (small trees).
-#   3. Two-step glob dirs: fd --type d finds matching dirs, then fd searches
-#      only those dirs (no whole-tree file scan).
-#   4. Bash glob at repo root for include_files (instant, no traversal).
+#   3. Bash glob at repo root for include_files (instant, no traversal).
 #
-# All run as 2 background jobs. Results stream through awk for dedup so fzf
-# shows matches immediately (sort -u would buffer everything first).
+# Intentionally omits include_dir_globs (**/local) from the nvim config.
+# Glob dir search requires a whole-tree --no-ignore traversal which costs ~1s
+# in monorepos with nested node_modules. Not worth it for ctrl-t.
+#
+# Portability:
+#   - fd: Debian/Ubuntu ship it as "fdfind", auto-detected below.
+#   - dedup: perl (universal on macOS/Linux) instead of awk — macOS nawk
+#     doesn't support associative arrays.
+#   - bash 4+: uses arrays (not macOS default bash 3.2, but any
+#     mise/homebrew bash works).
 set -euo pipefail
 
 # --- Configuration (keep in sync with fzf-lua.lua) --------------------------
 include_dirs=(.ai.dump .dump)           # gitignored dirs to include
-include_dir_globs=('**/local')          # gitignored dir globs to include
 include_files=(.envrc .exrc .nvim.lua .env .env.*) # gitignored files (root only)
 
-# --- 1. Base: gitignore-aware ------------------------------------------------
-fd --hidden --type f -E .git &
+# --- Detect fd (Debian/Ubuntu install it as fdfind) --------------------------
+if command -v fd >/dev/null 2>&1; then
+  FD=fd
+elif command -v fdfind >/dev/null 2>&1; then
+  FD=fdfind
+else
+  echo "fzf-files: fd not found (install fd-find)" >&2
+  exit 1
+fi
 
-# --- 2. Ignored dirs + glob dirs + include_files (single background job) -----
+# --- Collect output from parallel jobs, dedup --------------------------------
 {
-  # Concrete ignored dirs: search directly (small, no whole-tree scan)
-  search_paths=()
-  for d in "${include_dirs[@]}"; do
-    [[ -d "$d" ]] && search_paths+=(--search-path "$d")
-  done
-  (( ${#search_paths[@]} )) && fd --no-ignore --hidden --type f -E .git "${search_paths[@]}"
+  # 1. Base: gitignore-aware
+  "$FD" --hidden --type f -E .git &
 
-  # Glob dir patterns: find matching dirs, search inside them
-  for g in "${include_dir_globs[@]}"; do
-    mapfile -t matched < <(fd --no-ignore --type d -E .git -g "$g" 2>/dev/null)
-    if (( ${#matched[@]} )); then
-      sp=()
-      for d in "${matched[@]}"; do sp+=(--search-path "$d"); done
-      fd --no-ignore --hidden --type f -E .git "${sp[@]}"
-    fi
-  done
-
-  # Include files at repo root only (bash glob, no traversal)
-  shopt -s nullglob
-  for pattern in "${include_files[@]}"; do
-    for f in ./$pattern; do
-      [[ -f "$f" ]] && printf '%s\n' "$f"
+  # 2. Ignored dirs + include_files (single background job)
+  {
+    # Concrete ignored dirs: search directly (small, no whole-tree scan)
+    search_paths=()
+    for d in "${include_dirs[@]}"; do
+      [[ -d "$d" ]] && search_paths+=(--search-path "$d")
     done
-  done
-} 2>/dev/null &
+    (( ${#search_paths[@]} )) && "$FD" --no-ignore --hidden --type f -E .git "${search_paths[@]}"
 
-wait | awk '!seen[$0]++'
+    # Include files at repo root only (bash glob, no traversal).
+    # Strip ./ prefix so paths match fd output format for dedup.
+    shopt -s nullglob
+    for pattern in "${include_files[@]}"; do
+      for f in ./$pattern; do
+        [[ -f "$f" ]] && printf '%s\n' "${f#./}"
+      done
+    done
+  } 2>/dev/null &
+
+  wait
+} | perl -ne 'print unless $seen{$_}++'
