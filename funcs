@@ -236,7 +236,7 @@ function killport() {
     fi
 
     # Find processes using the port
-    pids=$(lsof -i ":$port" -t 2>/dev/null)
+    pids=$(lsof -i ":$port" -sTCP:LISTEN -t 2>/dev/null)
 
     if [[ -z "$pids" ]]; then
         echo "No process found listening on port $port"
