@@ -6,95 +6,39 @@
 set -euo pipefail
 
 # --- Configuration (keep in sync with fzf-lua.lua) --------------------------
-# Gitignored dirs to include (searched recursively). Supports fd glob syntax.
-include_dirs=(.ai.dump .dump '**/local')
-# Gitignored files to include (matched at any depth). Supports glob wildcard.
-include_files=(.envrc .exrc .nvim.lua .env '.env.*')
+include_dirs=(.ai.dump .dump)           # gitignored dirs to include
+include_dir_globs=('**/local')          # gitignored dir globs to include
+include_files=(.envrc .exrc .nvim.lua .env .env.*) # gitignored files (root only)
 
-# --- Helpers -----------------------------------------------------------------
-has_glob() { [[ "$1" == *[*?\[* ]]; }
+# --- 1. Base: gitignore-aware ------------------------------------------------
+fd --hidden --type f -E .git &
 
-# Read .gitignore (cwd + git root) and emit -E flags for bare-name patterns,
-# skipping our include_dirs so they aren't re-excluded.
-gitignore_excludes() {
-  local skip_pattern=""
-  for d in "${concrete_dirs[@]}"; do
-    skip_pattern+="${skip_pattern:+$'\n'}$d"
+# --- 2. Ignored dirs + glob dirs + include_files (single background job) -----
+{
+  # Concrete ignored dirs: search directly (small, no whole-tree scan)
+  search_paths=()
+  for d in "${include_dirs[@]}"; do
+    [[ -d "$d" ]] && search_paths+=(--search-path "$d")
+  done
+  (( ${#search_paths[@]} )) && fd --no-ignore --hidden --type f -E .git "${search_paths[@]}"
+
+  # Glob dir patterns: find matching dirs, search inside them
+  for g in "${include_dir_globs[@]}"; do
+    mapfile -t matched < <(fd --no-ignore --type d -E .git -g "$g" 2>/dev/null)
+    if (( ${#matched[@]} )); then
+      sp=()
+      for d in "${matched[@]}"; do sp+=(--search-path "$d"); done
+      fd --no-ignore --hidden --type f -E .git "${sp[@]}"
+    fi
   done
 
-  local excludes
-  excludes=$(
-    sed -n '/^[^#!]/{ s/\/$//; s/^\///; /[*?\[]/d; /\//d; p; }' \
-      .gitignore "$(git rev-parse --show-toplevel 2>/dev/null)/.gitignore" \
-      2>/dev/null \
-    | sort -u \
-    | if [[ -n "$skip_pattern" ]]; then grep -vxF "$skip_pattern"; else cat; fi \
-    | sed 's/.*/-E &/' \
-    | tr '\n' ' '
-  )
-  printf '%s' "$excludes"
-}
-
-# --- Build fd commands -------------------------------------------------------
-concrete_dirs=()
-glob_alts=()
-
-for d in "${include_dirs[@]}"; do
-  if has_glob "$d"; then
-    # Convert fd glob to a path regex: "**/local" -> "/local/"
-    d="${d//\*\*\//}"   # strip **/
-    d="${d//\*/§}"      # temporarily replace * with §
-    d="${d//./\\.}"     # escape literal dots
-    d="${d//§/[^/]*}"   # § -> [^/]*
-    glob_alts+=("/$d/")
-  else
-    concrete_dirs+=("$d")
-  fi
-done
-
-# File patterns -> regex alternatives
-file_alts=()
-for f in "${include_files[@]}"; do
-  f="${f#.}"          # strip leading dot
-  f="${f//\*/§}"      # temporarily replace * with §
-  f="${f//./\\.}"     # escape literal dots
-  f="${f//§/.*}"      # § -> .*
-  file_alts+=("$f")
-done
-
-# Join file_alts into a single regex group
-if (( ${#file_alts[@]} > 0 )); then
-  joined=$(printf '%s|' "${file_alts[@]}")
-  joined=${joined%|}
-  glob_alts+=("/\\.(${joined})$")
-fi
-
-# 1. Base: gitignore-aware
-cmd1="fd --hidden --type f -E .git"
-
-# 2. Concrete ignored dirs: search directly (fast, avoids whole-tree traversal)
-cmd2=""
-if (( ${#concrete_dirs[@]} > 0 )); then
-  search_paths=""
-  for d in "${concrete_dirs[@]}"; do
-    search_paths+=" --search-path $(printf '%q' "$d")"
+  # Include files at repo root only (bash glob, no traversal)
+  shopt -s nullglob
+  for pattern in "${include_files[@]}"; do
+    for f in ./$pattern; do
+      [[ -f "$f" ]] && printf '%s\n' "$f"
+    done
   done
-  cmd2="fd --no-ignore --hidden --type f -E .git${search_paths} 2>/dev/null"
-fi
+} 2>/dev/null &
 
-# 3. Glob dirs + include_files: whole-tree --no-ignore with .gitignore excludes
-cmd3=""
-if (( ${#glob_alts[@]} > 0 )); then
-  regex=$(printf '%s|' "${glob_alts[@]}")
-  regex=${regex%|}
-  excludes=$(gitignore_excludes)
-  cmd3="fd --hidden --no-ignore -E .git ${excludes}--type f --full-path '${regex}' 2>/dev/null"
-fi
-
-# Run in parallel, deduplicate
-parts=("$cmd1")
-[[ -n "$cmd2" ]] && parts+=("$cmd2")
-[[ -n "$cmd3" ]] && parts+=("$cmd3")
-
-# Stream results to fzf immediately (awk dedup vs sort -u which buffers all).
-eval "{ $(printf '%s & ' "${parts[@]}") wait; }" | awk '!seen[$0]++'
+wait | awk '!seen[$0]++'
