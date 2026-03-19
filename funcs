@@ -271,60 +271,22 @@ function killport() {
 }
 
 # zoxide restricted to git repo (or current directory)
-# Falls back to fd + fzf if zoxide finds no match
+# Falls back to fzf-dirs + fzf if zoxide finds no match
 j() {
-  local result
-  local root
+  local root result
+  root=$(git rev-parse --show-toplevel 2>/dev/null) || root="$PWD"
 
-  # Try to get git root, fallback to PWD
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    root="$(git rev-parse --show-toplevel)/"
-  else
-    root="$PWD/"
-  fi
-
-  # Try zoxide first (only if query provided)
+  # Zoxide first (if query provided)
   if [[ -n "$*" ]]; then
-    result=$(zoxide query --list "$@" | awk -v prefix="$root" 'index($0, prefix) == 1' | head -n 1)
-    if [[ -n "$result" ]]; then
-      cd "$result"
-      return 0
-    fi
+    result=$(zoxide query --list "$@" | awk -v p="$root/" 'index($0,p)==1' | head -1)
+    [[ -n "$result" ]] && cd "$result" && return
   fi
 
-  # Fallback: use fd to find directories
-  local query="${*}"
-  local matches
-  if [[ -n "$query" ]]; then
-    matches=$(cd "$root" && fd --type d --hidden --exclude .git --glob "*${query}*")
-  else
-    matches=$(cd "$root" && fd --type d --hidden --exclude .git)
-  fi
-
-  local count=$(echo "$matches" | grep -c '^')
-
-  # No matches found
-  if [[ $count -eq 0 ]]; then
-    echo "No matching directories found"
-    return 1
-  fi
-
-  # Single match - jump directly
-  if [[ $count -eq 1 ]]; then
-    cd "$root/$matches"
-    return 0
-  fi
-
-  # Multiple matches - use fzf
-  result=$(echo "$matches" | fzf --height 40% --reverse \
-    --preview "ls -A --color=always '$root/{}'" \
-    --preview-window=right:50%:wrap)
-  if [[ -z "$result" ]]; then
-    echo "No directory selected"
-    return 1
-  fi
-
-  cd "$root/$result"
+  # Fallback: fzf-dirs + fzf
+  result=$(cd "$root" && fzf-dirs | fzf --height 40% --reverse \
+    --query "${*}" \
+    --preview "ls -1A {}")
+  [[ -n "$result" ]] && cd "$root/$result"
 }
 
 

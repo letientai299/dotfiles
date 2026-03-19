@@ -26,9 +26,12 @@
 #     mise/homebrew bash works).
 set -euo pipefail
 
-# --- Configuration (keep in sync with fzf-lua.lua) --------------------------
-include_dirs=(.ai.dump .dump)           # gitignored dirs to include
-include_files=(.envrc .exrc .nvim.lua .env .env.*) # gitignored files (root only)
+# --- Configuration (shared with fzf-dirs, fzf-lua.lua) ----------------------
+_cfg="${DOTFILES:-}/config/fzf-includes.sh"
+[[ -f "$_cfg" ]] && source "$_cfg" || {
+  include_dirs=(.ai.dump .dump)
+  include_files=(.envrc .exrc .nvim.lua .env .env.*)
+}
 
 # --- Detect fd (Debian/Ubuntu install it as fdfind) --------------------------
 if command -v fd >/dev/null 2>&1; then

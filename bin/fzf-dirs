@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# fd-based directory finder that respects .gitignore but includes specific
+# ignored paths. Directory equivalent of fzf-files.
+#
+# Strategy (mirrors fzf-files):
+#   1. fd (gitignore-aware) for normal directories.
+#   2. fd --no-ignore --search-path into concrete include_dirs only,
+#      plus emit the top-level dir names themselves (fd doesn't list roots).
+set -euo pipefail
+
+# --- Configuration (shared with fzf-files, fzf-lua.lua) ---------------------
+_cfg="${DOTFILES:-}/config/fzf-includes.sh"
+[[ -f "$_cfg" ]] && source "$_cfg" || {
+  include_dirs=(.ai.dump .dump)
+  include_files=(.envrc .exrc .nvim.lua .env .env.*)
+}
+
+# --- Detect fd (Debian/Ubuntu install it as fdfind) --------------------------
+if command -v fd >/dev/null 2>&1; then
+  FD=fd
+elif command -v fdfind >/dev/null 2>&1; then
+  FD=fdfind
+else
+  echo "fzf-dirs: fd not found (install fd-find)" >&2
+  exit 1
+fi
+
+# --- 1. Base: gitignore-aware ------------------------------------------------
+"$FD" --hidden --type d -E .git &
+
+# --- 2. Ignored dirs: search directly + emit roots --------------------------
+{
+  search_paths=()
+  for d in "${include_dirs[@]}"; do
+    if [[ -d "$d" ]]; then
+      # Emit the root dir itself (fd doesn't list search roots)
+      printf '%s\n' "$d"
+      search_paths+=(--search-path "$d")
+    fi
+  done
+  (( ${#search_paths[@]} )) && "$FD" --no-ignore --hidden --type d -E .git "${search_paths[@]}"
+} 2>/dev/null &
+
+wait
