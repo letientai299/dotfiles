@@ -83,3 +83,4 @@ nohup.out
 .ai.dump/
 
 .nvim.lua
+.wrangler
