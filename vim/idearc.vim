@@ -21,9 +21,9 @@ set anyobject
 set exchange
 " set functiontextobj
 
-set dial
-nnoremap <C-a> :DialIncrement<cr>
-nnoremap <C-x> :DialDecrement<cr>
+"set dial
+"nnoremap <C-a> :DialIncrement<cr>
+"nnoremap <C-x> :DialDecrement<cr>
 
 
 " https://github.com/JetBrains/ideavim/blob/master/doc/NERDTree-support.md
