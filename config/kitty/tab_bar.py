@@ -734,11 +734,11 @@ def draw_tab(
 
     # Tab colors
     if tab.is_active:
-        bg = 0x151b54
+        bg = 0x1a3a6a
         fg = 0xffffff
     else:
-        bg = 0x3b3b3b
-        fg = 0xbbbbbb
+        bg = 0x2a2a2a
+        fg = 0x999999
 
     screen.cursor.bg = as_rgb(bg)
     screen.cursor.fg = as_rgb(fg)
