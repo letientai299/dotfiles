@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Copy a file to the clipboard so it can be pasted into web apps
+# (Gmail, Messenger, Slack, etc.) via Cmd+V.
+#
+# Usage:
+#   fcp <path>
+#   fcp **<tab>        # fzf completion picks the file
+#   ls | grep ... | fcp
+
+set -e
+
+usage() {
+  echo "Usage: fcp <file>"
+  echo "       <command> | fcp"
+  echo ""
+  echo "Copy a file to the clipboard for pasting into web apps."
+  echo "Only one file at a time."
+}
+
+case "${1:-}" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+esac
+
+# Resolve the file path: argument or stdin (first line only).
+if [ $# -gt 1 ]; then
+  echo "Error: fcp accepts only one file" >&2
+  exit 1
+elif [ $# -eq 1 ]; then
+  file="$1"
+elif [ ! -t 0 ]; then
+  read -r file
+else
+  usage >&2
+  exit 1
+fi
+
+if [ ! -f "$file" ]; then
+  echo "Error: not a file: $file" >&2
+  exit 1
+fi
+
+# Resolve to absolute path.
+dir="$(cd "$(dirname "$file")" && pwd)"
+abs="$dir/$(basename "$file")"
+
+osascript -e "set the clipboard to (POSIX file \"$abs\")"
+echo "Copied: $abs"
