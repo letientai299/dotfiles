@@ -151,3 +151,6 @@ fi
 # mise
 export PATH="/Users/tai/.local/bin:/Users/tai/.local/share/mise/shims:$PATH"
 eval "$(mise activate zsh)"
+
+# Added by Antigravity IDE
+export PATH="/Users/tai/.antigravity-ide/antigravity-ide/bin:$PATH"
