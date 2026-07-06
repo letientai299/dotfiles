@@ -47,21 +47,6 @@ HERE
 task "curl and wget"
 brew install curl wget
 
-task "Diff-so-fancy"
-yarn global add diff-so-fancy
-git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
-git config --global color.ui true
-git config --global color.diff-highlight.oldNormal "red bold"
-git config --global color.diff-highlight.oldHighlight "red bold 52"
-git config --global color.diff-highlight.newNormal "green bold"
-git config --global color.diff-highlight.newHighlight "green bold 22"
-git config --global color.diff.meta "227"
-git config --global color.diff.frag "magenta bold"
-git config --global color.diff.commit "227 bold"
-git config --global color.diff.old "red bold"
-git config --global color.diff.new "green bold"
-git config --global color.diff.whitespace "red reverse"
-
 task "Term 256 color"
 wget "https://gist.github.com/sos4nt/3187620/raw/bca247b4f86da6be4f60a69b9b380a11de804d1e/xterm-256color-italic.terminfo"
 tic xterm-256color-italic.terminfo

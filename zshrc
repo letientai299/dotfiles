@@ -1,3 +1,5 @@
+autoload -Uz compinit && compinit
+
 if [[ -n "${ZSH_STARTUP_PROFILE:-}" ]]; then
   zmodload zsh/zprof
   zmodload zsh/datetime

@@ -1,6 +1,8 @@
 # vim:fileencoding=utf-8:ft=kitty
 # https://sw.kovidgoyal.net/kitty/conf.html#opt-kitty.sync_to_monitor
 
+# cursor_trail 3
+# cursor_trail_decay 0.1 0.4
 # editor sh -c /opt/homebrew/bin/neovide
 
 # term xterm-256color-italic
@@ -10,6 +12,9 @@ include ${KITTY_OS}.conf
 
 # Sync to monitor to avoid CPU cost
 sync_to_monitor yes
+
+allow_remote_control yes
+listen_on unix:/tmp/mykitty
 
 # dim inactive pane text
 inactive_text_alpha 0.7
@@ -22,7 +27,7 @@ macos_quit_when_last_window_closed yes
 macos_window_resizable yes
 
 # Mouse & cursor
-# cursor_blink_interval     0.4
+cursor_blink_interval     0
 # cursor_stop_blinking_after 4.0
 # one of (block, beam, underline)
 cursor_shape    beam
@@ -36,6 +41,7 @@ scrollback_pager ~/.config/kitty/pager.sh 'INPUT_LINE_NUMBER' 'CURSOR_LINE' 'CUR
 
 include tabs.conf
 window_border_width 1pt
+window_drag_tolerance 10
 
 open_url_with default
 kitty_mod ctrl+shift
@@ -45,6 +51,9 @@ map alt+1 goto_tab 1
 map alt+2 goto_tab 2
 map alt+3 goto_tab 3
 map alt+4 goto_tab 4
+
+# Window switcher
+map ctrl+shift+f launch --type=overlay zsh -c 'python3 ~/.config/kitty/switch.py'
 map alt+5 goto_tab 5
 map alt+6 goto_tab 6
 map alt+7 goto_tab 7
@@ -60,8 +69,15 @@ map cmd+enter new_window_with_cwd
 map alt+left send_text all \x1b\x62
 map alt+right send_text all \x1b\x66
 
+# smart-splits.nvim integration (Alt+hjkl for navigation)
+map alt+h neighboring_window left
+map alt+j neighboring_window down
+map alt+k neighboring_window up
+map alt+l neighboring_window right
+
 
 # layout https://sw.kovidgoyal.net/kitty/layouts
+enabled_layouts grid,tall,stack,fat,vertical,horizontal,splits
 map ctrl+shift+l>s goto_layout stack
 map ctrl+shift+l>t goto_layout tall
 map ctrl+shift+l>g goto_layout grid
@@ -69,6 +85,7 @@ map ctrl+shift+l>f goto_layout fat
 map ctrl+shift+l>v goto_layout vertical
 map ctrl+shift+l>h goto_layout horizontal
 map ctrl+shift+l>l next_layout
+map ctrl+shift+z toggle_maximized
 
 map ctrl+shift+alt+j resize_window taller 10
 map ctrl+shift+alt+k resize_window shorter 10
@@ -82,10 +99,9 @@ map ctrl+b>l neighboring_window right
 
 # remote control
 # map alt+f1 launch sh ~/.config/kitty/remote.sh
-
+map alt+f1 launch --type=overlay --cwd=current bash ~/.config/kitty/set-tab-task.sh
+map ctrl+shift+o copy_last_command_output
 map alt+f2 detach_window new-tab
-
-map alt+f3 launch --type=overlay bash -i -c 'grep -E "^(map|mouse_map)\s+.*" ~/.config/kitty/kitty.conf | fzf'
 
 # BEGIN_KITTY_THEME
 # Carbonfox
@@ -102,10 +118,22 @@ include current-theme.conf
 # modify_font cell_width 80%
 disable_ligatures never
 # Font size (in pts)
-font_size        13.0
+font_size        15.0
 # BEGIN_KITTY_FONTS
-font_family      family="D2CodingLigature Nerd Font Mono"
+font_family      family="Iosevka Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
 # END_KITTY_FONTS
+
+# # Map Nerd Font icon ranges to the non-Mono variant so icons render at
+# # double-width instead of being squeezed into Iosevka's narrow cells.
+# symbol_map U+E0A0-U+E0A3,U+E0B0-U+E0D4,U+E200-U+E2A9,U+E0A0-U+E0A3 IosevkaTerm Nerd Font
+# symbol_map U+E5FA-U+E6B5 IosevkaTerm Nerd Font
+# symbol_map U+E700-U+E7C5 IosevkaTerm Nerd Font
+# symbol_map U+EA60-U+EC1E IosevkaTerm Nerd Font
+# symbol_map U+ED00-U+EFCE IosevkaTerm Nerd Font
+# symbol_map U+F000-U+F2FF IosevkaTerm Nerd Font
+# symbol_map U+F300-U+F372 IosevkaTerm Nerd Font
+# symbol_map U+F400-U+F533 IosevkaTerm Nerd Font
+# symbol_map U+F0001-U+F1AF0 IosevkaTerm Nerd Font
