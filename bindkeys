@@ -10,7 +10,7 @@ bindkey -s "^k" "| vim -RM -^m"
 bindkey -s "^]" "^e | clipcopy^m"
 
 # Autosuggestion accept (available after zsh-autosuggestions loads via zsh-defer)
-bindkey "^ " "autosuggest-accept"
+bindkey '^@' autosuggest-accept
 
 # Edit command line - defer the autoload but bind immediately
 # The binding will work once the deferred autoload completes
@@ -18,4 +18,3 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
-
