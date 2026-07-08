@@ -143,8 +143,6 @@ update_software() {
   vim -c "PlugUpdate" -c "qa!"
   vim -c "UpdateRemotePlugins" -c "qa!"
 
-  # ensure zsh/kitty known about xterm-256color-italic
-  tic "$DOTFILES/xterm-256color-italic.terminfo"
 
   # update zsh plugins
   antidote update
@@ -288,5 +286,3 @@ j() {
     --preview "ls -1A {}")
   [[ -n "$result" ]] && cd "$root/$result"
 }
-
-
