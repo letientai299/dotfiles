@@ -44,7 +44,7 @@ alias sv="sudo nvim"
 alias vi=nvim
 alias vim=nvim
 alias ve="nvim ~/.zshenv"
-alias se="nvim ~/.zshenv"
+alias se="source ~/.zshenv"
 
 # toggle console text line wrapping
 alias nowrap="tput rmam"
