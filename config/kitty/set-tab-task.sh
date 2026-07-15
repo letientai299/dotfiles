@@ -5,15 +5,15 @@
 # doesn't move.
 
 GIT_DIR=$(git rev-parse --git-dir 2>/dev/null) || {
-    echo "Not in a git repository"
-    sleep 1
-    exit 1
+  echo "Not in a git repository"
+  sleep 1
+  exit 1
 }
 
 # Make absolute if relative
 case "$GIT_DIR" in
-    /*) ;;
-    *) GIT_DIR="$PWD/$GIT_DIR" ;;
+/*) ;;
+*) GIT_DIR="$PWD/$GIT_DIR" ;;
 esac
 
 # Deterministic tempfile path based on git dir
