@@ -1,5 +1,3 @@
-autoload -Uz compinit && compinit
-
 if [[ -n "${ZSH_STARTUP_PROFILE:-}" ]]; then
   zmodload zsh/zprof
   zmodload zsh/datetime
@@ -65,6 +63,12 @@ if [[ -n "$BREW_PREFIX" && -d "$BREW_PREFIX" ]]; then
   [[ -d "${BREW_PREFIX}/share/zsh-completions" ]] && \
     FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
 fi
+
+# Initialize the completion system now that fpath is built. Required because the
+# ohmyzsh libs sourced via plugins.zsh call `compdef` at load time, which only
+# exists after compinit. The belak/zsh-utils plugin re-runs a deferred compinit
+# after the prompt to pick up plugin- and mise-provided completions.
+autoload -Uz compinit && compinit
 
 # Antidote plugin manager - only load antidote.zsh when regeneration needed
 zsh_plugins=${DOTFILES}/plugins.zsh
