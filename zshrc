@@ -160,3 +160,5 @@ eval "$(mise activate zsh)"
 
 # Added by Antigravity IDE
 export PATH="/Users/tai/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
