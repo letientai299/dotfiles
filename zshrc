@@ -161,3 +161,4 @@ eval "$(mise activate zsh)"
 # Added by Antigravity IDE
 export PATH="/Users/tai/.antigravity-ide/antigravity-ide/bin:$PATH"
 
+eval "$(/opt/homebrew/bin/wt config shell init zsh)"; 
