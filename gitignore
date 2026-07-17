@@ -84,3 +84,7 @@ nohup.out
 
 .nvim.lua
 .wrangler
+
+**/*.local.*
+**/*.temp.*
+**/*.dump.*
