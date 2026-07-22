@@ -88,3 +88,4 @@ nohup.out
 **/*.local.*
 **/*.temp.*
 **/*.dump.*
+.worktreeinclude
