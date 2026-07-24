@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# yz — open an SSH host in yazi over its built-in SFTP VFS.
+#
+# Usage: yz <ssh-alias> [remote/path]
+#
+# Yazi's SFTP reads services from ~/.config/yazi/vfs.toml by name; it does NOT
+# read ~/.ssh/config and has no inline sftp://user@host URL form. So for hosts
+# whose address rotates (colossus leases), hand-editing vfs.toml per lease is
+# the friction. This resolves the alias with `ssh -G` at launch, upserts a
+# matching [services.<alias>] block, then opens `sftp://<alias>[/path]`.
+set -euo pipefail
+
+alias=${1:-}
+path=${2:-}
+if [[ -z $alias ]]; then
+  echo "usage: yz <ssh-alias> [remote/path]" >&2
+  exit 2
+fi
+
+# Authoritative, always-current resolution — walks Include'd files (e.g.
+# ~/.ssh/config.colossus) and applies all matching Host blocks.
+cfg=$(ssh -G "$alias" 2>/dev/null) || { echo "yz: ssh -G $alias failed" >&2; exit 1; }
+field() { awk -v k="$1" '$1==k {print $2; exit}' <<<"$cfg"; }
+
+host=$(field hostname)
+user=$(field user)
+port=$(field port)
+[[ -n $host ]] || { echo "yz: no hostname resolved for '$alias'" >&2; exit 1; }
+port=${port:-22}
+
+# Yazi connects directly to host:port — it cannot traverse a ProxyCommand /
+# ProxyJump. `ssh -G` omits these keys entirely when unset, so treat empty as
+# "no proxy" and warn only on a real one rather than failing silently.
+pc=$(field proxycommand); pj=$(field proxyjump)
+if [[ ( -n $pc && $pc != none ) || ( -n $pj && $pj != none ) ]]; then
+  echo "yz: warning: '$alias' uses a proxy; yazi connects directly and may fail" >&2
+fi
+
+# First identity file that actually exists (ssh -G lists all candidates).
+key=
+while IFS= read -r f; do
+  f=${f/#\~/$HOME}
+  [[ -f $f ]] && { key=$f; break; }
+done < <(awk '$1=="identityfile"{print $2}' <<<"$cfg")
+key=${key:-$HOME/.ssh/id_ed25519}
+
+vfs=${YAZI_CONFIG_HOME:-$HOME/.config/yazi}/vfs.toml
+mkdir -p "$(dirname "$vfs")"
+[[ -f $vfs ]] || printf '# Yazi VFS services — service blocks are managed by `yz`.\n' >"$vfs"
+
+# Replace any existing block for this alias (header line to the next table or
+# EOF), then append a fresh one. Keeps other services and header comments.
+tmp=$(mktemp "${vfs}.XXXXXX")
+awk -v hdr="[services.$alias]" '
+  $0==hdr {skip=1; next}
+  skip && /^\[/ {skip=0}
+  !skip {print}
+' "$vfs" >"$tmp"
+{
+  printf '\n[services.%s]\ntype = "sftp"\nhost = "%s"\nuser = "%s"\nport = %s\nkey_file = "%s"\n' \
+    "$alias" "$host" "$user" "$port" "$key"
+} >>"$tmp"
+# Collapse any run of blank lines left by the removal.
+awk 'NF{blank=0} !NF{blank++} blank<2' "$tmp" >"$vfs"
+rm -f "$tmp"
+
+url="sftp://$alias"
+[[ -n $path ]] && url="$url/${path#/}"
+exec yazi "$url"
