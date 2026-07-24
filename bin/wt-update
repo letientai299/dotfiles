@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+# wt-update - Pull the base branch and rebase all matching worktrees onto it.
+#
+# Fetches origin, fast-forwards the local base branch (default: the remote's
+# default branch), then rebases every worktree whose branch matches a prefix
+# (default: tai/) onto it. Rebases run per-worktree via `git -C`, so no `cd` /
+# shell integration is needed. Conflicting rebases abort themselves and are
+# reported at the end; the run continues past them.
+#
+# Usage: wt-update [-n] [-b BASE] [-p PREFIX] [-h]
+#   -n         Dry run: print what would happen, change nothing.
+#   -b BASE    Base branch to rebase onto (default: origin's default branch).
+#   -p PREFIX  Only rebase worktrees whose branch starts with PREFIX
+#              (default: tai/).
+#   -h         Show this help.
+set -euo pipefail
+
+DRY=0
+BASE=""
+PREFIX="tai/"
+
+# Print the leading comment block (skipping the shebang) as help text.
+usage() { awk 'NR==1{next} /^#/{sub(/^# ?/,""); print; next} {exit}' "$0"; }
+
+while getopts "nb:p:h" opt; do
+  case "$opt" in
+    n) DRY=1 ;;
+    b) BASE="$OPTARG" ;;
+    p) PREFIX="$OPTARG" ;;
+    h) usage; exit 0 ;;
+    *) usage >&2; exit 2 ;;
+  esac
+done
+
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  echo "wt-update: not inside a git repository" >&2
+  exit 1
+fi
+
+# Resolve the remote (assume 'origin') and its default branch when -b is unset.
+if [[ -z "$BASE" ]]; then
+  if ref=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null); then
+    BASE="${ref#origin/}"
+  else
+    BASE="main"
+  fi
+fi
+
+# run: execute a command, or just print it in dry-run mode.
+run() {
+  if [[ "$DRY" -eq 1 ]]; then
+    printf '  [dry-run] %s\n' "$*"
+  else
+    "$@"
+  fi
+}
+
+echo "==> Fetching origin (base: $BASE, prefix: $PREFIX)"
+run git fetch origin --prune
+
+# Locate the worktree that has BASE checked out (needed to fast-forward it,
+# since a checked-out branch can't be updated from another worktree).
+base_wt=""
+while IFS= read -r line; do
+  case "$line" in
+    worktree\ *) cur_path="${line#worktree }" ;;
+    branch\ refs/heads/*)
+      [[ "${line#branch refs/heads/}" == "$BASE" ]] && base_wt="$cur_path"
+      ;;
+  esac
+done < <(git worktree list --porcelain)
+
+echo "==> Updating base branch '$BASE'"
+if [[ -n "$base_wt" ]]; then
+  # BASE is checked out somewhere: fast-forward that worktree.
+  run git -C "$base_wt" merge --ff-only "origin/$BASE"
+else
+  # BASE not checked out anywhere: update the ref directly.
+  run git fetch origin "$BASE:$BASE"
+fi
+
+# Collect worktrees whose branch matches PREFIX (excluding the base worktree).
+declare -a paths=() branches=()
+while IFS= read -r line; do
+  case "$line" in
+    worktree\ *) cur_path="${line#worktree }" ;;
+    branch\ refs/heads/*)
+      br="${line#branch refs/heads/}"
+      if [[ "$br" == "$PREFIX"* && "$cur_path" != "$base_wt" ]]; then
+        paths+=("$cur_path")
+        branches+=("$br")
+      fi
+      ;;
+  esac
+done < <(git worktree list --porcelain)
+
+if [[ ${#paths[@]} -eq 0 ]]; then
+  echo "==> No worktrees match prefix '$PREFIX'; nothing to rebase."
+  exit 0
+fi
+
+echo "==> Rebasing ${#paths[@]} worktree(s) onto '$BASE'"
+declare -a failed=()
+for i in "${!paths[@]}"; do
+  path="${paths[$i]}"
+  br="${branches[$i]}"
+  echo "--> $br  ($path)"
+  if [[ "$DRY" -eq 1 ]]; then
+    printf '  [dry-run] git -C %q rebase %q\n' "$path" "$BASE"
+    continue
+  fi
+  # Conflicts leave a half-finished rebase; abort so the worktree stays clean
+  # and the loop can continue to the next branch.
+  if ! git -C "$path" rebase "$BASE"; then
+    git -C "$path" rebase --abort 2>/dev/null || true
+    failed+=("$br")
+    echo "  ! rebase failed (aborted); resolve manually"
+  fi
+done
+
+echo
+if [[ ${#failed[@]} -gt 0 ]]; then
+  echo "==> Done with ${#failed[@]} failure(s): ${failed[*]}"
+  exit 1
+fi
+echo "==> Done: all matching worktrees rebased onto '$BASE'"
