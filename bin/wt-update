@@ -99,6 +99,15 @@ if [[ ${#paths[@]} -eq 0 ]]; then
   exit 0
 fi
 
+# True while a worktree has a rebase in progress (rebase-merge/rebase-apply).
+rebase_in_progress() {
+  local d
+  for d in rebase-merge rebase-apply; do
+    [[ -d "$(git -C "$1" rev-parse --git-path "$d" 2>/dev/null)" ]] && return 0
+  done
+  return 1
+}
+
 echo "==> Rebasing ${#paths[@]} worktree(s) onto '$BASE'"
 declare -a failed=()
 for i in "${!paths[@]}"; do
@@ -109,18 +118,35 @@ for i in "${!paths[@]}"; do
     printf '  [dry-run] git -C %q rebase %q\n' "$path" "$BASE"
     continue
   fi
-  # Conflicts leave a half-finished rebase; abort so the worktree stays clean
-  # and the loop can continue to the next branch.
-  if ! git -C "$path" rebase "$BASE"; then
-    git -C "$path" rebase --abort 2>/dev/null || true
-    failed+=("$br")
-    echo "  ! rebase failed (aborted); resolve manually"
+  # A dirty tree makes rebase fail partway with nothing safe to abort; skip it.
+  if [[ -n "$(git -C "$path" status --porcelain)" ]]; then
+    failed+=("$br ($path): uncommitted changes — skipped")
+    echo "  ! skipped: uncommitted changes" >&2
+    continue
   fi
+  if git -C "$path" rebase "$BASE"; then
+    continue
+  fi
+  # Rebase failed (usually a conflict). Restore the pre-rebase state so the
+  # worktree is never left mid-rebase, and verify the abort actually cleaned up.
+  reason="rebase failed"
+  if rebase_in_progress "$path"; then
+    if git -C "$path" rebase --abort; then
+      reason="conflict — aborted, worktree restored"
+    else
+      reason="conflict AND abort FAILED — worktree left mid-rebase, fix manually"
+    fi
+  fi
+  failed+=("$br ($path): $reason")
+  echo "  ! $reason" >&2
 done
 
 echo
 if [[ ${#failed[@]} -gt 0 ]]; then
-  echo "==> Done with ${#failed[@]} failure(s): ${failed[*]}"
+  echo "==> ${#failed[@]} worktree(s) could not be rebased onto '$BASE':" >&2
+  for f in "${failed[@]}"; do
+    echo "     - $f" >&2
+  done
   exit 1
 fi
 echo "==> Done: all matching worktrees rebased onto '$BASE'"
