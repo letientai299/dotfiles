@@ -2,10 +2,12 @@
 import json
 import subprocess
 import os
-import hashlib
-import tempfile
 
-from kitty_shared import PROJECT_COLORS, get_project_color, find_git_root_and_dir
+from kitty_shared import (
+    find_git_root_and_dir,
+    get_project_color,
+    read_tab_task,
+)
 
 GIT_ICON = ""
 
@@ -28,28 +30,17 @@ def _project_from_title(title):
 
 
 def _get_project_title(cwd):
-    """Get '[project] task' title for a CWD, or None."""
+    """Get the '[project]' fallback title for a CWD, or None.
+
+    Used only when the tab has no task set (see read_tab_task); the task itself
+    is keyed by tab id, not by cwd.
+    """
     if not cwd:
         return None
     root, git_dir = find_git_root_and_dir(cwd)
     if not root or not git_dir:
         return None
-
-    project_name = os.path.basename(root)
-    title = f'[{project_name}]'
-
-    git_dir_hash = hashlib.md5(git_dir.encode()).hexdigest()
-    task_file = os.path.join(tempfile.gettempdir(), f'kitty-task-{git_dir_hash}')
-    try:
-        if os.path.exists(task_file):
-            with open(task_file) as f:
-                task_desc = f.read().strip().split('\n')[0].strip()
-            if task_desc:
-                title = f'[{project_name}] {task_desc}'
-    except OSError:
-        pass
-
-    return title
+    return f'[{os.path.basename(root)}]'
 
 
 def _relative_dir(cwd, git_root):
@@ -150,21 +141,25 @@ def main():
             if not panes:
                 continue
 
-            display_title = None
-            all_cwds = [w.get('cwd', '') for w in tab.get('windows', [])]
-            if active_cwd:
-                display_title = _get_project_title(active_cwd)
+            # Per-tab task takes priority; else fall back to the git project.
+            task = read_tab_task(tab.get('id'))
+            display_title = task
             if not display_title:
-                for cwd in all_cwds:
-                    title = _get_project_title(cwd)
-                    if title:
-                        display_title = title
-                        break
+                all_cwds = [w.get('cwd', '') for w in tab.get('windows', [])]
+                if active_cwd:
+                    display_title = _get_project_title(active_cwd)
+                if not display_title:
+                    for cwd in all_cwds:
+                        title = _get_project_title(cwd)
+                        if title:
+                            display_title = title
+                            break
             if not display_title:
                 display_title = tab.get('title') or 'Tab'
 
             os_tabs.append({
                 'title': display_title,
+                'is_task': bool(task),
                 'panes': panes,
             })
 
@@ -183,8 +178,12 @@ def main():
         rows.append(f"{first_id}\tos\t{os_row}")
 
         for tab_info in os_tabs:
-            project = _project_from_title(tab_info['title'])
-            tab_color = get_project_color(project) if project else 0x6ea8fe
+            if tab_info['is_task']:
+                # Custom color from the task text — matches tab_bar.py.
+                tab_color = get_project_color(tab_info['title'])
+            else:
+                project = _project_from_title(tab_info['title'])
+                tab_color = get_project_color(project) if project else 0x6ea8fe
             tab_row = (
                 f"  {_ansi_color(tab_color, bold=True)}"
                 f"{tab_info['title']}\033[0m"

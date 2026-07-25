@@ -1,6 +1,7 @@
 """Shared utilities for kitty tab_bar.py and switch.py."""
 import hashlib
 import os
+import tempfile
 
 PROJECT_COLORS = [
     0x50fa7b,  # Green
@@ -22,6 +23,26 @@ def get_project_color(name):
     """Get a deterministic color for a project name using stable hash."""
     h = int(hashlib.md5(name.encode()).hexdigest(), 16)
     return PROJECT_COLORS[h % len(PROJECT_COLORS)]
+
+
+def tab_task_file(tab_id):
+    """Path to a tab's task file, keyed by kitty's stable tab id.
+
+    The id is stable per session and independent of tab index, so reordering
+    tabs keeps the same file. This makes the task pane-independent and free of
+    any git-repo requirement.
+    """
+    return os.path.join(tempfile.gettempdir(), f'kitty-task-tab-{tab_id}')
+
+
+def read_tab_task(tab_id):
+    """Return the one-line task description for a tab id, or None."""
+    try:
+        with open(tab_task_file(tab_id)) as f:
+            first = f.read().strip().split('\n', 1)[0].strip()
+        return first or None
+    except OSError:
+        return None
 
 
 def find_git_root_and_dir(cwd):

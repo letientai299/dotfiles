@@ -1,10 +1,9 @@
 """Custom tab bar for Kitty with slanted powerline tabs and system stats"""
 import ctypes
 import ctypes.util
-import hashlib
+import glob
 import json
 import os
-import re
 import struct
 import subprocess
 import tempfile
@@ -17,6 +16,12 @@ from kitty.tab_bar import (
     TabBarData,
     TabAccessor,
     as_rgb,
+)
+
+from kitty_shared import (
+    find_git_root_and_dir,
+    get_project_color,
+    read_tab_task,
 )
 
 opts = get_options()
@@ -467,57 +472,41 @@ def _save_all_stats():
     })
 
 
-# --- Git project task info for tab rendering ---
-
-PROJECT_COLORS = [
-    0x50fa7b,  # Green
-    0xff79c6,  # Pink
-    0x8be9fd,  # Cyan
-    0xffb86c,  # Orange
-    0xbd93f9,  # Purple
-    0xf1fa8c,  # Yellow
-    0xff6e6e,  # Coral
-    0x69ff94,  # Mint
-    0xa4ffff,  # Light cyan
-    0xff92df,  # Light pink
-    0xffd580,  # Light orange
-    0xcaa9fa,  # Light purple
-]
+# --- Git project info for the auto-refreshing tab fallback ---
+#
+# The per-tab task (get_project_color / PROJECT_COLORS / find_git_root_and_dir /
+# read_tab_task) lives in kitty_shared. Project detection below only feeds the
+# fallback label shown when a tab has neither a manual title nor a task.
 
 _task_cache = {}
-_tab_project_cache = {}  # {tab_id: (project_name, task_desc)} — last known project per tab
+_tab_project_cache = {}  # {tab_id: project_name} — last known project per tab
+
+# Prune task files for tabs that no longer exist (e.g. after a tab closes). Done
+# lazily here rather than via a close watcher, since a watcher can't reliably
+# tell an overlay closing (set-tab-task.sh runs nvim in one) from a tab closing.
+_TASK_FILE_PREFIX = os.path.join(tempfile.gettempdir(), 'kitty-task-tab-')
+_TASK_PRUNE_INTERVAL = 5   # seconds
+_last_task_prune = 0
 
 
-def get_project_color(name):
-    """Get a deterministic color for a project name using stable hash."""
-    h = int(hashlib.md5(name.encode()).hexdigest(), 16)
-    return PROJECT_COLORS[h % len(PROJECT_COLORS)]
-
-
-def find_git_root_and_dir(cwd):
-    """Walk up from cwd to find git root and git dir.
-
-    Returns (root, git_dir) or (None, None).
-    """
-    path = cwd
-    while path and path != os.path.dirname(path):
-        git_path = os.path.join(path, '.git')
-        if os.path.isdir(git_path):
-            return path, git_path
-        elif os.path.isfile(git_path):
+def _prune_task_files(boss):
+    """Delete kitty-task-tab-<id> files whose tab id is no longer live."""
+    global _last_task_prune
+    now = time.time()
+    if now - _last_task_prune < _TASK_PRUNE_INTERVAL:
+        return
+    _last_task_prune = now
+    try:
+        live = {tab.id for tab in boss.all_tabs}
+    except Exception:
+        return
+    for path in glob.glob(_TASK_FILE_PREFIX + '*'):
+        suffix = path[len(_TASK_FILE_PREFIX):]
+        if suffix.isdigit() and int(suffix) not in live:
             try:
-                with open(git_path) as f:
-                    line = f.read().strip()
-                if line.startswith('gitdir: '):
-                    git_dir = line[8:]
-                    if not os.path.isabs(git_dir):
-                        git_dir = os.path.normpath(os.path.join(path, git_dir))
-                    return path, git_dir
-            except Exception:
+                os.remove(path)
+            except OSError:
                 pass
-            return None, None
-        path = os.path.dirname(path)
-    return None, None
 
 
 def _dim_color(color_int, factor=0.45):
@@ -528,14 +517,14 @@ def _dim_color(color_int, factor=0.45):
     return (r << 16) | (g << 8) | b
 
 
-def _get_task_info(cwd):
-    """Get (project_name, task_desc) for a cwd, with caching."""
+def _get_project_name(cwd):
+    """Get the git project name for a cwd, with caching, or None."""
     now = time.time()
 
     if cwd in _task_cache:
-        ts, proj, task = _task_cache[cwd]
+        ts, proj = _task_cache[cwd]
         if now - ts < _TASK_CACHE_TTL:
-            return proj, task
+            return proj
 
     # Evict oldest entries when cache is full
     if len(_task_cache) >= _TASK_CACHE_MAX:
@@ -546,24 +535,11 @@ def _get_task_info(cwd):
     if not root or not git_dir:
         # Don't cache non-git CWDs — transient paths like "/" appear briefly
         # during shell prompt hooks (e.g. git status) and would poison the cache.
-        return None, None
+        return None
 
     project_name = os.path.basename(root)
-    task_desc = None
-
-    git_dir_hash = hashlib.md5(git_dir.encode()).hexdigest()
-    task_file = os.path.join(tempfile.gettempdir(), f'kitty-task-{git_dir_hash}')
-    try:
-        if os.path.exists(task_file):
-            with open(task_file) as f:
-                content = f.read().strip()
-            if content:
-                task_desc = content.split('\n')[0].strip()
-    except Exception:
-        pass
-
-    _task_cache[cwd] = (now, project_name, task_desc)
-    return project_name, task_desc
+    _task_cache[cwd] = (now, project_name)
+    return project_name
 
 
 # --- Status bar drawing helpers (module-level to avoid re-creation) ---
@@ -705,12 +681,18 @@ def draw_tab(
 
     # Check for manual tab title
     boss = get_boss()
+    _prune_task_files(boss)
     tab_obj = boss.tab_for_id(tab.tab_id)
     has_manual_title = tab_obj and tab_obj.name
 
-    # Detect git project task info (only when no manual title)
-    project_name, task_desc = (None, None)
-    if not has_manual_title and cwd:
+    # Per-tab task, keyed by the stable tab id — pane-independent and git-free.
+    task_desc = None if has_manual_title else read_tab_task(tab.tab_id)
+
+    # Auto-refreshing fallback: git project of the active pane's cwd, shown only
+    # when the tab has neither a manual title nor a task. This intentionally
+    # updates as you switch panes (for adhoc, unscoped tabs).
+    project_name = None
+    if not has_manual_title and not task_desc and cwd:
         # If the active window is an overlay, use the parent's CWD instead
         # to avoid transient overlays (e.g. switch.py) changing the tab title.
         effective_cwd = cwd
@@ -723,14 +705,14 @@ def draw_tab(
                     if parent_cwd:
                         effective_cwd = parent_cwd
 
-        project_name, task_desc = _get_task_info(effective_cwd)
+        project_name = _get_project_name(effective_cwd)
         if project_name:
             # Remember last known project for this tab
-            _tab_project_cache[tab.tab_id] = (project_name, task_desc)
+            _tab_project_cache[tab.tab_id] = project_name
         elif tab.tab_id in _tab_project_cache:
             # CWD is transiently non-git (e.g. "/" during prompt hooks) —
             # reuse the last known project for this tab.
-            project_name, task_desc = _tab_project_cache[tab.tab_id]
+            project_name = _tab_project_cache[tab.tab_id]
 
     # Tab colors
     if tab.is_active:
@@ -750,38 +732,29 @@ def draw_tab(
             title_text = title_text[:max_title_length - 1] + '…'
         screen.draw(title_text)
 
+    elif task_desc:
+        # Custom color from the task text — stable per task, same on every pane.
+        task_color = get_project_color(task_desc)
+        if len(task_desc) > max_title_length:
+            task_desc = task_desc[:max_title_length - 1] + '…'
+        screen.cursor.fg = as_rgb(
+            task_color if tab.is_active else _dim_color(task_color)
+        )
+        screen.draw(task_desc)
+
     elif project_name:
         proj_color = get_project_color(project_name)
+        bracket_fg = 0x888888 if tab.is_active else 0x777777
 
-        if tab.is_active:
-            bracket_fg = 0x888888
-            proj_fg = proj_color
-            task_fg = 0xffffff
-        else:
-            bracket_fg = 0x777777
-            proj_fg = proj_color
-            task_fg = 0xbbbbbb
-
-        prefix_len = len(project_name) + 2
-        if task_desc:
-            full_len = prefix_len + 1 + len(task_desc)
-            if full_len > max_title_length:
-                avail = max_title_length - prefix_len - 1
-                if avail > 1:
-                    task_desc = task_desc[:avail - 1] + '…'
-                else:
-                    task_desc = None
+        if len(project_name) + 2 > max_title_length:
+            project_name = project_name[:max_title_length - 3] + '…'
 
         screen.cursor.fg = as_rgb(bracket_fg)
         screen.draw('[')
-        screen.cursor.fg = as_rgb(proj_fg)
+        screen.cursor.fg = as_rgb(proj_color)
         screen.draw(project_name)
         screen.cursor.fg = as_rgb(bracket_fg)
         screen.draw(']')
-
-        if task_desc:
-            screen.cursor.fg = as_rgb(task_fg)
-            screen.draw(' ' + task_desc)
 
     elif cwd:
         home = os.path.expanduser('~')
