@@ -6,6 +6,7 @@ import json
 import os
 import struct
 import subprocess
+import sys
 import tempfile
 import time
 
@@ -17,6 +18,12 @@ from kitty.tab_bar import (
     TabAccessor,
     as_rgb,
 )
+
+# kitty loads this file via runpy.run_path(), which — unlike running a script
+# directly — does NOT put its directory on sys.path. Without this the sibling
+# kitty_shared import below raises ModuleNotFoundError and kitty silently falls
+# back to the default tab bar. https://docs.python.org/3/library/runpy.html
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from kitty_shared import (
     find_git_root_and_dir,

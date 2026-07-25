@@ -31,4 +31,4 @@ fi
 task_file="${TMPDIR:-/tmp}/kitty-task-tab-${tab_id}"
 
 # Open nvim to edit the 1-line task description.
-nvim "$task_file"
+/usr/local/bin/nvim "$task_file"
