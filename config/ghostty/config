@@ -1,0 +1,10 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config
+
+# Font: FiraCode Nerd Font with programming ligatures.
+font-family = FiraCode Nerd Font
+
+# Enable ligatures (calt/liga are on by default; listed explicitly so the
+# intent survives across machines and font swaps).
+font-feature = calt
+font-feature = liga
