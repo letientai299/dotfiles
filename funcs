@@ -138,18 +138,12 @@ update_software() {
     NONINTERACTIVE=1 brew upgrade
   fi
 
-  #  Neovim / Vim
+  #  Neovim (config lives in its own repo, see ~/.config/nvim)
   if command -v nvim >/dev/null 2>&1; then
     fancy_echo "Neovim plugins"
     # Lazy! (with bang) runs synchronously, so --headless doesn't quit mid-sync.
     # https://lazy.folke.io/usage#-startup-sequence
     nvim --headless "+Lazy! sync" +qa
-  elif command -v vim >/dev/null 2>&1; then
-    fancy_echo "Vim plugins"
-    # -es (silent ex mode) is the headless equivalent for vim; PlugUpdate's jobs
-    # are async, so --sync is required or the quit kills them.
-    vim -es -u "$HOME/.vimrc" -i NONE -c "PlugUpgrade" -c "qa!"
-    vim -es -u "$HOME/.vimrc" -i NONE -c "PlugUpdate --sync" -c "qa!"
   fi
 
   # update zsh plugins — antidote is a zsh function, not a binary on PATH, so it
