@@ -138,28 +138,28 @@ zsh-defer -c '
 '
 
 # PATH additions (fast, no subprocess)
-export PATH="$DOTFILES/tools:$DOTFILES/plugins:/$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
+export PATH="$DOTFILES/tools:$DOTFILES/plugins:$HOME/.cargo/bin:$HOME/.fzf/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/tai/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
-export PATH="${PATH}:/Users/tai/.azureauth/0.9.2"
+export PATH="${PATH}:$HOME/.azureauth/0.9.2"
 
 # Load per machine setting
 if [ -f ~/.zshrc_local ]; then
   source ~/.zshrc_local
 fi
 
-# mise
-export PATH="/Users/tai/.local/bin:/Users/tai/.local/share/mise/shims:$PATH"
+# mise — shims and ~/.local/bin are set in ~/.zprofile so GUI/non-interactive
+# login shells (Neovide) get them too. `activate` is interactive-only.
 eval "$(mise activate zsh)"
 
 # Added by Antigravity IDE
-export PATH="/Users/tai/.antigravity-ide/antigravity-ide/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 eval "$(/opt/homebrew/bin/wt config shell init zsh)"; 
