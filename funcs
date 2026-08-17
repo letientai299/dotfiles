@@ -132,25 +132,37 @@ update_software() {
 
   if command -v brew >/dev/null 2>&1; then
     fancy_echo "Update software installed by homebrew"
-    brew update
-    brew upgrade
+    # NONINTERACTIVE makes brew never prompt (e.g. cask upgrade confirmations)
+    # https://docs.brew.sh/Manpage#environment
+    NONINTERACTIVE=1 brew update
+    NONINTERACTIVE=1 brew upgrade
   fi
 
-  #  Vim
-  fancy_echo "Vim plugins"
-  # Execute vim-plug upgrade, then update all plugins
-  vim -c "PlugUpgrade" -c "qa!"
-  vim -c "PlugUpdate" -c "qa!"
-  vim -c "UpdateRemotePlugins" -c "qa!"
+  #  Neovim / Vim
+  if command -v nvim >/dev/null 2>&1; then
+    fancy_echo "Neovim plugins"
+    # Lazy! (with bang) runs synchronously, so --headless doesn't quit mid-sync.
+    # https://lazy.folke.io/usage#-startup-sequence
+    nvim --headless "+Lazy! sync" +qa
+  elif command -v vim >/dev/null 2>&1; then
+    fancy_echo "Vim plugins"
+    # -es (silent ex mode) is the headless equivalent for vim; PlugUpdate's jobs
+    # are async, so --sync is required or the quit kills them.
+    vim -es -u "$HOME/.vimrc" -i NONE -c "PlugUpgrade" -c "qa!"
+    vim -es -u "$HOME/.vimrc" -i NONE -c "PlugUpdate --sync" -c "qa!"
+  fi
 
-
-  # update zsh plugins
-  antidote update
+  # update zsh plugins — antidote is a zsh function, not a binary on PATH, so it
+  # must be sourced first; antidote-load handles cloning/sourcing.
+  fancy_echo "Zsh plugins"
+  antidote-load update
+  # Rebuild plugins.zsh so the static loader points at the updated checkouts
+  antidote-regen
 
   # update mise tools and plugins
   if command -v mise >/dev/null 2>&1; then
     mise self-update -y
-    mise up -l --cd $TMPDIR
+    mise up --bump --cd $TMPDIR
   fi
 }
 
