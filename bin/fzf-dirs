@@ -13,7 +13,7 @@ set -euo pipefail
 # --- Configuration (shared with fzf-files, fzf-lua.lua) ---------------------
 _cfg="${DOTFILES:-}/config/fzf-includes.sh"
 [[ -f "$_cfg" ]] && source "$_cfg" || {
-  include_dirs=(.ai.dump .dump)
+  include_dirs=(.ai .dump)
   include_dir_globs=(local)
   include_files=(.envrc .exrc .nvim.lua .env .env.*)
 }

@@ -77,10 +77,10 @@ nohup.out
 .junie/
 .output.txt
 .claude
-.ai.dump
+.ai
 
 .playwright*
-.ai.dump/
+.ai/
 
 .nvim.lua
 .wrangler
