@@ -89,3 +89,4 @@ nohup.out
 **/*.temp.*
 **/*.dump.*
 .worktreeinclude
+.ai/
